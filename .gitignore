@@ -45,3 +45,4 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+00_intro_to_R/00_getting_started/00_getting_started.Rmd
