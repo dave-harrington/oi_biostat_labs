@@ -1,6 +1,8 @@
 #specific files to ignore
-00_intro_to_R/00_getting_started/00_getting.started.Rmd
 oi_biostat_labs.Rproj
+
+00_intro_to_R/00_getting_started/00_getting.started.Rmd
+00_intro_to_R/console_layout_web.png
 
 
 # LaTeX temporary files
