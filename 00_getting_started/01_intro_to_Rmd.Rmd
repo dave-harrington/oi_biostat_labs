@@ -101,7 +101,7 @@ Alternatively, clicking on the name of the dataset in the Files panel will produ
 
 ###R Script versus R Markdown
 
-An R Script file can be though of as one large code chunk; R script files are only meant to contain R commands with short plain-text comments. R Markdown files consist of both code, output, and plain text.
+An R Script file can be thought of as one large code chunk; R script files are only meant to contain R commands with short plain-text comments. R Markdown files consist of both code, output, and plain text.
 
 R script files are useful when the primary goal is to explore a dataset or test short R programs. R Markdown files are ideal for preparing documents that need to contain both explanatory text and statistical output, such as a lab report. 
 
