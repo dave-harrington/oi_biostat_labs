@@ -1,6 +1,3 @@
 01_intro_to_Rmd.pdf
-<<<<<<< HEAD
-01_intro_to_Rmd.Rmd
-=======
 00_intro_to_R.Rmd
->>>>>>> 8502de1e2a77cf70ad7fa9da65a1eb1127e861c6
+sample_data.Rdata
