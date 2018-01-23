@@ -5,7 +5,7 @@ date: "January 1, 2018"
 output: pdf_document
 ---
 
-This is an R Markdown (Rmd) document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. It was designed to simplify creating HTML documents, but the labs for this text are written to generate PDF documents.
+This is an R Markdown (Rmd) document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. It was designed to simplify creating HTML documents, but the labs for this text are written to generate PDF documents. Before continuing, be sure to install a full TeX distribution from \url{https://www.latex-project.org/get/}.
 
 The content of an R Markdown document is created in the R Studio script editor. Formatting commands in the text are converted to a PDF document when you click on the *Knit* button, located on the toolbar at the top of the script editor.
 
