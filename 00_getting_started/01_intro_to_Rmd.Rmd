@@ -41,6 +41,10 @@ Your bulleted list...
 
 Additional formatting commands will be introduced gradually throughout the rest of the labs.
 
+<!---
+To make a "comment" in an R Markdown document, use the syntax on the lines preceding and following this message. All the text within the 'arrows' does not appear in the knitted PDF, similar to how lines preceded with a # in R are not executed as code.
+--->
+
 5. To start a new page in the PDF document, enter the text 'newpage' preceded by a backslash, as in...(new page coming in the PDF!)
 
 \newpage
