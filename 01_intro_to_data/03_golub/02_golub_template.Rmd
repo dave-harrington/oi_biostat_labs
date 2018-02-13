@@ -191,7 +191,7 @@ diff.mean.expression.matrix = as.matrix(diff.mean.expression)
 diff.mean.expression.matrix
 ```
 
-a) What is the difference in mean expresion level between AML and ALL for the first gene on the list? Does it seem like this gene could be a good predictor of leukemia type? Why or why not?
+a) What is the difference in mean expression level between AML and ALL for the first gene on the list; on average, is this gene more highly expressed in AML patients or ALL patients? Does it seem like this gene could be a good predictor of leukemia type? Why or why not?
 
 
 
