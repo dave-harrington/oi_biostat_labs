@@ -449,7 +449,7 @@ b) Inside the loop, the two vectors \texttt{dist.from.aml} and \texttt{dist.from
    
    
     
-    iv. Based on the previous answers, why does it make sense for the loop to calculate distance based on \texttt{predictor.means.aml[j]} and \texttt{predictor.means.all[j]} instead of \texttt{predictor.means.aml[i]} or \texttt{predictor.means.all[i]}?
+    iv. Based on the previous answers, why does it make sense for the loop to calculate distance based on \texttt{predictor.means.aml[j]} and \texttt{predictor.means.all[j]} instead of \texttt{predictor.means.aml[i]} and \texttt{predictor.means.all[i]}?
     
     
     
