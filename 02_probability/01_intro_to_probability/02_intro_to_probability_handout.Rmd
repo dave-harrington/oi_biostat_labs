@@ -31,9 +31,9 @@ The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostat
 
 #### Introduction
 
-Suppose that a fair coin is tossed 5 times. What is the probability of obtaining exactly 3 heads?
+Suppose that a biased coin is tossed 5 times; the coin is weighted such that the probability of obtaining a heads is 0.6. What is the probability of obtaining exactly 3 heads?
 
-Before writing the code for a simulation to estimate probability, it is helpful to clearly define the experiment and event of interest. In this case, the experiment is tossing a fair coin 5 times and the event of interest is observing exactly 3 heads. Since the coin is fair, the probability of obtaining a heads is 0.5.
+Before writing the code for a simulation to estimate probability, it is helpful to clearly define the experiment and event of interest. In this case, the experiment is tossing a biased coin 5 times and the event of interest is observing exactly 3 heads. 
 
 1. The following code illustrates the use of the \texttt{sample()} command to simulate the result for one set of 5 coin tosses. 
 
@@ -70,7 +70,7 @@ total.heads
  
 ```{r, eval = FALSE}
 #define parameters
-prob.heads = 0.5
+prob.heads = 0.6
 number.tosses = 5
 number.replicates = 50
 
@@ -90,25 +90,26 @@ for(k in 1:number.replicates){
 }
 
 #view the results
+outcomes
 addmargins(table(outcomes))
 
 heads.3 = (outcomes == 3)
 table(heads.3)
 ```
 
-  a) The parameters of the experiment have already been filled in; the probability of heads remains 0.5 and the number of tosses is set to 5. This code repeats the experiment 50 times, as specified by \texttt{number.replicates}. Run the code chunk.
+  a) The parameters of the experiment have already been filled in; the probability of heads remains 0.6 and the number of tosses is set to 5. This code repeats the experiment 50 times, as specified by \texttt{number.replicates}. Run the code chunk.
 
   b) How many heads were observed in the fourth replicate of the experiment? Hint: look at \texttt{outcomes}.
 
   c) Out of the 50 replicates, how often were exactly 3 heads observed in a single experiment?
 
-  d) From the tabled results of the simulation, calculate an estimate of the probability of observing exactly 3 heads when a coin is tossed 5 times.
+  d) From the tabled results of the simulation, calculate an estimate of the probability of observing exactly 3 heads when the biased coin is tossed 5 times.
 
-  e) Using the laws of probability, calculate the exact probability of observing exactly 3 heads when a coin is tossed 5 times.
-
-  f) Compare the estimate from the simulation to the exact probability. How close are the two values?
-
-  g) Re-run the simulation with 100 replicates of the experiment; calculate a new estimate of the probability of observing exactly 3 heads when a coin is tossed 5 times. How close is this new estimate to the exact probability calculated in part e)? How close is an estimate based on 1,000 replicates to the exact probability calculated in part e)?
+  e) Re-run the simulation with 10,000 replicates of the experiment; calculate a new estimate of the probability of observing exactly 3 heads when the biased coin is tossed 5 times.
+  
+  f) Using the laws of probability, calculate the exact probability of observing exactly 3 heads when the biased coin is tossed 5 times.
+  
+  g) How do the values calculated in parts d) and e) compare to the value calculated in part f)? Of the two values derived from simulation, why can the one calculated from 1,000 replicates be considered more reliable?
 
 
 #### Mandatory Drug Testing
@@ -127,13 +128,9 @@ Mandatory drug testing in the workplace is common practice for certain professio
       
         ii. What are the associated probabilites of the possible outcomes?
       
-        iii. Describe a reasonable way to represent the two possible outcomes with the values \texttt{0} and \texttt{1}.
+        iii. Describe a reasonable way to represent the two possible outcomes with values \texttt{0} and \texttt{1}.
       
-    b) Simulate the result for one set of 150 tests. Use \texttt{set.seed()} so that the results are reproducible.
-
-        i. Was there at least one employee who tested positive?
-        
-        ii. What is the proportion of employees who tested positive for drug use?
+    b) Simulate the results for one set of 150 tests. Use \texttt{set.seed()} so that the results are reproducible. Was there at least one employee who tested positive?
     
     c) Based on 100,000 replicates, estimate the probability that at least one employee tests positive out of 150 drug-free employees.
     
@@ -148,66 +145,3 @@ Mandatory drug testing in the workplace is common practice for certain professio
     
     c) Re-calculate the probability described in a) if the probability of a false positive result is 0.01.
 
-
-
-
-```{r}
-#define parameters
-prob.false.positive = 0.012
-number.employees = 150
-number.replicates = 100000
-
-#create empty vector to store results
-results = vector("numeric", number.replicates)
-
-#set the seed for a pseudo-random sample
-set.seed(2018)
-
-#simulate the tests
-for(k in 1:number.replicates){
-  
-  results.replicate = sample(c(0,1), size = number.employees,
-                             prob = c(1 - prob.false.positive, prob.false.positive),
-                                      replace = TRUE)
-  
-  results[k] = sum(results.replicate)
-  
-}
-
-#view the results
-table(results)
-
-at.least.1.pos = (results >= 1)
-table(at.least.1.pos)
-```
-
-
-```{r}
-#define parameters
-prob.false.positive = 0.05
-number.women = 50
-number.replicates = 100000
-
-#create empty vector to store results
-results = vector("numeric", number.replicates)
-
-#set the seed for a pseudo-random sample
-set.seed(2018)
-
-#simulate the tests
-for(k in 1:number.replicates){
-  
-  results.replicate = sample(c(0,1), size = number.women,
-                             prob = c(1 - prob.false.positive, prob.false.positive),
-                                      replace = TRUE)
-  
-  results[k] = sum(results.replicate)
-  
-}
-
-#view the results
-table(results)
-
-at.most.1.pos = (results <= 1)
-table(at.most.1.pos)
-```
