@@ -1,0 +1,88 @@
+---
+title: "Introduction to Probability"
+author: "Chapter 2, Lab 1: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Defining probability
+	  \item Rules of probability
+	  \item Simulation
+	\end{itemize}
+	
+\end{small}
+
+Probabilities for events can be calculated via simulation by simply repeating an experiment a large number of times and then counting the number of times the event of interest occurs. According to the Law of Large Numbers, as the number of repetitions increase, the proportion $\hat{p}_n$ of occurrences converges to the probability $p$ of that event. 
+
+The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostatistics}.
+
+#### Introduction
+
+Suppose that a fair coin is tossed 5 times. What is the probability of obtaining exactly 3 heads?
+
+Before writing the code for a simulation to estimate probability, it is helpful to clearly define the experiment and event of interest. In this case, the experiment is tossing a fair coin 5 times and the event of interest is observing exactly 3 heads. Since the coin is fair, the probability of obtaining a heads is 0.5.
+
+1. The following code illustrates the use of the \texttt{sample()} command to simulate the result for one set of 5 coin tosses. 
+
+```{r, eval = FALSE}
+#define parameters
+prob.heads = 
+number.tosses = 
+
+#simulate the coin tosses
+outcomes = sample(c(0, 1), size = number.tosses,
+                      prob = c(1 - prob.heads, prob.heads), replace = TRUE)
+
+#view the results
+table(outcomes)
+
+#store the results as a single number
+total.heads = sum(outcomes)
+total.heads
+```
+
+<!---
+Set the parameters above, then change FALSE to TRUE for the output to display in the knitted PDF.
+--->
+
+  a) Using the information given about the experiment, set the parameters for \texttt{prob.heads} and \texttt{number.tosses} and run the code chunk.
+
+
+
+
+  
+  b) To generate \texttt{outcomes}, the \texttt{sample()} command draws from the values \texttt{0} and \texttt{1} with probabilites corresponding to those specified by the argument \texttt{prob}. Which number corresponds to heads, and which corresponds to tails?
+
+
+
+  
+  c) Why is it important to sample with replacement?
+
+
+
+
+  
+  d) What is the advantage of representing the outcomes with the values \texttt{0} and \texttt{1}, rather than with letters like "T" and "H"?
+
+
+
+
+  
+  e) Run the code chunk again to simulate another set of 5 coin tosses. Is it reasonable to expect that the results might differ from the first set of tosses? Explain your answer.
+
+
+
+
