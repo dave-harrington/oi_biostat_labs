@@ -1,0 +1,106 @@
+---
+title: "Extended Practice"
+author: "Chapter 2, Lab 4: Template"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+output: pdf_document
+---
+
+This lab contains examples of relatively complex conditioning problems that require particular care in both translating problem statements to the language of probability and correctly manipulating marginal, joint, and conditional probabilities. 
+
+The first problem is from the context of allele inheritance, like Examples 2.4 and 2.32 in the text. The second problem is approached algebraically in the text in Section 2.3; a familiarity with both algebraic and simulation methods is instructive. 
+
+#### Problem 1: Eye Color Inheritance. 
+
+One of the earliest models for the genetics of eye color was developed in 1907, and proposed a single-gene inheritance model, for which brown eye color is always dominant over blue eye color.\footnote{This model has since been shown to be incorrect---eye color inheritance is actually controlled by multiple genes.} 
+
+Suppose that in the population, 25\% of individuals are homozygous dominant (genotype $BB$), 50\% are heterozygous (genotype $Bb$), and 25\% are homozygous recessive (genotype $bb$). Individuals with genotype $BB$ or $Bb$ have brown eyes, while those with genotype $bb$ have blue eyes.
+
+Assume independent mating in the population.
+
+a) Suppose that two parents have brown eyes. What is the probability that their first child has blue eyes?
+
+
+
+
+
+b) Does the probability in part a) change if it is now known that the paternal grandfather had blue eyes? Justify your answer.
+
+
+
+
+
+c) Given that their first child has brown eyes, what is the probability that their second child has blue eyes? Ignore the condition given in part b).
+
+
+
+
+
+\newpage
+
+#### Problem 2: Cat Genetics.
+
+The gene that controls white coat color in cats, $KIT$, is known to be responsible for multiple phenotypes such as deafness and blue eye color. A dominant allele $W$ at one location in the gene has complete penetrance for white coat color; all cats with the $W$ allele have white coats. There is incomplete penetrance for blue eyes and deafness; not all white cats will have blue eyes and not all white cats will be deaf. However, deafness and blue eye color are strongly linked, such that white cats with blue eyes are much more likely to be deaf. The variation in penetrance for eye color and deafness may be due to other genes as well as environmental factors.
+
+Suppose that 30\% of white cats have one blue eye, while 10\% of white cats have two blue eyes. About 73\% of white cats with two blue eyes are deaf and 40\% of white cats with one blue eye are deaf. Only 19\% of white cats with other eye colors are deaf. 
+
+Create a simulated dataset of 100,000 white cats to answer the following questions. The lab template provides a basic outline of the components of the simulation.
+
+
+
+
+
+```{r}
+#define parameters
+
+
+
+#create empty vectors to store results
+
+
+
+#set the seed for a pseudo-random sample
+
+
+
+#assign eye color
+
+
+
+#assign deafness
+
+
+
+#assign blindness
+
+
+
+#calculations
+
+
+
+```
+
+
+a) Calculate the prevalence of deafness among white cats.
+
+b) Given that a white cat is deaf, what is the probability that it has two blue eyes?
+
+c) Suppose that deaf, white cats have an increased chance of being blind, but that the prevalence of blindness differs according to eye color. While deaf, white cats with two blue eyes or two non-blue eyes have probability 0.20 of developing blindness, deaf and white cats with one blue eye have probability 0.40 of developing blindness. White cats that are not deaf have probability 0.10 of developing blindness, regardless of their eye color.
+
+    i. What is the prevalence of blindness among deaf, white cats?
+  
+    ii. What is the prevalence of blindness among white cats?
+
+    iii. Given that a cat is white and blind, what is the probability that it has two blue eyes? 
+    
+    iv. What is the probability that a white cat has one blue eye and one non-blue eye, given that it is not blind?
+    
+d) The following two questions are not solved in the text. Solve the answers algebraically, then check the answers with the results of the simulation.
+
+    i. What is the prevalence of two blue eyes among white cats that are both deaf and blind?
+    
+    ii. Given that a white cat has two blue eyes, what is the probability that it is deaf and blind?
+    
