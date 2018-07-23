@@ -288,7 +288,7 @@ barplot(table(trials.for.rth.success))
 
     Run a simulation with 20 replicates, with seed set to \texttt{2018}.
     
-    This simulation nests the sampling within a \texttt{while} loop, which will run as long as the specified condition is no longer satisfied. The \texttt{while} loop contains an \texttt{if} statement that keeps track of the number of successes that have been observed.
+    This simulation nests the sampling within a \texttt{while} loop, which will run until the specified condition is no longer satisfied. The \texttt{while} loop contains an \texttt{if} statement that keeps track of the number of successes that have been observed.
     
     a) The variable \texttt{successes} keeps track of how many successes have occurred in the current replicate. The variable is set to \texttt{0} at the beginning of the loop.
     
