@@ -112,7 +112,7 @@ barplot(table(trials.for.first.success))
     
     
     
-    b) The \texttt{if-else} statement is closely related to the \texttt{if} statement and has the basic structure \texttt{if( condition ) \{ statement 1 \} else \{ statement 2 \}}. If the condition is satisfied, the first condition is carried out; else, the second statement is carried out.
+    b) The \texttt{if-else} statement is closely related to the \texttt{if} statement and has the basic structure \texttt{if( condition ) \{ statement 1 \} else \{ statement 2 \}}. If the condition is satisfied, the first statement is carried out; else, the second statement is carried out.
     
         Examine the condition in the \texttt{if-else} statement and explain how the condition specifies when statement 1 should be carried out versus statement 2. In the context of the experiment, is statement 1 or statement 2 carried out when a success occurs?
 
