@@ -255,7 +255,7 @@ set.seed(2018)
 #simulate the experiment
 for (k in 1:replicates){
   
-  trial.number = 1
+  trial.number = 0
   successes = 0
   
   while(successes < r){
@@ -272,7 +272,7 @@ for (k in 1:replicates){
     
     }
   
-  trials.for.rth.success[k] = trial.number - 1
+  trials.for.rth.success[k] = trial.number
   
 }
 
@@ -311,25 +311,19 @@ barplot(table(trials.for.rth.success))
     
     
     
-    d) Once a value can be recorded in \texttt{trials.for.rth.success} for the $k^{th}$ replicate of the experiment, why is it necessary to subtract \texttt{1} from \texttt{trial.number}? (*Hint*: It may help to think about the answer to parts b) and c).)
+    d) In the first of these 20 replicates, how many trials did it take to observe four successes?
     
     
     
     
     
-    e) In the first of these 20 replicates, how many trials did it take to observe four successes?
+    e) Set the number of replicates to 1,000 and re-run the simulation. What is the estimated probability that five participants must be tested in order to observe four who refuse to administer the most severe shock?
     
     
     
     
     
-    f) Set the number of replicates to 1,000 and re-run the simulation. What is the estimated probability that five participants must be tested in order to observe four who refuse to administer the most severe shock?
-    
-    
-    
-    
-    
-    g) Use \texttt{pnbinom()} to calculate the probability estimated in part f).
+    f) Use \texttt{pnbinom()} to calculate the probability estimated in part e).
 
 
 
