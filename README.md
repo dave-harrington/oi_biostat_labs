@@ -26,4 +26,4 @@ Unit 0 contains two short tutorials for getting started with R and R Markdown. S
 
 - The solutions file (.pdf) contains fully worked solutions and code. 
 
-Each unit contains a 'Lab Notes' file that gives an overview of the labs and provides a detailed explanation of the 'R' programming used in each lab.
+Each unit contains a 'Lab Notes' file that gives a high-level overview of the labs and provides a detailed explanation of the `R` programming used in each lab.
