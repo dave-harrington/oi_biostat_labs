@@ -25,3 +25,5 @@ Unit 0 contains two short tutorials for getting started with R and R Markdown. S
 - The template file (.Rmd) contains space for entering answers (both plain text writing and code) along with additional guidance related to R and Rmd syntax. When compiled, the template generates a PDF document.
 
 - The solutions file (.pdf) contains fully worked solutions and code. 
+
+Each unit contains a 'Lab Notes' file that gives an overview of the labs and provides a detailed explanation of the 'R' programming used in each lab.
