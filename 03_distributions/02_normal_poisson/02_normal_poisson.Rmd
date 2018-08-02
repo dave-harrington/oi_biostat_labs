@@ -1,0 +1,148 @@
+---
+title: "Distributions: Normal and Poisson"
+author: "Chapter 3, Lab 2"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Normal distribution
+	  \item Poisson distribution
+	\end{itemize}
+	
+\end{small}
+
+This lab discusses two additional distributions: the normal and Poisson. Working with normal probabilities and evaluating the normal approximation will be especially important in later units on inference. The Poisson distribution is useful for estimating the number of events in a large population over a unit of time.
+
+The material in this lab corresponds to Sections 3.3 and 3.4 of *OpenIntro Biostatistics*.
+
+
+#### Normal distribution
+
+A normal distribution curve is characterized by two parameters: the mean ($\mu$) and standard deviation ($\sigma$). The normal distribution with mean 0 and standard deviation 1 is referred to as the standard normal distribution; a random variable following the standard normal distribution is typically denoted as $Z$. 
+
+The $Z$-score of an observation quantifies how far the observation is from the mean, in units of standard deviation(s). The $Z$-score for an observation $x$ from a random variable $X \sim \text{N}(\mu, \sigma)$ equals
+\[Z = \frac{x-\mu}{\sigma}. \]
+
+In the reverse direction, the value $x$ from $X \sim \text{N}(\mu, \sigma)$ associated with a particular $Z$-score equals
+\[x = \mu + \sigma Z. \]
+
+Normal probabilities are calculated in \textsf{R} with the use of \texttt{pnorm}. 
+
+Unlike the binomial, the normal distribution is continuous. Since the probability of a continuous random variable equaling some exact value is always 0, it is valid to state that for a continuous random variable $X$, $P(X \leq x) = P(X < x)$ and $P(X \geq x) = P(X > x)$. 
+
+The following code shows how to calculate $P(X \leq 105)$ and $P(X > 105)$ for $X \sim \text{N}(100, 5)$. When values of $\mu$ and $\sigma$ are not specified, \textsf{R} assumes that $\mu = 0$ and $\sigma = 1$.
+
+```{r}
+#probability X is less than (or equal to) 105
+pnorm(105, 100, 5)
+
+#probability X is greater than 105
+pnorm(105, 100, 5, lower.tail = FALSE)
+
+#probability Z is less than (or equal to) 1
+pnorm(1)
+
+#probability Z is greater than 1
+pnorm(1, lower.tail = FALSE)
+```
+
+To identify the observation corresponding to a particular probability, use \texttt{qnorm}. The following code shows how to identify the $X$ or $Z$ value where there is 0.841 area to the left (and 0.159 area to the right). The values differ slightly from the ones above due to rounding.
+
+```{r}
+#identify X value
+qnorm(0.841, 100, 5)
+qnorm(0.159, 100, 5, lower.tail = FALSE)
+
+#identify Z value
+qnorm(0.841)
+qnorm(0.159, lower.tail = FALSE)
+```
+
+
+1. In the last decade, the average age of a mother at childbirth is 26.4 years, with standard deviation 5.8 years. The distribution of age at childbirth is approximately normal. 
+
+    a) What age at childbirth puts a woman in the upper 2.5\% of the age distribution? In other words, what is the 97.5 percentile of this age distribution?
+  
+  
+    b) What proportion of women who give birth are 21 years of age or older?
+  
+
+2. Suppose a mild hypertensive is defined as a person whose diastolic blood pressure (DBP) is between 90 and 100 mm Hg, inclusive. Assume that in the population of 35-44 year old men, mean DBP is 80 mm Hg, with variance 144. What is the probability that a randomly selected male from this population is a mild hypertensive, assuming that DBP is normally distributed?
+
+
+3. People are classified as hypertensive if their systolic blood pressure (SBP) is higher than a specified level for their age group. For ages 1-14, SBP has a mean of 105.0 and standard deviation 5.0, with hypertension level 115.0. For ages 15-44, SBP has a mean of 125.0 and standard deviation 10.0, with hypertension level 140.0. Assume SBP is normally distributed. 
+
+    Define a family as a group of two people in age group 1-14 and two people in age group 15-44. A family is classified as hypertensive if at least one adult and at least one child are hypertensive.\footnote{Problem from Rosner, \textit{Fundamentals of Biostatistics}, 7$^{th}$ edition, pp. 138-139}
+  
+    a) What proportion of 1- to 14-year-olds are hypertensive?
+    
+    b) What proportion of 15- to 44-year-olds are hypertensive?
+    
+    c) What is the probability that a family is hypertensive? Assume that the hypertensive status of different members of a family are independent random variables. (Admittedly, this assumption is highly unrealistic.)
+    
+    d) Consider a community of 1,000 families. What is the probability that between one and five families (inclusive) are hypertensive? 
+
+#### Poisson distribution
+
+The Poisson distribution is characterized by a single parameter, $\lambda$, which expresses the rate of event occurrences per unit time; $X \sim \text{Pois}(\lambda)$. The probability that exactly $k$ events occur in $t$ units of time is
+\[P(X = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!}. \]
+
+For a Poisson random variable, $E(X) = \lambda$ and $Var(X) = \lambda$. 
+
+The following code shows how to calculate $P(X = 5)$, $P(X \leq 5)$, and $P(X > 5)$ for $X \sim \text{Pois}(3)$.
+
+```{r}
+#probability X equals 5
+dpois(5, 3)
+
+#probability X is less than or equal to 5
+ppois(5, 3)
+
+#probability X is greater than 5
+ppois(5, 3, lower.tail = FALSE)
+```
+
+4. The rate of trisomy 21 (Down syndrome) birth defects is about 1/800 live births per year. In 2012, there were 8,011 live births in the city of Boston. Assume that the number of live births has remained constant over the past few years (2012-2017).
+
+    a) What is the expected number of children born with Down syndrome in Boston in 2017?
+    
+    b) What is the probability of 12 or more Down syndrome births in 2017?
+    
+    c) In 2012, 23\% of the 8,011 live births were among women age 35 or older. Is this enough information to recalculate parts a) and b) for women age 35 or older? Explain your answer.
+    
+    d) Rates in populations are sometimes expressed as a rate per 1,000 or 10,000. Could the following statement be true, or is it clearly a contradiction? Explain your answer.
+    
+        *In 2012, there were 44.5 births per 1,000 female Boston residents, ages 15-44. There was no significant change in the Boston birth rate between 2008 and 2012. In 2012, the rates of births to Black and Latino women in the same age range were 64.7 and 66.3, respectively.*
+
+5. Hemophilia is a sex-linked bleeding disorder that slows the blood clotting process. In severe cases of hemophilia, continued bleeding occurs after minor trauma or even in the absence of injury. The annual rate of males born with hemophilia in the US is approximately 1 per 5,000 male births. In the United States, there are approximately 4,000,000 births per year. Assume that there are equal numbers of males and females born each year.
+
+    a) What is the probability that at most 380 newborns in a year are born with hemophilia?
+    
+    b) What is the probability that 450 or more newborns in a year are born with hemophilia?
+    
+    c) Consider a hypothetical country in which there are approximately 1.5 million births per year. If the incidence rate of hemophilia is equal to that in the US, as well as the sex ratio at birth, how many newborns are expected to have hemophilia over five years, and with what standard deviation?
+    
+6. The US Centers for Disease Control (CDC) has been monitoring the rate of deaths from opioid overdoses for at least the last 15 years. As the CDC notes on its website, "Of the 22,767 deaths relating to prescription drug overdose in 2013, 16,325 (71.3\%) involved opioid painkillers."\footnote{\url{http://www.cdc.gov/drugoverdose/data/overdose.html}} This statistic is simply a count of the number of deaths, and does not show a rate per unit of the population, which is more useful for monitoring this phenomenon in different communities. The latest statistic shows that among non-Hispanic whites, the rate of opioid-related deaths has risen to 6.8 deaths per year per 100,000 non-Hispanic whites.
+
+    In 2014-2015, the population of Essex County, MA, was approximately 769,000, of whom 73\% are non-Hispanic white. The county health department has asked you to investigate the incidence of opioid-related deaths.
+    
+    a) In 2014, Essex County reported 146 overdose fatalities from opioids. Assume that all these deaths occurred in the non-Hispanic white members of the population. What is the probability of 146 or more such events in a given year, assuming that the incidence rate of opioid deaths in Essex County is the same as the national rate?
+    
+    b) What was the observed rate of opioid-related deaths in Essex County in 2014, stated in terms of deaths per 100,000 non-Hispanic white members of the population? Continue to assume that all of the observed deaths were among non-Hispanic whites.
+    
+    c) In 2015, Essex County reported 165 opioid-related deaths in its non-Hispanic white population. Using the rate from part b), calculate the probability of 165 or more such events.
+    
+    d) Assess whether the findings from parts a) through c) are indicative of an opioid overdose crisis in Essex County.

@@ -1,0 +1,525 @@
+---
+title: "Lab Notes"
+author: "Chapter 3"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 6.5
+    fig_height: 3.5
+---
+
+# Overview
+
+1. Introduction to Random Variables
+    - *OI Biostat* Sections 3.1 - 3.2
+    
+2. Distributions: Normal and Poisson
+    - *OI Biostat* Sections 3.3 - 3.4
+    
+3. Distributions Related to Bernoulli Trials
+    - *OI Biostat* Section 3.5
+    
+
+Lab 1 introduces the general notion of a random variable and its distribution using a simulation, then discusses the binomial distribution. 
+
+Lab 2 discusses the normal distribution and working with normal probabilities, as well as the Poisson distribution.
+    
+Lab 3 covers the geometric, negative binomial, and hypergeometric distributions. The simulations in this lab introduce \texttt{repeat} and \texttt{while} loops.
+
+All three labs include practice problems that illustrate the use of \textsf{R} functions for probability distributions.
+
+\newpage
+
+#Lab 1: Introduction to Random Variables
+
+This first part of the lab introduces the concept of a random variable by exploring the clinical trial example described at the beginning of Chapter 3. All \textsf{R} programming required to understand the simulation code has been previously covered. 
+
+The second part of the lab formally introduces the binomial distribution; examples of binomial sampling have appeared in previous labs, but without being associated with a named distribution. The use of \texttt{dbinom()} and \texttt{pbinom()} are shown.
+
+### Binomial Distribution Functions
+
+The function \textbf{\texttt{dbinom()}} used to calculate $P(X = k)$ has the generic structure
+
+```{r, eval = FALSE}
+dbinom(x, size, prob)
+```
+
+where \texttt{x} is $k$, \texttt{size} is the number of trials $n$, and \texttt{prob} is the probability of success $p$.
+
+The following code shows how to calculate $P(X = 5)$ for $X \sim \text{Bin}(10, 0.35)$. It is not necessary to explicitly specify the names of the arguments.
+
+```{r}
+#probability X equals 5
+dbinom(x = 5, size = 10, prob = 0.35)    #argument names specified
+dbinom(5, 10, 0.35)                      #argument names omitted
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{pbinom()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+pbinom(q, size, prob, lower.tail = TRUE)
+```
+
+where \texttt{q} is $k$, \texttt{size} is the number of trials $n$, and \texttt{prob} is the probability of success $p$. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate $P(X \leq 5)$ and $P(X > 5)$ for $X \sim \text{Bin}(10, 0.35)$.
+
+```{r}
+#probability X is less than or equal to 5
+pbinom(5, 10, 0.35)
+
+#probability X is greater than 5
+pbinom(5, 10, 0.35, lower.tail = FALSE)
+```
+
+
+\newpage
+
+#Lab 2: Distributions: Normal and Poisson
+
+The first part of the lab demonstrates the use of \texttt{pnorm()} and \texttt{qnorm()} for working with normal probabilities. The practice problems involve both calculating probabilities associated with a particular observation and identifying observations corresponding to a particular probability.
+
+The second part of the lab shows the use of \texttt{dpois()} and \texttt{ppois()} for calculating Poisson probabilities. The practice problems include examples of calculating $\lambda$ for different population sizes and units of time.
+
+### Normal Distribution Functions
+
+The function \textbf{\texttt{pnorm()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+pnorm(q, mean = 0, sd = 1, lower.tail = FALSE)
+```
+
+where \texttt{q} is $k$, \texttt{mean} is the parameter $\mu$, and \texttt{sd} is the parameter $\sigma$. By default, \textsf{R} calculates $P(X \leq k)$ and assumes that mean and standard deviation are 0 and 1, respectively. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code show show to calculate $P(X \leq 105)$ and $P(X > 105)$ for $X \sim \text{N}(100, 5)$ and $P(Z \leq 1)$ and $P(Z > 1)$ for $Z \sim \text{N}(0, 1)$. 
+
+```{r}
+#probability X is less than (or equal to) 105
+pnorm(105, 100, 5)
+
+#probability X is greater than 105
+pnorm(105, 100, 5, lower.tail = FALSE)
+
+#probability Z is less than (or equal to) 1
+pnorm(1)
+
+#probaiblity Z is greater than 1
+pnorm(1, lower.tail = FALSE)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{qnorm()}} used to identify the observation that corresponds to a particular probability $p$ has the generic structure
+
+```{r, eval = FALSE}
+qnorm(p, mean = 0, sd = 1, lower.tail = FALSE)
+```
+
+where \texttt{p} is $p$, \texttt{mean} is the parameter $\mu$, and \texttt{sd} is the parameter $\sigma$. By default, \textsf{R} identifies the observation that corresponds to area $p$ in the lower tail (i.e., to the left) and assumes that mean and standard deviation are 0 and 1. To identify the observation with area $p$ in the upper tail, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate the value of the observation (unstandardized and standardized) where there is 0.841 area to the left (and 0.159 area to the right).
+
+```{r}
+#identify X value
+qnorm(0.841, 100, 5)
+
+qnorm(0.159, 100, 5, lower.tail = FALSE)
+
+#identify Z value
+qnorm(0.841)
+
+qnorm(0.159, lower.tail = FALSE)
+```
+
+
+
+### Poisson Distribution Functions
+
+The function \textbf{\texttt{dpois()}} used to calculate $P(X = k)$ has the generic structure
+
+```{r, eval = FALSE}
+dpois(x, lambda)
+```
+
+where \texttt{x} is $k$ and \texttt{lambda} is the rate parameter $\lambda$.
+
+The following code shows how to calculate $P(X = 5)$ for $X \sim \text{Pois}(3)$. 
+
+```{r}
+#probability X equals 5
+dpois(5, 3)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{ppois()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+ppois(q, lambda, lower.tail = TRUE)
+```
+
+where \texttt{q} is $k$ and \texttt{lambda} is the rate parameter $\lambda$. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate $P(X \leq 5)$ and $P(X > 5)$ for $X \sim \text{Pois}(3)$.
+
+```{r}
+#probability X is less than or equal to 5
+ppois(5, 3)
+
+#probability X is greater than 5
+ppois(5, 3, lower.tail = FALSE)
+```
+
+\newpage
+
+#Lab 3: Distributions Related to Bernoulli Trials
+
+This lab discusses the geometric, negative binomial, and hypergeometric distributions. Particular care should be taken when calculating geometric and negative binomial probabilities, since the convention for defining the distributions in the book differs from that used by \textsf{R}. 
+
+Simulating geometric and negative binomial random variables requires the use of new programming control structures: the \texttt{repeat} and \texttt{while} loops.
+
+### Geometric Distribution Functions
+
+\texttt{R} defines the geometric distribution as the distribution of the number of failed trials before the first success, while the text defines it as the distribution of the number of trials needed to observe the first success. To adjust for the difference in convention, enter $k - 1$ into the \textsf{R} command for \texttt{x} (or \texttt{q}) when calculating a geometric probability. 
+
+The function \textbf{\texttt{dgeom()}} used to calculate $P(X = k)$ has the generic structure
+
+```{r, eval = FALSE}
+dgeom(x, prob)
+```
+
+where \texttt{x} is $k$ and \texttt{prob} is the probability of success $p$.
+
+The following code shows how to calculate $P(X = 5)$ for $X \sim \text{Geom}(0.35)$. 
+
+```{r}
+#probability X equals 5
+dgeom(5 - 1, 0.35)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{pgeom()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+pgeom(q, prob, lower.tail = TRUE)
+```
+
+where \texttt{q} is $k$ and \texttt{prob} is the probability of success $p$. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate $P(X \leq 5)$ and $P(X > 5)$ for $X \sim \text{Geom}(0.35)$.
+
+```{r}
+#probability X is less than or equal to 5
+pgeom(5 - 1, 0.35)
+
+#probability X is greater than 5
+pgeom(5 - 1, 0.35, lower.tail = FALSE)
+```
+
+
+\newpage
+
+### Negative Binomial Distribution Functions
+
+\textsf{R} defines the negative binomial distribution as the number of failed trials before $r$ successes, while the text defines it as the distribution of the number of trials needed to observe $r$ successes. To adjust for the difference in convention, enter $k - r$ into the \textsf{R} command for \texttt{x} (or \texttt{q}) when calculating a negative binomial probability.
+
+The function \textbf{\texttt{dnbinom()}} used to calculate $P(X = k)$ has the generic structure
+
+```{r, eval = FALSE}
+dnbinom(x, size, prob)
+```
+
+where \texttt{x} is $k$, \texttt{size} is the number of successes $r$, and \texttt{prob} is the probability of success $p$. 
+
+The following code shows how to calculate $P(X = 5)$ for $X \sim \text{NB}(4, 0.8)$. 
+
+```{r}
+#probability X equals 5
+dnbinom(5 - 4, 4, 0.8)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{pnbinom()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+pnbinom(q, size, prob, lower.tail = TRUE)
+```
+
+where \texttt{q} is $k$, \texttt{size} is the number of successes $r$, and \texttt{prob} is the probability of success $p$. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate $P(X \leq 5)$ and $P(X > 5)$ for $X \sim \text{NB}(4, 0.8)$.
+
+```{r}
+#probability X is less than or equal to 5
+pnbinom(5 - 4, 4, 0.8)
+
+#probability X is greater than 5
+pnbinom(5 - 4, 4, 0.8, lower.tail = FALSE)
+```
+
+### Hypergeometric Distribution Functions
+
+The function \textbf{\texttt{dhyper()}} used to calculate $P(X = k)$ has the generic structure
+
+```{r, eval = FALSE}
+dhyper(x, m, n, k)
+```
+
+where \texttt{x} is $k$, \texttt{m} is the total number of successes $m$, \texttt{n} is the total number of failures $N - m$, and \texttt{k} is the sample size $n$.
+
+The following code shows how to calculate $P(X = 5)$ for $X \sim \text{HGeom}(10, 15, 8)$, where $m = 10$, $N - m = 15$, and $n = 8$.
+
+```{r}
+#probability X equals 5
+dhyper(5, 10, 15, 8)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{phyper()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+phyper(q, m, n, k, lower.tail = TRUE)
+```
+
+where \texttt{q} is $k$, \texttt{m} is the total number of successes $m$, \texttt{n} is the total number of failures $N - m$, and \texttt{k} is the sample size $n$. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate $P(X \leq 5)$ and $P(X > 5)$ for $X \sim \text{HGeom}(10, 15, 8)$, where $m = 10$, $N - m = 15$, and $n = 8$.
+
+```{r}
+#probability X is less than or equal to 5
+phyper(5, 10, 15, 8)
+
+#probability X is greater than 8
+phyper(5, 10, 15, 8, lower.tail = FALSE)
+```
+
+
+### \texttt{if-else} Statements
+
+An \texttt{if-else} statement is closely related to the \texttt{if} statement and has the basic structure \texttt{if( condition ) \{ statement 1 \} else \{ statement 2 \} }. If the condition is satisfied, the first statement is carried out; else, the second statement is carried out.
+
+The following code prints the message "$x$ is greater than 5" if the condition \texttt{x > 5} is satisfied; if it is not satisfied, then it prints the message "$x$ is not greater than 5".
+
+```{r}
+x = 100/50
+
+if(x > 5){
+  
+  print("x is greater than 5")
+  
+} else {
+  
+  print("x is not greater than 5")
+  
+}
+```
+
+The following code shows an example of an \texttt{if-else} statement nested within a \texttt{for} loop. The loop has five iterations, for \texttt{x} in 1 through 5. The \texttt{\%\%} operator (i.e., modulo operator) finds the remainder after the division of one number by the other; for example, \texttt{4 \%\% 2} returns the value 0, since there is no remainder after 4 is divided by 2.
+
+```{r}
+for(x in 1:5){
+  
+  if(x %% 2 == 0){
+  
+  print("x is even")
+  
+} else {
+  
+  print("x is odd")
+  
+}
+  
+}
+```
+
+### \texttt{repeat} Loops
+
+A \texttt{repeat} loop runs indefinitely until it encounters the \texttt{break} statement. It is necessary to place a condition inside the loop to stop it from running indefinitely. The condition can be in the form of an \texttt{if} statement or an \texttt{if-else} statement.
+
+The loop below calculates the squares of the integers starting at 1 and stops once it encounters a squared value larger than 25. 
+
+  - A \texttt{repeat} loop does not explicitly have a counter like a \texttt{for} loop. In this example, \texttt{x} performs the role of the counter. The value of \texttt{x} is initially set as \texttt{1}. 
+  
+  - Each time the loop runs, it executes the statements within the curly braces in \texttt{repeat \{ \} }. Here, it calculates the square of \texttt{x} and prints the value, then adds \texttt{1} to the previous value of \texttt{x}. 
+  
+  - If the value of \texttt{squares} is greater than 25, then the loop encounters the \texttt{break} statement and stops running.
+  
+  - Note how the loop stops after printing the value 36, *not* after printing 25. Since 25 is not greater than 25, the condition in the \texttt{if} statement is not fulfilled and the \texttt{break} statement is not executed.
+
+```{r}
+#initialization
+x = 1
+
+#run the loop
+repeat{
+  
+  squares = x^2
+  print(squares)
+  x = x + 1
+  
+  if(squares > 25){
+    
+    break
+    
+  }
+  
+}
+```
+
+The loop structure used to simulate a geometric random variable is reproduced here for reference.
+
+  - The \texttt{repeat} loop is nested within the \texttt{for} loop. The \texttt{for} loop runs for every $k$ from 1 to the value of \texttt{replicates}. For each iteration of the \texttt{for} loop, the \texttt{repeat} loop runs until a successful trial occurs. 
+
+  - The value of \texttt{trial.number} is initially set as \texttt{1}. This variable acts as the counter in the \texttt{repeat} loop. Recall that for a geometric random variable, it is of interest to track how many trials have occurred.
+  
+  - Each iteration of the \texttt{repeat} loop represents one independent Bernoulli trial. The outcome of the trial is recorded in \texttt{outcome.individual}. 
+  
+      - If the trial is a failure, then a \texttt{1} is added to \texttt{trial.number} and the loop continues.
+  
+      - If the trial is a success, then the current value of \texttt{trial.number} is recorded as the $k^{th}$ element of \texttt{trials.for.first.success} and the \texttt{break} statement is encountered. The next iteration of the \texttt{for} loop starts.
+
+```{r, eval = FALSE}
+for(k in 1:replicates){
+  
+  trial.number = 1
+  
+  repeat{
+    
+    outcome.individual = sample(c(0, 1), size = 1,
+                                prob = c(1 - p, p), replace = TRUE)
+    
+    if(outcome.individual == 0){
+      
+      trial.number = trial.number + 1
+      
+    } else {
+      
+      trials.for.first.success[k] = trial.number
+      
+      break
+      
+    }
+    
+  }
+  
+}
+```
+
+The version of the negative binomial simulation in the lab uses a \texttt{while} loop, but it is also possible to write the simulation with a \texttt{repeat} loop.
+
+  - In addition to an \texttt{if} statement that contains the \texttt{break} statement, this \texttt{repeat} loop contains an \texttt{if} statement that keeps track of the number of successful trials in \texttt{successes}.
+  
+  - The values of both \texttt{trial.number} and \texttt{successes} are initially set as \texttt{0}.
+  
+  - Each iteration of the \texttt{repeat} loop represents one independent Bernoulli trial. The outcome of each trial is recorded in \texttt{outcome.individual}.
+  
+      - With each iteration, a \texttt{1} is added to \texttt{trial.number}.
+  
+      - If the outcome is a success, then a \texttt{1} is added to \texttt{successes}.
+      
+      - If the number of successes equals $r$, then the current value of \texttt{trial.number} is recorded as the $k^{th}$ element of \texttt{trials.for.rth.success} and the \texttt{break} statement is encountered. The next iteration of the \texttt{for} loop starts.
+
+```{r, eval = FALSE}
+for(k in 1:replicates){
+  
+  trial.number = 0
+  successes = 0
+  
+  repeat {
+    
+    outcome.individual = sample(c(0,1), size = 1,
+                                prob = c(1 - p, p), replace = TRUE)
+    
+    trial.number = trial.number + 1
+    
+    if(outcome.individual == 1){
+      
+      successes = successes + 1
+      
+    } 
+      
+    if(sum(successes) == r){
+      
+      trials.for.rth.success[k] = trial.number
+      
+      break
+      
+    }
+    
+  }
+  
+}
+```
+
+
+### \texttt{while} Loops
+
+A \texttt{while} loop runs until the specified condition is no longer satisfied and has the basic structure \texttt{while( condition ) \{ instructions \}}.
+
+The loop below calculates the squares of the integers starting at 1 as long as the value of \texttt{x} is less than 5.
+
+  - The value of \texttt{x} is initially set as \texttt{1}. 
+  
+  - Each time the loop runs, it executes the statements within the curly braces. Here, it calculates the squares of \texttt{x} and prints the value, then adds \texttt{1} to the previous value of \texttt{x}. 
+  
+  - The loop will run as long as the current value of \texttt{x} is less than 5. 
+
+```{r}
+#initialization
+x = 1
+
+#run the loop
+while(x < 5){
+  
+  squares = x^2
+  print(squares)
+  x = x + 1
+  
+}
+```
+
+The loop structure used to simulate a negative binomial random variable is reproduced here for reference.
+
+  - The version of the simulation code with a \texttt{while} loop is very similar to the version with a \texttt{repeat} loop.
+  
+  - Since the \texttt{while} loop explicitly has a condition stated at the outset, it does not contain an \texttt{if} statement that counts the number of successes and leads to a \texttt{break} statement. Instead, the loop runs as long as the value of \texttt{successes} is less than \texttt{r}. 
+  
+  - Note how the line that specifies the recording of the current value of \texttt{trial.number} in the vector \texttt{trials.for.rth.success} is outside the \texttt{while} loop. It will record the value of \texttt{trial.number} right after the \texttt{while} loop stops; i.e., after the \texttt{while} loop has encountered an iteration in which \texttt{successes} has value \texttt{r}.
+
+```{r, eval = FALSE}
+for(k in 1:replicates){
+  
+  trial.number = 0
+  successes = 0
+  
+  while(successes < r){
+    
+    outcome.individual = sample(c(0, 1), size = 1,
+                                prob = c(1 - p, p), replace = TRUE)
+    
+    if(outcome.individual == 1){
+      
+      successes = successes + 1
+      
+    }
+    
+    trial.number = trial.number + 1
+    
+  }
+  
+  trials.for.rth.success[k] = trial.number
+  
+}
+```
+

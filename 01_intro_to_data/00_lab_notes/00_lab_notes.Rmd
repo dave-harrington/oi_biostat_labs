@@ -1,0 +1,555 @@
+---
+title: "Lab Notes"
+author: "Chapter 1"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 6.5
+    fig_height: 3.5
+---
+
+# Overview
+
+1. Introduction to Data
+    - *OI Biostat* Sections 1.1 - 1.2, 1.4 - 1.6
+    
+2. Exploratory Data Analysis: DDS Case Study
+    - *OI Biostat* Section 1.7.1
+    
+3. Exploratory Data Analysis: Golub Case Study
+    - *OI Biostat* Section 1.7.2
+    
+4. Exploratory Data Analysis: Arenosa Case Study
+    - *OI Biostat* Section 1.7.3
+    
+Lab 1 introduces the basic commands for working with data, including those for manipulating dataframes, producing numerical and graphical summaries, and drawing pseudorandom samples. The questions in the last section focus on interpreting summaries and exploring relationships between variables.
+
+Lab 2 provides a walkthrough for conducting an exploratory analysis of a dataset in which confounding may be present. Most of the commands required were introduced previously in Lab 1; this lab more heavily emphasizes interpretation. 
+
+Lab 3 demonstrates the use of statistical first principles in conducting a basic analysis of a small microarray dataset. New commands for manipulating matrices are introduced, along with a first look at control structures. 
+
+Lab 4 reinforces the commands introduced in Lab 3 and data interpretation skills from Labs 1 and 2, in the context of an RNA sequencing dataset. Both Labs 3 and 4 demonstrate how computing is essential for data analysis; even though the two datsets are relatively small by modern standards, they are already too large to feasibly analyze without statistical computing software.
+
+\newpage
+
+# Lab 1: Introduction to Data
+
+While the following notes are a more systematic introduction to \textsf{R} than the lab exercises, we highly recommend working through the labs before consulting these notes. The labs introduce \textsf{R} functions as needed, and the surrounding exercise structure helps develop intuition for when certain functions are useful. We suggest that these notes are used for review or as a reference.
+
+## Data Structures
+
+There are several **data types** in \textsf{R}: character, numeric, integer, complex, and logical. The most common data types are character and numeric, where numeric specifically refers to real-valued numbers; characters can be thought of as text labels. Integers and complex numbers can be stored as integer and complex values. Logical values will be discussed in the Lab 3 notes.
+
+**Data structures** are different formats for storing data: vectors, matrices, lists, data frames, and factors. 
+
+###Vectors
+
+A **vector** is a one-dimensional collection of values that are all the same data type; in colloquial language, a vector might simply be referred to as a "list". For example, a numeric vector is one in which all elements of the vector are real numbers.
+
+The \texttt{c()} command concatenates (i.e., combines) elements into a vector. The following code creates a numeric vector containing the values 1, 1.5, 2, 2.5, and 3, which is stored as a variable \texttt{x}. The variable \texttt{y} is an integer vector containing the integers 5 through 9. The \texttt{class()} command identifies the data structure of an object.
+
+```{r}
+x = c(1, 1.5, 2, 2.5, 3)
+y = 5:9
+
+class(x)
+class(y)
+```
+
+When creating a character vector, each element must be contained within quotes to denote it is a character, rather than a variable. Below, the vector \texttt{a} is a character vector with the elements \texttt{x} and \texttt{y}. However, the vector \texttt{b} is a numeric vector formed by combining the variables \texttt{x} and \texttt{y} as defined previously.
+
+```{r}
+a = c("x", "y")
+a
+
+b = c(x, y)
+b
+```
+
+Operations on vectors are performed element by element; for example, if two vectors are added together, the first element in the resulting vector is the sum of the first elements of the two vectors. If two vectors are not the same length, the shorter vector will be repeated until it is the same length as the longer vector; below, note how the 6$^{th}$ element of \texttt{z} is created by summing the 6$^{th}$ element of the longer vector (\texttt{b}) with the 1$^{st}$ element of the shorter vector (\texttt{y}).
+
+```{r}
+x + y
+x^2
+2*x
+
+z = y + b
+z
+```
+
+Vectors are indexed, in that each element's position in the vector is identified by a number. To access specific elements in a vector, use square brackets.
+
+```{r}
+z[6]              #extracts 6th element of z
+z[1:3]            #extracts elements 1 through 3 of z
+z[c(6, 1:3)]      #extracts elements 6 and 1 through 3 of z
+z[-c(1, 10)]      #extracts all elements of z except for elements 1 and 10
+```
+
+Other useful vector operations exist; a few examples are provided below.
+
+```{r}
+sum(x)        #sum of all elements in x
+prod(x)       #product of all elements in x
+min(x)        #minimum of all elements in x
+max(x)        #maximum of all elements in x
+length(x)     #length of x; i.e., number of elements in x 
+```
+
+### Matrices
+
+A **matrix** is a two-dimensional collection of values that are all the same data type. The dimensions of a matrix are its number of rows and number of columns.
+
+There are various ways to construct a matrix. One is to bind together vectors by either the columns with \texttt{cbind()} or by the rows with \texttt{rbind()}. Note how the columns in the first matrix are automatically labeled with \texttt{x} and \texttt{y}, and the same for the rows in the second matrix. Row and column names can also be explicitly specified.
+
+```{r}
+matrix.a = cbind(x, y)
+matrix.a
+
+matrix.b = rbind(x, y)
+matrix.b
+
+rownames(matrix.a) = c("A", "B", "C", "D", "E")
+matrix.a
+
+colnames(matrix.b) = c("A", "B", "C", "D", "E")
+matrix.b
+```
+
+To create a matrix with the \texttt{matrix()} command, specify a vector containing the elements of the matrix, the number of rows, and the number of columns. By default, the matrix is filled by column, with the first column being filled top to bottom before moving to the next column. To fill the matrix by row, with the first row being filled left to right before moving down to the next row, specify \texttt{byrow = TRUE}.
+
+```{r}
+matrix.c = matrix(1:9, nrow = 3, ncol = 3, byrow = FALSE)
+matrix.c
+
+matrix.d = matrix(1:9, nrow = 3, ncol = 3, byrow = TRUE)
+matrix.d
+```
+
+Operations on matrices are also performed element by element.\footnote{Matrix multiplication, in the matrix algebra sense, must be specified with the operator \texttt{\%*\%}.}
+
+```{r}
+matrix.c + matrix.d
+
+matrix.c*matrix.d
+
+matrix.c^2
+
+2*matrix.c
+```
+
+As with vectors, specific elements of a matrix are indexed and can be accessed using square bracket notation.
+
+```{r}
+matrix.c[1, 2]      #extracts the element in row 1, column 2 of matrix.c
+
+matrix.c[1, 1:2]    #extracts the elements in row 1, columns 1 and 2 of matrix.c
+
+matrix.c[1, ]       #extracts all elements in row 1 of matrix.c
+
+matrix.c[, 1]       #extracts all elements in column 1 of matrix.c
+
+matrix.c[, -1]      #extracts all elements in all columns of matrix.c except col 1
+```
+
+
+### Data Frames
+
+A **list** is a one-dimensional collection of values that are different data types; i.e., a vector that contains more than one data type. This is a useful format for outputting function results; lists will be seen later on beginning in Unit 4. In this course, creating lists will not be necessary.
+
+```{r}
+list(a, b)
+```
+
+Just as a matrix is the two-dimensional analog of a vector, a **data frame** is the two-dimensional analog of a list. A data frame contains vectors of the same length, where the vectors can be of different types. This is often the most convenient format for storing a statistical dataset.
+
+The following code creates a small data frame called \texttt{patient.info} from four vectors: \texttt{id}, \texttt{weight}, \texttt{gender}, and \texttt{age}.
+
+```{r}
+id = c("A", "B", "C", "D", "E")
+weight = c(210, 140, 120, 180, 160)
+gender = c("male", "female", "female", "male", "male")
+age = c(22, 45, 35, 50, 70)
+
+patient.info = data.frame(id, weight, gender, age)
+patient.info
+```
+
+Square bracket notation applies to data frames just as for matrices. With data frames, a specific column can be accessed using the dollar sign symbol with the column name.
+
+```{r}
+patient.info[, 2]          #elements in second column of patient.info
+patient.info[1, 2]         #first element of second column of patient.info
+
+patient.info$weight        #elements in weight column of patient.info
+patient.info$weight[1]     #first element in weight column of patient.info
+```
+
+Square bracket notation can also be used with row and column names, rather than the numerical indices. The following code reproduces *OI Biostat* Table 1.6, which shows four rows from the \texttt{famuss} data.\footnote{The last row is labeled 1348 because the \texttt{famuss} data is a subset of a larger dataset; the 595$^{th}$ row in this version of \texttt{famuss} contains the information from participant 1348 in the original dataset.}
+
+```{r, message = FALSE}
+#load the data
+library(oibiostat)
+data("famuss")
+
+#OI Biostat Table 1.6
+famuss[c(1, 2, 3, 595), c("sex", "age", "race", "height", "weight", 
+                          "actn3.r577x", "ndrm.ch")]
+```
+
+
+The default in \textsf{R} when creating data frames is to convert any character vectors to factors. A **factor** is a specific data structure for values that come from a fixed set of possible values, and is ideal for storing categorical data. When \texttt{patient.info} was created, the character vector \texttt{gender} was converted into a factor variable with two levels, \texttt{female} and \texttt{male}. To prevent a character vector from being converted into a factor, use \texttt{I()} to indicate that the object should remain as-is.\footnote{In the \textit{RStudio} interface, the data types of objects are visible in the Environment tab. To view the data types of objects within a data frame, select the blue arrow to the left of the name of the data frame.}
+
+```{r}
+class(patient.info$gender)
+levels(patient.info$gender)
+
+class(patient.info$id)
+patient.info = data.frame(I(id), weight, gender, age)  #rebuild patient.info
+class(patient.info$id)                                 #id remains a character vector
+```
+
+Creation of factor variables will be discussed in Chapter 6.
+
+Some useful commands for viewing features of a dataframe are shown below.
+
+```{r}
+nrow(patient.info)   #number of rows in patient.info
+ncol(patient.info)   #number of columns in patient.info
+```
+
+
+##Numerical and Graphical Summaries
+
+###Numerical Summaries
+
+The following code demonstrates several functions that produce numerical summaries.
+
+The \texttt{summary()} command applied to a (non-character) vector returns the minimum, first quartile, median, mean, third quartile, and maximum values of the vector. If there are any missing values, which \textsf{R} denotes as the value \texttt{NA}, the number of missing values is also reported.
+
+The \texttt{quantile()} command returns quantiles corresponding to the specified probabilities. To produce the first quartile (i.e., the 25$^{th}$ percentile), specify \texttt{probs = 0.25}; several probabilities can also be specified.
+
+Functions like \texttt{mean()}, \texttt{median()}, \texttt{IQR()}, etc. will either return \texttt{NA} or an error message if the vector contains missing values. To specify that the missing values should be omitted before the summary is computed, specify \texttt{na.rm = TRUE}. This is shown below with the \texttt{body.size} variable.
+
+```{r, message = FALSE}
+library(oibiostat)
+data("frog")
+
+summary(frog$clutch.volume)
+
+#range, minimum, maximum
+range(frog$clutch.volume)
+min(frog$clutch.volume)
+max(frog$clutch.volume)
+
+#median, quantiles
+median(frog$clutch.volume)
+quantile(frog$clutch.volume, probs = 0.25)
+quantile(frog$clutch.volume, probs = c(0.25, 0.50, 0.75))
+
+#measures of spread
+IQR(frog$clutch.volume)
+var(frog$clutch.volume)
+sd(frog$clutch.volume)
+
+#effect of missing values
+summary(frog$body.size)
+mean(frog$body.size)
+mean(frog$body.size, na.rm = TRUE)
+```
+
+The correlation between two variables $x$ and $y$ can be calculated using \texttt{cor(x, y)}. To calculate a correlation after dropping missing values, use the argument \texttt{use = "complete.obs"}.
+
+```{r}
+cor(frog$body.size, frog$clutch.volume, use = "complete.obs")
+```
+
+
+###Graphical Summaries
+
+Simple plots can be created with very few specifications, since \textsf{R} will make default choices about marking data points, labeling axes, etc. The full details of optional plotting arguments are explained in the \textsf{R} help files and in various freely accessible resources online. These notes include the minimum information needed to get started with plotting and show some examples of plots that make use of optional arguments.
+
+To create a histogram from the data values in a vector \texttt{x}, use \texttt{hist(x)}. The basic plot will label the $x$-axis with the name of the vector, \texttt{x}. The optional arguments allow for control over how many bins are used, the range of values for the $y$-axis, the axis labels, plot title, etc.
+
+```{r}
+#basic histogram
+hist(frog$clutch.volume)
+
+#OI Biostat Figure 1.18
+hist(frog$clutch.volume, breaks = 14, col = "dodgerblue",
+     xlab = "Clutch Volume", ylab = "Frequency", ylim = c(0, 100),
+     main = "Histogram of Clutch Volume Frequencies")
+```
+
+Similarly, to create a boxplot from the data values in a vector \texttt{x}, use \texttt{boxplot(x)}. The syntax for creating a side-by-side boxplot depends on how the data are organized. To plot the distribution of a variable $y$ separately by the groups defined by a variable $x$, use \texttt{boxplot(y $\sim$ x)}. To simply plot the distributions of variables $v$ and $w$ next to each other, use \texttt{boxplot(v, w)}. An example of the second method is shown in Lab 2; refer to the notes for Lab 2 for additional details.
+
+```{r}
+#basic boxplot: single variable
+boxplot(frog$clutch.volume)
+
+#basic boxplot: y ~ x
+boxplot(famuss$ndrm.ch ~ famuss$actn3.r577x)
+```
+
+To create a scatterplot of the variable $y$ and the variable $x$, where $y$ is on the $y$-axis and $x$ is on the $x$-axis, use either \texttt{plot(y $\sim$ x)} or \texttt{plot(x, y)}.
+
+```{r}
+#basic scatterplot
+plot(frog$clutch.volume ~ frog$body.size)
+
+#OI Biostat Figure 1.26
+plot(frog$clutch.volume ~ frog$body.size, col = "dodgerblue",
+     bg = "slategray1", pch = 21, 
+     xlab = "Female Body Size (cm)", 
+     ylab = expression("Clutch Volume" ~ (mm^3)))
+```
+
+
+
+##Subsetting Data
+
+The \texttt{subset()} command is one way to create subsets of vectors, matrices, or dataframes that meet specific conditions. The conditions are specified using logical operators that express "less than", "greater than or equal to", "exactly equal to", etc.
+
+The following code creates subsets from the famuss data that contain only the rows (i.e., participants) that are older than 27, 27 or younger, or 27 years old. The \texttt{<=} and \texttt{>=} denote $\leq$ and $\geq$. Note that two equal signs (\texttt{==}) are required to specify exactly equal to. 
+
+The \texttt{subset()} command can also be used on character vectors like \texttt{sex}.
+
+```{r}
+famuss.older = subset(famuss, famuss$age > 27)
+range(famuss.older$age)
+
+famuss.younger = subset(famuss, famuss$age <= 27)
+range(famuss.younger$age)
+
+famuss.27 = subset(famuss, famuss$age == 27)
+range(famuss.27$age)
+
+famuss.females = subset(famuss, famuss$sex == "Female")
+summary(famuss.females$sex)
+```
+
+Subsetting can also be done through bracket notation and logical operators. The following code creates a subset of males, a subset of males over 25, and a subset of individuals who are either male or over 25. The logical "and" is denoted by \texttt{\&} and the logical "or" is denoted by \texttt{|}. Note that in the last subset, males of any age are included, while females must be older than 25.
+
+```{r}
+famuss.males = famuss[famuss$sex == "Male", ]
+summary(famuss.males$sex)
+
+famuss.males.and.over25 = famuss[famuss$sex == "Male" & famuss$age > 25, ]
+range(famuss.males.and.over25$age); summary(famuss.males.and.over25$sex)
+
+famuss.males.or.over25 = famuss[famuss$sex == "Male" | famuss$age > 25, ]
+females = famuss.males.or.over25[famuss.males.or.over25$sex == "Female", ]
+range(females$age)
+```
+
+
+##Pseudorandom Sampling
+
+The \texttt{sample()} command takes a random sample of a specified size from the elements of a vector, either with or without replacement. 
+
+To be able to retrieve a sample that has been generated, it is necessary to associate the sample with a seed (i.e., a tag). Setting the seed allows for the same sample to be generated with a subsequent run of \texttt{sample()}.
+
+The following code shows samples of size 10 drawn from the integers 1 through 15, either with replacement or without replacement. In the first run, it is possible to obtain a specific number more than once; this is not possible in the other runs. The first two runs are not associated with a seed. The second two are associated with the seed \texttt{2018}; running \texttt{sample()} with these specifications and seed will always result in the sample 6, 7, 1, 3, 15, 4, 11, 2, 14, 10. Note how the last two runs result in a different sample than the second run.
+
+```{r}
+#completely random
+sample(1:15, size = 10, replace = TRUE)
+sample(1:15, size = 10, replace = FALSE)
+
+#set.seed
+set.seed(2018)
+sample(1:15, size = 10, replace = FALSE)
+set.seed(2018)
+sample(1:15, size = 10, replace = FALSE)
+```
+
+
+
+##Tables
+
+The \texttt{table()} command produces a 2 $\times$ 2 contingency table of counts at each combination of factor levels for two specified variables. Running \texttt{table(x, y)} results in a table where \texttt{x} specifies the rows and \texttt{y} specifies the columns. The \texttt{addmargins()} command prints the row and column sums on the sides of the tables.
+
+```{r}
+#load data
+data("LEAP")
+
+#simple table
+table(LEAP$treatment.group, LEAP$overall.V60.outcome)
+
+#OI Biostat Table 1.2
+addmargins(table(LEAP$treatment.group, LEAP$overall.V60.outcome))
+```
+
+Using \texttt{table()} on a single factor produces the counts in each level; using \texttt{summary()} on a factor has the same result.
+
+```{r}
+table(LEAP$treatment.group)
+summary(LEAP$treatment.group)
+```
+
+
+
+\newpage
+
+# Lab 2: DDS Case Study
+
+This lab relies heavily on subsetting and producing graphical and numerical summaries for categorical data. Subsetting was discussed in Lab 1, while tables and barplots are discussed below.
+
+## Barplots
+
+The command \texttt{prop.table()} converts a table of counts to a table of proportions. To produce a bar plot, apply \texttt{barplot()} to the table. A bar plot of counts can also be produced by directly applying \texttt{plot()} to a categorical variable; this method is shown in the lab solutions.
+
+```{r}
+table(famuss$actn3.r577x)
+prop.table(table(famuss$actn3.r577x))
+
+#OI Biostat Figure 1.25
+par(mfrow = c(1, 2))
+barplot(table(famuss$actn3.r577x))
+barplot(prop.table(table(famuss$actn3.r577x)))
+```
+
+A segmented bar plot is produced from applying \texttt{barplot()} to a contingency table of counts. A standardized segmented bar plot is produced from applying \texttt{barplot()} to a contingency table of proportions. When using \texttt{prop.table()} on a contingency table, specify \texttt{2} to calculate column proportions; specify \texttt{1} to calculate row proportions. 
+
+```{r}
+addmargins(table(LEAP$overall.V60.outcome, LEAP$treatment.group))
+prop.table(table(LEAP$overall.V60.outcome, LEAP$treatment.group), 2)
+
+#OI Biostat Figure 1.3
+par(mfrow = c(1, 2))
+barplot(table(LEAP$overall.V60.outcome, LEAP$treatment.group))
+barplot(prop.table(table(LEAP$overall.V60.outcome, LEAP$treatment.group), 2))
+```
+
+
+## Boxplots, Again
+
+To plot the distributions of two variables $v$ and $w$ in a side-by-side boxplot, use \texttt{boxplot(v, w)}. The boxplots can be labeled using the optional argument \texttt{names}. The following code produces a side-by-side boxplot of change in non-dominant arm strength for participants with BMI less than 25 and with BMI greater than or equal to 25. 
+
+```{r}
+#basic boxplot: v, w
+boxplot(famuss$ndrm.ch[famuss$bmi < 25], famuss$ndrm.ch[famuss$bmi >= 25],
+        names = c("low BMI", "high BMI"))
+```
+
+
+\newpage
+
+# Lab 3: Golub Case Study
+
+The analysis of the Golub data shown in the text uses a small version of the complete dataset (\texttt{golub.small}) that contains only the data for 10 patients and 10 genes. For the conceptual details behind the analysis approach, refer to the text. The lab shows the computational details for working with the dataset in \textsf{R}. 
+
+Part 1, identifying informative genes, mostly relies on functions and ideas that have been introduced previously, such as producing summaries and taking pseudorandom samples. Part 2, predicting leukemia type, requires the use of loops and conditional statements. All code containing loops and conditional statements are provided in the lab; at this stage, the goal is to begin understanding the logic behind control structure rather than the precise syntax. A more formal introduction to loops and conditional statements is provided in Chapter 2.
+
+## Logical Values
+
+A **logical** vector contains elements that can take on either of two pre-defined values: \texttt{TRUE} or \texttt{FALSE}. Logical vectors are typically created from the use of logical operators, as shown in the subsetting section of the Lab 1 notes. The following code repeats the creation of \texttt{famuss.males}, but explicitly shows how the condition \texttt{famuss\$sex == "Male"} is a logical vector specifying which rows to extract from \texttt{famuss}. \texttt{R} extracts the rows with indices that have value \texttt{TRUE} in the logical vector; i.e., rows for which the variable \texttt{sex} has value \texttt{"Male"}.
+
+```{r}
+male.rows = (famuss$sex == "Male")
+head(male.rows)
+class(male.rows)
+
+famuss.males = famuss[male.rows, ]               #vector stored as male.rows
+famuss.males = famuss[famuss$sex == "Male", ]    #syntax used in Lab 1 Notes
+```
+
+In various programming contexts, it can sometimes be useful to express a logical vector as a numeric vector. \texttt{R} always associates the logical value \texttt{TRUE} with the numeric value \texttt{1}, and the logical value \texttt{FALSE} with the numeric value \texttt{0}. This idea will be revisited in later chapters.
+
+```{r}
+male.rows.numeric = as.numeric(famuss$sex == "Male")
+head(male.rows.numeric)
+class(male.rows.numeric)
+```
+
+## The \texttt{apply()} Function
+
+To use the \texttt{apply()} function to a matrix, specify the function and whether it should be applied to the rows or the columns. The function can be a pre-defined \texttt{R} function like \texttt{mean()}, \texttt{range()}, \texttt{summary()}, \texttt{class()}, etc. or a user-defined function. \texttt{R} also has specific functions for calculating the marginal sums and means of a matrix: \texttt{rowSums()}, \texttt{colSums()}, \texttt{rowMeans()}, and \texttt{colMeans()}.
+
+```{r}
+m = matrix(1:9, nrow = 3)
+m
+
+apply(m, 1, sum)   #calculate row sums
+apply(m, 2, sum)   #calculate column sums
+
+rowSums(m)
+colSums(m)
+
+rowMeans(m)
+colMeans(m)
+```
+
+## Working with Vector Indices
+
+The \texttt{order()} function applied to a vector returns the indices of the vector in sorted order; order is either ascending or descending, as specified by the argument \texttt{decreasing}. For example, in the following code, the first value of \texttt{indices} is \texttt{4} because the 4$^{th}$ element of \texttt{scores} has the lowest value.
+
+```{r}
+scores = c(67, 88, 75, 52, 93)                  #vector of scores
+indices = order(scores, decreasing = FALSE)     #sorted in ascending order
+indices
+scores[indices]                                 #ordered vector of scores
+```
+
+The \texttt{which()} function returns the indices of a logical vector that have value \texttt{TRUE}. When applied to a non-character vector, \texttt{which.min()} and \texttt{which.max()} return the indices of the minimum and maximum value, respectively. When applied to a logical vector, \texttt{which.min()} returns the index of the first \texttt{FALSE} and \texttt{which.max()} returns the index of the first \texttt{TRUE}.
+
+```{r}
+passing = (scores >= 60)
+passing
+
+which(passing)
+which.min(scores)
+which.max(scores)
+```
+
+
+\newpage
+
+# Lab 4: Arenosa Case Study
+
+This lab integrates the statistical concepts covered in Chapter 1 (numerical and graphical summary measures, transformations, identifying outliers) with the computing techniques introduced in earlier labs.
+
+## Logarithms and Exponentials
+
+The \texttt{log()} function computes natural logarithms by default, and the base can be specified with the optional argument \texttt{base}. The \texttt{log10()} function computes base 10 logarithms and the \texttt{log2()} function computes base 2 logarithms. 
+
+The \texttt{exp()} function computes the exponential function.
+  
+```{r}
+#load the data
+data("wdi.2011")
+
+#OI Biostat Figure 1.22
+par(mfrow = c(1, 2))
+hist(wdi.2011$gdp.per.capita, main = "Income")
+hist(log(wdi.2011$gdp.per.capita), main = "Log-Transformed Income")
+```
+
+## Set Operations
+
+Set operations are useful for comparing vectors. The \texttt{union()} function returns all elements in both vectors, without repeating the elements common to both. The \texttt{intersect()} function returns the elements common to both vectors.
+
+The \texttt{setdiff(v, w)} function is order-specific, returning the elements in $v$ that are not in $w$.
+
+The \texttt{\%in\%} operator can be used to produce a logical vector indicating matches between two sets.
+
+```{r}
+v = c(1, 2, 3, 4, 5)
+w = c(4, 5, 6, 7, 8)
+
+union(v, w)
+intersect(v, w)
+
+setdiff(v, w)
+setdiff(w, v)
+
+v %in% w
+w %in% v
+```
+
