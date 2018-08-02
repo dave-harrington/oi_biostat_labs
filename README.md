@@ -4,7 +4,9 @@
 
 This repository contains `R` labs that accompany the *OpenIntro Biostatistics* textbook. These labs complement the conceptual material discussed in detail in the text by introducing statistical computing with `R` and `R Markdown`.
 
-Each lab consists of a handout file with background information and problem statements, a solutions file with fully worked solutions and `R` code, and a template `.Rmd` file containing the basic structure to generate a file similar to the solutions file. The template is optimized for generating a PDF document. We recommend that a full installation of TeX be downloaded before using the labs. The '.Rmd' source for the handout and solutions files are also available, and may be of use to instructors.
+Each lab consists of a handout file with background information and problem statements, a solutions file with fully worked solutions and `R` code, and a template `.Rmd` file containing the basic structure to generate a file similar to the solutions file. The template is optimized for generating a PDF document. We recommend that a full installation of TeX be downloaded before using the labs. 
+
+The '.Rmd' source for the handout and solutions files are also available, and may be of use to instructors.
 
 Most of the datasets used in the labs can be accessed from the `oibiostat` `R` package; instructions are provided for downloading any additional datasets. To install the 'oibiostat' package from GitHub:
 
@@ -26,4 +28,4 @@ Unit 0 contains two short tutorials for getting started with R and R Markdown. S
 
 - The solutions file (.pdf) contains fully worked solutions and code. 
 
-Each unit contains a 'Lab Notes' file that gives a high-level overview of the labs and provides a detailed explanation of the `R` programming used in each lab.
+Each unit contains a 'Lab Notes' file that gives a high-level overview of the labs and provides detailed explanations of the `R` programming used in each lab.
