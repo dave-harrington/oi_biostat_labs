@@ -1,5 +1,4 @@
 #specific files to ignore
-header.tex
 oi_biostat_labs.Rproj
 
 00_intro_to_R/00_getting.started.Rmd
