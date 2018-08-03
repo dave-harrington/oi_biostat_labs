@@ -1,0 +1,302 @@
+---
+title: "Sampling Variability"
+author: "Chapter 4, Lab 1"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 6
+    fig_height: 3
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Point estimates
+	  \item Sampling distribution of the sample mean
+	  \item Simulation
+	\end{itemize}
+	
+\end{small}
+
+A natural way to estimate features of a population, such as a population mean, is to use the corresponding summary statistic calculated from a sample drawn from the population; a sample mean is a point estimate of a population mean. If a different sample is drawn, the new sample mean would likely be different as a result of sampling variability. This lab explores the relationship between point estimates and population parameters through simulation.
+
+The material in this lab corresponds to Section 4.1 of *OpenIntro Biostatistics*.
+
+#### Background information
+
+This lab uses data from the Youth Risk Behavioral Surveillance System (YRBSS), a yearly survey conducted by the US Centers for Disease Control to measure health-related activity in high-school aged youth. The dataset \texttt{yrbss} contains responses from the 13,572 participants in 2013 for a subset of the variables included in the complete survey data.
+
+Variables in \texttt{yrbss} include:
+
+- \texttt{age}: age in years
+- \texttt{gender}: gender of participant, recorded as either \texttt{female} or \texttt{male}
+- \texttt{grade}: grade in high school (9-12)
+- \texttt{height}: height, in meters (1 m = 3.28 ft)
+- \texttt{weight}: weight, in kilograms (1 kg = 2.2 lbs)
+
+The CDC used the response from the 13,572 students to estimate the health behaviors of the target population: the 21.2 million high school aged students in the United States in 2013.
+
+The goal in this lab is to observe the effect of sampling by treating the 13,572 individuals in \texttt{yrbss} as a target population and drawing random samples. How do point estimates of mean weight, $\overline{x}_{weight}$, calculated from random samples compare to the population parameter, $\mu_{weight}$?
+
+\newpage
+
+#### Taking one sample
+
+1. Run the following code to take a random sample of 10 individuals from \texttt{yrbss} and store the subset as \texttt{yrbss.sample}.
+
+    ```{r}
+#load the data
+library(oibiostat)
+data("yrbss")
+
+#set parameters
+sample.size = 10
+
+#obtain random sample of row numbers
+set.seed(5011)
+sample.rows = sample(1:nrow(yrbss), sample.size)
+
+#create yrbss.sample
+yrbss.sample = yrbss[sample.rows, ]
+```
+
+    a) Which rows of \texttt{yrbss} were sampled from?
+    
+    \textcolor{NavyBlue}{The following ten rows were sampled from \texttt{yrbss}; the data from the respondents stored in these ten rows are stored as \texttt{yrbss.sample}.}
+    
+    ```{r}
+sample.rows
+```
+    
+    
+    
+    b) How many individuals of each gender have been sampled?
+    
+    \textcolor{NavyBlue}{There are 8 female students and 2 male students in \texttt{yrbss.sample}.}
+    
+    ```{r}
+table(yrbss.sample$gender)
+```
+
+    
+    
+    c) What is the mean age of the sampled students?
+    
+    \textcolor{NavyBlue}{The mean age of the sampled students is 16.5 years.}
+    
+    ```{r}
+mean(yrbss.sample$age)
+```
+    
+
+    
+    d) Calculate $\overline{x}_{weight}$ and $s_{weight}$, the mean and standard deviation of weight in the sample.
+    
+    \textcolor{NavyBlue}{The mean weight in the sample is 68.13 kg and the standard deviation of weight in the sample is 12.03 kg.}
+    
+    ```{r}
+mean(yrbss.sample$weight)
+sd(yrbss.sample$weight)
+```
+
+
+    
+    e) Calculate $\mu_{weight}$, the mean weight in the \texttt{yrbss} population.
+    
+    \textcolor{NavyBlue}{The mean weight in the \texttt{yrbss} population is 67.91 kg.}
+    
+    ```{r}
+mean(yrbss$weight, na.rm = TRUE)
+```
+
+
+2. Take a new random sample of size 10 from \texttt{yrbss}, changing the seed to be the four digits representing your birth month and day (e.g., \texttt{1028} for October 28).
+
+    ```{r}
+#load the data
+library(oibiostat)
+data("yrbss")
+
+#set parameters
+sample.size = 10
+
+#obtain random sample of row numbers
+set.seed(1028)
+sample.rows = sample(1:nrow(yrbss), sample.size)
+
+#create yrbss.sample
+yrbss.sample = yrbss[sample.rows, ]
+```
+
+    a) Use the \texttt{summary()} command on \texttt{weight} to check for any missing values, which are recorded as \texttt{NA}. Are there any missing values in your sample?
+    
+    \textcolor{NavyBlue}{There are five missing values in this sample.}
+    
+    ```{r}
+summary(yrbss.sample$weight)
+```
+
+
+ 
+    
+    b) What is $\overline{x}_{weight}$, as calculated from your sample? Does it differ from $\overline{x}_{weight}$ as calculated in part d) of the previous question? How do these point estimates compare to the population mean $\mu_{weight}$?
+
+    \textcolor{NavyBlue}{From this sample, $\overline{x}_{weight}$ is 71.03 kg. It is larger than both the sample mean calculated in part d) of the previous question (68.13 kg) and the population parameter $\mu_{weight}$ (67.91 kg). }
+
+
+\newpage
+
+#### Taking many samples
+
+<!---
+Set eval = TRUE for the results to display in the knitted PDF.
+--->
+
+3. Run the following code to take 1,000 random samples of size 10 from \texttt{yrbss}. For each sample, the code calculates mean weight for participants in the sample and stores the value in the vector \texttt{sample.means}.
+
+    ```{r, eval = TRUE}
+#set parameters
+sample.size = 10
+replicates = 1000
+
+#set seed for pseudo-random sampling
+set.seed(5011)
+
+#create empty vector to store results
+sample.means = vector("numeric", replicates)
+
+#calculate sample means
+for(k in 1:replicates){
+  
+  sample.rows = sample(1:nrow(yrbss), sample.size)
+  sample.means[k] = mean(yrbss$weight[sample.rows], na.rm = TRUE)
+  
+}
+
+#create histogram of sample means
+hist(sample.means, xlim = c(54, 87)) #xlim keeps the axis scale fixed
+
+#draw a blue line at the mean of sample means
+abline(v = mean(sample.means), col = "blue")
+
+#draw a red line at the population mean weight in yrbss
+abline(v = mean(yrbss$weight, na.rm = TRUE), col = "red")
+```
+
+    a) Describe the distribution of sample means.
+    
+        \textcolor{NavyBlue}{The distribution of sample means is somewhat symmetric, with some right skewing. The mean of sample means is about 67 kg, which is close to the population mean weight from \texttt{yrbss}.}\footnote{\textcolor{NavyBlue}{The histogram shows a visual approximation of the theoretical sampling distribution of $\overline{X}$ with $n = 10$. }}
+    
+    b) Explore the effect of larger sample sizes by re-running the code for sample sizes of 25, 100, and 300. Describe how the distribution of sample means changes as sample size increases.
+    
+        \textcolor{NavyBlue}{As the sample size increases, the spread of the distribution decreases. With a sample size of 10, the sample means range from about 55 kg to 85 kg. Once sample size is 300, the sample means are all between 65 kg and 71 kg. It is difficult to discern from the plots as printed in the PDF, but zooming in on the plots in the \textit{RStudio} figure pane reveals that as sample size increases, the mean of sample means (blue line) approaches the population mean weight (red line).}
+    
+    ```{r, eval = TRUE, echo = FALSE}
+#set parameters
+sample.size = 25
+replicates = 1000
+
+#set seed for pseudo-random sampling
+set.seed(5011)
+
+#create empty vector to store results
+sample.means = vector("numeric", replicates)
+
+#calculate sample means
+for(k in 1:replicates){
+  
+  sample.rows = sample(1:nrow(yrbss), sample.size)
+  sample.means[k] = mean(yrbss$weight[sample.rows], na.rm = TRUE)
+  
+}
+
+#create histogram of sample means
+hist(sample.means, xlim = c(54, 87)) #xlim keeps the axis scale fixed
+
+#draw a blue line at the mean of sample means
+abline(v = mean(sample.means), col = "blue")
+
+#draw a red line at the population mean weight in yrbss
+abline(v = mean(yrbss$weight, na.rm = TRUE), col = "red")
+```
+
+
+    ```{r, eval = TRUE, echo = FALSE}
+#set parameters
+sample.size = 100
+replicates = 1000
+
+#set seed for pseudo-random sampling
+set.seed(5011)
+
+#create empty vector to store results
+sample.means = vector("numeric", replicates)
+
+#calculate sample means
+for(k in 1:replicates){
+  
+  sample.rows = sample(1:nrow(yrbss), sample.size)
+  sample.means[k] = mean(yrbss$weight[sample.rows], na.rm = TRUE)
+  
+}
+
+#create histogram of sample means
+hist(sample.means, xlim = c(54, 87)) #xlim keeps the axis scale fixed
+
+#draw a blue line at the mean of sample means
+abline(v = mean(sample.means), col = "blue")
+
+#draw a red line at the population mean weight in yrbss
+abline(v = mean(yrbss$weight, na.rm = TRUE), col = "red")
+```
+
+    ```{r, eval = TRUE, echo = FALSE}
+#set parameters
+sample.size = 300
+replicates = 1000
+
+#set seed for pseudo-random sampling
+set.seed(5011)
+
+#create empty vector to store results
+sample.means = vector("numeric", replicates)
+
+#calculate sample means
+for(k in 1:replicates){
+  
+  sample.rows = sample(1:nrow(yrbss), sample.size)
+  sample.means[k] = mean(yrbss$weight[sample.rows], na.rm = TRUE)
+  
+}
+
+#create histogram of sample means
+hist(sample.means, xlim = c(54, 87)) #xlim keeps the axis scale fixed
+
+#draw a blue line at the mean of sample means
+abline(v = mean(sample.means), col = "blue")
+
+#draw a red line at the population mean weight in yrbss
+abline(v = mean(yrbss$weight, na.rm = TRUE), col = "red")
+```
+    
+    c) Recall that the goal of inference is to learn about characteristics of a target population through the information obtained by taking one sample. What is the advantage of a larger sample size?
+    
+        \textcolor{NavyBlue}{Increasing sample size causes the distribution of $\overline{X}$ to be clustered more tightly around the population mean $\mu$, allowing for more accurate estimates of $\mu$ from a single sample. When sample size is large, it is more likely that any one particular sample will have a mean close to the population mean.}
+    
+    
+    d) From what you have observed in this exercise about the relationship between a point estimate for the mean $\overline{x}$ and the population mean ($\mu$), evaluate the following statement:
+    
+        "Since the mean weight of the 13,572 sampled high school students in the 2013 YRBSS survey is 67.91 kg, it is possible to definitively conclude that the mean weight of the 21.2 million high school students in the US in 2013 is also 67.91 kg."
+        
+        \textcolor{NavyBlue}{It is not possible to conclude that the point estimate from the 13,572 sampled students is precisely equal to the population mean weight across the target population of 21.2 million students. As observed in the histograms, there is variation from sample to sample; it is quite possible that the mean of any one particular sample is not equal to the population mean weight.}
+        
+        \textcolor{NavyBlue}{A more defensible conclusion is to say that the sample mean of 67.91 kg is a reasonable estimate of the actual population mean weight.}
+        
+        
