@@ -1,6 +1,6 @@
 ---
 title: "Sampling Variability"
-author: "Chapter 4, Lab 1"
+author: "Chapter 4, Lab 1: Solutions"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
