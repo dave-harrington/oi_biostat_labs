@@ -1,0 +1,221 @@
+---
+title: "Exploratory Data Analysis: Arenosa Case Study"
+author: "Chapter 1, Lab 4: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+This lab presents the details of conducting the analysis discussed in Section 1.7.3 of \textit{OpenIntro Biostatistics}. A reader interested in applied data analysis may benefit from working through this lab and reviewing the solutions instead of reading the section in the text. Refer to the section in the text for a brief description of RNA sequencing technology.
+
+#### Background information
+
+*Arabidopsis arenosa* populations exist in different habitats, and exhibit a range of differences in flowering time, cold sensitivity, and perenniality. Sensitivity to cold is an important trait for perennials, plants that live longer than one year. It is common for perennials to require a period of prolonged cold in order to flower. This mechanism, known as vernalization, allows perennials to synchronize their life cycle with the seasons such that they flower only once winter is over. Plant response to low temperatures is under genetic control, and mediated by a specific set of cold-responsive genes.
+
+In a recent study, researchers used RNA sequencing (RNA-Seq) to investigate how cold responsiveness differs in two populations of *A. arenosa*: TBG (collected from Triberg, Germany) and KA (collected from Kasparstein, Austria).\footnote{Baduel P, et al. Habitat-Associated Life History and Stress-Tolerance Variation in \textit{Arabidopsis arenosa}. \textit{Plant Physiology} 2016: \textbf{171}: 437-451.} TBG grows in and around railway tracks, while KA is found on shaded limestone outcrops in wooded forests. As an annual, TBG has lost the vernalization response and does not require extended cold in order to flower; in the wild, TBG plants usually die before the onset of winter. In contrast, KA is a perennial plant, in which vernalization is known to greatly accelerate the onset of flowering.
+
+Winter conditions can be simulated by incubating plants at 4 \degree C for several weeks; a plant that has undergone cold treatment is considered vernalized, while plants that have not been exposed to cold treatment are non-vernalized. Expression data were collected for 1,088 genes known to be cold-responsive in TBG and KA plants that were either vernalized or non-vernalized; the expression data were obtained from three specimens from each population that were exposed to cold treatment, and three that were not.\footnote{The data have been normalized between samples to allow for comparisons between gene counts.} The data are in the \texttt{arenosa} dataset in the \texttt{oibiostat} package.
+
+Each row corresponds to a gene; the first column indicates gene name, while the rest correspond to expression measured in a particular plant sample. Three individuals of each population were not exposed to cold (non-vernalized, denoted by \texttt{nv}) and three were exposed to cold (vernalized, denoted by \texttt{v}). Expression was measured in gene counts; as a result of normalization between samples, the counts are not integers. A high number of transcripts indicates a high level of gene expression. 
+
+\newpage
+
+#### Exploring the data
+
+The first part of this lab focuses on using numerical and graphical methods to explore the overall picture of how expression levels differ by population (TBG and KA) and vernalization conditions (V and NV). For simplicity, we will work with a sample from the complete dataset.
+
+1. Take a sample of 100 genes (without replacement) from the 1,088 genes in the dataset, using '5011' in the \texttt{set.seed()} command. Name the sample \texttt{arenosa.sample}.
+
+    ```{r}
+#load the data
+library(oibiostat)
+data(arenosa)
+
+#create arenosa.sample
+arenosa.rows = 1:nrow(arenosa)
+set.seed(5011)
+arenosa.sample.rows = sample(arenosa.rows, size = 100, replace = FALSE)
+arenosa.sample = arenosa[arenosa.rows, ]
+```
+
+2. Print out the first five rows and first seven columns of \texttt{arenosa.sample}; briefly describe the data matrix shown. Does expression of these genes seem higher in vernalized or non-vernalized plants?
+
+    \textcolor{NavyBlue}{The data matrix shows expression data for the first five genes in \texttt{arenosa.sample} in the six KA specimens. For these gens, expression seems higher in vernalized plants (columns 5-7).}
+
+    ```{r}
+arenosa.sample[1:5, 1:7]
+```
+
+
+3. The three measured individuals in a particular group represent biological replicates: individuals of the same type grown under identical conditions. Collecting data from multiple replicates captures the inherent biological variability between organisms. Thus, averaging expression levels across replicates provides an estimate of the typical expression level in the larger population. 
+
+    Using the \texttt{apply()} function as shown in the template, calculate mean expression level across the three replicates for each type of sample: non-vernalized KA, vernalized KA, non-vernalized TBG, and vernalized TBG.
+
+    ```{r}
+ka.nv.mean.sample = apply(arenosa.sample[2:4], 1, mean)
+ka.v.mean.sample = apply(arenosa.sample[5:7], 1, mean)
+tbg.nv.mean.sample = apply(arenosa.sample[8:10], 1, mean)
+tbg.v.mean.sample = apply(arenosa.sample[11:13], 1, mean)
+```
+
+4. Using graphical methods, compare expression levels of cold-responsive genes between non-vernalized and vernalized KA, and between non-vernalized and vernalized TBG. How does gene expression differ between non-vernalized and vernalized plants?
+
+    \textcolor{NavyBlue}{For both KA and TBG plants, expression of cold-responsive genes tends to be higher in vernalized plants than non-vernalized plants; vernalized plants have a higher median expression level relative to non-vernalized plants.}
+    
+    ```{r, fig.height = 6, fig.width = 6}
+#graphical summaries
+par(mfrow = c(1, 2))
+boxplot(ka.nv.mean.sample, ka.v.mean.sample, names = c("KA NV", "KA V"))
+boxplot(tbg.nv.mean.sample, tbg.v.mean.sample, names = c("TBG NV", "TBG V"))
+```
+
+  
+5. Using graphical and numerical methods, compare expression levels of cold-responsive genes between non-vernalized KA and non-vernalized TBG, and between vernalized KA and vernalized TBG. How does gene expression differ between non-vernalized KA and TBG plants? How does gene expression differ between vernalized KA and TBG plants?
+  
+    \textcolor{NavyBlue}{Expression level of cold-responsive gense in non-vernalized TBG is slightly higher than in non-vernalized KA; median expression in NV TBG is 275 versus 243 in NV KA. In contrast, vernalized KA plants show higher expression of cold-responsive genes; median expression in vernalized KA is at 464 versus 393 in vernalized TBG.}  
+      
+    ```{r, fig.height = 6, fig.width = 6}
+#numerical summaries
+summary(ka.nv.mean.sample)
+summary(tbg.nv.mean.sample)
+summary(ka.v.mean.sample)
+summary(tbg.v.mean.sample)
+
+#graphical summaries
+par(mfrow = c(1, 2))
+boxplot(ka.nv.mean.sample, tbg.nv.mean.sample, names = c("KA NV", "TBG NV"))
+boxplot(ka.v.mean.sample, tbg.v.mean.sample, names = c("KA V", "TBG V"))
+```
+
+6. Based on the observations made in Questions 4 and 5, does vernalization appear to trigger a stronger change in gene expression in KA plants or TBG plants?
+
+    \textcolor{NavyBlue}{Vernalization appears to trigger a stronger change in gene expression in KA plants. Non-vernalized KA plants start out at overall lower levels of expression in comparison to TBG plants, but vernalized KA plants have higher overall levels of expression than vernalized TBG plants. The difference in median expression level for KA between vernalized and non-vernalized means is $464 - 243 = 221$; for TBG, the difference is $393 - 275 = 118$.}
+
+
+#### Identifying outliers for responsiveness
+
+7. A more quantitative way to explore the data is to use a gene-level approach. Let the ratio of expression under vernalized conditions to expression under non-vernalized conditions represent the 'responsiveness' of a gene to vernalization. 
+
+    Using the expression means defined in Question 3, calculate the responsiveness of the genes in \texttt{arenosa.sample} for TBG and for KA. Examine the responsiveness for the first three genes in the sample. Interpret the meaning of responsiveness values of 1, less than 1, and greater than 1. 
+    
+    \textcolor{NavyBlue}{A responsiveness value of 1 occurs when the mean expression level under vernalized conditions is equal to the mean expression level under non-vernalized conditions. A value less than 1 indicates higher expression under non-vernalized conditions, such as with gene 3, in TBG plants. A value greater than 1 indicates higher expression under vernalized conditions. For example, mean expression of gene 2 is almost 15 times higher in vernalized KA than non-vernalized KA.}
+
+    
+    ```{r}
+#calculate responsiveness
+ka.resp.sample = ka.v.mean.sample/ka.nv.mean.sample
+tbg.resp.sample = tbg.v.mean.sample/tbg.nv.mean.sample
+
+#view responsiveness for genes 1-3
+ka.resp.sample[1:3]
+tbg.resp.sample[1:3]
+```
+
+8. Create a plot to compare the responsiveness of genes in KA versus TBG for the genes in \texttt{arenosa.sample}; a transformation may be helpful. Describe what you see.
+
+    \textcolor{NavyBlue}{A log transformation is especially helpful for clarifying features of the boxplot. On a log scale, values close to 0 are indicative of low responsiveness, while large values in either direction correspond to high responsiveness. The magnitude of response to vernalization in TBG is smaller than in KA. The spread of responsiveness in KA is larger than for TBG, as indicated by the larger IQR and range of values; this indicates that more genes in KA are differentially expressed between vernalized and non-vernalized samples. Additionally, median responsiveness in KA is higher than in TBG.}
+
+    ```{r, fig.width = 8, fig.height = 6, warning = FALSE}
+par(mfrow = c(1, 2))
+boxplot(tbg.resp.sample, ka.resp.sample, names = c("TBG resp", "KA resp"))
+boxplot(log(tbg.resp.sample), log(ka.resp.sample), 
+        names = c("log(TBG resp)", "log(KA resp)"))
+```
+
+9. Among the 1,088 genes in the complete dataset, which seem to have unusually high or low response to cold treatment; in other words, which genes have a response that is an outlier? Conduct separate analyses for TBG and KA plants, on log-transformed responsiveness.
+
+    a) Report the genes that are high outliers for both KA and TBG, and the genes that are low outliers for both KA and TBG.
+    
+    \textcolor{NavyBlue}{There are 17 high outliers for both KA and TBG (see below for the list), and 3 small outliers for both KA and TBG (485694, 921327, HR3).}
+    
+  
+    ```{r}
+#calculate log responsiveness for all genes
+ka.nv.mean = apply(arenosa[2:4], 1, mean)
+ka.v.mean = apply(arenosa[5:7], 1, mean)
+tbg.nv.mean = apply(arenosa[8:10], 1, mean)
+tbg.v.mean = apply(arenosa[11:13], 1, mean)
+
+log.ka.resp = log(ka.v.mean/ka.nv.mean)
+log.tbg.resp = log(tbg.v.mean/tbg.nv.mean)
+
+
+#define outlier boundaries for ka
+ka.quart.3 = quantile(log.ka.resp, 0.75, na.rm = TRUE)
+ka.quart.1 = quantile(log.ka.resp, 0.25, na.rm = TRUE)
+ka.iqr = ka.quart.3 - ka.quart.1
+ka.lb.outlier = ka.quart.1 - 1.5*ka.iqr
+ka.ub.outlier = ka.quart.3 + 1.5*ka.iqr
+
+#define outlier boundaries for tbg
+tbg.quart.3 = quantile(log.tbg.resp, 0.75, na.rm = TRUE)
+tbg.quart.1 = quantile(log.tbg.resp, 0.25, na.rm = TRUE)
+tbg.iqr = tbg.quart.3 - tbg.quart.1
+tbg.lb.outlier = tbg.quart.1 - 1.5*tbg.iqr
+tbg.ub.outlier = tbg.quart.3 + 1.5*tbg.iqr
+
+#identify large outliers
+arenosa.response = data.frame(arenosa$gene.name, log.tbg.resp, log.ka.resp)
+
+which.tbg.pos.out = log.tbg.resp > tbg.ub.outlier
+tbg.pos.out = as.matrix(arenosa.response[which.tbg.pos.out, ])
+order.pos.tbg.out = order(log.tbg.resp, decreasing = TRUE)
+ordered.pos.tbg.out = as.matrix(arenosa.response[order.pos.tbg.out, ])
+ordered.pos.tbg.out[1:10, ] #show the first 10 outliers
+
+which.ka.pos.out = log.ka.resp > ka.ub.outlier
+ka.pos.out = as.matrix(arenosa.response[which.ka.pos.out, ])
+order.pos.ka.out = order(log.ka.resp, decreasing = TRUE)
+ordered.pos.ka.out = as.matrix(arenosa.response[order.pos.ka.out, ])
+ordered.pos.ka.out[1:10, ] #show the first 10 outliers
+
+#identify common large outliers
+##using intersect()
+tbg.pos.out = arenosa[which.tbg.pos.out, 1]
+ka.pos.out = arenosa[which.ka.pos.out, 1]
+intersect(tbg.pos.out, ka.pos.out)
+
+##using (merge)
+merge(arenosa.response[which.tbg.pos.out, ], arenosa.response[which.ka.pos.out, ])
+
+#identify small outliers
+which.tbg.neg.out = log.tbg.resp < tbg.lb.outlier
+tbg.neg.out = as.matrix(arenosa.response[which.tbg.neg.out, ])
+order.neg.tbg.out = order(log.tbg.resp, decreasing = FALSE)
+ordered.neg.tbg.out = as.matrix(arenosa.response[order.neg.tbg.out, ])
+ordered.neg.tbg.out[1:10, ] #show the first 10 outliers
+
+which.ka.neg.out = log.ka.resp < ka.lb.outlier
+ka.neg.out = as.matrix(arenosa.response[which.ka.neg.out, ])
+order.neg.ka.out = order(log.ka.resp, decreasing = FALSE)
+ordered.neg.ka.out = as.matrix(arenosa.response[order.neg.ka.out, ])
+ordered.neg.ka.out[1:10, ] #show the first 10 outliers
+
+#identify common small outliers
+##using intersect()
+tbg.neg.out = arenosa[which.tbg.neg.out, 1]
+ka.neg.out = arenosa[which.ka.neg.out, 1]
+intersect(tbg.neg.out, ka.neg.out)
+
+##using (merge)
+merge(arenosa.response[which.tbg.neg.out, ], arenosa.response[which.ka.neg.out, ])
+```
+  
+  
+  
+  
+  
+   b) Why might it be interesting to further investigate cold-responsive genes that are either high outliers or low outliers for both KA and TBG?
+  
+    \textcolor{NavyBlue}{These highly cold-responsive genes likely play a role in how plants cope with colder temperatures; they could be involved in regulating freezing tolerance, or controlling how plants detect cold temperatures.}
+
+
+
