@@ -20,7 +20,7 @@ devtools::install_github("OI-Biostat/oi_biostat_data")
 
 These labs were initially developed for a classroom setting, but can also be used by those interested in an independent learning experience. 
 
-Unit 0 contains two short tutorials for getting started with R and R Markdown. Subsequent units correspond to the chapters in *OpenIntro Biostatistics*. Each lab consists of three files: a handout file, a template file, and a solutions file. 
+Unit 0 contains two short tutorials for getting started with R and R Markdown: `00_intro_to_R.pdf` and `01_intro_to_Rmd.Rmd`. Subsequent units correspond to the chapters in *OpenIntro Biostatistics*. Each lab consists of three files: a handout file, a template file, and a solutions file. 
 
 - The handout file (.pdf) contains background information and problem statements. An instructor might choose to provide printed handout files to students so they can easily reference the problem statements while working through the labs. 
 
@@ -28,4 +28,4 @@ Unit 0 contains two short tutorials for getting started with R and R Markdown. S
 
 - The solutions file (.pdf) contains fully worked solutions and code. 
 
-Each unit contains a 'Lab Notes' file that gives a high-level overview of the labs and provides detailed explanations of the `R` programming used in each lab.
+Each unit contains a 'Lab Notes' file (.pdf) that gives a high-level overview of the labs and provides detailed explanations of the `R` programming used in each lab.
