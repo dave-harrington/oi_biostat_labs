@@ -42,7 +42,7 @@ The goal in this lab is to observe the effect of sampling by treating the 13,572
 
 #### Calculating confidence intervals
 
-Run the following code to take a random sample of 30 individuals from \texttt{yrbsss} and store the subset as \texttt{yrbss.sample}. The code includes a section that removes any rows from \texttt{yrbss} where there are no data recorded for \texttt{weight}. The version of \texttt{yrbss} without missing weight values is stored as \texttt{yrbss.complete}.
+Run the following code to take a random sample of 30 individuals from \texttt{yrbss} and store the subset as \texttt{yrbss.sample}. The code includes a section that removes any rows from \texttt{yrbss} where there are no data recorded for \texttt{weight}. The version of \texttt{yrbss} without missing weight values is stored as \texttt{yrbss.complete}.
 
 ```{r}
 #load the data
