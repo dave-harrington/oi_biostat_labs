@@ -18,7 +18,7 @@ The previous labs in this unit discussed the calculation of point estimates and 
 
 Hypothesis testing operates under a different perspective---under the working hypothesis that the population mean is a particular value $\mu_0$, what is the likelihood of observing a sample with mean $\overline{x}$? If there is a very small chance of observing a sample with mean $\overline{x}$ when $\mu = \mu_0$, this represents evidence against the working hypothesis and suggests that the $\mu$ does not equal $\mu_0$.
 
-The material in this lab corresponds to Section 4.3.1 - 4.3.3 of *OpenIntro Biostatistics*.
+The material in this lab corresponds to Section 4.3.1 - 4.3.2 of *OpenIntro Biostatistics*.
 
 ####Introduction to hypothesis testing
 
