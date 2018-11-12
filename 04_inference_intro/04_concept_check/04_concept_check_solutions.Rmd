@@ -321,7 +321,7 @@ To explore this idea, let's return to the \texttt{yrbss} repeated sampling simul
 
 6. Run the code chunk shown in the template to take 1,000 random samples of size 100 from \texttt{yrbss.complete}. The code calculates the $t$-statistics from each sample and returns \texttt{TRUE} if the $t$-statistic from a sample is within the rejection region.
 
-```{r, eval = FALSE}
+    ```{r, eval = TRUE}
 #set parameters
 sample.size = 100
 replicates = 1000
@@ -356,21 +356,97 @@ in.rejection.region = (t.stat >= reject.ub) | (t.stat <= reject.lb)
 table(in.rejection.region)
 ```
 
-  a) With $\alpha = 0.05$, what percentage of samples result in the (incorrect) conclusion that the population mean is not 67.91 kg?
+    a) With $\alpha = 0.05$, what percentage of samples result in the (incorrect) conclusion that the population mean is not 67.91 kg?
 
 
-
-
-  
-  b) What happens when $\alpha$ is changed? Test $\alpha = 0.10$ and $\alpha = 0.01$. Compare your results to those in part a).
-
-
-
+    \textcolor{NavyBlue}{$55/1000 = 5.5\%$ of the samples result in the incorrect conclusion that the population mean is not 67.91 kg.}
 
   
-  c) Why not eliminate the chance of Type I error completely by letting $\alpha = 0$? What implications would this have for hypothesis testing?
+    b) What happens when $\alpha$ is changed? Test $\alpha = 0.10$ and $\alpha = 0.01$. Compare your results to those in part a).
+
+
+    \textcolor{NavyBlue}{When $\alpha = 0.10$, 10\% of the samples result in rejecting $H_0$. When $\alpha = 0.01$, 1.8\% of the samples result in rejecting $H_0$.\footnote{Note that the observed proportion 1.8\% is different from 1\% only due to random chance; with a larger number of simulations, the observed proportion will approach 1\%.} As $\alpha$ decreases, the percentage of samples that return an incorrect conclusion decreases.}
+
+    \textcolor{NavyBlue}{This is directly related to what was observed in the confidence interval simulation from Lab 2 of this unit: $\alpha$ is the percentage of confidence intervals that did not contain the population mean $\mu_{weight}$. Thus, $\alpha$ can be thought of as the error probability for both hypothesis tests and confidence intervals.}
+
+
+    ```{r, echo = FALSE}
+#set parameters
+sample.size = 100
+replicates = 1000
+alpha = 0.10
+
+#set seed
+set.seed(2017)
+
+#create empty lists
+t.stat = vector("numeric", replicates)
+
+#calculate t-statistics from each sample
+for (k in 1:replicates) {
+  sample.rows = sample(nrow(yrbss.complete), sample.size)
   
+  #define constants
+  mu = mean(yrbss.complete$weight)
+  sample.mean = mean(yrbss.complete$weight[sample.rows])
+  sample.sd = sd(yrbss.complete$weight[sample.rows])
   
+  #calculate t statistics
+  t.stat[k] = (sample.mean - mu) / (sample.sd / sqrt(sample.size))
+}
+
+#define upper and lower bounds of rejection region
+reject.ub = qt(1 - (alpha)/2, df = sample.size - 1)
+reject.lb = qt(alpha/2, df = sample.size - 1)
+
+#is the t-stat in the rejection region?
+in.rejection.region = (t.stat >= reject.ub) | (t.stat <= reject.lb)
+
+table(in.rejection.region)
+```
+  
+    ```{r, echo = FALSE}
+#set parameters
+sample.size = 100
+replicates = 1000
+alpha = 0.01
+
+#set seed
+set.seed(2017)
+
+#create empty lists
+t.stat = vector("numeric", replicates)
+
+#calculate t-statistics from each sample
+for (k in 1:replicates) {
+  sample.rows = sample(nrow(yrbss.complete), sample.size)
+  
+  #define constants
+  mu = mean(yrbss.complete$weight)
+  sample.mean = mean(yrbss.complete$weight[sample.rows])
+  sample.sd = sd(yrbss.complete$weight[sample.rows])
+  
+  #calculate t statistics
+  t.stat[k] = (sample.mean - mu) / (sample.sd / sqrt(sample.size))
+}
+
+#define upper and lower bounds of rejection region
+reject.ub = qt(1 - (alpha)/2, df = sample.size - 1)
+reject.lb = qt(alpha/2, df = sample.size - 1)
+
+#is the t-stat in the rejection region?
+in.rejection.region = (t.stat >= reject.ub) | (t.stat <= reject.lb)
+
+table(in.rejection.region)
+```  
+  
+
+  
+    c) Why not eliminate the chance of Type I error completely by letting $\alpha = 0$? What implications would this have for hypothesis testing?
+  
+    \textcolor{NavyBlue}{If $\alpha$ were equal to 0, then the null hypothesis would never be rejected, no matter how far the sample mean was from the hypothesized population mean $\mu_0$. Hypothesis testing simply wouldn't work -- there would be no "testing" happening!}
+
+    \textcolor{NavyBlue}{It is necessary to balance the significance level such that the chance of a Type I error occurring is relatively rare, but $\alpha$ remains large enough to prevent the null hypothesis from almost never being rejected. }
   
   
   
