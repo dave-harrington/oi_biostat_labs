@@ -1,0 +1,43 @@
+---
+title: "Lab Notes"
+author: "Chapter 4"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 6.5
+    fig_height: 3.5
+---
+
+# Overview
+
+1. Sampling Variability
+    - *OI Biostat* Section 4.1
+    
+2. Confidence Intervals
+    - *OI Biostat* Section 4.2
+    
+3. Hypothesis Testing
+    - *OI Biostat* Sections 4.3 - 4.3.2
+    
+4. Inference Concept Check
+    - *OI Biostat* Sections 4.3.3 - 4.3.5
+    
+
+Lab 1 illustrates the idea of sampling variability through simulation and explores the relationship between a point estimate and population parameter.
+
+Lab 2 introduces the calculation and interpretation of confidence intervals.
+
+Lab 3 introduces the mechanics of formal hypothesis testing.
+
+Lab 4 examines some conceptual details of inference, including the relationship between hypothesis tests and confidence intervals.
+
+These labs demonstrate inference with the $t$-distribution, rather than the normal distribution. While using the normal distribution is a convenient approximation when doing calculations without access to software, \textsf{R} offers functions that compute confidence intervals and $p$-values based on the $t$-distribution. The $t$-distribution is formally introduced in Chapter 5 of the text.
+
+
+\newpage

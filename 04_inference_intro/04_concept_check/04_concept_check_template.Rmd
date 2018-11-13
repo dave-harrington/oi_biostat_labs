@@ -22,7 +22,7 @@ output: pdf_document
 
 The previous labs in this unit discussed the mechanics of calculating confidence intervals and conducting hypothesis tests. This lab focuses on examining some conceptual details of inference.
 
-The material in this lab corresponds to Sections 4.3.4 - 4.3.5 of *OpenIntro Biostatistics*.
+The material in this lab corresponds to Sections 4.3.3 - 4.3.5 of *OpenIntro Biostatistics*.
 
 ####Hypothesis Testing and Confidence Intervals
 
