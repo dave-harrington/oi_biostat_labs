@@ -99,7 +99,7 @@ pnorm(q, mean = 0, sd = 1, lower.tail = FALSE)
 
 where \texttt{q} is $k$, \texttt{mean} is the parameter $\mu$, and \texttt{sd} is the parameter $\sigma$. By default, \textsf{R} calculates $P(X \leq k)$ and assumes that mean and standard deviation are 0 and 1, respectively. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
 
-The following code show show to calculate $P(X \leq 105)$ and $P(X > 105)$ for $X \sim \text{N}(100, 5)$ and $P(Z \leq 1)$ and $P(Z > 1)$ for $Z \sim \text{N}(0, 1)$. 
+The following code shows how to calculate $P(X \leq 105)$ and $P(X > 105)$ for $X \sim \text{N}(100, 5)$ and $P(Z \leq 1)$ and $P(Z > 1)$ for $Z \sim \text{N}(0, 1)$. 
 
 ```{r}
 #probability X is less than (or equal to) 105
@@ -111,7 +111,7 @@ pnorm(105, 100, 5, lower.tail = FALSE)
 #probability Z is less than (or equal to) 1
 pnorm(1)
 
-#probaiblity Z is greater than 1
+#probability Z is greater than 1
 pnorm(1, lower.tail = FALSE)
 ```
 

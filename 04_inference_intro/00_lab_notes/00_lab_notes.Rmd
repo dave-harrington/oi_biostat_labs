@@ -41,3 +41,191 @@ These labs demonstrate inference with the $t$-distribution, rather than the norm
 
 
 \newpage
+
+#Lab 1: Sampling Variability
+
+The first part of the lab covers taking a single sample from \texttt{yrbss}. In the second part, many samples are taken and their means calculated via a \texttt{for} loop.
+
+The key point to understand is that the subset \texttt{yrbss.sample} is created in two distinct steps:
+
+  1. Select the row numbers. The vector \texttt{sample.rows} is a random sample of 10 numbers from 1 to $n$, where $n$ represents the total number of rows in the \texttt{yrbss} dataframe.
+    
+  2. Extract the rows corresponding to the selected row numbers. The dataframe \texttt{yrbss.sample} is created using the bracket notation first introduced in the Chapter 1 Lab Notes.
+
+Enclosing these two steps in the \texttt{for} loop (Question 3) allows for a different set of 10 numbers and thus, a different set of 10 observations, to be drawn with each iteration of the loop. The loop contains a slightly more compact version of the code shown in Question 1:
+
+```{r, eval = FALSE}
+for(k in 1:replicates){
+  
+  sample.rows = sample(1:nrow(yrbss), sample.size)
+  sample.means[k] = mean(yrbss$weight[sample.rows], na.rm = TRUE)
+  
+}
+```
+
+  - The second line in the loop calculates the mean of the \texttt{weight} variable in \texttt{yrbss}, but only for the indices specified by the numbers in \texttt{sample.rows}. Note how no comma is needed in the bracket notation because \texttt{yrbss\$weight} specifies a vector.
+  
+  - One alternative way to write the line is as follows, where the outer object is still the \texttt{yrbss} matrix, and the bracket notation specifies the rows as \texttt{sample.rows} and the column as \texttt{weight}.
+  
+    ```{r, eval = FALSE}
+sample.means[k] = mean(yrbss[sample.rows, "weight"], na.rm = TRUE)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{abline()}} is used to draw a straight line through a plot. It has the generic structure
+
+```{r, eval = FALSE}
+abline(a, b, h, v)
+```
+
+and additional parameters like color (\texttt{col}), line type (\texttt{lty}), and line width (\texttt{lwd}) can also be specified. The first two arguments specify an intercept and slope, respectively; \texttt{h} refers to the $y$-value for a horizontal line and \texttt{v} refers to the $x$-value for a vertical line.
+
+The following plot illustrates how \texttt{abline()} can be used. 
+
+```{r, fig.width = 5, fig.height = 5, fig.align='center'}
+#draw a plot
+x = c(-2, -1, 0, 1, 2)
+plot(x , x)
+
+#draw lines
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(h = 0, col = "blue", lty = 5, lwd = 2)
+abline(v = 0, col = "green", lty = 4, lwd = 2)
+```
+
+
+
+
+\newpage
+
+#Lab 2: Confidence Intervals
+
+The simulation code from the previous lab is expanded in this lab. For each sample, not only is the mean calculated, but also the standard deviation; these values are then used to compute a confidence interval for each sample. 
+
+Unlike the previous simulation which drew samples from \texttt{yrbss}, this simulation draws only from the rows of \texttt{yrbss} for which a \texttt{weight} value has been recorded. This simplifies the calculation of confidence intervals, since the sample size will be consistent from sample to sample rather than being affected by missing data values.
+
+\vspace{0.5cm}
+
+The \textbf{\texttt{complete.cases()}} function returns a logical vector specifying which observations or rows have no missing values. The following example illustrates how \texttt{complete.cases} returns \texttt{TRUE} for the first three values in the vector \texttt{x} and \texttt{FALSE} for the last two values; bracket notation is then used to extract the values of \texttt{x} for which the values are not missing (i.e., the cases are complete).
+
+
+```{r}
+#create data vector
+x = c(50, 3, 1.2, NA, NA)
+
+#view output of complete.cases()
+complete.cases(x)
+
+#extract non-missing values of x
+x[complete.cases(x)]
+```
+
+\vspace{0.5cm}
+
+The \textbf{\texttt{t.test()}} function performs a $t$-test; its arguments will be explained in more detail in the next section. In this lab, the function is used to compute a confidence interval with a specific confidence level. It has the following generic structure, where the first argument is a numeric vector of data values, and the confidence level is entered as a decimal. The \texttt{\$conf.int} syntax is used to print out only the confidence interval from the complete output.
+
+```{r, eval = FALSE}
+t.test(x, conf.level = 0.95)$conf.int
+```
+
+\vspace{0.5cm}
+
+The \texttt{for} loop in Question 5 stores output in two vectors, \texttt{sample.means} and \texttt{m}; \texttt{sample.means} is a vector of the 1,000 sample means, and \texttt{m} is a vector of the margin of error calculated from each sample, where $m = z^\star \times s/\sqrt{n}$. These two vectors are used to generate the upper and lower bounds of the confidence interval for each sample. 
+
+Each confidence interval is then checked for whether or not it contains \texttt{mu}, the mean weight in the \texttt{yrbss.complete} population. The logical vector \texttt{contains.mu} returns \texttt{TRUE} if \texttt{mu} is both greater than the lower bound and less than the upper bound.
+
+
+\newpage
+
+
+#Lab 3: Hypothesis Testing
+
+This lab introduces the essential functions for conducting hypothesis tests (for a population mean) with \textsf{R}. The $t$-distribution functions are useful for hand calculations, while the \texttt{t.test()} function performs hypothesis tests directly on data.
+
+### T Distribution Functions
+
+The function \textbf{\texttt{pt()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+pt(q, df, lower.tail = FALSE)
+```
+
+where \texttt{q} is $k$ and \texttt{df} is the degrees of freedom. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate $P(X \leq 1.20)$ and $P(X > 1.20)$ for $X \sim t_{df = 20}$. 
+
+```{r}
+#probability X is less than (or equal to) 1.20
+pt(1.20, df = 20)
+
+#probability X is greater than 1.20
+pt(1.20, df = 20, lower.tail = FALSE)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{qt()}} used to identify the observation that corresponds to a particular probability $p$ has the generic structure
+
+```{r, eval = FALSE}
+qt(p, df, lower.tail = FALSE)
+```
+
+where \texttt{p} is $p$ and \texttt{df} is the degrees of freedom. By default, \textsf{R} identifies the observation that corresponds to area $p$ in the lower tail (i.e., to the left). To identify the observation with area $p$ in the upper tail, specify \texttt{lower.tail = FALSE}.
+
+The following code shows how to calculate the value of the observation where there is 0.841 area to the left (and 0.159 area to the right) on a $t$-distribution with 20 degrees of freedom.
+
+```{r}
+#identify X value
+qt(0.841, df = 20)
+
+qt(0.159, df = 20, lower.tail = FALSE)
+```
+
+\newpage
+
+###Hypothesis Testing with \texttt{t.test()}
+
+The \textbf{\texttt{t.test()}} function has the following generic structure:
+
+```{r, eval = FALSE}
+t.test(x, alternative = "two.sided", mu = , conf.level = 0.95)
+```
+
+where \texttt{x} is a numeric vector of data values, \texttt{alternative} specifies the form of the alternative hypothesis, \texttt{mu} is $\mu_0$, and \texttt{conf.level} refers to the confidence level. The argument for \texttt{alternative} can be either \texttt{"two.sided"} ($H_A: \mu \neq \mu_0$), \texttt{"less"} ($H_A: \mu < \mu_0$), or \texttt{"greater"} ($H_A: \mu > \mu_0$). By default, confidence level is set to 95\% and a two-sided alternative is tested.
+
+The following example shows a hypothesis test for mean standing height in centimeters in the artificial NHANES population, using a random sample of 135 adults. The null hypothesis is that the population mean height is equal to 168 cm (a little over 5 feet, 6 inches). A one-sided alternative is tested against the null, $H_A: \mu > 168$ cm; the output includes the $t$-statistic, degrees of freedom, $p$-value, 90\% confidence interval, and the sample mean of the data. 
+
+```{r}
+#load the data
+library(oibiostat)
+data("nhanes.samp.adult")
+
+#conduct test
+t.test(nhanes.samp.adult$Height, mu = 168, alternative = "less", conf.level = 0.90)
+```
+
+The output of \texttt{t.test()} is organized as a list object, and so specific pieces can be extracted using the dollar sign (\texttt{\$}) and the name of the desired component. The possible components include the $t$-statistic (\texttt{statistic}), degrees of freedom (\texttt{parameter}), $p$-value (\texttt{p.val}), sample mean (\texttt{estimate}), and $\mu_0$ (\texttt{null.value}).
+
+The following examples show the  $t$-statistic and $p$-value being selectively output from a test of the two-sided alternative against the null, using the same data as the previous example.
+
+```{r}
+t.test(nhanes.samp.adult$Height, mu = 168)$statistic
+t.test(nhanes.samp.adult$Height, mu = 168)$p.val
+```
+
+
+\newpage
+
+
+#Lab 4: Inference Concept Check
+
+This lab takes a closer look at some concepts in inference that may be confusing or seem counterintuitive. The labs in the next unit will continue exploring conceptual details in the two-sample context.
+
+The first section examines the relationship between a hypothesis test and a confidence interval associated with the same significance level (e.g., $\alpha = 0.05$ and 95\% confidence) by illustrating how the margin of error is the common quantity for both tests and intervals.
+
+The second section provides practice calculating and interpreting one-sided hypothesis tests and confidence intervals. Two important take-away points from Question 4: 1) statistical significance does not automatically imply practical significance, 2) care should be exercised when calculating one-sided $p$-values, because the area corresponding to the $p$-value is in the direction specified by the alternative hypothesis, and this area will not always be the smaller tail area.
+
+The third section features an example of a scenario where context informs whether a one-sided or or two-sided test is more appropriate. The example also illustrates the idea of a two-sided test as more "conservative" than a one-sided test.
+
+The fourth section uses simulation to explore the idea of Type I error and $\alpha$ as the probability of making a Type I error. Like in the previous simulation, samples are repeatedly drawn from \texttt{yrbss.complete}. A $t$-statistic is calculated from each sample to test the null hypothesis $H_0: \mu = 67.91$ kg. The simulation can be thought of as a simulation "under the null", in the sense that it is known that the null hypothesis is true: in the artificial \texttt{yrbss.complete} population, the mean weight is 67.91 kg. Thus, any samples that produce extreme $t$-statistics and indicate that the null should be rejected represent instances of making a Type I error. When the rejection region is defined by $\alpha = 0.05$, on average, 5% of the samples will have extreme $t$-statistics even though the population mean is not different from 67.91 kg. The simulation explicitly demonstrates that this error percentage changes as $\alpha$ changes.

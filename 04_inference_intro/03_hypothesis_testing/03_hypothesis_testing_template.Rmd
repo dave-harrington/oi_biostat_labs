@@ -107,6 +107,8 @@ t
 
 To calculate a tail area from a t-statistic, use the pt() function, which is analogous to pnorm(). Specify the t-statistic and the degrees of freedom; set lower.tail = FALSE if you want an upper tail area (i.e., area to the right of the t-statistic).
 
+The degrees of freedom equals the sample size minus 1; i.e., df = n - 1.
+
 --->
 
 ```{r, eval = FALSE}
