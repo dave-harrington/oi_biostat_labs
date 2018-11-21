@@ -93,8 +93,8 @@ d) Let $X$ be a random variable defined as the number of patients who respond we
   
   
   
-    iii. Calculate $Var(X)$, where
-    \[Var(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
+    iii. Calculate $\text{Var}(X)$, where
+    \[\text{Var}(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
 
 
 
@@ -107,7 +107,7 @@ d) Let $X$ be a random variable defined as the number of patients who respond we
 Let $X$ represent the number of successes in a series of independent Bernoulli trials. Suppose the probability of a single trial being a success is $p$. The probability of observing exactly $k$ successes in $n$ independent trials is given by
 \[P(X = k) = { n \choose k} p^k (1-p)^{n-k} = \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}. \]
 
-For a binomial random variable, $E(X) = np$ and $Var(X) = np(1-p)$.
+For a binomial random variable, $E(X) = np$ and $\text{Var}(X) = np(1-p)$.
 
 Binomial probabilities are calculated in \textsf{R} with the use of \texttt{dbinom} and \texttt{pbinom}.
 
@@ -140,7 +140,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
   
   
   
-    b) Calculate $E(X)$ and $Var(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
+    b) Calculate $E(X)$ and $\text{Var}(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
 
 
 
@@ -178,7 +178,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 
     
     
-    d) If a researcher wants to make sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
+    d) Assume that a researcher will use all of the stocks sampled for an experiment.  If the researcher wants to be sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
     
     
 ```{r}
@@ -221,7 +221,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 ```
 
         
-    c) What is the probability that at least 1 out of 10 randomly sampled American adult have had chickenpox?
+    c) What is the probability that at least 1 out of 10 randomly sampled American adult has had chickenpox?
 
 
 ```{r}

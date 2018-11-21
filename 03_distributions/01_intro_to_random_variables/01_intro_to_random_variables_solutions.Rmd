@@ -183,13 +183,13 @@ prop.table(table(number.responses))
     \color{Black}
   
   
-    iii. Calculate $Var(X)$, where
-    \[Var(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
+    iii. Calculate $\text{Var}(X)$, where
+    \[\text{Var}(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
     
     \color{NavyBlue}
     
     \begin{align*}
-    Var(X) 	&= \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \\
+    \text{Var}(X) 	&= \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \\
       &= (x_1-\mu)^2 P(X=x_1) + \cdots+ (x_k-\mu)^2 P(X=x_k) \\
 	    &= (0 - 1.132)^{2}(0.266) + (1 - 1.132)^{2}(0.418) + (2 - 1.132)^{2}(0.250) + (3 - 1.132)^{2}(0.052) \\
 	    & \qquad + (4 - 1.132)^{2}(0.012) + (5 - 1.132)^{2}(0.002) + (6 - 1.132)^{2}(0) + (7 - 1.132)^{2}(0) \\
@@ -207,7 +207,7 @@ prop.table(table(number.responses))
 Let $X$ represent the number of successes in a series of independent Bernoulli trials. Suppose the probability of a single trial being a success is $p$. The probability of observing exactly $k$ successes in $n$ independent trials is given by
 \[P(X = k) = { n \choose k} p^k (1-p)^{n-k} = \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}. \]
 
-For a binomial random variable, $E(X) = np$ and $Var(X) = np(1-p)$.
+For a binomial random variable, $E(X) = np$ and $\text{Var}(X) = np(1-p)$.
 
 Binomial probabilities are calculated in \textsf{R} with the use of \texttt{dbinom} and \texttt{pbinom}.
 
@@ -227,7 +227,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 
 2. Why is the value returned by \texttt{pbinom(5, 10, 0.35)} greater than the value from \texttt{dbinom(5, 10, 0.35)}?
 
-    \textcolor{NavyBlue}{The value returned by \texttt{pbinom(5, 10, 0.35)} represents $P(X \leq 5)$, while \texttt{dbinom 3, 10, 0.3} returns $P(X = 5)$. $P(X \leq 5)$ is equivalent to $P(X = 0) + P(X = 1) + \cdots + P(X = 5)$; since the probability of 0, 1, 2, 3, or 4 events occurring is nonzero, $P(X \leq 5)$ is greater than $P(X = 5)$.}
+    \textcolor{NavyBlue}{The value returned by \texttt{pbinom(5, 10, 0.35)} represents $P(X \leq 5)$, while \texttt{dbinom(5, 10, 0.35)} returns $P(X = 5)$. $P(X \leq 5)$ is equivalent to $P(X = 0) + P(X = 1) + \cdots + P(X = 5)$; since the probability of 0, 1, 2, 3, or 4 events occurring is nonzero, $P(X \leq 5)$ is greater than $P(X = 5)$.}
 
 
 
@@ -239,10 +239,10 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
     \textcolor{NavyBlue}{There is a fixed number of trials, $n$, at 8 patients; it is reasonable to assume that the response of each patient is indepedent of the others. Each outcome can be classified as either success or failure. The probability of a good response, $p$, is assumed to be the same for each patient.}
   
   
-    b) Calculate $E(X)$ and $Var(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
+    b) Calculate $E(X)$ and $\text{Var}(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
     
     
-    \textcolor{NavyBlue}{According to the binomial formulas, $E(X) = np = (8)(0.15) = 1.2$ and $Var(X) = np(1-p) = (8)(0.15)(1 - 0.15) = 1.02$. The values are a bit different from the answers in part d), with a lower mean and higher variance. The probability distribution from simulation will approach the theoretical distribution as the number of replicates increases, and the formulas will give identical results.}
+    \textcolor{NavyBlue}{According to the binomial formulas, $E(X) = np = (8)(0.15) = 1.2$ and $\text{Var}(X) = np(1-p) = (8)(0.15)(1 - 0.15) = 1.02$. The values are a bit different from the answers in part d), with a lower mean and higher variance. The probability distribution from simulation will approach the theoretical distribution as the number of replicates increases, and the formulas will give identical results.}
 
 
 
@@ -279,7 +279,7 @@ pbinom(60, 250, 0.30)
 pbinom(79, 250, 0.30, lower.tail = FALSE)
 ```
     
-    d) If a researcher wants to make sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
+    d) Assume that a researcher will use all of the stocks sampled for an experiment. If the researcher wants to be sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
     
     \textcolor{NavyBlue}{40\% of 250 stocks is 100. What is the probability that out of 250 stocks, no more than 100 stocks are infected? This is $P(X \leq 100) \approx 1$. It seems reasonable to expect that from a random sample of 250, no more than 40\% are infected.}
     
@@ -333,7 +333,7 @@ sum(number.infected <= 100)/number.replicates
 
     a) Calculate the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood.
 
-    \textcolor{NavyBlue}{Let $X$ represent the number of individuals in a sample who had chickenpox during childhood. $P(X = 97) = 0006$; the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood is 0.006.}
+    \textcolor{NavyBlue}{Let $X$ represent the number of individuals in a sample who had chickenpox during childhood. $P(X = 97) = 0.006$; the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood is 0.006.}
 
     ```{r}
 dbinom(97, size = 100, prob = 0.90)
@@ -345,7 +345,7 @@ dbinom(97, size = 100, prob = 0.90)
     \textcolor{NavyBlue}{The event that exactly 3 out of 100 adults did not have chickenpox during childhood is equivalent to the event that exactly 97 out of 100 did have chickenpox during childhood; thus, the probability is 0.006 from calculations in part a).}
 
         
-    c) What is the probability that at least 1 out of 10 randomly sampled American adult have had chickenpox?
+    c) What is the probability that at least 1 out of 10 randomly sampled American adult has had chickenpox?
 
     \textcolor{NavyBlue}{$P(X \geq 1) = P(X > 0)$; the probability that at least 1 out of 10 randomly sampled American adults have had chickenpox is essentially 1.}
 

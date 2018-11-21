@@ -32,11 +32,11 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 
     Let $X$ represent the event of two parents having brown eyes, and $Y$ represent the event of having a child with blue eyes. The following tree illustrates the possible paths to $Y$.
 	
-    Note that the $\times$ represents a mating between two genotypes; e.g. $BB \times BB$ represents a mating between two $BB$ individuals.
+    Note that the $\times$ represents a mating between two genotypes; e.g. $BB \times BB$ represents a mating between two $BB$ individuals.  The symbol $\cdot$ is used for multiplication of probabilities
 	
     \textit{\Tree [.X [.BB$\times$BB [ Y $Y^C$ ] ] [.Bb$\times$Bb [ Y $Y^C$ ] ] [.BB$\times$Bb [ Y $Y^C$ ] ] ]} 
 	
-    Solve for $P(Y|X)$, which is given by adding together the probabilities of the three branches ending in $Y$.\footnote{The total probability equation : $P(Y|X) = [P(BB \times BB | X) \times P(Y| BB \times BB)] + [P(Bb \times Bb | X) \times P(Y| Bb \times Bb)] + [P(BB \times Bb | X) \times P(Y| BB \times Bb)]$}
+    Solve for $P(Y|X)$, which is given by adding together the probabilities of the three branches ending in $Y$.\footnote{The total probability equation : $P(Y|X) = [P(BB \times BB | X) \cdot P(Y| BB \times BB)] + [P(Bb \times Bb | X) \cdot P(Y| Bb \times Bb)] + [P(BB \times Bb | X) \cdot P(Y| BB \times Bb)]$}
 
     \textbf{Find the probabilities of the first set of branches}: $P(BB \times BB | X)$, $P(Bb \times Bb | X)$, and $P(BB \times Bb | X)$. In other words, find the probability of each pair, given that both parents have brown eyes. 
 
@@ -46,7 +46,7 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 	
     \begin{align*}
 		P(BB \times BB | X) = [P(BB | X)]^2 =& \left[\dfrac{P(BB \text{ and } X)}{P(X)} \right]^2 \\
-		=& \left[\dfrac{P(X|BB) \times P(BB)}{[P(X|BB) \times P(BB)] + [P(X|Bb) \times P(Bb)]} \right]^2 \\
+		=& \left[\dfrac{P(X|BB) \cdot P(BB)}{[P(X|BB) \cdot P(BB)] + [P(X|Bb) \cdot P(Bb)]} \right]^2 \\
 		=& \left[\dfrac{(1)(1/4)}{[(1)(1/4)] + [(1)(1/2)]} \right]^2 \\
 		=& \left[\dfrac{1}{3} \right]^2 \\
 		=& \dfrac{1}{9}
@@ -56,7 +56,7 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 	
     \begin{align*}
 		P(Bb \times Bb | X) = [P(Bb | X)]^2 =& \left[\dfrac{P(Bb \text{ and } X)}{P(X)} \right]^2 \\
-		=& \left[\dfrac{P(X|Bb) \times P(Bb)}{[P(X|BB) \times P(BB)] + [P(X|Bb) \times P(Bb)]} \right]^2 \\
+		=& \left[\dfrac{P(X|Bb) \cdot P(Bb)}{[P(X|BB) \cdot P(BB)] + [P(X|Bb) \cdot P(Bb)]} \right]^2 \\
 		=& \left[\dfrac{(1)(1/2)}{[(1)(1/4)] + [(1)(1/2)]} \right]^2 \\
 		=& \left[\dfrac{2}{3} \right]^2 \\
 		=& \dfrac{4}{9}
@@ -71,8 +71,8 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
     - Calculate $P(BB \times Bb | X)$. From the previous calculations, $P(BB | X)$ and $P(Bb | X)$ are already known to be 1/3 and 2/3, respectively. Since the mother could be $BB$ and the father $Bb$, or vice versa, remember to multiply by 2.
 		
     \begin{align*}
-		P(BB \times Bb | X) =& 2 \times P(BB|X) \times P(Bb|X) \\
-		=& 2 \times (1/3) \times (2/3) \\
+		P(BB \times Bb | X) =& 2 \cdot P(BB|X) \cdot P(Bb|X) \\
+		=& (2) (1/3)  (2/3) \\
 		=& \dfrac{4}{9}
     \end{align*}
 	
@@ -87,7 +87,7 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 	
     \textbf{Add together the probabilities of the three branches ending in Y.}
     \begin{align*}
-	P(Y|X) =& [P(BB \times BB | X) \times P(Y| BB \times BB)] + [P(Bb \times Bb | X) \times P(Y| Bb \times Bb)] + [P(BB \times Bb | X) \times P(Y| BB \times Bb)] \\
+	P(Y|X) =& [P(BB \times BB | X) \cdot P(Y| BB \times BB)] + [P(Bb \times Bb | X) \cdot P(Y| Bb \times Bb)] + [P(BB \times Bb | X) \cdot P(Y| BB \times Bb)] \\
 	=& [(1/9)(0)] + [(4/9)(1/4)] + [(4/9)(0)] \\
 	=& \dfrac{1}{9}
     \end{align*}
@@ -114,7 +114,7 @@ b) Does the probability in part a) change if it is now known that the paternal g
     Substitute this value into the final equation from part a): 
 	
     \begin{align*}
-	P(Y|X) =& 0 + [P(Bb \times Bb | X) \times P(Y| Bb \times Bb)] + 0 \\
+	P(Y|X) =& 0 + [P(Bb \times Bb | X) \cdot P(Y| Bb \times Bb)] + 0 \\
 	=& (2/3)(1/4) \\
 	=& \dfrac{1}{6}
     \end{align*}	
@@ -141,9 +141,9 @@ c) Given that their first child has brown eyes, what is the probability that the
     Start by writing out the total probability equation.
 	
     \begin{align*}
-	P(Z|X, Y^C) &= [P(BB \times BB | X, Y^C)(P(Z|BB \times BB, X, Y^C)] \\
-	& \qquad + [P(Bb \times Bb | X, Y^C)(P(Z|Bb \times Bb, X, Y^C)] \\
-	& \qquad + [P(BB \times Bb | X, Y^C)(P(Z|BB \times Bb, X, Y^C)]
+	P(Z|X, Y^C) &= [P(BB \times BB | X, Y^C) \cdot (P(Z|BB \times BB, X, Y^C)] \\
+	& \qquad + [P(Bb \times Bb | X, Y^C) \cdot (P(Z|Bb \times Bb, X, Y^C)] \\
+	& \qquad + [P(BB \times Bb | X, Y^C) \cdot (P(Z|BB \times Bb, X, Y^C)]
     \end{align*}
 	
     The second part of each term, the probability of Z given a combination of parental genotypes (and events $X$ and $Y^C$), can be calculated from the rules of genetics. Only a $Bb \times Bb$ pairing can potentially produce a blue-eyed child; $(P(Z|BB \times BB, X, Y^C) = 0$, $(P(Z|Bb \times Bb, X, Y^C) = 1/4$, $(P(Z|BB \times Bb, X, Y^C) = 0$.
@@ -158,15 +158,15 @@ c) Given that their first child has brown eyes, what is the probability that the
     Find $P(Bb \times Bb | X, Y^C)$. This probability can be found using Bayes' Rule, with $Y^C$ being partitioned into the three different ways it can occur (i.e. the three possible genotype pairs).
 	
     \begin{align*}
-	P(Bb \times Bb | X, Y^C) &= \dfrac{P(Bb \times Bb | X) \times P(Y^C | Bb \times Bb, X)}{P(Y^C | X)}
+	P(Bb \times Bb | X, Y^C) &= \dfrac{P(Bb \times Bb | X) \cdot P(Y^C | Bb \times Bb, X)}{P(Y^C | X)}
     \end{align*}
 	
     Note that the denominator, $P(Y^C|X)$, is the complement of the probability solved for in part a), $P(Y|X)$. Thus, $P(Y^C|X) = 1 - 1/9 = 8/9$. Alternatively, fully expand the denominator to solve for $P(Y^C|X)$:
 	
     \begin{align*}
-	P(Y^C|X) &= [(P(BB \times BB | X)) (P(Y^C | BB \times BB, X))] + [(P(BB \times Bb | X)) (P(Y^C | BB \times Bb, X))] \\
-	& \qquad + [(P(Bb \times Bb | X))(P(Y^C | Bb \times Bb, X))] \\
-	&= \left[ \left(\dfrac{1}{3} \right)^{2} \times 1 \right] + \left[ 2 \times \left( \dfrac{1}{3}\right) \left(\dfrac{2}{3} \right) \times 1 \right] + \left[ \left(\dfrac{2}{3} \right)^{2} \times \dfrac{3}{4} \right] \\
+	P(Y^C|X) &= [(P(BB \times BB | X)) \cdot (P(Y^C | BB \times BB, X))] + [(P(BB \times Bb | X)) \cdot (P(Y^C | BB \times Bb, X))] \\
+	& \qquad + [(P(Bb \times Bb | X)) \cdot (P(Y^C | Bb \times Bb, X))] \\
+	&= \left[ \left(\dfrac{1}{3} \right)^{2} \times 1 \right] + \left[ (2) \left( \dfrac{1}{3}\right) \left(\dfrac{2}{3} \right) (1) \right] + \left[ \left(\dfrac{2}{3} \right)^{2}  \dfrac{3}{4} \right] \\
 	& = \dfrac{1}{9} + \dfrac{4}{9} + \dfrac{3}{9} \\
 	& = \dfrac{8}{9}
     \end{align*}
@@ -174,8 +174,8 @@ c) Given that their first child has brown eyes, what is the probability that the
     Finish solving for $P(Bb \times Bb | X, Y^C)$:
 	
     \begin{align*}
-	P(Bb \times Bb | X, Y^C) &= \dfrac{P(Bb \times Bb | X) \times P(Y^C | Bb \times Bb, X)}{P(Y^C | X)} \\
-	&= \dfrac{\left[ \left(\dfrac{2}{3} \right)^{2} \times \dfrac{3}{4} \right]}{\dfrac{8}{9}} = \dfrac{3}{8}
+	P(Bb \times Bb | X, Y^C) &= \dfrac{P(Bb \times Bb | X) \cdot P(Y^C | Bb \times Bb, X)}{P(Y^C | X)} \\
+	&= \dfrac{\left[ \left(\dfrac{2}{3} \right)^{2} \left( \dfrac{3}{4} \right) \right]}{\dfrac{8}{9}} = \dfrac{3}{8}
     \end{align*}
 	
     Return to the simplified total probability equation.
