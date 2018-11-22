@@ -121,7 +121,31 @@ ci.upper.bound = x.bar + m
 ci.lower.bound; ci.upper.bound
 ```
 
+    d) The standard deviation of weight in the sample is 17.52 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
+    
+    \color{NavyBlue}
+    
+    For $s = 20$, the 95\% confidence interval is (61.68, 76.00) kg, while for $s = 25$, the 95\% confidence interval is (59.90, 77.79) kg. As sample standard deviation increases, the confidence intervals become wider. In comparison, the original interval with $s = 17.52$ kg was about 12.5 kg wide; this increased to 14.5 kg and 18 kg. Intuitively, one would expect that observing less variability in a sample allows for a more precise estimate of the population parameter. This effect can also be determined through examining the formula for $m$, the margin of error; as $s$ increases, the margin of error increases since the numerator of the standard error ($s/\sqrt{n}$) increases.
+    
+    \color{Black}
 
+    ```{r}
+#use r as a calculator
+
+#set the values
+x.bar = mean(yrbss.sample$weight)
+s = c(20, 25)
+n = 30
+z.star = qnorm(0.975)
+
+#calculations
+m = s/sqrt(n) * z.star
+ci.lower.bound = x.bar - m
+ci.upper.bound = x.bar + m
+
+#confidence interval
+ci.lower.bound; ci.upper.bound
+```
         
 2. In general, for a confidence interval of $(1 - \alpha)(100)\%$, $z^\star$ is the point on a standard normal distribution that has area $1 - (\alpha/2)$ to the left (and area $\alpha/2$ to the right). For a 95\% confidence interval, $\alpha = 0.05$; $z^\star$ is the point on a standard normal distribution with area $1 - (0.05/2) = 0.975$ to the left.
 
@@ -274,6 +298,7 @@ yrbss.sample = yrbss.complete[sample.rows, ]
 #calculate confidence interval
 t.test(yrbss.sample$weight, conf.level = 0.95)$conf.int
 ```
+
 \newpage
 
 #### The interpretation of "confidence"
