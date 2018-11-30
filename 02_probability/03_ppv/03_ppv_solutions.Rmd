@@ -152,7 +152,7 @@ ppv
     
 2. **Simulation approach**. Rather than building a population based on expected values, a population can be simulated using the provided probabilities. This approach was introduced in the previous lab.
 
-    The following code creates a simulated dataset of 100,000 individuals that each have a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
+    The following code creates a simulated dataset of 100,000 individuals each of whom  has a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
     
     ```{r, eval = TRUE}
 #define parameters
@@ -389,11 +389,11 @@ ppv
 
     \color{NavyBlue}
 
-    As the prevalence of breast cancer increases, PPV also increases. If more women have the disease, the chance of a positive test result being a true positive increases (and the chances of the result being a false positive decreases).
+    As the prevalence of breast cancer increases, PPV also increases. If more women have the disease, the chance of a positive test result being a true positive increases (and the chance of the result being a false positive decreases).
 
-    To explain the reason for this trend, it is helpful to refer to the PPV formula and consider extreme cases. Suppose that the prevalence of a disease is very low, and extremely close to 0; the numerator would also be close to 0, causing PPV to be low. In the other direction, if prevalence is very high (almost 1), then the second term in the denominator that contains *(1 - prevalence)* essentially disappears, and the numerator divided by the denominator will be very high (almost 1). 
+    To explain the reason for this trend, it is helpful to refer to the PPV formula and consider extreme cases. Suppose that the prevalence of a disease is very small and close to 0; the numerator would also be close to 0, causing PPV to be small. In the other direction, if prevalence is  large (almost 1), then the second term in the denominator that contains *(1 - prevalence)* essentially disappears, and the numerator divided by the denominator will be almost 1. 
 
-    Another way to think about this is to focus on the denominator, which quantifies the number of true positives and false positives. When prevalence increases, even though both the numerator and denominator are increasing from $[prev \times sensitivity]$, the denominator is also decreasing from $[(1-prev) \times (1-specificity)]$ decreasing (since as prevalence increases, the quantity $(1 - prev)$ decreases). Since sensitivity and specificity are constant, increasing prevalence has the effect of increasing the number of true positives (left term) and decreasing the number of false positives (right term). PPV increases when the number of true positives increases.
+    Another way to think about this is to focus on the denominator, which quantifies the number of true positives and false positives. When prevalence increases, even though both the numerator and denominator are increasing from $[prev \times sensitivity]$, the denominator is also decreasing from $[(1-prev) \times (1-specificity)]$ (since as prevalence increases, the quantity $(1 - prev)$ decreases). Since sensitivity and specificity are constant, increasing prevalence has the effect of increasing the number of true positives (left term) and decreasing the number of false positives (right term). PPV increases when the number of true positives increases.
 
     \[P(D|T^{+}) = \frac{\text{prevalence} \times
     \text{sensitivity}}{[\text{prev} \times
@@ -414,7 +414,7 @@ ppv
 	\end{tabular}
     \end{table}
 
-    The following \textsf{R} chunk demonstrates how \textsf{R} can be used as a calculator; the code calculates PPV through applying Bayes' rule.
+    The following \textsf{R} chunk demonstrates how \textsf{R} can be used as a calculator; the code calculates PPV using Bayes' rule.
     
     \color{Black}
 
@@ -435,7 +435,7 @@ ppv
 
     Additional Comments: 
 
-    The relationship between PPV and prevalence has very important implications in breast cancer and in screening populations for diseases.  A paper published on February 9, 2017 (yes, just last week) in *Cancer Epidemiology Biomarkers \& Prevention* suggests that women who experience a false positive mammogram are less likely to return for their regularly scheduled mammogram than women who receive a true negative.  False positives are usually confirmed with a biopsy, and this unpleasant experience seems to have a negative influence on health behavior. You may be able to view the article through the Harvard Library online resources; it had not yet been posted on the morning of February 9.
+    The relationship between PPV and prevalence has very important implications in breast cancer and in screening populations for diseases.  A paper published on February 9, 2017 in *Cancer Epidemiology Biomarkers \& Prevention* suggests that women who experience a false positive mammogram are less likely to return for their regularly scheduled mammogram than women who receive a true negative.  False positives are usually confirmed with a biopsy, and this unpleasant experience seems to have a negative influence on health behavior. 
 
     More generally, small values of PPV in diseases with low prevalence make it impractical and sometimes unethical to screen for diseases with low prevalence.  In the early days of the HIV epidemic in the US, there was considerable support for screening everyone for HIV.  The epidemic was real, but the number of HIV+ individuals in the US was very small, and false positive tests might have led to the loss of employment or other stigma.  Fortunately, mass screening was never implemented.  It is possible to `increase' prevalence by restricting the screened population to individuals at high risk for a disease, because the prevalence in the high risk population would be higher. Viewed this way, prevalence is a conditional probability of disease, given membership in a high risk population.
 
@@ -445,7 +445,7 @@ ppv
 
     d) Suppose that two new mammogram imaging technologies have been developed which can improve the PPV associated with mammograms; one improves sensitivity to 99\% (but specificity remains at 95\%), while the other improves specificity to 99\% (while sensitivity remains at 85\%). Which technology offers a higher increase in PPV? Explain your answer.
 
-    \textcolor{NavyBlue}{The technology that raises specificity to 99\% offers a higher increase. For example, see the below code that tests how PPV changes for the 70 - 80 age group, as compared to the current PPV of 0.403; while raising sensitivity only increases PPV to 0.440, raising specificity increases PPV to 0.771. Since prevalence of the disease only ranges between less than 1\% to at most $\sim$ 4\%, most of the people tested do not have breast cancer. This implies that the low PPV is largely due to the high number of false positives. This value is related to the specificity. If specificity increases, this increases the number of true negatives and decreases the number of false positives. Increasing sensitivity can potentially increase the number of true positives detected and raise PPV, but this does not have as strong an effect.}
+    \textcolor{NavyBlue}{The technology that raises specificity to 99\% offers a higher increase. For example, see the code below that tests how PPV changes for the 70 - 80 age group, as compared to the current PPV of 0.403; while raising sensitivity only increases PPV to 0.440, raising specificity increases PPV to 0.771. Since prevalence of the disease only ranges between less than 1\% to at most $\sim$ 4\%, most of the people tested do not have breast cancer. This implies that the low PPV is largely due to the high number of false positives. This value is related to the specificity. If specificity increases, this increases the number of true negatives and decreases the number of false positives. Increasing sensitivity can potentially increase the number of true positives detected and raise PPV, but this does not have as strong an effect.}
 
     ```{r}
 #test high sensitivity
@@ -526,7 +526,7 @@ npv
 	
     c) Explain the reason for the trends in part b), in language that someone who has not taken a statistics course would understand. 
 	
-	  \textcolor{NavyBlue}{The probability that a man has prostate cancer, given a positive test, necessarily increases as the overall probability of having prostate cancer increases. If more men have the disease, the chance of a positive test result being a true positive increases (and the chances of the result being a false positive decreases). The decreasing NPV values follow similar logic: if more men have the disease, the chance of a negative test being a true negative decreases (and the chances of the result being a false negative increases). }
+	  \textcolor{NavyBlue}{The probability that a man has prostate cancer, given a positive test, necessarily increases as the overall probability of having prostate cancer increases. If more men have the disease, the chance of a positive test result being a true positive increases (and the chances of the result being a false positive decreases). The decreasing NPV values follow similar logic: if fewer men have the disease, the chance of a negative test being a true negative decreases (and the chances of the result being a false negative increases). }
 	
 	
 	
@@ -534,9 +534,11 @@ npv
 
     \color{NavyBlue}
     
-    Lowering the cutoff for a positive test would result in more men testing positive, since men with PSA values 2.5 ng/ml to 4.1 ng/ml were not previously classified as testing positive. Since the sensitivity of a test is the proportion who test positive among those who have disease, and the number with disease does not change, the proportion will increase, except in the rare and unlikely situation where the additional positive tests are among only men without the disease.
+    Lowering the cutoff for a positive test would result in more men testing positive, since men with PSA values 2.5 ng/ml to 4.1 ng/ml were not previously classified as testing positive. Since the sensitivity of a test is the proportion who test positive among those who have disease, and the number with disease does not change, the proportion will increase, causing sensitivity to increase.  
+    
+    Lowering the cutoff will cause fewer men to test negative.  Since the proportion without the disease will not change, sensitivity (the proportion of men testing negative among those who are negative) will decrease.
 
-    The effect on sensitivity can be seen by creating a table of a hypothetical population of 10,000 men. The table below corresponds to an overall prevalence of 0.05, sensitivity of 0.20, and specificty of 0.94. Note that since prevalence remains constant (in a given age group), the totals for $D$ and $D^C$ must remain the same.
+    It may be helpful to examine a numerical example. The table below corresponds to hypothetical population of 10,000 men in a particular age group with an overall prevalence of 0.05, sensitivity of 0.20, and specificty of 0.94. Since prevalence remains constant in a given age group, the totals for $D$ and $D^C$ must remain the same when test results are changed.
 
     \begin{center}
     \begin{tabular}{l|l|l|l}
@@ -547,13 +549,15 @@ npv
     \end{tabular}
     \end{center}
 
-    The following explanation is based on the idea that men with high PSA levels (i.e. between 4.1 ng/ml and 2.5 ng/ml) are far more likely to have prostate cancer. Thus, it is unlikely that an increase in positive tests will completely consist of false positives; it is also unlikely that all men who previously tested negative did not have prostate cancer.
 
-    - Suppose the number of positive tests ($T^+$, Total) were to increase to 700. Unless all of the additional 30 positive tests are false positives, the 100 in the upper left cell ($T^+$, $D$) must increase, and the number of false negatives ($T^-$, $D$) must decrease (since the total $D$ must remain constant). This causes test sensitivity ($P(T^{+}|D)$), the ratio of the upper left cell to 500), to increase. 
+    - Suppose with a change in the cutoff, the number of positive tests ($T^+$, Total) were to increase from 670 to 700. It is reasonable to assume that some but not all of the additional 30 positive tests are false positives. The 100 in the upper left cell ($T^+$, $D$) must increase, and because the total with disease remains 500,  sensitivity ($P(T^{+}|D)$), the ratio of the upper left cell to 500), increases. 
+    
+    - If the total testing positive increases to 700, the total testing negative decreases to 9,300. Assuming that some of the 30 now positive but previously negative tests were true negatives, the 8,930 true negatives in the middle cell ($T^-$, $D^C$) must decrease. This causes test specificity ($P(T^{-}|D^C)$), the ratio of the middle cell to 9,500), to decrease. 
+    
+    - It is easy to show that in the extreme situation where all of the additional positive tests are false positive, sensitivity does not change and specificity still decreases.
+    
+     This example shows the features of all diagnostic tests based on a quantitative level of a biomarker.  The sensitivity and specificity of the test depend on the level used to `make a call' that disease is present.  The same logic used in this problem can be used to show that if the level of PSA used to indicate prostate cancer is increased, sensitivity will decrease and specificity will increase.
 
-    - The number of negative tests ($T^-$, Total) decreases, since a man's PSA level would now have to be below 2.5 ng/ml to be classified as testing negative. Unless all of the 30 previously negative tests were true negatives, the 8,930 in the middle cell ($T^-$, $D^C$) must decrease, and the number of false positives ($T^+$, $D^C$) must increase (since the total $D^C$ must remain constant). This causes test specificity ($P(T^{-}|D^C)$), the ratio of the middle cell to 9,500), to decrease. 
-
-    \textit{Alternative Justification.} If the assumption is made that all additional positive tests are false positives, changing the 570 in the upper middle cell to 600, then the number of true negatives ($T^-$, $D^C$) decreases. This has no effect on test sensitivity and decreases test specificity.
 
     \color{Black}
 

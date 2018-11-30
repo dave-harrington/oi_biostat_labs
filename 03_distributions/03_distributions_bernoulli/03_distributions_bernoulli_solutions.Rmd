@@ -37,12 +37,10 @@ Let $X$ represent the number of trials required to obtain a success in a series 
 
 For a geometric random variable, $E(X) = \frac{1}{p}$ and $Var(X) = \frac{1-p}{p^2}$.
 
-The other convention for defining the geometric distribution models the number of trials required to obtain the first success; i.e., the number of failures until the first success.
+The other convention for defining the geometric distribution models the number of failures required to obtain the first success; i.e., the number of failures until the first success.
 Formally, let $Y$ be the number of failures until the first success. $Y = X - 1$, where $Y$ can take on values $\{0, 1, 2, \dots \}$ and $X$ can take on values $\{1, 2, 3, \dots\}$.\footnote{For reference, $E(Y) = \frac{1-p}{p}$ and $Var(Y) = \frac{1-p}{p^2}$.} 
 
-The text and the labs use the former convention, while \textsf{R} calculates geometric probabilities using the latter definition. so care should be taken when using \texttt{dgeom()} and \texttt{pgeom()}.
-
-The following code shows how to calculate $P(X = 5)$, $P(X \leq 5)$, and $P(X > 5)$ for $X \sim \text{Geom}(0.35)$, where $X$ includes the successful trial.
+The text and the labs use the former convention, while \textsf{R} calculates geometric probabilities using the latter definition, so care should be taken when using \texttt{dgeom()} and \texttt{pgeom()}.The following code shows how to calculate $P(X = 5)$, $P(X \leq 5)$, and $P(X > 5)$ for $X \sim \text{Geom}(0.35)$, where $X$ includes the successful trial.
 
 ```{r}
 #probability X equals 5
@@ -54,6 +52,7 @@ pgeom(5 - 1, 0.35)
 #probability X is greater than 5
 pgeom(5 - 1, 0.35, lower.tail = FALSE)
 ```
+
 
 The following code shows how to simulate a geometric random variable for a given success probability $p$ and number of replicates.
 

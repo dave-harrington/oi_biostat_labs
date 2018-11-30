@@ -132,7 +132,7 @@ total.expected.negatives
     
 2. **Simulation approach**. Rather than building a population based on expected values, a population can be simulated using the provided probabilities. This approach was introduced in the previous lab.
 
-    The following code creates a simulated dataset of 100,000 individuals that each have a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
+    The following code creates a simulated dataset of 100,000 individuals each of whom has a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
     
 ```{r, eval = FALSE}
 #define parameters

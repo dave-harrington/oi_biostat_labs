@@ -24,7 +24,7 @@ output:
 	
 \end{small}
 
-This lab discusses two additional distributions: the normal and Poisson. Working with normal probabilities and evaluating the normal approximation will be especially important in later units on inference. The Poisson distribution is useful for estimating the number of events in a large population over a unit of time.
+This lab discusses two additional distributions: the normal and Poisson. Working with normal probabilities and evaluating the normal approximation will be especially important in later units on inference. The Poisson distribution is useful for estimating the rate that events occur in a large population over a unit of time.
 
 The material in this lab corresponds to Sections 3.3 and 3.4 of *OpenIntro Biostatistics*.
 
@@ -33,11 +33,11 @@ The material in this lab corresponds to Sections 3.3 and 3.4 of *OpenIntro Biost
 
 A normal distribution curve is characterized by two parameters: the mean ($\mu$) and standard deviation ($\sigma$). The normal distribution with mean 0 and standard deviation 1 is referred to as the standard normal distribution; a random variable following the standard normal distribution is typically denoted as $Z$. 
 
-The $Z$-score of an observation quantifies how far the observation is from the mean, in units of standard deviation(s). The $Z$-score for an observation $x$ from a random variable $X \sim \text{N}(\mu, \sigma)$ equals
-\[Z = \frac{x-\mu}{\sigma}. \]
+The $z$-score of an observation quantifies how far the observation is from the mean, in units of standard deviation(s). The $z$-score for an observation $x$ from a random variable $X \sim \text{N}(\mu, \sigma)$ equals
+\[z = \frac{x-\mu}{\sigma}. \]
 
-In the reverse direction, the value $x$ from $X \sim \text{N}(\mu, \sigma)$ associated with a particular $Z$-score equals
-\[x = \mu + \sigma Z. \]
+In the reverse direction, the value $x$ from $X \sim \text{N}(\mu, \sigma)$ associated with a particular $z$-score equals
+\[z = \mu + \sigma z. \]
 
 Normal probabilities are calculated in \textsf{R} with the use of \texttt{pnorm}. 
 
@@ -100,7 +100,7 @@ qnorm(0.159, lower.tail = FALSE)
 The Poisson distribution is characterized by a single parameter, $\lambda$, which expresses the rate of event occurrences per unit time; $X \sim \text{Pois}(\lambda)$. The probability that exactly $k$ events occur in $t$ units of time is
 \[P(X = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!}. \]
 
-For a Poisson random variable, $E(X) = \lambda$ and $Var(X) = \lambda$. 
+For a Poisson random variable, $E(X) = \lambda$ and $\text{Var}(X) = \lambda$. 
 
 The following code shows how to calculate $P(X = 5)$, $P(X \leq 5)$, and $P(X > 5)$ for $X \sim \text{Pois}(3)$.
 

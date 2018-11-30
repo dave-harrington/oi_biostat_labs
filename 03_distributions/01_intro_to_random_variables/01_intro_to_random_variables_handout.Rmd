@@ -71,8 +71,8 @@ for(k in 1:number.replicates){
           ii. Calculate $E(X)$, where 
           \[E(X) 	= x_1 P(X=x_1) + \cdots + x_k P(X=x_k) = \sum_{i=1}^{k}x_iP(X=x_i)\]
   
-          iii. Calculate $Var(X)$, where
-          \[Var(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
+          iii. Calculate $\text{Var}(X)$, where
+          \[\text{Var}(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
 
 
 #### Binomial Distribution
@@ -80,7 +80,7 @@ for(k in 1:number.replicates){
 Let $X$ represent the number of successes in a series of independent Bernoulli trials. Suppose the probability of a single trial being a success is $p$. The probability of observing exactly $k$ successes in $n$ independent trials is given by
 \[P(X = k) = { n \choose k} p^k (1-p)^{n-k} = \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}. \]
 
-For a binomial random variable, $E(X) = np$ and $Var(X) = np(1-p)$.
+For a binomial random variable, $E(X) = np$ and $\text{Var}(X) = np(1-p)$.
 
 Binomial probabilities are calculated in \textsf{R} with the use of \texttt{dbinom} and \texttt{pbinom}.
 
@@ -104,7 +104,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 
     a) Confirm that the clinical trial satisfies the conditions for a binomial experiment.
   
-    b) Calculate $E(X)$ and $Var(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
+    b) Calculate $E(X)$ and $\text{Var}(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
 
 4. Approximately 12,500 stocks of *Drosophila melanogaster* flies are kept at the Bloomingdale *Drosophila* Stock Center for research purposes. A 2006 study examined how many stocks were infected with Wolbachia, an intracellular microbe that can manipulate host reproduction for its own benefit. About 30\% of stocks were identified as infected. Researchers working with infected stocks should be cautious of the potential confounding effects that Wolbachia infection may have on experiments.
 
@@ -116,7 +116,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
     
     c) Calculate the probability that at least 80 stocks are infected. 
     
-    d) If a researcher wants to make sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
+    d) Assume that a researcher will use all of the stocks sampled for an experiment. If the researcher wants to be sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
     
     e) Demonstrate how parts a) through d) can be approached through simulation.
     
@@ -126,7 +126,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
     
     b) Calculate the probability that exactly 3 out of a new sample of 100 American adults have not had chickenpox in their childhood.
     
-    c) What is the probability that at least 1 out of 10 randomly sampled American adult have had chickenpox?
+    c) What is the probability that at least 1 out of 10 randomly sampled American adult has had chickenpox?
     
     d) What is the probability that at most 3 out of 10 randomly sampled American adults have not had chickenpox?
     
