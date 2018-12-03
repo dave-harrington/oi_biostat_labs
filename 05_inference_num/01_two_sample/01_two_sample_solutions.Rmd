@@ -361,11 +361,13 @@ t.test(swim$wet.suit.velocity, swim$swim.suit.velocity,
 
 
     
-    b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about variance and uncertainty).
+    b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about the variance between individuals, versus the variance between two measurements on the same individual).
 
-    \textcolor{NavyBlue}{Consider an independent group design for the swim study: 24 swimmers could be selected, in which one half of the swimmers complete a 1500m swim wearing a wetsuit and the other half swim wearing a swimsuit. In order for there to be sufficient evidence of a difference, the difference in means must be large relative to the standard error, which accounts for the variation in swim velocities within groups.} 
+    \textcolor{NavyBlue}{Consider an independent group design for the swim study in which one half of the swimmers complete a 1500m swim wearing a wetsuit and the other half swim wearing a swimsuit. In order for there to be sufficient evidence of a difference, the difference in means must be large relative to the variance in swim velocities within groups (as measured by the standard error of the test statistic).} 
     
-    \textcolor{NavyBlue}{A paired study design takes advantage of the correlation between two observations in a pair; in the context of the swim study, each swimmer acts as their own control.} 
+    \textcolor{NavyBlue}{In a paired study design, each swimmer acts as their own control. Rather than measure the effect of wearing a swim suit by comparing the average difference between two groups, the pairing allows for a difference to be calculated at the individual level, for each participant. A paired design leverages the fact that two measurements on one individual will tend to be correlated, and more similar than two measurements made on separate individuals.}
+    
+    \textcolor{NavyBlue}{Note: The concept of a statistical test having more capacity to show evidence of a difference (when the alternative hypothesis is true and a difference exists at the population level) is referred to as power. Power will be explored in a later section of the chapter (and lab exercise).}
 
 
     
@@ -374,9 +376,11 @@ t.test(swim$wet.suit.velocity, swim$swim.suit.velocity,
 
     The data are in the \texttt{dds.discr} dataset in \texttt{oibiostat}. Descriptions of the variables are provided in the documentation file.
 
-  a) Is there evidence of a difference in mean expenditures by ethnic group, comparing Hispanics to White non-Hispanics? There is substantial skew in the distribution of expenditures within each group, so it is advisable to apply a natural log transformation before conducting a $t$-test. Summarize the results of the test.
+    a) Is there evidence of a difference in mean expenditures by ethnic group, comparing Hispanics to White non-Hispanics? There is substantial skew in the distribution of expenditures within each group, so it is advisable to apply a natural log transformation before conducting a $t$-test. Summarize the results of the test.
+    
+    \textcolor{NavyBlue}{When ignoring age, there is significant evidence of a difference in mean expenditures between Hispanics and White non-Hispanics. It appears that on average, White non-Hispanics receive a higher amount of developmental disability support from the state of California ($\overline{x} > \overline{y}$).}
 
-```{r}
+    ```{r}
 #load the data
 library(oibiostat)
 data("dds.discr")
@@ -385,17 +389,28 @@ data("dds.discr")
 dds.discr$log.expenditures = log(dds.discr$expenditures)
   
 #conduct test
-
+t.test(dds.discr$log.expenditures[dds.discr$ethnicity == "White not Hispanic"],
+       dds.discr$log.expenditures[dds.discr$ethnicity == "Hispanic"])
 ```
 
 
     
-  b) One way to account for the effect of age is to compare mean expenditures within age cohorts. When comparing individuals of similar ages, are the differences in mean expenditures by ethnic group larger than would be expected by chance alone?
+    b) One way to account for the effect of age is to compare mean expenditures within age cohorts. When comparing individuals of similar ages, are the differences in mean expenditures by ethnic group larger than would be expected by chance alone?
     
-    Conduct two $t$-tests to examine the evidence against the null hypothesis of no difference in mean expenditures within the two largest age cohorts: 13-17 years and 22-50 years. Summarize the results.
+        Conduct two $t$-tests to examine the evidence against the null hypothesis of no difference in mean expenditures within the two largest age cohorts: 13-17 years and 22-50 years. Summarize the results.
+    
+    \textcolor{NavyBlue}{The $p$-values are large (0.75 and 0.51); it is not unlikely to see the observed discrepancy in means if the population means are actually the same. There is not evidence of a difference between mean expenditures in Hispanics and White non-Hispanics within either age cohort. This inference-based approach supports the conclusions from the earlier exploratory lab.}  
         
-```{r}
-#conduct tests
+    ```{r}
+#create subsets
+ages.13to17 = dds.discr[dds.discr$age.cohort == "13-17", ]
+ages.22to50 = dds.discr[dds.discr$age.cohort == "22-50", ]
 
+#conduct tests
+t.test(ages.13to17$expenditures[ages.13to17$ethnicity == "White not Hispanic"],
+       ages.13to17$expenditures[ages.13to17$ethnicity == "Hispanic"])
+
+t.test(ages.22to50$expenditures[ages.22to50$ethnicity == "White not Hispanic"],
+       ages.22to50$expenditures[ages.22to50$ethnicity == "Hispanic"])
 ```
 

@@ -320,7 +320,7 @@ t.test( ~ , mu = , alternative = "",
 
 
     
-  b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about variance and uncertainty).
+  b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about the variance between individuals, versus the variance between two measurements on the same individual).
 
 
 
@@ -351,6 +351,10 @@ dds.discr$log.expenditures = log(dds.discr$expenditures)
     Conduct two $t$-tests to examine the evidence against the null hypothesis of no difference in mean expenditures within the two largest age cohorts: 13-17 years and 22-50 years. Summarize the results.
         
 ```{r}
+#create subsets
+ages.13to17 = dds.discr[dds.discr$age.cohort == "13-17", ]
+ages.22to50 = dds.discr[dds.discr$age.cohort == "22-50", ]
+
 #conduct tests
 
 ```

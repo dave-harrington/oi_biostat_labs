@@ -122,7 +122,7 @@ In the Functional polymorphisms Associated with Human Muscle Size and Strength s
 
     a) Use \texttt{t.test()} to analyze the data accordingly and summarize the results. Do the results suggest a different conclusion than those of the original analysis?
     
-    b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about variance and uncertainty).
+    b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about the variance between individuals, versus the variance between two measurements on the same individual).
     
     
 11. Chapter 1 (Section 7.1, Lab 2) presented an exploratory analysis of the relationship between age, ethnicity, and the amount of expenditures for supporting developmentally disabled residents in the State of California. When age is ignored, the expenditures per consumer is larger on average for White non-Hispanics than Hispanics, but the average differences by ethnicity were much smaller within age cohorts. Hypothesis testing can be used to conduct a more formal analysis of the differences in expenditures by ethnicity, both overall (i.e., ignoring age) and within age cohorts.
