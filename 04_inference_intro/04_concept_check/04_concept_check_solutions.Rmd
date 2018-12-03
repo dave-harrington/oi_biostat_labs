@@ -210,7 +210,7 @@ pt(t, df = n - 1, lower.tail = TRUE)
     
     \textcolor{NavyBlue}{The interval does not contain the $\mu_0$ value of 7.0 hours; 7.0 hours is not a plausible value for $\mu_0$ according to the confidence interval, which agrees with the conclusion from part a). While the interval provides a plausible range of values for the population mean hours sleep per night, the $p$-value from the test gives a measure of the strength of the evidence against $H_0$.}
     
-    \textcolor{NavyBlue}{Note that while the results of the test are statistically significant, but not necessarily practically significant. 6.97 hours is only about 2 minutes less than 7 hours. Thus, from a practical standpoint that 2 minutes of sleep is a negligible amount, this sample does not provide convincing evidence that American adults sleep less than 7 hours per night.}
+    \textcolor{NavyBlue}{Note that while the results of the test are statistically significant, but not necessarily practically significant. 6.97 hours is only about 2 minutes less than 7 hours. Thus, from a practical standpoint that 2 minutes of sleep is a negligible amount, this sample does not provide convincing evidence that American adults sleep a meaningful amount less than 7 hours per night.}
   
     ```{r}
 #use r as a calculator

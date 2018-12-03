@@ -20,7 +20,7 @@ Hypothesis testing operates under a different perspective---under the working hy
 
 The material in this lab corresponds to Section 4.3.1 - 4.3.2 of *OpenIntro Biostatistics*.
 
-####Introduction to hypothesis testing
+#### Introduction to hypothesis testing
 
 This lab uses data from the National Health and Nutrition Examination Survey (NHANES), a survey conducted annually by the US Centers for Disease Control (CDC).\footnote{The dataset was first introduced in Chapter 1, Lab 1 (Introduction to Data).} The complete \texttt{NHANES} dataset contains 10,000 observations, which will be the artificial target population. 
 
@@ -56,7 +56,7 @@ boxplot(nhanes.samp.adult$SleepHrsNight)
 
 
     
-    b) Based on the distribution of nightly sleep hours in the sample, does it seem like the population mean nightly sleep hours will be outside the range defined as adequate (7 - 9 hours)?
+    b) Based on the distribution of nightly sleep hours in the sample, does it seem that the population mean nightly sleep hours may be outside the range defined as adequate (7 - 9 hours)?
 
     \textcolor{NavyBlue}{Yes, it seems like the population mean nightly sleep hours will be outside the range defined as adequate; the sample mean at 6.9 hours is just below the lower end of this range.}
 
@@ -136,7 +136,7 @@ t.test(nhanes.samp.adult$SleepHrsNight, mu = 8, alternative = "less")
 
 
     
-####Hypothesis Testing: Cholesterol Level
+#### Hypothesis Testing: Cholesterol Level
 
 High cholesterol is a major controllable risk factor for coronary heart disease, heart attack, and stroke. According to general guidelines, a total cholesterol level below 5.2 mmol/L is desirable, in the 5.2 - 6.2 mmol/L range is borderline high, and above 6.2 mmol/L is high. 
 
@@ -209,7 +209,7 @@ t.test(x = nhanes.samp.adult$TotChol, mu = 5.2, alternative = "two.sided")
     \textcolor{NavyBlue}{The $p$-value is greater than $\alpha$; there is insufficient evidence to reject the null hypothesis in favor of the alternative. Based on these data, the population mean total cholesterol level may not be different from 5.2 mmol/L. Note that it would be inappropriate to conclude that the population mean total cholesterol level \textit{is} 5.2 mmol/L; failure to reject the null does not imply that the null is true.}
 
 
-####Hypothesis Testing: Body Temperature
+#### Hypothesis Testing: Body Temperature
 
 Mean body temperature is commonly accepted to be 98.6 degrees Fahrenheit. The origin of this benchmark value is credited to Carl Wunderlich, a scientist working in clinical thermometry in the late 19th century. A study was conducted in 1992 to evaluate whether population mean body temperature among healthy adults is really 98.6 F. Data were collected from healthy volunteers who had agreed to participate in a separate set of vaccine trials; these data are in the dataset \texttt{thermometry} in the \texttt{oibiostat} package.
 

@@ -42,7 +42,7 @@ These labs demonstrate inference with the $t$-distribution, rather than the norm
 
 \newpage
 
-#Lab 1: Sampling Variability
+# Lab 1: Sampling Variability
 
 The first part of the lab covers taking a single sample from \texttt{yrbss}. In the second part, many samples are taken and their means calculated via a \texttt{for} loop.
 
@@ -107,7 +107,9 @@ Unlike the previous simulation which drew samples from \texttt{yrbss}, this simu
 
 \vspace{0.5cm}
 
-The \textbf{\texttt{complete.cases()}} function returns a logical vector specifying which observations or rows have no missing values. The following example illustrates how \texttt{complete.cases} returns \texttt{TRUE} for the first three values in the vector \texttt{x} and \texttt{FALSE} for the last two values; bracket notation is then used to extract the values of \texttt{x} for which the values are not missing (i.e., the cases are complete).
+The \textbf{\texttt{complete.cases()}} function returns a logical vector specifying which observations or rows have no missing values. The following example illustrates how \texttt{complete.cases} returns \texttt{TRUE} for the first three values in the vector \texttt{x} and \texttt{FALSE} for the last two values; bracket notation is then used to extract the values of \texttt{x} for which the values are not missing (i.e., the cases are complete). 
+
+Generally, missing data should be handled with care, since data that is selectively missing from a particular subset may mean that the complete cases do not represent the target population.  If, for instance, a large number of adolescents who were overweight were more likely to refuse having their weight recorded, the average weight in the complete cases would be too small.  Since sophisticated methods for conducting inference in the presence of missing data are beyond the scope of this course, however, this lab uses complete cases for instructional purposes.
 
 
 ```{r}
@@ -148,10 +150,10 @@ This lab introduces the essential functions for conducting hypothesis tests (for
 The function \textbf{\texttt{pt()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
 
 ```{r, eval = FALSE}
-pt(q, df, lower.tail = FALSE)
+pt(q, df, lower.tail = TRUE)
 ```
 
-where \texttt{q} is $k$ and \texttt{df} is the degrees of freedom. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+where \texttt{q} is $k$ and \texttt{df} is the degrees of freedom. By default (\texttt{lower.tail = TRUE}), \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
 
 The following code shows how to calculate $P(X \leq 1.20)$ and $P(X > 1.20)$ for $X \sim t_{df = 20}$. 
 
@@ -168,12 +170,12 @@ pt(1.20, df = 20, lower.tail = FALSE)
 The function \textbf{\texttt{qt()}} used to identify the observation that corresponds to a particular probability $p$ has the generic structure
 
 ```{r, eval = FALSE}
-qt(p, df, lower.tail = FALSE)
+qt(p, df, lower.tail = TRUE)
 ```
 
-where \texttt{p} is $p$ and \texttt{df} is the degrees of freedom. By default, \textsf{R} identifies the observation that corresponds to area $p$ in the lower tail (i.e., to the left). To identify the observation with area $p$ in the upper tail, specify \texttt{lower.tail = FALSE}.
+where \texttt{p} is $p$ and \texttt{df} is the degrees of freedom. By default (\texttt{lower.tail = TRUE} ), \textsf{R} identifies the observation that corresponds to area $p$ in the lower tail (i.e., to the left). To identify the observation with area $p$ in the upper tail, specify \texttt{lower.tail = FALSE}.
 
-The following code shows how to calculate the value of the observation where there is 0.841 area to the left (and 0.159 area to the right) on a $t$-distribution with 20 degrees of freedom.
+The following code shows how to calculate the value of the observation with 0.841 area to the left (and 0.159 area to the right) on a $t$-distribution with 20 degrees of freedom.
 
 ```{r}
 #identify X value
@@ -202,7 +204,7 @@ library(oibiostat)
 data("nhanes.samp.adult")
 
 #conduct test
-t.test(nhanes.samp.adult$Height, mu = 168, alternative = "less", conf.level = 0.90)
+t.test(nhanes.samp.adult$Height, mu = 168, alternative = "greater", conf.level = 0.90)
 ```
 
 The output of \texttt{t.test()} is organized as a list object, and so specific pieces can be extracted using the dollar sign (\texttt{\$}) and the name of the desired component. The possible components include the $t$-statistic (\texttt{statistic}), degrees of freedom (\texttt{parameter}), $p$-value (\texttt{p.val}), sample mean (\texttt{estimate}), and $\mu_0$ (\texttt{null.value}).
@@ -226,6 +228,6 @@ The first section examines the relationship between a hypothesis test and a conf
 
 The second section provides practice calculating and interpreting one-sided hypothesis tests and confidence intervals. Two important take-away points from Question 4: 1) statistical significance does not automatically imply practical significance, 2) care should be exercised when calculating one-sided $p$-values, because the area corresponding to the $p$-value is in the direction specified by the alternative hypothesis, and this area will not always be the smaller tail area.
 
-The third section features an example of a scenario where context informs whether a one-sided or or two-sided test is more appropriate. The example also illustrates the idea of a two-sided test as more "conservative" than a one-sided test.
+The third section features an example of a scenario where context informs whether a one-sided or or two-sided test is more appropriate. The example also illustrates the terminology of a two-sided test as more "conservative" than a one-sided test.
 
-The fourth section uses simulation to explore the idea of Type I error and $\alpha$ as the probability of making a Type I error. Like in the previous simulation, samples are repeatedly drawn from \texttt{yrbss.complete}. A $t$-statistic is calculated from each sample to test the null hypothesis $H_0: \mu = 67.91$ kg. The simulation can be thought of as a simulation "under the null", in the sense that it is known that the null hypothesis is true: in the artificial \texttt{yrbss.complete} population, the mean weight is 67.91 kg. Thus, any samples that produce extreme $t$-statistics and indicate that the null should be rejected represent instances of making a Type I error. When the rejection region is defined by $\alpha = 0.05$, on average, 5% of the samples will have extreme $t$-statistics even though the population mean is not different from 67.91 kg. The simulation explicitly demonstrates that this error percentage changes as $\alpha$ changes.
+The fourth section uses simulation to explore the idea of Type I error and $\alpha$ as the probability of making a Type I error. As in the previous simulation, samples are drawn repeatedly from \texttt{yrbss.complete}. A $t$-statistic is calculated from each sample to test the null hypothesis $H_0: \mu = 67.91$ kg. The simulation can be thought of as a simulation "under the null", in the sense that it is known that the null hypothesis is true: in the artificial \texttt{yrbss.complete} population, the mean weight is 67.91 kg. Thus, any samples that produce extreme $t$-statistics and indicate that the null should be rejected represent instances of making a Type I error. When the rejection region is defined by $\alpha = 0.05$, on average, 5% of the samples will have extreme $t$-statistics even though the population mean is not different from 67.91 kg. The simulation explicitly demonstrates that this error percentage changes as $\alpha$ changes.

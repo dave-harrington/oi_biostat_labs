@@ -94,10 +94,10 @@ The second part of the lab shows the use of \texttt{dpois()} and \texttt{ppois()
 The function \textbf{\texttt{pnorm()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
 
 ```{r, eval = FALSE}
-pnorm(q, mean = 0, sd = 1, lower.tail = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE)
 ```
 
-where \texttt{q} is $k$, \texttt{mean} is the parameter $\mu$, and \texttt{sd} is the parameter $\sigma$. By default, \textsf{R} calculates $P(X \leq k)$ and assumes that mean and standard deviation are 0 and 1, respectively. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+where \texttt{q} is $k$, \texttt{mean} is the parameter $\mu$, and \texttt{sd} is the parameter $\sigma$. By default, \textsf{R} calculates $P(X \leq k)$ (\texttt{lower.tail = TRUE}) and assumes that mean and standard deviation are 0 and 1, respectively. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
 
 The following code shows how to calculate $P(X \leq 105)$ and $P(X > 105)$ for $X \sim \text{N}(100, 5)$ and $P(Z \leq 1)$ and $P(Z > 1)$ for $Z \sim \text{N}(0, 1)$. 
 
@@ -120,7 +120,7 @@ pnorm(1, lower.tail = FALSE)
 The function \textbf{\texttt{qnorm()}} used to identify the observation that corresponds to a particular probability $p$ has the generic structure
 
 ```{r, eval = FALSE}
-qnorm(p, mean = 0, sd = 1, lower.tail = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE)
 ```
 
 where \texttt{p} is $p$, \texttt{mean} is the parameter $\mu$, and \texttt{sd} is the parameter $\sigma$. By default, \textsf{R} identifies the observation that corresponds to area $p$ in the lower tail (i.e., to the left) and assumes that mean and standard deviation are 0 and 1. To identify the observation with area $p$ in the upper tail, specify \texttt{lower.tail = FALSE}.
@@ -184,7 +184,7 @@ ppois(5, 3, lower.tail = FALSE)
 
 This lab discusses the geometric, negative binomial, and hypergeometric distributions. Particular care should be taken when calculating geometric and negative binomial probabilities, since the convention for defining the distributions in the book differs from that used by \textsf{R}. 
 
-Simulating geometric and negative binomial random variables requires the use of new programming control structures: the \texttt{repeat} and \texttt{while} loops.
+Simulating geometric and negative binomial random variables uses new programming control structures: the \texttt{repeat} and \texttt{while} loops.
 
 ### Geometric Distribution Functions
 
