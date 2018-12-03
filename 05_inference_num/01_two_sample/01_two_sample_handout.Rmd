@@ -29,7 +29,7 @@ This lab extends inference for means in the one-sample setting to the two-sample
 
 The material in this lab corresponds to Sections 5.2 - 5.3 of *OpenIntro Biostatistics*.
 
-###Distinguishing between paired and independent data
+### Distinguishing between paired and independent data
 
 1. The following scenarios describe examples of two-sample data. Identify whether the data are paired (i.e., an observation in one group can be paired to an observation in the other) or independent.
 
@@ -44,7 +44,7 @@ The material in this lab corresponds to Sections 5.2 - 5.3 of *OpenIntro Biostat
         ii. A group of oral contraceptive users and a group of non-users are identified, and their blood pressure is measured. The researchers will compare blood pressure between the users and non-users.
 
 
-###Two-sample test for paired data
+### Two-sample test for paired data
 
 \begin{center}
 \textit{Did a new wetsuit design allow for increased swim velocities during the 2000 Olympics?} 
@@ -86,7 +86,7 @@ The mean velocity (m/s) for each 1500m swim is recorded in the \texttt{swim} dat
     
 \newpage    
 
-###Two-sample test for independent group data
+### Two-sample test for independent group data
 
 \begin{center}
 \textit{Does change in non-dominant arm strength after resistance training differ between men and women?}
