@@ -18,9 +18,9 @@ output:
 	
 	\textbf{Topics}
 	\begin{itemize}
+	  \item Distinguishing between paired and independent data
 	  \item Two-sample test for paired data
 	  \item Two-sample test for independent group data
-	  \item Distinguishing between paired and independent data
 	\end{itemize}
 	
 \end{small}
