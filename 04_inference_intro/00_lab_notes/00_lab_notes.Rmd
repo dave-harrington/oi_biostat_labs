@@ -99,7 +99,7 @@ abline(v = 0, col = "green", lty = 4, lwd = 2)
 
 \newpage
 
-#Lab 2: Confidence Intervals
+# Lab 2: Confidence Intervals
 
 The simulation code from the previous lab is expanded in this lab. For each sample, not only is the mean calculated, but also the standard deviation; these values are then used to compute a confidence interval for each sample. 
 
@@ -141,7 +141,7 @@ Each confidence interval is then checked for whether or not it contains \texttt{
 \newpage
 
 
-#Lab 3: Hypothesis Testing
+# Lab 3: Hypothesis Testing
 
 This lab introduces the essential functions for conducting hypothesis tests (for a population mean) with \textsf{R}. The $t$-distribution functions are useful for hand calculations, while the \texttt{t.test()} function performs hypothesis tests directly on data.
 
@@ -186,7 +186,7 @@ qt(0.159, df = 20, lower.tail = FALSE)
 
 \newpage
 
-###Hypothesis Testing with \texttt{t.test()}
+### Hypothesis Testing with \texttt{t.test()}
 
 The \textbf{\texttt{t.test()}} function has the following generic structure:
 
@@ -220,7 +220,7 @@ t.test(nhanes.samp.adult$Height, mu = 168)$p.val
 \newpage
 
 
-#Lab 4: Inference Concept Check
+# Lab 4: Inference Concept Check
 
 This lab takes a closer look at some concepts in inference that may be confusing or seem counterintuitive. The labs in the next unit will continue exploring conceptual details in the two-sample context.
 

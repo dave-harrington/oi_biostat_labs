@@ -48,7 +48,7 @@ There are several **data types** in \textsf{R}: character, numeric, integer, com
 
 **Data structures** are different formats for storing data: vectors, matrices, lists, data frames, and factors. 
 
-###Vectors
+### Vectors
 
 A **vector** is a one-dimensional collection of values that are all the same data type; in colloquial language, a vector might simply be referred to as a "list". For example, a numeric vector is one in which all elements of the vector are real numbers.
 
@@ -225,9 +225,9 @@ ncol(patient.info)   #number of columns in patient.info
 ```
 
 
-##Numerical and Graphical Summaries
+## Numerical and Graphical Summaries
 
-###Numerical Summaries
+### Numerical Summaries
 
 The following code demonstrates several functions that produce numerical summaries.
 
@@ -271,7 +271,7 @@ cor(frog$body.size, frog$clutch.volume, use = "complete.obs")
 ```
 
 
-###Graphical Summaries
+### Graphical Summaries
 
 Simple plots can be created with very few specifications, since \textsf{R} will make default choices about marking data points, labeling axes, etc. The full details of optional plotting arguments are explained in the \textsf{R} help files and in various freely accessible resources online. These notes include the minimum information needed to get started with plotting and show some examples of plots that make use of optional arguments.
 
@@ -312,7 +312,7 @@ plot(frog$clutch.volume ~ frog$body.size, col = "dodgerblue",
 
 
 
-##Subsetting Data
+## Subsetting Data
 
 The \texttt{subset()} command is one way to create subsets of vectors, matrices, or dataframes that meet specific conditions. The conditions are specified using logical operators that express "less than", "greater than or equal to", "exactly equal to", etc.
 
@@ -349,7 +349,7 @@ range(females$age)
 ```
 
 
-##Pseudorandom Sampling
+## Pseudorandom Sampling
 
 The \texttt{sample()} command takes a random sample of a specified size from the elements of a vector, either with or without replacement. 
 
@@ -371,7 +371,7 @@ sample(1:15, size = 10, replace = FALSE)
 
 
 
-##Tables
+## Tables
 
 The \texttt{table()} command produces a 2 $\times$ 2 contingency table of counts at each combination of factor levels for two specified variables. Running \texttt{table(x, y)} results in a table where \texttt{x} specifies the rows and \texttt{y} specifies the columns. The \texttt{addmargins()} command prints the row and column sums on the sides of the tables.
 

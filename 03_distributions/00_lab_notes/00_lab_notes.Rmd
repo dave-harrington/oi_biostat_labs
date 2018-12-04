@@ -36,7 +36,7 @@ All three labs include practice problems that illustrate the use of \textsf{R} f
 
 \newpage
 
-#Lab 1: Introduction to Random Variables
+# Lab 1: Introduction to Random Variables
 
 This first part of the lab introduces the concept of a random variable by exploring the clinical trial example described at the beginning of Chapter 3. All \textsf{R} programming required to understand the simulation code has been previously covered. 
 
@@ -83,7 +83,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 
 \newpage
 
-#Lab 2: Distributions: Normal and Poisson
+# Lab 2: Distributions: Normal and Poisson
 
 The first part of the lab demonstrates the use of \texttt{pnorm()} and \texttt{qnorm()} for working with normal probabilities. The practice problems involve both calculating probabilities associated with a particular observation and identifying observations corresponding to a particular probability.
 
@@ -180,7 +180,7 @@ ppois(5, 3, lower.tail = FALSE)
 
 \newpage
 
-#Lab 3: Distributions Related to Bernoulli Trials
+# Lab 3: Distributions Related to Bernoulli Trials
 
 This lab discusses the geometric, negative binomial, and hypergeometric distributions. Particular care should be taken when calculating geometric and negative binomial probabilities, since the convention for defining the distributions in the book differs from that used by \textsf{R}. 
 

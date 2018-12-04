@@ -22,7 +22,7 @@ The previous lab demonstrated the use of \texttt{for} loops to simulate many rep
 
 The material in this lab corresponds to Sections 2.2.1 - 2.2.4 of \textit{OpenIntro Biostatistics}.
 
-####Counting successes with \texttt{if} statements
+#### Counting successes with \texttt{if} statements
 
 A bag contains 3 red and 3 white balls. Two balls are drawn from the bag, one at a time; the first ball is not replaced before the second ball is drawn.
 
@@ -157,7 +157,7 @@ table(successes)
 
 \newpage
 
-####Simulating a population with \texttt{if} statements
+#### Simulating a population with \texttt{if} statements
 
 3. In the United States population, approximately 20\% of men and 3\% of women are taller than 6 feet (72 inches). Let $F$ be the event that a person is female and $T$ be the event that a person is taller than 6 feet. Assume that the ratio of males to females in the population is 1:1. 
 

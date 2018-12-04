@@ -40,7 +40,7 @@ Lab 4 features probability problems that are more extensive than those in the te
 
 \newpage
 
-#Lab 1: Introduction to Probability
+# Lab 1: Introduction to Probability
 
 Simulation allows for an intuitive way to understand the definition of probability as a proportion of times that an outcome of interest occurs if the random phenomenon could be repeated infinitely. With \textsf{R}, it is possible to feasibly conduct simulations with enough replicates such that the proportion of occurrences with a particular outcome closely approximates the probability $p$. 
 
@@ -180,7 +180,7 @@ for(k in 1:number.replicates){
 
 \newpage
 
-#Lab 2: Conditional Probability
+# Lab 2: Conditional Probability
 
 The direct relationship between the language of conditional probability and the logic of conditional statements in \textsf{R} can help reinforce the concept behind conditioning on an event. 
 
@@ -344,13 +344,13 @@ sum(sex == 1 & tall == 1)/sum(tall == 1)
 ```
 
 
-#Lab 3: Positive Predictive Value (Bayes' Theorem)
+# Lab 3: Positive Predictive Value (Bayes' Theorem)
 
 This lab illustrates three common approaches for calculating the positive predictive value of a diagnostic test: contingency tables, tree diagrams, and simulation. These approaches are generalizable to any conditioning problem that involves Bayes' Theorem.
 
 All \textsf{R} programming required for the simulation approach is discussed in the two previous labs. The challenging aspect of this lab is the second half, which consists of concept-oriented questions focused on the relationships between prevalence, sensitivity, specificity, positive predictive value, and negative predictive value. 
 
-####Using \textsf{R} as a calculator
+#### Using \textsf{R} as a calculator
 
 One advantage \textsf{R} has over a standard hand calculator is the ability to easily store values as named variables. This can make numerical computations like the calculation of positive predictive value much less error-prone. Using a short script like the following to do the computation, rather than directly entering numbers into a calculator, is more efficient. The script can also be re-run with different starting values.
 
@@ -383,7 +383,7 @@ ppv
 ````
 
 
-#Lab 4: Extended Practice
+# Lab 4: Extended Practice
 
 This lab consists of conditioning questions that are more challenging than those in the text end-of-chapter exercises, both in terms of the problem context and the extent of manipulation required to calculate probabilities. 
 
