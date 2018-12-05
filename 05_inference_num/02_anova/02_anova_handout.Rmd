@@ -40,7 +40,9 @@ The percent change in non-dominant arm strength, comparing strength after resist
 
 1. Load the data. Create a plot that shows the association between change in non-dominant arm strength and *ACTN3* genotype. Describe what you see.
 
-2. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$.
+2. Check whether the assumptions for conducting an ANOVA are reasonably satisfied: 1) observations are independent within and across groups, 2) the data within each group are nearly normal, and 3) the variability across the groups is about equal.
+
+3. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$.
 
     a) Let the parameters $\mu_{CC}$, $\mu_{CT}$, and $\mu_{TT}$ represent the population mean change in non-dominant arm strength for individuals of the corresponding genotype. State the null and alternative hypotheses.
     
@@ -60,3 +62,16 @@ This section uses data from the National Health and Nutrition Examination Survey
 
 The variable \texttt{Poverty} is a ratio of family income to poverty guidelines. Smaller numbers indicate more poverty, where a value below 1 indicates that the participant is in a family with income below the poverty threshold. Ratios above 5 were recorded as 5.
 
+4. Is there evidence of an association between poverty and BMI category? People with lower incomes tend to have less access to healthy food, and an increased risk of obesity.
+
+    The variable \texttt{BMI\_WHO} contains BMI data, grouped into the categories defined by the World Health Organization: 12 - 18.5 (underweight), 18.5 - 24.9 (normal), 25 - 29.9 (overweight), and 30+ (obese). 
+
+    a) Create a plot that shows the association between poverty ratio and BMI category. Check the assumptions for conducting an ANOVA.
+    
+    b) Among individuals with BMI of at least 18.5, is there evidence of an association between poverty and BMI category?
+
+5. Is there evidence of an association between poverty and educational level? It is reasonable to expect that on average, individuals with a higher educational level will also have a higher income.
+
+    The variable \texttt{Education} records the highest level of education obtained: 8$^{th}$ grade, 9$^{th}$ - 11$^{th}$ grade, high school, some college, or college degree.
+
+    a) 
