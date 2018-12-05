@@ -40,7 +40,7 @@ The percent change in non-dominant arm strength, comparing strength after resist
 
 1. Load the data. Create a plot that shows the association between change in non-dominant arm strength and *ACTN3* genotype. Describe what you see.
 
-2. Check whether the assumptions for conducting an ANOVA are reasonably satisfied: 1) observations are independent within and across groups, 2) the data within each group are nearly normal, and 3) the variability across the groups is about equal.
+2. Assess whether the assumptions for conducting an ANOVA are reasonably satisfied: 1) observations are independent within and across groups, 2) the data within each group are nearly normal, and 3) the variability across the groups is about equal.
 
 3. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$.
 
@@ -56,22 +56,43 @@ The percent change in non-dominant arm strength, comparing strength after resist
         
         iii. Summarize the results.
         
-### NHANES: factors associated with poverty
+### NHANES: comparing BMI by educational level
 
-This section uses data from the National Health and Nutrition Examination Survey (NHANES), a survey conducted annually by the US Centers for Disease Control (CDC).\footnote{The dataset was first introduced in CHapter 1, Lab 1 (Introduction to Data).} The dataset \texttt{nhanes.samp.adult.500} contains data for 500 participants ages 21 years or older that were randomly sampled from the complete NHANES dataset that contains 10,000 observations.
+\begin{center}
+\textit{Is body mass index (BMI) associated with educational attainment?}
+\end{center}
 
-The variable \texttt{Poverty} is a ratio of family income to poverty guidelines. Smaller numbers indicate more poverty, where a value below 1 indicates that the participant is in a family with income below the poverty threshold. Ratios above 5 were recorded as 5.
+This section uses data from the National Health and Nutrition Examination Survey (NHANES), a survey conducted annually by the US Centers for Disease Control (CDC).\footnote{The dataset was first introduced in Chapter 1, Lab 1 (Introduction to Data).} The dataset \texttt{nhanes.samp.adult.500} contains data for 500 participants ages 21 years or older that were randomly sampled from the complete NHANES dataset that contains 10,000 observations.
 
-4. Is there evidence of an association between poverty and BMI category? People with lower incomes tend to have less access to healthy food, and an increased risk of obesity.
+The variable \texttt{BMI} contains BMI information for the study participants. The variable \texttt{Education} records the highest level of education obtained: 8$^{th}$ grade, 9$^{th}$ - 11$^{th}$ grade, high school, some college, or college degree.
 
-    The variable \texttt{BMI\_WHO} contains BMI data, grouped into the categories defined by the World Health Organization: 12 - 18.5 (underweight), 18.5 - 24.9 (normal), 25 - 29.9 (overweight), and 30+ (obese). 
+4. Load the data. Create a plot that shows the association between BMI and educational level. Describe what you see.
 
-    a) Create a plot that shows the association between poverty ratio and BMI category. Check the assumptions for conducting an ANOVA.
-    
-    b) Among individuals with BMI of at least 18.5, is there evidence of an association between poverty and BMI category?
+5. Examine the normality and equal variance assumptions across the groups. Explain why it is advisable to restrict the analysis to participants who have completed at least $9^{th}$ grade.
 
-5. Is there evidence of an association between poverty and educational level? It is reasonable to expect that on average, individuals with a higher educational level will also have a higher income.
+6. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$. Summarize the conclusions.
 
-    The variable \texttt{Education} records the highest level of education obtained: 8$^{th}$ grade, 9$^{th}$ - 11$^{th}$ grade, high school, some college, or college degree.
 
-    a) 
+### Chick weights: comparing weight across feed supplements
+
+Chicken farming is a multi-billion dollar industry, and any methods that increase the growth rate of young chicks can reduce consumer costs while increasing company profits. An experiment was conducted to measure and compare the effectiveness of various feed supplements on the growth rate of chicks. Newly hatched chicks were randomly allocated into groups, and each group was given a different feed supplement. 
+
+The \texttt{chickwts} dataset available in the \texttt{datasets} package contains the weight in grams of chicks at six weeks of age. For simplicity, this analysis will be limited to four types of feed supplements: linseed, meatmeal, soybean, and sunflower.
+
+
+1. Run the following code to load the \texttt{chickwts} dataset and subset the data for the four feed supplements of interest.
+
+    ```{r}
+#load the data
+library(datasets)
+data("chickwts")
+
+#subset the four feed supplements
+keep = (chickwts$feed == "linseed" | chickwts$feed == "meatmeal" |
+  chickwts$feed == "soybean" | chickwts$feed == "sunflower")
+chickwts = chickwts[keep, ]
+
+#eliminate unused levels
+chickwts$feed <- droplevels(chickwts$feed)
+```
+
