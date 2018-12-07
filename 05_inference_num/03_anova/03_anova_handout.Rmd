@@ -1,11 +1,17 @@
 ---
 title: "Analysis of Variance (ANOVA)"
-author: "Chapter 5, Lab 2: Template"
+author: "Chapter 5, Lab 3"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-output: pdf_document
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
 ---
 
 \begin{small}
@@ -18,7 +24,7 @@ output: pdf_document
 	
 \end{small}
 
-The previous lab introduced the two-group independent $t$-test as a method for comparing the means of two groups. In some settings, it is useful to compare the means across more than two groups. The methodology behind a two-group independent $t$-test can be generalized to a procedure called **analysis of variance (ANOVA)**. Assessing whether the means across several groups are equal by conducting a single hypothesis test rather than multiple two-sample tests is important for controlling the overall Type I error rate. 
+The first lab in this chapter introduced the two-group independent $t$-test as a method for comparing the means of two groups. In some settings, it is useful to compare the means across more than two groups. The methodology behind a two-group independent $t$-test can be generalized to a procedure called **analysis of variance (ANOVA)**. Assessing whether the means across several groups are equal by conducting a single hypothesis test rather than multiple two-sample tests is important for controlling the overall Type I error rate. 
 
 The material in this lab corresponds to Section 5.5 of *OpenIntro Biostatistics*.
 
@@ -34,88 +40,23 @@ The percent change in non-dominant arm strength, comparing strength after resist
 
 1. Load the data. Create a plot that shows the association between change in non-dominant arm strength and *ACTN3* genotype. Describe what you see.
 
-```{r}
-#load the data
-library(oibiostat)
-data("famuss")
-
-#create plot
-
-```
-
-
-
-
 2. Assess whether the assumptions for conducting an ANOVA are reasonably satisfied: 1) observations are independent within and across groups, 2) the data within each group are nearly normal, and 3) the variability across the groups is about equal.
-
-```{r}
-#check assumptions
-
-```
-
-
-
 
 3. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$.
 
-  a) Let the parameters $\mu_{CC}$, $\mu_{CT}$, and $\mu_{TT}$ represent the population mean change in non-dominant arm strength for individuals of the corresponding genotype. State the null and alternative hypotheses.
-
-
-
-
+    a) Let the parameters $\mu_{CC}$, $\mu_{CT}$, and $\mu_{TT}$ represent the population mean change in non-dominant arm strength for individuals of the corresponding genotype. State the null and alternative hypotheses.
     
-  b) Use \texttt{summary(aov())} to compute the $F$-statistic and $p$-value. Interpret the $p$-value.
-
-<!---
-The syntax inside summary(aov(y ~ x)) follows the same logic as for a boxplot command, where y is the numerical variable to be sorted by the categorical variable x.
---->
+    b) Use \texttt{summary(aov())} to compute the $F$-statistic and $p$-value. Interpret the $p$-value.
     
-```{r}
-#use summary(aov())
-
-```
-
-
+    c) Complete the analysis using pairwise comparisons.
     
-  c) Complete the analysis using pairwise comparisons.
-    
-  i. What is the appropriate significance level $\alpha^{\star}$ for the individual comparisons, as per the Bonferroni correction?
-
-  \[\alpha^{\star} = \alpha/K, \text{where } K = \frac{k(k-1)}{2} \text{for $k$ groups}\]  
-          
-```{r, eval = FALSE}
-#use R as a calculator
-alpha =
-k =
-
-K = (k*(k-1))/2
-
-alpha.star = alpha/k
-alpha.star
-```  
+        i. What is the appropriate significance level $\alpha^{\star}$ for the individual comparisons, as per the Bonferroni correction?
         
-  ii. Use \texttt{pairwise.t.test()} to conduct the pairwise two-sample $t$-tests.
+         \[\alpha^{\star} = \alpha/K, \text{where } K = \frac{k(k-1)}{2} \text{for $k$ groups}\] 
         
-<!---
-The pairwise.t.test() command uses a comma between the two variables x and y, instead of a tilde like the aov() command.
-
-  pairwise.t.test(x, y, p.adj = "")
-
---->
-  
-```{r, eval = FALSE}
-#use pairwise.t.test() without adjusting p-value
-pairwise.t.test( , , p.adj = "none")
-
-#alternatively, use pairwise.t.test() with bonferroni adjustment
-pairwise.t.test( , , p.adj = "bonf")
-
-```        
+        ii. Use \texttt{pairwise.t.test()} to conduct the pairwise two-sample $t$-tests.
         
-  iii. Summarize the results.
-
-
-
+        iii. Summarize the results.
         
 ### NHANES: comparing BMI by educational level
 
@@ -129,36 +70,9 @@ The variable \texttt{BMI} contains BMI information for the study participants. T
 
 4. Load the data. Create a plot that shows the association between BMI and educational level. Describe what you see.
 
-```{r}
-#load the data
-library(oibiostat)
-data("nhanes.samp.adult.500")
-
-#create a plot
-
-```
-
-
-
 5. Examine the normality and equal variance assumptions across the groups. Explain why it is advisable to restrict the analysis to participants who have completed at least $9^{th}$ grade.
 
-```{r}
-#check assumptions
-
-```
-
-
-
-
 6. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$. Summarize the conclusions.
-
-```{r}
-#conduct hypothesis test
-
-```
-
-
-
 
 
 ### Chick weights: comparing weight across feed supplements
@@ -170,7 +84,7 @@ The \texttt{chickwts} dataset available in the \texttt{datasets} package contain
 
 7. Run the following code to load the \texttt{chickwts} dataset and subset the data for the four feed supplements of interest.
 
-```{r}
+    ```{r}
 #load the data
 library(datasets)
 data("chickwts")
@@ -185,13 +99,3 @@ chickwts$feed <- droplevels(chickwts$feed)
 ```
 
 8. Analyze the data and report the results. Using language accessible to a non-statistician, discuss which feed supplement(s) is/are the most effective for increasing chick weight.
-
-```{r}
-#check assumptions
-
-#conduct analysis
-
-```
-
-
-

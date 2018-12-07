@@ -1,6 +1,6 @@
 ---
 title: "Analysis of Variance (ANOVA)"
-author: "Chapter 5, Lab 2: Solutions"
+author: "Chapter 5, Lab 3: Solutions"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
@@ -24,7 +24,7 @@ output:
 	
 \end{small}
 
-The previous lab introduced the two-group independent $t$-test as a method for comparing the means of two groups. In some settings, it is useful to compare the means across more than two groups. The methodology behind a two-group independent $t$-test can be generalized to a procedure called **analysis of variance (ANOVA)**. Assessing whether the means across several groups are equal by conducting a single hypothesis test rather than multiple two-sample tests is important for controlling the overall Type I error rate. 
+The first lab in this chapter introduced the two-group independent $t$-test as a method for comparing the means of two groups. In some settings, it is useful to compare the means across more than two groups. The methodology behind a two-group independent $t$-test can be generalized to a procedure called **analysis of variance (ANOVA)**. Assessing whether the means across several groups are equal by conducting a single hypothesis test rather than multiple two-sample tests is important for controlling the overall Type I error rate. 
 
 The material in this lab corresponds to Section 5.5 of *OpenIntro Biostatistics*.
 
