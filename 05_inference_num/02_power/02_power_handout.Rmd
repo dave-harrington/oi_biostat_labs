@@ -91,7 +91,7 @@ treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
   
     b) Using \texttt{t.test()}, conduct a two-sided test of the null hypothesis from the simulated data. Summarize your conclusions.
   
-2. Run the following code to repeat the simulation 1,000 times. With each iteration, the code draws a new set of control and treatment values, conducts the two-sample $t$-test, and records the $p$-value. The logical vector \texttt{reject} records whether the $p$-value for a particular iteration was less than or equal to $\alpha$.
+2. Run the following code to repeat the simulation 1,000 times. With each iteration, the code draws a new set of control and treatment values, conducts the two-sample $t$-test, and records the $p$-value. The logical vector \texttt{reject} records whether the $p$-value for a particular iteration was significant at $\alpha$ (i.e., less than or equal to $\alpha$).
 
     ```{r repeated tests equal means, eval = FALSE}
 #set parameters
@@ -144,11 +144,59 @@ Now, suppose that the alternative hypothesis $H_A: \mu_{treatment} \neq \mu_{con
     
     b) Estimate the power of the two-sample test when each group has $n = 25$, $\sigma= 10$, and $\mu_{treatment} - \mu_{control} = -2$ mm Hg. Recall that power refers to the probability of rejecting $H_0$ when $H_A$ is true. 
     
-    c) How does power change with increasing sample size? Estimate the power of the test as $n$ changes to 50, 100, 200, and 300.
+    c) How does power change with increasing sample size? Estimate the power of the test as $n$ changes to 50, 100, 200, and 300 (leaving all other parameters the same).
     
-    d) Run the code chunk shown in the template to createa  plot of power against sample size. The code uses the command \texttt{power.t.test()} to calculate power; this command will be discussed later in the lab. Does power seem linear in relation to sample size?
+    d) Run the code chunk shown in the template to create a plot of power against sample size. The code uses the command \texttt{power.t.test()} to calculate power; this command will be discussed later in the lab. Does power seem linear in relation to sample size?
+
     
-5. *Power and Standard Deviation*. 
+5. *Power and Standard Deviation*. Run the code chunk shown in the template to repeat the simulation 1,000 times.
+
+    a) Would you expect the probability of rejecting $H_0$ when $H_A$ is true to increase or decrease if there is more variation in the observations? (*Hint*: Consider the formula for the test statistic in the independent two-group setting.) 
+    
+    b) How does power change with increased standard deviation? Estimate the power of the test as the standard deviation of each group changes to 10, 15, and 20 (leaving all other parameters the same).
+    
+    
+6. *Power and Effect Size*. The population effect size refers to the difference between the population means, $\mu_{treatment} - \mu_{control}$. In the simulations so far, $\mu_{treatment} - \mu_{control} = 138 - 140 = -2$ mm Hg. 
+
+    In a realistic setting, the effect size is chosen to be the incremental value of the intervention that would justify changing current clinical recommendations from an existing intervention to a new one. The simulations so far mimic a setting in which researchers decide they are interested in detecting an effect on blood pressure that is 2 mm Hg or greater, when comparing the new drug to the old drug. 
+    
+    Run the code chunk shown in the template to repeat the simulation 1,000 times.
+    
+    a) If the true difference in the group means is relatively large (e.g., 5 mm Hg), as opposed to relatively small (e.g., 1 mm Hg), would you expect the probability of rejecting $H_0$ when $H_A$ to be relatively large or relatively small?
+    
+    b) How does power change with effect size? Estimate the power of the test as effect size increases; change \texttt{treatment.mean} from 138 to 137, 136, 135, and 134 (leaving all other parameters the same).
+
+
+\newpage
+
+### Power and sample size calculations
+
+Section 5.4 in the text discusses how power and sample size for a study can be calculated from first principles, using fundamental ideas behind distributions and testing. In practice, power and sample size can be calculated directly from formulas. While hand calculations can provide quick estimates in the early stages of planning a study, statistical software should be the method of choice for a formal analysis.
+
+*Calculating sample size for comparing two means*
+
+\[n = \frac{(\sigma_1^2 + \sigma_2^2)(z_{1 - \alpha/2} + z_{1 - \beta})^2}{\Delta^2}, \]
+
+where $n$ is the number of participants in each group, $\Delta = \mu_1 - \mu_2$ is the effect size, $z_{1 - \alpha/2}$ is the point on a standard normal distribution with area $1 - \alpha/2$ to its left, and $z_{1 - \beta}$ is the point on a standard normal distribution with area $1 - \beta$ to its left. The null hypothesis of the test is $H_0: \Delta = 0$, tested against the alternative hypothesis $H_A: \Delta \neq 0$.
+
+*Calculating power for comparing two means*
+
+\[1 - \beta = P \left( Z < -z_{1 - \alpha/2} + \dfrac{\Delta}{\sqrt{\sigma^2_1/n + \sigma^2_2/n}} \right), \]
+
+where $Z$ is a standard normal random variable and the study has $n$ participants in each group.
+
+The \texttt{power.t.test()} function in \textsf{R} can both compute the power of a one- or two-sample $t$-test (given the appropriate parameters) and determine necessary parameters (e.g., sample size) to obtain a target power. Specific instructions for using \texttt{power.t.test()} can be found in the template, the lab notes for this unit, and in the \textsf{R} help file.
+
+7. A pharmaceutical company has developed a new drug to lower blood pressure and is planning a clinical trial to test its effectiveness. Individuals whose systolic blood pressures are between 140 and 180 mm Hg will be recruited for the study. Based on previous published studies, it is estimated that the patients' blood pressures will be approximately symmetrically distributed, with standard deviation of about 12 mm Hg.
+
+    The participants will be randomly assigned to the new drug or a standard drug and at the end of the study their systolic blood pressures will be measured. The company expects to receive FDA approval for the drug if there is evidence at $\alpha = 0.05$ that in the general population of people with blood pressure in the same range, the drug lowers blood pressure, on average, by at least 3 mm Hg more than the standard drug.
+    
+    a) How large should the study be if the company wants the power of the study to be 80%?
+    
+    b) What would the power of the study be if 200 individuals were recruited for each group?
+    
+    c) Does $\alpha$ influence power? What would the power of the test be in part b) if $\alpha$ increased to 0.10? What if $\alpha$ decreased to 0.01?
+
 
     ```{r initial test unequal means}
 #set the parameters
@@ -170,7 +218,7 @@ treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
 
 ```
 
-```{r power and sample size}
+    ```{r power and sample size}
 #set parameters
 control.mean = 140
 treatment.mean = 138
@@ -218,7 +266,5 @@ for (k in sample.size.range){
 }
 
 #create plot
-plot(power ~ sample.size)
-```  
-
-### Power and sample size calculations
+plot(power ~ sample.size, type = "l")
+```      
