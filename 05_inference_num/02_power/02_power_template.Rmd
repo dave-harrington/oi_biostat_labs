@@ -1,17 +1,11 @@
 ---
 title: "Statistical Power"
-author: "Chapter 5, Lab 2"
+author: "Chapter 5, Lab 2: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -87,9 +81,38 @@ treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
 
 ```
 
-    a) Calculate $\overline{x}$ and $s$ for \texttt{control} and \texttt{treatment} to confirm that the simulated values seem plausible given the specified parameters for $\mu$ and $\sigma$. Would you expect $\overline{x}$ and $s$ to be exactly the same as the parameter values? Why or why not?
+  a) Calculate $\overline{x}$ and $s$ for \texttt{control} and \texttt{treatment} to confirm that the simulated values seem plausible given the specified parameters for $\mu$ and $\sigma$. Would you expect $\overline{x}$ and $s$ to be exactly the same as the parameter values? Why or why not?
+
+    ```{r}
+#calculate x bar and s for control
+
+
+#calculate x bar and s for treatment
+
+```
+
+
+
   
-    b) Using \texttt{t.test()}, conduct a two-sided test of the null hypothesis from the simulated data. Summarize your conclusions.
+  b) Using \texttt{t.test()}, conduct a two-sided test of the null hypothesis from the simulated data. Summarize your conclusions.
+
+
+<!---
+Run the test in the above code chunk.
+
+To use the t.test() command...
+
+x is the name of the variable containing the data from sample one
+y is the name of the variable containing the data from sample two
+mu is the mu_0 value specified by the null and alternative hypotheses
+alternative can be set to either
+  "two.sided" for a two-sided test
+  "greater" for a one-sided test, mu > mu_0
+  "less" for a one-sided test, mu < mu_0
+paired can be set to either TRUE or FALSE
+--->
+
+
   
 2. Run the following code to repeat the simulation 1,000 times. With each iteration, the code draws a new set of control and treatment values, conducts the two-sample $t$-test, and records the $p$-value. The logical vector \texttt{reject} records whether the $p$-value for a particular iteration was significant at $\alpha$ (i.e., less than or equal to $\alpha$).
 
@@ -124,8 +147,19 @@ table(reject)
 ```
 
     a) With 50 individuals in each group, what percentage of tests result in the (incorrect) conclusion that the two population means are different?
+
+
+
+
+
   
     b) Does Type I error rate change with sample size? Modify the simulation code to assess sample sizes of 100, 1,000, and 10,000.
+
+
+
+
+
+\newpage
 
 
 ### Controlling Type II error
@@ -134,35 +168,202 @@ Now, suppose that the alternative hypothesis $H_A: \mu_{treatment} \neq \mu_{con
 
 3. Run the code shown in the template to simulate blood pressure values for 25 individuals in the control group and 25 individuals in the treatment group.
 
-    a) Conduct a two-sided test of the null hypothesis from the simulated data. What is the conclusion of the test?
+```{r initial test unequal means}
+#set the parameters
+control.mean = 140
+treatment.mean = 138
+control.sigma = treatment.sigma = 10
+control.n = treatment.n = 25
+
+alpha = 0.05
+
+#set seed
+set.seed(2018)
+
+#simulate data
+control = rnorm(n = control.n, mean = control.mean, sd = control.sigma)
+treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
+
+#conduct the test
+
+```
+
+  a) Conduct a two-sided test of the null hypothesis from the simulated data. What is the conclusion of the test?
     
-    b) Is the conclusion from part a) correct?
+
+
+
+    
+    
+  b) Is the conclusion from part a) correct?
+
+
+
+
     
 4. *Power and Sample Size*. Run the code chunk shown in the template to repeat the simulation 1,000 times. 
 
-    a) With 25 individuals in each group, how many tests result in the incorrect conclusion that the two population means are not different?
+```{r power and sample size}
+#set parameters
+control.mean = 140
+treatment.mean = 138
+control.sigma = treatment.sigma = 10
+control.n = treatment.n = 25
+
+alpha = 0.05
+replicates = 1000
+
+#set seed
+set.seed(2018)
+
+#create empty list
+p.values = vector("numeric", replicates)
+
+#run repeated t-tests and record p-values
+for (k in 1:replicates){
+  control = rnorm(n = control.n, mean = control.mean, sd = control.sigma)
+  treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
+  
+  p.values[k] = t.test(control, treatment, alternative = "two.sided", mu = 0,
+       conf.level = 1 - alpha)$p.val
+}
+
+reject = (p.values <= alpha)
+table(reject)
+```
+
+
+  a) With 25 individuals in each group, how many tests result in the incorrect conclusion that the two population means are not different?
+
+
+
+
     
-    b) Estimate the power of the two-sample test when each group has $n = 25$, $\sigma= 10$, and $\mu_{treatment} - \mu_{control} = -2$ mm Hg. Recall that power refers to the probability of rejecting $H_0$ when $H_A$ is true. 
+  b) Estimate the power of the two-sample test when each group has $n = 25$, $\sigma= 10$, and $\mu_{treatment} - \mu_{control} = -2$ mm Hg. Recall that power refers to the probability of rejecting $H_0$ when $H_A$ is true. 
+
+
+
+
     
-    c) How does power change with increasing sample size? Estimate the power of the test as $n$ changes to 50, 100, 200, and 300 (leaving all other parameters the same).
+  c) How does power change with increasing sample size? Estimate the power of the test as $n$ changes to 50, 100, 200, and 300 (leaving all other parameters the same).
+
+
+
+
     
-    d) Run the code chunk shown in the template to create a plot of power against sample size. The code uses the command \texttt{power.t.test()} to calculate power; this command will be discussed later in the lab. Does power seem linear in relation to sample size?
+  d) Run the code chunk shown in the template to create a plot of power against sample size. The code uses the command \texttt{power.t.test()} to calculate power; this command will be discussed later in the lab. Does power seem linear in relation to sample size?
+
+```{r power vs sample size plot}
+#set parameters
+min.n = 10
+max.n = 300
+
+sample.size.range = min.n:max.n
+
+#create empty lists
+power = vector("numeric", max.n - min.n + 1)
+sample.size = vector("numeric", max.n - min.n + 1)
+
+#calculate power
+for (k in sample.size.range){
+  sample.size[k] = k
+  power[k] = power.t.test(n = k, delta = 3, sd = treatment.sigma, type = "two.sample",
+               alternative = "two.sided", strict = TRUE)$power
+}
+
+#create plot
+plot(power ~ sample.size, type = "l")
+```      
+
+
 
     
 5. *Power and Standard Deviation*. For simplicity, this simulation assumes that the standard deviation of the treatment and control groups are equal.
 
-    a) Would you expect the probability of rejecting $H_0$ when $H_A$ is true to increase or decrease if there is more variation in the observations? (*Hint*: Consider the formula for the test statistic in the independent two-group setting.) 
+```{r power and standard deviation}
+#set parameters
+control.mean = 140
+treatment.mean = 138
+control.sigma = treatment.sigma = 10
+control.n = treatment.n = 25
+
+alpha = 0.05
+replicates = 1000
+
+#set seed
+set.seed(2018)
+
+#create empty list
+p.values = vector("numeric", replicates)
+
+#run repeated t-tests and record p-values
+for (k in 1:replicates){
+  control = rnorm(n = control.n, mean = control.mean, sd = control.sigma)
+  treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
+  
+  p.values[k] = t.test(control, treatment, alternative = "two.sided", mu = 0,
+       conf.level = 1 - alpha)$p.val
+}
+
+reject = (p.values <= alpha)
+table(reject)
+```
+
+  a) Would you expect the probability of rejecting $H_0$ when $H_A$ is true to increase or decrease if there is more variation in the observations? (*Hint*: Consider the formula for the test statistic in the independent two-group setting.) 
+
+
+
+
     
-    b) How does power change with increased standard deviation? Estimate the power of the test as the standard deviation within each group changes to 10, 15, and 20 (leaving all other parameters the same).
+  b) How does power change with increased standard deviation? Estimate the power of the test as the standard deviation within each group changes to 10, 15, and 20 (leaving all other parameters the same).
+
+
+
     
     
 6. *Power and Effect Size*. The population effect size refers to the difference between the population means, $\mu_{treatment} - \mu_{control}$. In the simulations so far, $\mu_{treatment} - \mu_{control} = 138 - 140 = -2$ mm Hg. 
 
     In a realistic setting, the effect size is chosen to be the incremental value of the intervention that would justify changing current clinical recommendations from an existing intervention to a new one. The simulations so far mimic a setting in which researchers decide they are interested in detecting an effect on blood pressure that is 2 mm Hg or greater, when comparing the new drug to the old drug. 
+
+    ```{r power and effect size}
+#set parameters
+control.mean = 140
+treatment.mean = 138
+control.sigma = treatment.sigma = 10
+control.n = treatment.n = 25
+
+alpha = 0.05
+replicates = 1000
+
+#set seed
+set.seed(2018)
+
+#create empty list
+p.values = vector("numeric", replicates)
+
+#run repeated t-tests and record p-values
+for (k in 1:replicates){
+  control = rnorm(n = control.n, mean = control.mean, sd = control.sigma)
+  treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
+  
+  p.values[k] = t.test(control, treatment, alternative = "two.sided", mu = 0,
+       conf.level = 1 - alpha)$p.val
+}
+
+reject = (p.values <= alpha)
+table(reject)
+```
     
     a) If the true difference in the group means is relatively large (e.g., 5 mm Hg), as opposed to relatively small (e.g., 1 mm Hg), would you expect the probability of rejecting $H_0$ when $H_A$ to be relatively large or relatively small?
+
+
+
+
     
-    b) How does power change with effect size? Estimate the power of the test as effect size increases; change \texttt{treatment.mean} from 138 to 137, 136, and 135 (leaving all other parameters the same).
+    b) How does power change with effect size? Estimate the power of the test as effect size increases; change \texttt{treatment.mean} from 138 to 137, 136, and 135  (leaving all other parameters the same).
+
+
+
 
 
 \newpage
@@ -189,8 +390,51 @@ The \texttt{power.t.test()} function in \textsf{R} can both compute the power of
 
     The participants will be randomly assigned to the new drug or a standard drug and at the end of the study their systolic blood pressures will be measured. The company expects to receive FDA approval for the drug if there is evidence at $\alpha = 0.05$ that in the general population of people with blood pressure in the same range, the drug lowers blood pressure, on average, by at least 3 mm Hg more than the standard drug.
     
-    a) How large should the study be if the company wants the power of the study to be 80%?
+  a) How large should the study be if the company wants the power of the study to be 80%?
     
-    b) What would the power of the study be if 200 individuals were recruited for each group?
+<!---
+To use power.t.test...
+
+enter = NULL for the value of interest
+
+n is the sample size per group
+delta is the true difference in means (effect size)
+sd is the standard deviation
+sig.level is alpha
+power is the power of the test
+type can be set to either
+  "two.sample" for an independent two-group test
+  "paired" for a paired test
+  "one.sample" for a one-sample test
+alternative can be set to either
+  "two.sided" for a two-sided test
+  "one.sided" for a one-sided.test
+
+--->
+
     
-    c) Does $\alpha$ influence power? What would the power of the test be in part b) if $\alpha$ increased to 0.10? What if $\alpha$ decreased to 0.01?
+```{r}
+power.t.test(n = NULL, delta = 3, sd = 12, 
+             sig.level = 0.05, power = .80,
+             type = "two.sample",
+             alternative = "two.sided")
+```
+    
+  b) What would the power of the study be if 200 individuals were recruited for each group?
+
+```{r}
+
+```
+
+
+
+    
+  c) Does $\alpha$ influence power? What would the power of the test be in part b) if $\alpha$ increased to 0.10? What if $\alpha$ decreased to 0.01?
+
+```{r}
+
+```
+
+
+
+
