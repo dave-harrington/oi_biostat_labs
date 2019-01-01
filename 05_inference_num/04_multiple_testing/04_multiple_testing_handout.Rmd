@@ -1,0 +1,29 @@
+---
+title: "Multiple Testing"
+author: "Chapter 5, Lab 4"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Experiment-wise error
+	  \item Controlling experiment-wise error for correlated data
+	\end{itemize}
+	
+\end{small}
+
+The previous lab in this chapter introduced the Bonferroni correction as a method for controlling Type I error when conducting pairwise $t$-tests following an ANOVA. This lab further more formally introduces the multiple testing problem and one specific approach for controlling Type I error (controlling the **experiment-wise error rate**, the probability of making at least one Type I error). 
+
+The material in this lab is an extension to Section 5.5 of *OpenIntro Biostatistics*.
