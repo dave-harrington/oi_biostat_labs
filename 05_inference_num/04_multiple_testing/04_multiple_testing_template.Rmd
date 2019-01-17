@@ -1,17 +1,11 @@
 ---
 title: "Multiple Testing"
-author: "Chapter 5, Lab 4"
+author: "Chapter 5, Lab 4: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -62,15 +56,52 @@ table(reject)
 
 ```
 
+<!---
+
+Change to eval = TRUE for the results to show in the knitted PDF.
+
+--->
+
+
 When conducting more than one $t$-test, the significance level $\alpha$ used in each test controls the error rate for that test. The **experiment-wise error rate** is the chance that at least one test will incorrectly reject $H_0$ when all tested null hypotheses are true.
 
 2. When two hypothesis tests are conducted at $\alpha = 0.05$, is the probability of making at least one Type I error equal to 0.05?
 
     a) Modify the simulation code to estimate the experiment-wise error rate (i.e., the 'overall' Type I error rate) when two hypothesis tests are conducted; let the vector \texttt{B} contain a set of 100 values randomly drawn from a standard normal distribution. 
     
+
+    
+```{r}
+
+```
+    
+    
+
+
+    
     b) Using an algebraic approach, calculate the probability of making at least one Type I error when conducting two hypothesis tests, if the null hypotheses in both cases are true. Assume independence between the tests.
+
+    
+    
+```{r}
+#use r as a calculator
+
+```
+    
+    
+
     
 3. Suppose that 100 independent two-sample $t$-tests are conducted. What is the probability of at least one incorrect rejection of $H_0$ at $\alpha = 0.05$, given that in all cases there is no difference between the population group means?
+
+
+
+```{r}
+#use r as a calculator
+
+```
+
+
+
 
 ### Multiple testing in the Golub leukemia dataset
 
@@ -104,8 +135,24 @@ leuk.type = (golub$cancer == "aml")
 ```
 
     a) Produce a plot to show the association between cancer type and expression levels for the gene in the first column of \texttt{gene.matrix.sample}. Describe what you see. What do the values \texttt{TRUE} and \texttt{FALSE} mean?
+
+
+    ```{r}
+#make a plot
+
+```
+
+
+
     
     b) Conduct a $t$-test comparing expression levels between AML and ALL patients for the gene in the first column of \texttt{gene.matrix.sample}. Summarize the results.
+
+    ```{r}
+#conduct a t-test
+
+```
+
+
     
 5. Run the following code to conduct 100 $t$-tests, comparing expression levels between AML and ALL patients for each of the 100 genes. The $p$-values are stored in the vector \texttt{p.vals}.
 
@@ -136,15 +183,45 @@ reject = (p.vals <= alpha)
 
 ```
 
-    a) Plot a histogram of the $p$-values. Describe what you see.
+a) Plot a histogram of the $p$-values. Describe what you see.
+
+<!---
+
+In the histogram command, define the number of breaks to be 15; for example,
+hist(x, breaks = 15).
+
+--->
+
     
-    b) The logical vector \texttt{reject} has value \texttt{TRUE} if the $p$-value of a test is smaller than $\alpha = 0.05$. 
+```{r}
+#plot a histogram
+
+```
+
+
     
-        i. Of the 100 $t$-tests conducted, how many result in rejecting the null hypothesis at $\alpha = 0.05$? In other words, how many of the 100 genes are identified as being significantly differently expressed between AML and ALL patients?
+b) The logical vector \texttt{reject} has value \texttt{TRUE} if the $p$-value of a test is smaller than $\alpha = 0.05$. 
+    
+    i. Of the 100 $t$-tests conducted, how many result in rejecting the null hypothesis at $\alpha = 0.05$? In other words, how many of the 100 genes are identified as being significantly differently expressed between AML and ALL patients?
         
-        ii. Do you think it is reasonable to expect that for all the genes identified as significantly differently expressed between AML and ALL patients, there is actually an association between expression level and leukemia type? In other words, is it reasonable to expect that for each rejection, the null hypothesis was correctly rejected?
+        
+        
+        
+    ii. Do you think it is reasonable to expect that for all the genes identified as significantly differently expressed between AML and ALL patients, there is actually an association between expression level and leukemia type? In other words, is it reasonable to expect that for each rejection, the null hypothesis was correctly rejected?
+
+
+
+
 
 6. One approach to controlling the experiment-wise error rate is the Bonferroni correction. Using the Bonferroni correction, how many genes out of the 100 are identified as being significantly differently expressed between AML and ALL patients?
+
+
+```{r}
+
+```
+
+
+
     
 From theory, it can be shown that the Bonferroni correction is too strict when comparisons are not independent, inflating the rate of false negatives (i.e., failing to reject when there is a difference between groups). In this setting, independence is not a realistic assumption; from a biological perspective, the expression level of each gene is unlikely to be completely independent of the expression level of another gene.
 
@@ -195,12 +272,32 @@ table(reject)
 ```
 
     a) Run the simulation. What does the vector \texttt{gene.p.vals} contain, versus \texttt{min.p.vals}?
+
+
+
+
     
     b) Create a histogram of \texttt{min.p.vals}. Describe the section of the histogram that denotes the estimated experiment-wise error.
+
+    ```{r}
+#create a histogram
+
+```
+
+
+
     
     c) From the simulation, what is the estimated experiment-wise error rate? Does this differ from the answer to Question 3?
+
+
+
+
     
     d) How does the estimated experiment-wise error change as $\alpha$ decreases from 0.05? Test values of 0.005 and 0.001 for $\alpha$.
+
+
+
+
     
     e) Run the following code to find the value for $\alpha$ that will yield an experiment-wise error of approximately $0.05$. Compare this value to the $\alpha^\star$ value recommended by the Bonferroni correction.
     
@@ -208,8 +305,16 @@ table(reject)
 sim.based.correction = quantile(min.p.vals, 0.05)
 sim.based.correction
 ```
-    
+
+
+
     f) Why is it not advisable to use an overly strict correction for $\alpha$?
     
+    
+    
+    
     g) Using the simulation-based adjustment to $\alpha$, how many genes out of the 100 are identified as being significantly differentially expressed between AML and ALL patients? 
+    
+    
+    
     
