@@ -1,0 +1,384 @@
+---
+title: "Lab Notes"
+author: "Chapter 5"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 6.5
+    fig_height: 3.5
+---
+
+# Overview
+
+1. Two-Sample Tests
+    - *OI Biostat* Sections 5.2 - 5.3
+    
+2. Statistical Power
+    - *OI Biostat* Section 5.4
+    
+3. Analysis of Variance (ANOVA)
+    - *OI Biostat* Section 5.5
+    
+4. Multiple Testing
+    - Extension to *OI Biostat* Section 5.5
+    
+5. 
+
+
+Lab 1 introduces hypothesis testing in the two-sample context, discussing the two-sample $t$-test for paired data and independent group data.
+
+Lab 2 discusses the control of Type I and Type II error and explores the factors influencing the power of a statistical test via simulation.
+
+Lab 3 introduces the analysis of variance procedure for comparing the means of several groups.
+
+Lab 4 examines the multiple testing problem and concept of experiment-wise error in the context of the Golub leukemia data.
+
+Lab 5 \dots
+
+
+\newpage
+
+# Lab 1: Two-Sample Tests
+
+### Hypothesis Testing with \texttt{t.test()}, cont.
+
+The \textbf{\texttt{t.test()}} function has the following generic structure:
+
+```{r, eval = FALSE}
+t.test(x, y, alternative = "two.sided", mu = 0, conf.level = 0.95, paired = FALSE)
+```
+
+where \texttt{x} and \texttt{y} are numeric vectors of data values, \texttt{alternative} specifies the form of the alternative hypothesis, \texttt{mu} is $\mu_1 - \mu_2$ (in the paired context, $\delta_0$), and \texttt{conf.level} refers to the confidence level. The argument for \texttt{alternative} can be either \texttt{"two.sided"} ($H_A: \mu_1 \neq \mu_2$), \texttt{"less"} ($H_A: \mu_1 < \mu_2$), or \texttt{"greater"} ($H_A: \mu_1 > \mu_2$). By default, confidence level is set to 95\%, and a two-sided alternative is tested with the independent group test.
+
+To conduct a test on data contained in variable \texttt{y} that is grouped by the variable \texttt{x}, use the tilde syntax:
+
+```{r, eval = FALSE}
+t.test(y ~ x, ...)
+```
+
+The following example shows a hypothesis test for mean standing height in centimeters in the artificial NHANES population, using a random sample of 135 adults. The null hypothesis is that the population mean height for females is equal to the population mean height for males. A one-sided alternative is tested against the null; the output includes the $t$-statistic, degrees of freedom, $p$-value, 90\% confidence interval, and the sample means of both groups.
+
+```{r}
+#load the data
+library(oibiostat)
+data("nhanes.samp.adult")
+
+#conduct test
+t.test(nhanes.samp.adult$Height ~ nhanes.samp.adult$Gender, alternative = "less",
+       conf.level = 0.90)
+```
+
+The following example shows two ways to conduct a hypothesis test for the difference in mean maximal swim velocity between swimmers wearing wetsuits versus swimsuits. The data are paired, since each participant completed two trials: one wearing a wetsuit and one wearing a swimsuit. The null hypothesis of no difference of $H_0: \delta = 0$ is tested against the two-sided alternative $H_A: \delta \neq 0$. 
+
+The first method uses the two-sample test syntax, while the second method uses the one-sample test syntax on the vector of velocity differences.
+
+```{r}
+#load the data
+library(oibiostat)
+data("swim")
+
+#two-sample test syntax
+t.test(swim$wet.suit.velocity, swim$swim.suit.velocity, alternative = "two.sided",
+       paired = TRUE)
+
+#one-sample test syntax
+t.test(swim$velocity.diff, mu = 0, alternative = "two.sided")
+```
+
+
+
+
+\newpage
+
+# Lab 2: Statistical Power
+
+### Simulating Values from a Distribution
+
+\texttt{R} has built-in functions for drawing random values from a distribution. The function \texttt{rnorm()} is used in Lab 2 to draw observations from normal distributions with specified parameter values. For reference, details for sampling values from other distributions are also discussed in this section.
+
+The function \textbf{\texttt{rnorm()}} has the generic structure
+
+```{r, eval = FALSE}
+rnorm(n, mean = 0, sd = 1)
+```
+
+where \texttt{n} is the number of observations sampled. By default, \texttt{R} assumes that mean and standard deviation are 0 and 1, respectively.
+
+The following code shows how to draw 10 values from a normal distribution with mean 100 and standard deviation 5. As with any random sampling, it is necessary to specify a seed with \texttt{set.seed()} for the results to be reproducible.
+
+```{r}
+#set seed for pseudorandom sampling
+set.seed(2018)
+
+#draw values
+rnorm(10, mean = 100, sd = 5)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{rbinom()}} has the generic structure
+
+```{r, eval = FALSE}
+rbinom(n, size, prob)
+```
+
+where \texttt{n} is the number of observations sampled, \texttt{size} is the number of trials \texttt{n}, and \texttt{prob} is the probability of success $p$.
+
+The following code shows how to draw 10 values from a binomial distribution with 10 trials and success probability 0.35.
+
+```{r}
+rbinom(10, 10, 0.35)
+```
+
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{rpois()}} has the generic structure
+
+```{r, eval = FALSE}
+rpois(n, lambda)
+```
+
+where \texttt{n} is the number of observations sampled and \texttt{lambda} is the rate parameter $\lambda$.
+
+The following code shows how to draw 10 values from a Poisson distribution with rate parameter $\lambda = 3$.
+
+```{r}
+rpois(10, 3)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{rgeom()}} has the generic structure
+
+```{r, eval = FALSE}
+rgeom(n, prob)
+```
+
+where \texttt{n} is the number of observations sampled and \texttt{prob} is the probability of success $p$.
+
+The following code shows how to draw 10 values from a geometric distribution with probability of success $p = 0.35$.
+
+```{r}
+rgeom(10, 0.35)
+```
+
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{rnbinom()}} has the generic structure
+
+```{r, eval = FALSE}
+rnbinom(n, size, prob)
+```
+
+where \texttt{n} is the number of observations sampled, \texttt{size} is the number of successes $r$, and \texttt{prob} is the probability of success $p$.
+
+The following code shows how to draw 10 values from a negative binomial distribution with number of successes $r = 4$ and probability of success $p = 0.8$.
+
+```{r}
+rnbinom(10, 4, 0.8)
+```
+
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{rhyper()}} has the generic structure
+
+```{r, eval = FALSE}
+rhyper(nn, m, n, k)
+```
+
+where \texttt{nn} is the number of observations sampled, \texttt{m} is the total number of successes $m$, \texttt{n} is the total number of failures $N - m$, and \texttt{k} is the sample size $n$.
+
+The following code shows how to draw 10 values from a hypergeometric distribution with total number of successes $m = 10$, total number of failures $N - m = 15$, and sample size $n = 8$.
+
+```{r}
+rhyper(10, 10, 15, 8)
+```
+
+
+### Power and Sample Size Calculations with \texttt{power.t.test()}
+
+The \textbf{\texttt{power.t.test()}} function can both compute the power of a one- or two-sample $t$-test and determine necessary parameters (e.g., sample size) to obtain a target power. The function has the generic structure
+
+```{r, eval = FALSE}
+power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
+             power = NULL, type, alternative)
+```
+
+where \texttt{n} is the sample size (per group), \texttt{delta} is the effect size, \texttt{sd} is the standard deviation, \texttt{sig.level} is the significance level, and \texttt{power} is the statistical power. The argument for \texttt{type} can be either \texttt{"one.sample"}, \texttt{"two.sample"}, or \texttt{"paired"}, where two-sample implies independent groups. The argument for \texttt{alternative} can be either \texttt{"two.sided"}, \texttt{"less"}, or \texttt{"greater"}. 
+
+Exactly one out of \texttt{n}, \texttt{delta}, \texttt{sd}, or \texttt{sig.level} must be entered as \texttt{NULL}; this is the parameter of interest that will be calculated based on the provided information.
+
+The following code shows how to calculate the power for a one-sample test where $n = 100$, $\Delta = 3$, $\sigma = 12$, $\alpha = 0.05$, with a two-sided alternative.
+
+```{r}
+power.t.test(n = 100, delta = 3, sd = 12, sig.level = 0.05,
+             power = NULL, type = "one.sample", alternative = "two.sided")
+```
+
+The following code shows how to calculate the sample size for a one-sample test where $\Delta = 3$, $\sigma = 12$, $\alpha = 0.05$, and power of 0.70, with a two-sided alternative.
+
+```{r}
+power.t.test(n = NULL, delta = 3, sd = 12, sig.level = 0.05,
+             power = 0.70, type = "one.sample", alternative = "two.sided")
+```
+
+
+\newpage
+
+# Lab 3: Analysis of Variance (ANOVA)
+
+### The \texttt{tapply()} Function
+
+The \textbf{\texttt{tapply()}} function is related to the \texttt{apply()} function introduced in Unit 1. As with \texttt{apply()}, \texttt{tapply()} allows a specific function to be applied to a matrix; the function can be a predefined \textsf{R} function like \texttt{mean()} or a user-defined function. The power of \texttt{tapply()} is that it allows for a vector to be split into groups, with the function applied to each group.
+
+The function has the generic structure
+
+```{r, eval = FALSE}
+tapply(y, x, FUN)
+```
+
+where \texttt{y} is the vector of data, \texttt{x} is the grouping variable, and \texttt{FUN} is the function of interest.
+
+The following code shows how to calculate the mean change in non-dominant arm strength for each genotype group in the FAMuSS data.
+
+```{r}
+#load the data
+library(oibiostat)
+data("famuss")
+
+tapply(famuss$ndrm.ch, famuss$actn3.r577x, mean)
+```
+
+
+
+### Fitting an ANOVA Model
+
+The \textbf{\texttt{aov()}} function fits an ANOVA model to data; wrapping with the \texttt{summary()} function outputs the ANOVA table, which contains the $F$-statistic and associated $p$-value. The input to \texttt{aov()} must be in the form of a formula using the tilde syntax:
+
+```{r, eval = FALSE}
+aov(y ~ x)
+```
+
+where \texttt{y} is the data vector and \texttt{y} is the grouping variable.
+
+The following code shows the summary of the ANOVA model fit for the association of change in non-dominant arm strength by genotype at the $r577x$ locus on the $ACTN3$ gene.
+
+```{r}
+#output summary of anova model
+summary(aov(famuss$ndrm.ch ~ famuss$actn3.r577x))
+```
+
+
+### Conducting Pairwise Tests with \texttt{pairwise.t.test}
+
+The \textbf{\texttt{pairwise.t.test}} function is used to conduct pairwise comparisons with corrections for multiple testing. Note that the input to this function uses different syntax from \texttt{aov()}: instead of the tilde, the comma is used to separate the data variable and grouping variable. The generic structure of the function is
+
+```{r, eval = FALSE}
+pairwise.t.test(y, x, p.adj)
+```
+
+where \texttt{y} is the data vector, \texttt{x} is the grouping vector, and \texttt{p.adj} can be one of several adjustment choices, such as \texttt{"none"} for no correction and \texttt{"bonf"} for Bonferroni.
+
+The following code shows how to conduct pairwise two-sample $t$-tests between mean change in non-dominant arm strength for each of the genotype groups in the FAMuSS data.
+
+```{r}
+#no correction
+pairwise.t.test(famuss$ndrm.ch, famuss$actn3.r577x, p.adj = "none")
+
+#Bonferroni correction
+pairwise.t.test(famuss$ndrm.ch, famuss$actn3.r577x, p.adj = "bonf")
+```
+
+Note that when the Bonferroni correction is applied, \texttt{R} multiples the $p$-value by $K$, the number of comparisons; thus, the values output from \texttt{pairwise.t.test} when \texttt{p.adj = "bonf"} should be compared to $\alpha$, not $\alpha^\star$. Comparing an unadjusted $p$-value to $\alpha/K$ is equivalent to comparing the quantity $(K \times p\text{-value})$ to $\alpha$.
+
+\newpage
+
+# Lab 4: Multiple Testing
+
+The \texttt{for} loop was introduced in Unit 2; nested loops were introduced in Unit 3 in the context of simulating geometric, negative binomial, and hypergeometric random variables. This section specifically discusses nested \texttt{for} loops and the logic behind the simulation code for estimating experiment-wise error in the Golub leukemia dataset.
+
+### Nested \texttt{for} Loops
+
+Understanding a nested \texttt{for} loop requires keeping track of more than two counters (i.e., index variables). In the following basic example, there are two counters: the outer counter, $k$, runs from 1 through 4, while the inner counter, $j$, runs from 1 through 2. 
+
+- For the first iteration, $k = 1$. Upon encountering the second loop, \textsf{R} cycles through $j = 1$ and $j = 2$. Thus, there are two values of the product $k \times j$ for this first iteration: $1 \times 1 = 1$ and $1 \times 2 = 2$.
+    
+- For the fourth iteration, $k = 4$. The two values of the product $k \times j$ are then $4 \times 1 = 4$ and $4 \times 2 = 8$. 
+
+```{r}
+for(k in 1:4){
+  
+  for(j in 1:2){
+    print(k*j)
+  }
+  
+}
+```
+
+Question 2 of the lab refers to a simulation for estimating experiment-wise error rate when two independent one-sample hypothesis tests are conducted. The approach shown in the lab is to create two separate vectors of observations. While this approach is straightforward, it is impractical for a large number of tests. 
+
+The following code demonstrates a more flexible approach that hinges on using nested \texttt{for} loops. When the number of tests is specified as a parameter, the simulation can simply be re-run to model experiment-wise error for any number of tests.
+
+- The outer loop, with index variable $k$, runs from 1 to the specified number of iterations. The inner loop, with index variable $j$, runs from 1 to the specified number of tests. 
+
+- Each time the outer loop runs, a set of data (i.e., observations in samples to be tested) is generated. The matrix \texttt{obs.matrix} has number of columns equivalent to \texttt{num.tests} and number of rows equivalent to \texttt{num.obs}. It is populated with $num.tests \times num.obs = 100 \times 100$ draws from a standard normal distribution. This is a more efficient way to generate the simulated data than running \texttt{rnorm()} 100 times and creating 100 vectors.
+
+- The inner loop proceeds through each column of \texttt{obs.matrix}, conducting a $t$-test on the values in column $j$ and storing the $p$-value as the $j^{th}$ entry of the vector \texttt{p.vals}.
+
+- The last instruction in the outer loop is to record the minimum value in \texttt{p.vals} as the $k^{th}$ entry in the vector \texttt{min.p.vals}. Note how the values in \texttt{obs.matrix} and \texttt{p.vals} are rewritten with each iteration of the outer loop, but not the values in \texttt{min.p.vals}.
+
+- The \texttt{reject} vector is also defined more efficiently than in the version of the simulation shown in the lab. If the $k^{th}$ entry in \texttt{min.p.vals} is larger than $\alpha$, then the $k^{th}$ iteration represents one instance of experiment-wise error occurring. This logic was discussed in Question 7.
+
+- The result of the simulation agrees closely with the algebraic solution from Question 3 of the lab. From simulation, the estimated experiment-wise error is 0.995; the probability of at least one incorrect rejection in 100 independent tests conducted at $\alpha = 0.05$ is 0.994.
+
+```{r}
+#set parameters
+num.tests = 100
+num.obs = 100
+num.iterations = 1000
+
+alpha = 0.05
+
+#set seed
+set.seed(2018)
+
+#create empty lists
+p.vals = vector("numeric", num.tests)
+min.p.vals = vector("numeric", num.iterations)
+
+#run simulation
+for(k in 1:num.iterations){
+  
+  obs.matrix = matrix(rnorm(num.tests*num.obs), 
+                      nrow = num.obs, ncol = num.tests)
+  
+  for(j in 1:num.tests){
+    
+    p.vals[j] = t.test(obs.matrix[, j], mu = 0)$p.val
+    
+  }
+
+  min.p.vals[k] = min(p.vals)
+  
+}
+
+#view results
+reject = (min.p.vals <= alpha)
+table(reject)
+```
+
+
+
+
+\newpage
+
+#Lab 5: 

@@ -39,6 +39,7 @@ Recall that making a Type I error, rejecting the null hypothesis when the null h
     ```{r, eval = FALSE}
 #set parameters
 num.iterations = 1000
+num.obs = 100
 alpha = 0.05
 
 #set seed
@@ -50,7 +51,7 @@ p.values.A = vector("numeric", num.iterations)
 #run simulation
 for(k in 1:num.iterations){
   
-  A = rnorm(100)
+  A = rnorm(num.obs)
   
   p.values.A[k] = t.test(A, mu = 0)$p.val
   

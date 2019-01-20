@@ -41,6 +41,7 @@ Recall that making a Type I error, rejecting the null hypothesis when the null h
     ```{r, eval = TRUE}
 #set parameters
 num.iterations = 1000
+num.obs = 100
 alpha = 0.05
 
 #set seed
@@ -52,7 +53,7 @@ p.values.A = vector("numeric", num.iterations)
 #run simulation
 for(k in 1:num.iterations){
   
-  A = rnorm(100)
+  A = rnorm(num.obs)
   
   p.values.A[k] = t.test(A, mu = 0)$p.val
   
@@ -78,6 +79,7 @@ When conducting more than one $t$-test, the significance level $\alpha$ used in 
     ```{r, eval = TRUE}
 #set parameters
 num.iterations = 1000
+num.obs = 100
 alpha = 0.05
 
 #set seed
@@ -90,8 +92,8 @@ p.values.B = vector("numeric", num.iterations)
 #run simulation
 for(k in 1:num.iterations){
   
-  A = rnorm(100)
-  B = rnorm(100)
+  A = rnorm(num.obs)
+  B = rnorm(num.obs)
   
   p.values.A[k] = t.test(A, mu = 0)$p.val
   p.values.B[k] = t.test(B, mu = 0)$p.val
