@@ -482,7 +482,7 @@ deviation.magnitude = matrix(nrow = num.patients, ncol = num.genes)
 for(i in 1:dim(deviation.magnitude)[1]){
   for(j in 1:dim(deviation.magnitude)[2]) {
     
-    midpoint = (predictor.means.aml - predictor.means.aml)/2
+    midpoint = (predictor.means.aml - predictor.means.all)/2
     
     deviation.magnitude[i,j] = abs(test.gene.matrix[i, j] - midpoint[j])
     
@@ -495,7 +495,7 @@ colnames(deviation.magnitude) <- colnames(test.gene.matrix)
 
     a) View \texttt{deviation.magnitude}. What is the deviation from the midpoint at the M19507\_at probe for patient 1? For which patient is the deviation at this gene probe the largest?
 
-    \textcolor{NavyBlue}{The deviation from the midpoint at the M19507\_at probe for patient 1 is 4,481.12. The largest deviation at this gene point occurs with patient number 3, with deviation 21,293.53.}
+    \textcolor{NavyBlue}{The deviation from the midpoint at the M19507\_at probe for patient 1 is 5,429.31. The largest deviation at this gene point occurs with patient number 3, with deviation 11,383.1.}
 
     ```{r}
 #deviation.magnitude for patient 1 at probe M19507_at
@@ -551,14 +551,14 @@ predicted.leuk.type
 
     c) What are the predicted leukemia types for the 10 patients in \texttt{golub.test}?
   
-    \textcolor{NavyBlue}{The first five patients are predicted to have AML; other patients are predicted to have ALL.}
+    \textcolor{NavyBlue}{The first three patients and the fifth patient are predicted to have AML; other patients are predicted to have ALL.}
 
 
 
 
 13. Assess the prediction accuracy, comparing the prediction to the actual leukemia status of each patient in \texttt{golub.test}. How well do the predictions match patient leukemia status?
 
-    \textcolor{NavyBlue}{The prediction matches actual patient leukemia status for all ten patients.}
+    \textcolor{NavyBlue}{The prediction matches actual patient leukemia status for nine out of ten patients.}
 
     ```{r}
 #compare predictions to actual leukemia type

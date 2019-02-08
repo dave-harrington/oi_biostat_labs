@@ -324,7 +324,7 @@ deviation.magnitude = matrix(nrow = num.patients, ncol = num.genes)
 for(i in 1:dim(deviation.magnitude)[1]){
   for(j in 1:dim(deviation.magnitude)[2]) {
     
-    midpoint = (predictor.means.aml - predictor.means.aml)/2
+    midpoint = (predictor.means.aml - predictor.means.all)/2
     
     deviation.magnitude[i,j] = abs(test.gene.matrix[i, j] - midpoint[j])
     
