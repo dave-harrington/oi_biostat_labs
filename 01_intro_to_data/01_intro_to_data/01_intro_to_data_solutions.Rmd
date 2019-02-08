@@ -147,7 +147,7 @@ plot(cdc[1:100, 5], cdc[1:100, 6])
 
 #### Section 2: Gene Transcript Lengths.
 
-Before genes can be translated into proteins, DNA must first be transcribed into RNA. The dataset \texttt{coding.mrna} contains the length of known protein-coding transcripts (measured in base pairs). Load the dataset from the \texttt{oibiostat} package using the \texttt{load()} command.
+Before genes can be translated into proteins, DNA must first be transcribed into RNA. The dataset \texttt{coding.mrna} contains the length of known protein-coding transcripts (measured in base pairs). Load the dataset from the \texttt{oibiostat} package.
 
 ```{r}
 #load the oibiostat package
