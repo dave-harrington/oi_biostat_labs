@@ -214,7 +214,7 @@ prob.true.negative = 1 - prob.false.positive
       
         ii. What are the associated probabilites of the possible outcomes?
       
-            \textcolor{NavyBlue}{The probability of a true positive result is 0.012 and the probability of a true negative is $1 - 0.012 = 0.988$.}
+            \textcolor{NavyBlue}{The probability of a false positive result is 0.012 and the probability of a true negative is $1 - 0.012 = 0.988$.}
       
         iii. Describe a reasonable way to represent the two possible outcomes with values \texttt{0} and \texttt{1}.
       
