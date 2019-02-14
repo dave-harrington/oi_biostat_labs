@@ -199,9 +199,7 @@ ppv = sum(test.result[disease.status == 1])/sum(test.result)
 ppv
 
 #calculate npv (part e)
-npv = ((population.size - sum(disease.status)) - sum(test.result[disease.status 
-                                                                 == 0])) /
-  (population.size - sum(test.result))
+npv = sum(test.result == 0 & disease.status == 0) / sum(test.result == 0)
 npv
 ```
     
