@@ -23,7 +23,7 @@ output:
     - *OI Biostat* Section 4.2
     
 3. Hypothesis Testing
-    - *OI Biostat* Sections 4.3 - 4.3.2
+    - *OI Biostat* Sections 4.3.1 - 4.3.2
     
 4. Inference Concept Check
     - *OI Biostat* Sections 4.3.3 - 4.3.5
