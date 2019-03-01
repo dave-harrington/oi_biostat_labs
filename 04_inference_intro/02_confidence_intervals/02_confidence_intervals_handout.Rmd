@@ -62,7 +62,7 @@ yrbss.complete = yrbss[complete.cases(yrbss$weight), ]
 sample.size = 30
 
 #set seed for pseudo-random sampling
-set.seed(2014)
+set.seed(5011)
 
 #obtain random sample of row numbers
 sample.rows = sample(1:nrow(yrbss.complete), sample.size)
