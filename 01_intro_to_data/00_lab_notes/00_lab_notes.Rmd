@@ -468,6 +468,16 @@ head(male.rows.numeric)
 class(male.rows.numeric)
 ```
 
+One example of a function that outputs a logical vector is \textbf{\texttt{is.na()}}, which indicates which elements of a vector are missing. In the earlier section discussing numerical summaries, applying \texttt{summary()} to the \texttt{body.size} variable in the \texttt{frog} dataset revealed the presence of 302 missing values. Since the output of \texttt{is.na()} is a logical vector, it can simply be summed to directly output the number of missing values.
+
+```{r}
+#table of missing (TRUE) versus not missing (FALSE) body.size measurements
+table(is.na(frog$body.size))
+
+#number of missing values
+sum(is.na(frog$body.size))
+```
+
 ## The \texttt{apply()} Function
 
 To use the \texttt{apply()} function to a matrix, specify the function and whether it should be applied to the rows or the columns. The function can be a pre-defined \texttt{R} function like \texttt{mean()}, \texttt{range()}, \texttt{summary()}, \texttt{class()}, etc. or a user-defined function. \texttt{R} also has specific functions for calculating the marginal sums and means of a matrix: \texttt{rowSums()}, \texttt{colSums()}, \texttt{rowMeans()}, and \texttt{colMeans()}.
