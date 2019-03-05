@@ -28,7 +28,8 @@ output:
 4. Multiple Testing
     - Extension to *OI Biostat* Section 5.5
     
-5. 
+5. Bayesian Hypothesis Testing
+    - Extension to *OI Biostat* Section 5.6
 
 
 Lab 1 introduces hypothesis testing in the two-sample context, discussing the two-sample $t$-test for paired data and independent group data.
@@ -39,8 +40,7 @@ Lab 3 introduces the analysis of variance procedure for comparing the means of s
 
 Lab 4 examines the multiple testing problem and concept of experiment-wise error in the context of the Golub leukemia data.
 
-Lab 5 \dots
-
+Lab 5 integrates the ideas of conditional probability and hypothesis testing to present a broader understanding of $p$-values, Type I error, and statistical power in a research context.
 
 \newpage
 
@@ -381,4 +381,4 @@ table(reject)
 
 \newpage
 
-#Lab 5: 
+#Lab 5: Bayesian Hypothesis Testing
