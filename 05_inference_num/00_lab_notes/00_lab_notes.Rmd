@@ -238,7 +238,7 @@ power.t.test(n = NULL, delta = 3, sd = 12, sig.level = 0.05,
 
 ### The \texttt{tapply()} Function
 
-The \textbf{\texttt{tapply()}} function is related to the \texttt{apply()} function introduced in Unit 1. As with \texttt{apply()}, \texttt{tapply()} allows a specific function to be applied to a matrix; the function can be a predefined \textsf{R} function like \texttt{mean()} or a user-defined function. The power of \texttt{tapply()} is that it allows for a vector to be split into groups, with the function applied to each group.
+The \textbf{\texttt{tapply()}} function is related to the \texttt{apply()} function introduced in Chapter 1. As with \texttt{apply()}, \texttt{tapply()} allows a specific function to be applied to a matrix; the function can be a predefined \textsf{R} function like \texttt{mean()} or a user-defined function. The power of \texttt{tapply()} is that it allows for a vector to be split into groups, with the function applied to each group.
 
 The function has the generic structure
 
@@ -304,7 +304,7 @@ Note that when the Bonferroni correction is applied, \texttt{R} multiples the $p
 
 # Lab 4: Multiple Testing
 
-The \texttt{for} loop was introduced in Unit 2; nested loops were introduced in Unit 3 in the context of simulating geometric, negative binomial, and hypergeometric random variables. This section specifically discusses nested \texttt{for} loops and the logic behind the simulation code for estimating experiment-wise error in the Golub leukemia dataset.
+The \texttt{for} loop was introduced in Chapter 2; nested loops were introduced in Chapter 3 in the context of simulating geometric, negative binomial, and hypergeometric random variables. This section specifically discusses nested \texttt{for} loops and the logic behind the simulation code for estimating experiment-wise error in the Golub leukemia dataset.
 
 ### Nested \texttt{for} Loops
 
