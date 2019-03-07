@@ -106,7 +106,7 @@ t.test(yrbss.sample$weight, mu = 60, alternative = "two.sided")
     
 3. The relationship between a hypothesis test and the corresponding confidence interval is defined by $\alpha$. Suppose that a two-sided test is conducted at significance level $\alpha$; the confidence level of the matching interval is (1 - $\alpha$)\%. For example, a 95\% confidence interval can be compared to a two-sided hypothesis test with $\alpha = 0.05$. 
 
-    a) What is the margin of error, $m$, from the confidence interval calculated in Question 6?
+    a) What is the margin of error, $m$, from the confidence interval calculated in Question 1?
 
     \textcolor{NavyBlue}{The margin of error is half the width of a confidence interval ($\overline{x} \pm m$). Thus, the margin of error in the confidence interval (62.997, 69.155) kg is $(69.155 - 62.997)/2 = 3.079$.}
 
