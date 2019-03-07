@@ -103,7 +103,7 @@ A one-sided hypothesis test with $\alpha = 0.05$ and $H_A: \mu > \mu_0$ correspo
     
     a) For the following scenarios, choose whether to conduct a one-sided or two-sided test. Formulate null and alternative hypotheses.
     
-        i. Suppose that you are interested in learning whether mean fasting blood sugar levels in Neighborhood A, a middle-class neighborhood, is equal to 5.31 mmol/L.
+        i. Suppose that you are interested in learning whether mean fasting blood sugar levels in Neighborhood A, a middle-class neighborhood, is different from 5.31 mmol/L.
         
         ii. Neighborhood B is primarily inhabited by low-income families. If the mean fasting blood sugar level in Neighborhood B is higher than normal, you will start recruiting participants for an antidiabetic drug trial from the neighborhood.
         
