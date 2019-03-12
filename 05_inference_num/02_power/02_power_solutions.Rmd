@@ -320,7 +320,7 @@ table(reject)
 
     a) With 25 individuals in each group, how many tests result in the incorrect conclusion that the two population means are not different?
 
-    \textcolor{NavyBlue}{With 25 individuals in each group, 115 of the tests result in the correct conclusion that the two population means are different.}
+    \textcolor{NavyBlue}{With 25 individuals in each group, 885 of the tests result in the incorrect conclusion that the two population means are not different.}
 
 
     

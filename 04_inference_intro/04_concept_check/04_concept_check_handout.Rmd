@@ -120,7 +120,9 @@ The significance level $\alpha$ can be thought of as the value that quantifies h
 
 It is also possible to think about $\alpha$ in the context of decision errors. Hypothesis tests can potentially result in incorrect decisions. Rejecting the null hypothesis when the null is true is referred to as a \textbf{Type I} error. A Type I error occurs with probability $\alpha$, since $\alpha$ determines the cutoff point for rejecting the null hypothesis. If $\alpha = 0.05$, there is a 5\% chance of incorrectly rejecting $H_0$.
 
-To explore this idea, let's return to the \texttt{yrbss} repeated sampling simulation. Recall that \texttt{yrbss.complete} is our artificial "population", where the mean weight, $\mu_{weight}$, is 67.91 kg. 
+To explore this idea, let's return to the \texttt{yrbss} repeated sampling simulation. 
+
+Recall that \texttt{yrbss.complete} is our artificial "population", where the mean weight, $\mu_{weight}$, is 67.91 kg. Let 67.91 kg be $\mu_0$ and test $H_0: \mu = 67.91$ kg versus $H_A: \mu \neq 67.91$ kg. A simulation can be run in which a hypothesis test is performed on each sample drawn from the population; since in this setting, it is known that $\mu$ truly is 67.91 kg, each instance of rejecting $H_0$ represents an instance of making a Type I error.
 
 6. Run the code chunk shown in the template to take 1,000 random samples of size 100 from \texttt{yrbss.complete}. The code calculates the $t$-statistics from each sample and returns \texttt{TRUE} if the $t$-statistic from a sample is within the rejection region.
 
@@ -141,12 +143,12 @@ for (k in 1:replicates) {
   sample.rows = sample(nrow(yrbss.complete), sample.size)
   
   #define constants
-  mu = mean(yrbss.complete$weight)
+  mu.0 = mean(yrbss.complete$weight)
   sample.mean = mean(yrbss.complete$weight[sample.rows])
   sample.sd = sd(yrbss.complete$weight[sample.rows])
   
   #calculate t statistics
-  t.stat[k] = (sample.mean - mu) / (sample.sd / sqrt(sample.size))
+  t.stat[k] = (sample.mean - mu.0) / (sample.sd / sqrt(sample.size))
 }
 
 #define upper and lower bounds of rejection region
