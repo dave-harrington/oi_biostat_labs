@@ -213,7 +213,7 @@ power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
              power = NULL, type, alternative)
 ```
 
-where \texttt{n} is the sample size (per group), \texttt{delta} is the effect size, \texttt{sd} is the standard deviation, \texttt{sig.level} is the significance level, and \texttt{power} is the statistical power. The argument for \texttt{type} can be either \texttt{"one.sample"}, \texttt{"two.sample"}, or \texttt{"paired"}, where two-sample implies independent groups. The argument for \texttt{alternative} can be either \texttt{"two.sided"}, \texttt{"less"}, or \texttt{"greater"}. 
+where \texttt{n} is the sample size (per group), \texttt{delta} is the effect size, \texttt{sd} is the standard deviation, \texttt{sig.level} is the significance level, and \texttt{power} is the statistical power. The argument for \texttt{type} can be either \texttt{"one.sample"}, \texttt{"two.sample"}, or \texttt{"paired"}, where two-sample implies independent groups. The argument for \texttt{alternative} can be either \texttt{"two.sided"} or \texttt{"one.sided"}.
 
 Exactly one out of \texttt{n}, \texttt{delta}, \texttt{sd}, or \texttt{sig.level} must be entered as \texttt{NULL}; this is the parameter of interest that will be calculated based on the provided information.
 
