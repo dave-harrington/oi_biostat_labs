@@ -1,0 +1,140 @@
+---
+title: "Examining Scatterplots"
+author: "Chapter 6, Lab 1: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Fitting and interpreting a line
+	  \item Checking assumptions
+	\end{itemize}
+	
+\end{small}
+
+The relationship between two numerical variables can be visualized using a scatterplot in the $xy$-plane. The *predictor* variable is plotted on the horizontal axis, while the *response* variable is plotted on the vertical axis. This lab introduces the idea of using a straight line, $y = b_0 + b_1x$, where $b_0$ is the $y$-intercept and $b_1$ is the slope, to summarize data that exhibit an approximately linear relationship.
+
+
+The material in this lab corresponds to Section 6.1 of *OpenIntro Biostatistics*.
+
+\vspace{0.5cm}
+
+### Background information
+
+This lab uses data from the Prevention of REnal and Vascular END-stage Disease (PREVEND) study, which took place between 2003 and 2006 in the Netherlands. Clinical and demographic data for 4,095 individuals are stored in the \texttt{prevend} dataset in the \texttt{oibiostat} package.
+
+As adults age, cognitive function declines over time; this is largely due to various cerebrovascular and neurodegenerative changes. 
+
+The Ruff Figural Fluency Test (RFFT) is one measure of cognitive function that provides information about cognitive abilities such as planning and the ability to switch between different tasks. Scores on the RFFT range from 0 to 175 points, where higher scores are indicative of better cognitive function.
+
+The goal of this lab is to begin exploring the relationship between age and RFFT score in the \texttt{prevend} dataset.
+
+\newpage
+
+### Fitting and interpreting a line
+
+The questions in this lab will be based around data from a random sample of $n = 500$ individuals from the \texttt{prevend} dataset.
+
+1. Run the following code chunk to load the \texttt{prevend} data and store a random sample of 500 individuals as \texttt{prevend.sample}.
+
+    ```{r}
+#load the data
+library(oibiostat)
+data("prevend")
+
+#take a random sample
+set.seed(5011)
+sample.size = 500
+sample.rows = sample(1:nrow(prevend), sample.size, replace = FALSE)
+prevend.sample = prevend[sample.rows, ]
+```
+
+2. Create a scatterplot of RFFT score (\texttt{RFFT}) and age in years (\texttt{Age}) in \texttt{prevend.sample}, then add a line of best fit.
+
+    ```{r}
+#create a plot of RFFT versus age with line of best fit
+plot(prevend.sample$RFFT ~ prevend.sample$Age, cex = 0.75)
+abline(lm(prevend.sample$RFFT ~ prevend.sample$Age), col = "red")
+
+#print the equation of the line
+lm(prevend.sample$RFFT ~ prevend.sample$Age)
+```
+
+
+    a) What are the slope and intercept values of the line of best fit?
+    
+        \textcolor{NavyBlue}{The slope is -1.261 and the intercept is 137.55.}
+    
+    b) Interpret the slope and intercept values in the context of the data; i.e., explain the linear model in terms that a non-statistician would understand. Comment on whether the intercept value has any interpretive meaning in this setting.
+    
+        \textcolor{NavyBlue}{According to the model slope, RFFT score declines an average of 1.3 points for every increase in age of 1 year. The intercept model suggests that the average RFFT score for an individual of age 0 is 137.55. The intercept value does not have interpretive meaning in this setting, since it is not reasonable to assess a newborn's cognitive function with a test like the RFFT.}
+    
+    c) Based on the linear model, how much does RFFT score differ, on average, between an individual who is 60 years old versus an individual who is 50 years old?
+    
+        \textcolor{NavyBlue}{Based on the linear model, RFFT score differs, on average, by $1.261(10) = 12.61$ points for individuals that have an age difference of 10 years; the younger individual is expected to have a higher RFFT score.}
+    
+    d) Write the equation of the least squares line in the form $\hat{y} = b_0 + b_1x$. According to the linear model, what is the average RFFT score for an individual who is 70 years old?
+    
+        \textcolor{NavyBlue}{The equation of the line is $\widehat{RFFT} = 137.55 - (1.261)(age)$. According to the model, the average RFFT score for an individual who is 70 years old is $137.55 - (1.261)(70) = 49.28$ points.}
+    
+    e) Is it valid to use the linear model to estimate RFFT score for an individual who is 20 years old? Explain your answer.
+    
+        \textcolor{NavyBlue}{No, it is not valid to use the linear model to estimate RFFT score for an individual who is 20 years old. The data in the sample only extend from ages 36 to 81 and should not be used to predict scores for individuals outside that age range. It may well be that the relationship between RFFT and age is different for individuals in a different age group.}
+        
+    ```{r}
+summary(prevend.sample$Age)
+```
+        
+
+
+\newpage
+
+### Checking assumptions
+
+There are four assumptions that should be true for a line to be considered a reasonable approximation for a relationship shown in a scatterplot, and for methods of inference to be applied to the linear model: 
+
+  1. *Linearity*: The data show a linear trend.
+    
+  2. *Constant variability*: The variability of the response variable about the line remains roughly constant as the predictor variable changes.
+    
+  3. *Independent observations*: The $(x, y)$ pairs are independent.
+    
+  4. *Approximate normality of residuals*: This condition will be explained in the next lab.
+    
+The next lab discusses specialized plots for checking assumptions. For now, the following question addresses how to do an informal check of assumptions based on simply assessing the scatterplot of the data with a line of best fit.
+
+
+```{r, echo = FALSE, fig.width = 8, fig.height = 5, message = FALSE}
+library(openintro)
+data("COL")
+plot(prevend.sample$RFFT ~ prevend.sample$Age, ylab = "RFFT Score", xlab = "Age (years)",
+     main = "Association of RFFT Score with Age in the PREVEND data (n = 500)", 
+     col = COL[1], bg = COL[1, 3], pch = 21)
+abline(lm(prevend.sample$RFFT ~ prevend.sample$Age), lwd = 3, col = COL[4])
+```
+
+3. Perform an informal check of assumptions 1 - 3.
+
+    a) Do the data seem to show a linear trend for the response variable $y$ as a function of the predictor variable $x$?
+    
+    \textcolor{NavyBlue}{Yes, the data show a linear trend, with RFFT scores tending to decrease as age increases.}
+  
+    b) Does the variability of the response variable around the line remain roughly constant for all values of the predictor variable?
+    
+    \textcolor{NavyBlue}{Yes, the variability around the line seems roughly constant across values of age, although observations at higher ages do seem somewhat less variable than those at younger ages. This decrease in variability may simply be from having fewer observations on older individuals.}
+  
+    c) From the description of the study, does it seem reasonable to assume that the observations are independent, such that the values of one $(x, y)$ pair provide no information about any other $(x, y)$ pair?
+    
+    \textcolor{NavyBlue}{The data are from individuals enrolled in a large study. It seems reasonable to assume that the observations were independent; one pair of age and score values does not provide information about other pairs. Independence could be violated, if, for example, many of the individuals were related, because certain conditions associated with cognitive decline have genetic risk factors.}
