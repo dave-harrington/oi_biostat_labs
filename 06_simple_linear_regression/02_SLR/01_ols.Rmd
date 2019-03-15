@@ -152,9 +152,7 @@ where the $t-statistic$ follows a $t$ distribution with $df = n - 2$.
 
 ### Triglyceride Level ~ Gender
 
-1. Setup the appropriate hypothesis test for $\beta_{Gender}$ and provide the test statistic and $p-value$ for the testing outcome.  Rule on the test and provide your interpretation in the context of the research hypothesis.
-
-2. Use the R function, `summary(model)` to confirm your $t-statistic$ and $p-value$.  Also, use the R function `t.test()` to evaluate the difference between triglyceride levels according to gender.  Do you see any similiarities between the test statistics in the regression output and $t$ test output?  
+3. Use the R function, `summary(model)` to determine the $t-statistic$ and $p-value$.  Also, use the R function `t.test()` to evaluate the difference between triglyceride levels according to gender.  Do you see any similiarities between the test statistics in the regression output and $t$ test output?  
 
 ## Prediction
 
@@ -181,7 +179,7 @@ In order to use linear regression to better understand the relationship between 
 - **Independent observations**: the ($x$, $y$) pairs are independent; i.e., values of one pair provide no information about other pairs.
 - **Approximate normality of residuals**: $e_i = y_i - \hat{y}_i$ where $e_i$ are normally distributed under $N(0, \sigma)$.
 
-1. Create a residual plot where the predicted values, $\hat{y}$ are on the *x-axis* and the residuals are on the *y-axis*.  Use the following R function to add a horizontal line to your residual plot, *abline(h = 0, color = "red")*.  What do you observe regarding conditions 1 and 2?
+1. Create a residual plot where the predicted values, $\hat{y}$ are on the *x-axis* and the residuals are on the *y-axis*.  Use the following R function to add a horizontal line to your residual plot, *abline(h = 0, col = "red")*.  What do you observe regarding conditions 1 and 2?
 
 2. Create a normal probability plot where the theoretical quantiles for a normal distribution are on the *x-axis* and the observed quantiles from the data are on the *y-axis*, and a histogram of the residuals.  Observe the tails of the distribution in the normal probability to monitor for departures from normality.  Is the histogram of the residuals nearly normal? Does them confirm or deny assumption 4?  
 
