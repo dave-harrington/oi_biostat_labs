@@ -1,361 +1,197 @@
 ---
-title: "Two-Sample Tests"
-author: "Chapter 5, Lab 1: Template"
+title: "Simple Linear Regression"
+author: "Chapter 6, Lab 1"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-output: pdf_document
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
 ---
 
 \begin{small}
 	
 	\textbf{Topics}
 	\begin{itemize}
-	  \item Distinguishing between paired and independent data
-	  \item Two-sample test for paired data
-	  \item Two-sample test for independent group data
+	  \item Examine visual relationships between numerical variables 	
+	  \item Estimate a regression line using least squares
+	  \item Interpret a least squares regression line
+	  \item Evaluate model fit
+	  \item Perform statistical inference with regression
+	  \item Prediction with the least squares regression line
+	  \item Check the necessary conditions for regression
 	\end{itemize}
 	
 \end{small}
 
-This lab extends inference for means in the one-sample setting to the two-sample setting. Two-sample data can consist of two samples in which the observations are paired in some way or in which the observations are drawn from two independent groups. In the paired context, inference is made about the population mean of the differences between observations; in the independent context, inference is made about the difference in population means between the two groups.
+This lab introduces simple linear regression.  
 
-The material in this lab corresponds to Sections 5.2 - 5.3 of *OpenIntro Biostatistics*.
+The material in this lab corresponds to Sections 6.1 - 6.4 of *OpenIntro Biostatistics*.
 
-### Distinguishing between paired and independent data
+## Background
 
-1. The following scenarios describe examples of two-sample data. Identify whether the data are paired (i.e., an observation in one group can be paired to an observation in the other) or independent.
+Triglycerides levels provide strong indication of heart health. Triglycerides are a type of lipid stored in your blood derived from unused calories.  When your body needs energy between meals hormones release triglycerides.  In some cases, people who eat excess high carbohydrate foods (more than the body requires) have high triglyceride levels.  This condition is known as hypertriglyceridemia. 
 
-    a) A multimedia program designed to improve dietary behavior among low-income women was evaluated by comparing women who were randomly assigned to intervention and control groups. The intervention was a 30-minute session in a computer kiosk in the Food Stamp office. About 2 months after the program, the participants took a knowledge test about healthy eating practices. The test scores will be used as an outcome in an analysis assessing the efficacy of the multimedia program.
+A lipid panel or blood test for cholesterol can easily determine a person's triglyceride level.  The following thresholds show generally accepted standards for certain triglyceride levels (mg/dL).
 
+  - Normal: < 150 mg/dL
+  - Moderate: 150 to 199 mg/dL
+  - High: 200 to 499 mg/dL
+  - Very High: > 500 mg/dL
 
+A patient with high and very high triglyceride levels are at extreme risk for arteriosclerosis (hardening of the arteries or thickening of the artery walls).  This condition increases the risk of stroke and heart and vascular failure.  In addtion to heart disease, high triglycerides contribute to obesity, pancreatitis, hypothyroidism, and diabetes.
 
+Prevention or at least mitigation of hypertriglyceridemia can be handled with multiple methods.  Maintaining a health lifestyle, including regular exercise, proper diet, and limited alcohol consumption helps ensure triglyceride levels are managed appropriately.  In some cases living a healthy lifestyle is not enough and medication, such as Lipitor or Crestor (statins) must also be taken to manage triglyceride levels.
 
+The `tri` dataset provides a list of de-identified patients who visited their primary care physician in the past month.  For each patient, data elements including their triglyceride level, age, waist circumference measurement, gender, and patient disease indicators were recorded.
 
-    
-    b) An investigator is studying standardized IQ test scores for third grade students in Massachusetts to see if birth order is associated with test score. He has collected test score data for 25 sets of siblings (first-born versus second-born).
-
-
-
-
-    
-    c) Researchers are interested in analyzing the relationship between oral contraceptive use and blood pressure in women.
-    
-        i. A group of women who are not currently oral contraceptive users are identified and their blood pressure is measured. One year later, the women who have become oral contraceptive users are identified; these women are selected as the study population and their blood pressure is measured a second time. The researchers will compare the initial blood pressure and the follow-up blood pressure of the women in the study population.
-
-
-
-
-
-        
-        ii. A group of oral contraceptive users and a group of non-users are identified, and their blood pressure is measured. The researchers will compare blood pressure between the users and non-users.
-
-
-
-
-
-
-### Two-sample test for paired data
-
-\begin{center}
-\textit{Did a new wetsuit design allow for increased swim velocities during the 2000 Olympics?} 
-\end{center}
-
-Wetsuits are commonly used in the swimming stage of triathlons; in addition to providing thermal insulation against cold water, wetsuits are also thought to increase swimming speed. In 2008, de Lucas and co-authors conducted a study to assess the effect of wetsuits on swim velocity. In this study, 12 competitive swimmers were asked to swim 1,500 meters at maximal velocity, once wearing a wetsuit and once wearing a standard swimsuit. The order of wetsuit versus swimsuit was randomized for each swimmer.
-
-The mean velocity (m/s) for each 1500m swim is recorded in the \texttt{swim} dataset in \texttt{oibiostat}.
-
-2. Load and view the data. There are two velocity values for each swimmer: one for the wetsuit trial and one for the swimsuit trial.
+The `tri` dataset can be found in the `oibiostat` package.  For more information, use the `help(tri)` command.
 
 ```{r}
-#load the data
 library(oibiostat)
-data("swim")
+data("tri")
 ```
 
+## Exploratory Data Analysis
 
+1. Explore the `tri` dataset. What is the dimensions, data types, etc.?
 
+2. Visually inspect the relationship between a patient's waist circumference measurement, `WAIST_CIR` and their associated triglyceride level, `TEST_RESULT_NUMERIC`.  What type of relationship exists?  
 
-  a) For swimmer 1, what is the difference between velocity measured during the wetsuit trial and velocity measured during the swimsuit trial?
+3. What is the strength of the linear relationship between a patient's waist circumference measurement, `WAIST_CIR` and their associated triglyceride level, `TEST_RESULT_NUMERIC`.  Does this indicate larger waist circumference measurements cause higher triglyceride levels? Explain.
 
+4. Explore the relationships between the remaining variables, `AGE`, `SEX_NAME`, and other disease indicators in relationship to the target variable, `TEST_RESULT_NUMERIC`.  Is a scatterplot appropriate to evaluate the relationship between `SEX_NAME` and `TEST_RESULT_NUMERIC`?  If not, use the appropriate visual tool to assess if there is any difference in triglyceride levels across genders.
 
+5. Based on your exploratory data analysis, which of the variables examined best explains the variability in `TEST_RESULT_NUMERIC`? 
 
+## Least Squares Estimation
 
-    
-  b) How were the values stored in the \texttt{velocity.diff} variable calculated? What does a positive value for \texttt{velocity.diff} imply, versus a negative value?\footnote{Note: there were no negative values in these data.}
+In this section we will fit two regression lines using the least squares approach.  First, we are interested in examining the relationship between a patient's waist circumference measurement, `WAIST_CIR` and their associated triglyceride level, `TEST_RESULT_NUMERIC`. Secondly, we are interested in examining the relationship between a patient's gender, `SEX_NAME` and their associated triglyceride level, `TEST_RESULT_NUMERIC`.  
 
+Determine the best fitting linear regression equations using the following procedures.
 
+### Triglyceride Level ~ Waist Circumference
 
+1. Calculate the slope, $b_0$ and y-intercept, $b_1$ using the following expressions.
 
-    
-  c) Calculate $\overline{d}$, the mean of the observed differences.
-  
-```{r, eval = FALSE}
-#calculate d.bar
-d.bar = 
-```
-  
-    
-3. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$.
+$$b_1 = r\frac{s_y}{s_x}$$
+$$b_0 = \bar{y} - b_1 \bar{x}$$
 
-  a) Suppose the parameter $\delta$ is the population mean of the differences in velocities during a 1500m swim if all competitive swimmers recorded swim velocities with both suit types. State the null and alternative hypotheses.
+2. Now, use R to calculate the coefficients of the least squares line using the `lm()` function.  Compare your results.
 
+### Triglyceride Level ~ Gender
 
+Refer to *Question 4* in the Exploratory Data Analysis section above, specifically the summary statistics and visualizations created to infer the relationship between triglyceride levels, `TEST_RESULT_NUMERIC` and gender, `SEX_NAME`.  
 
+3. Does the observed means for triglyceride levels by gender appear to be widely different?  Calculate the two sample means of triglyceride level for each gender (if not determined earlier).  Calculate the difference in both sample means.
 
-    
-  b) Calculate the test statistic, where $\overline{d}$ is the mean of the differences, $s_d$ is the standard deviation of the differences, and $n$ is the number of differences (i.e., number of pairs). Note how the formula for the test statistic is identical to the one introduced in the previous chapter; a paired $t$-test is essentially a one-sample test of difference values.
-    
-  \[t = \dfrac{\overline{d} - \delta_0}{s_{d}/ \sqrt{n}} \]
+4. Now, build a linear regression model using R's `lm()` function to explain triglyceride levels, `TEST_RESULT_NUMERIC` using gender, `SEX_NAME` as your *only* explanatory variable.  
 
-```{r, eval = FALSE}
-#use r as a calculator
-d.bar = 
-delta.0 = 
-s.d = 
-n =
-  
-t = (d.bar - delta.0)/(s.d/sqrt(n))
-t
-```      
+5. Comment on the relationship between the estimated coefficients for $\beta_0$ and $\beta_1$ and the sample means of triglyceride levels calculated for each gender in Question 1.  What does the difference in sample means of triglyceride levels for each gender equal in terms of estimated coefficients? 
 
+## Interval Estimation 
 
+Just as we constructed confidence intervals for parameters such as $\mu$, we can also calculate confidence intervals for regression parameters, $\beta$.  We will discuss two approaches to calculating confidence intervals for regression parameters in the model, *Triglyceride Level ~ Waist Circumference*.  
 
-  c) Calculate the $p$-value from a $t$-distribution with degrees of freedom $n - 1$.
-    
-```{r}
-#calculate the p-value
+1. Calculate the 95\% confidence interval for the slope, $\beta_1$ using the following expression.  Recall the expression for mean squared error, $MSE = \frac{1}{n-2}\sum(y_i - \hat{y}_i)^2$
 
-```  
-  
-  
-  
-  d) Draw a conclusion.
-    
+$$b_1 \pm t_{\frac{\alpha}{2}, n - 2}\sqrt{\frac{MSE}{\sum(x_i - \bar{x})^2}}$$
 
+2. Now, use R to calculate the 95\% confidence interval for the slope, $\beta_1$ using `confint()` function.  Compare your results.
 
+## Interpretation
 
+### Triglyceride Level ~ Waist Circumference
 
-4. Calculate a 95\% confidence interval. Interpret the interval in the context of the data.
+1. Interpret $b_1$, $b_0$, and the 95\% confidence interval for $\beta_1$ in the context of the research question.  Does, $b_0$ have any contextual meaning?
 
-    \[\overline{d} \pm  t^{\star} \times \dfrac{s_d}{\sqrt{n}}\]
+### Triglyceride Level ~ Gender
 
+2. Interpret $b_1$ and $b_0$ in the context of the research question.  Does, $b_0$ have any contextual meaning?
 
-```{r, eval = FALSE}
-#use r as a calculator
-d.bar = 
-s.d = 
-n = 
-t.star = 
+## Model Fit
 
-m = t.star * (s.d/sqrt(n))
-d.bar - m; d.bar + m
-```    
+In this section we will evaluate the fit of both models estimated previously.  
 
+### Triglyceride Level ~ Waist Circumference
 
+1. Calculate the strength of the association, $r$ between a patient's waist circumference measurement, `WAIST_CIR` and their triglyceride level, `TEST_RESULT_NUMERIC`.  
 
-    
-5. Verify the answers from Questions 3 and 4 using \texttt{t.test()}.
-    
-<!---
-To use the t.test() command...
+2. What is the proportion of variability in the response, triglyceride levels, explained by the model?  Calculate  using the following expression.  Does the model, including only the explanatory variable, waist circumference, do a fair job at explaining the variability in triglyceride levels according to $R^2$?
 
-x is the name of the variable containing the data from sample one
-y is the name of the variable containing the data from sample two
-mu is the mu_0 value specified by the null and alternative hypotheses
-alternative can be set to either
-  "two.sided" for a two-sided test
-  "greater" for a one-sided test, mu > mu_0
-  "less" for a one-sided test, mu < mu_0
-paired can be set to either TRUE or FALSE
---->
+$$R^2 = \frac{s_y^2 - s^2_{residuals}}{s_y^2}$$
 
+### Triglyceride Level ~ Gender
 
-```{r, eval = FALSE}
-#option 1: use one-sample syntax on velocity.diff
-t.test(x = , mu = , alternative = "")
+3. What is the proportion of variability in the response, triglyceride levels, explained by the model?  Calculate  using the expression offered in *Question 2*.  Does the model, including only the explanatory variable, gender, do a fair job at explaining the variability in triglyceride levels according to $R^2$?
 
-#option 2: use two-sample syntax, specifying the data are paired
-t.test(x = , y = , mu = , alternative = "",
-       paired = TRUE)
-```
+## Statistical Inference
 
+Since the least squares method offers a way to estimate population parameters, we are essentially performing statistical inference, where the slope of the least squares line, $b_1$ is an estimate of the population slope, $\beta_1$ and the intercept of the least squares line, $b_0$ is an estimate of the population intercept, $\beta_0$.
 
-    
-    
-\newpage    
+In regresssion the typical hypothesis for $\beta_1$ is as follows:
 
-### Two-sample test for independent group data
+$$H_0: \beta_1 = 0$$
+$$H_A: \beta_1 \ne 0$$
+where under the null hypothesis, $H_0$ the explanatory and response variables are not associated and under the alternative hypothesis the explanatory and response variables are associated.  The test statistic, $t-statistic$ is provided below:
 
-\begin{center}
-\textit{Does change in non-dominant arm strength after resistance training differ between men and women?}
-\end{center}
+$$t=\frac{b_1}{s.e.(b_1)}$$
 
-In the Functional polymorphisms Associated with Human Muscle Size and Strength study (FAMuSS), researchers investigated the relationship between muscle strength and genotype at a location on the ACTN3 gene. The \texttt{famuss} dataset in \texttt{oibiostat} contains a subset of the data collected from the study, which includes additional demographic and phenotypic information. The percent change in non-dominant arm strength, comparing strength after training to before training, is stored as \texttt{ndrm.ch}.
+where the $t-statistic$ follows a $t$ distribution with $df = n - 2$.
 
-6. Load and view the data. Create a plot that shows the association between \texttt{ndrm.ch} and \texttt{sex}. Describe what you see.
+### Triglyceride Level ~ Waist Circumference
 
-```{r}
-#load the data
-library(oibiostat)
-data("famuss")
+1. Setup the appropriate hypothesis test for $\beta_{Waist-Circumference}$ and provide the test statistic and $p-value$ for the testing outcome.  Rule on the test and provide your interpretation in the context of the research hypothesis.
 
-#create a plot
+2. Use the R function, `summary(model)` to confirm your $t-statistic$ and $p-value$ for $\beta_{Waist-Circumference}$.
 
-```
+### Triglyceride Level ~ Gender
 
-7. Conduct a hypothesis test to address the question of interest. Let $\alpha = 0.05$.
+3. Use the R function, `summary(model)` to determine the $t-statistic$ and $p-value$.  Also, use the R function `t.test()` to evaluate the difference between triglyceride levels according to gender.  Do you see any similiarities between the test statistics in the regression output and $t$ test output?  
 
-  a) Suppose the parameter $\mu_F$ is the population mean change in non-dominant arm strength for women, and $\mu_M$ is the population mean change in non-dominant arm strength for men. State the null and alternative hypotheses.
+## Prediction
 
+In addition to performing inference about the association between the response and explanatory variables, we can use the least squares line to predict responses according to values of the explanatory variable that fall within the scope of the model.  For example one might like to know the predicted triglyceride level for a patient with a waist circumference, $x_{Waist-Circumference}$ or the predicted triglyceride level for a patient that is $x_{Male}$. 
 
+### Triglyceride Level ~ Waist Circumference
 
+1. Use your estimated simple linear regression model for *Triglyceride Level ~ Waist Circumference* to predict the triglyceride level of a patient whos waist circumference measures 32 inches. 
 
-    
-  b) Calculate the test statistic for the difference in means of the two groups, where $\overline{x}_1$ and $\overline{x}_2$ are the means of each sample, $s_1$ and $s_2$ are the standard deviations of each sample, and $n_1$ and $n_2$ are the number of observations per sample.
-  
-  \[t = \dfrac{(\overline{x}_1 - \overline{x}_2) - (\mu_1 - \mu_2)}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}} \]
-  
-  
-```{r, eval = FALSE}
-#define categories for sorting ndrm.ch
-female = (famuss$sex == "Female")
-male = (famuss$sex == "Male")
+2. Now use the R function `predict()` to confirm your answer in part 1 and provide a *prediction* interval.  
 
-#define parameters
-x.bar.1 = mean(famuss$ndrm.ch[female])
-s.1 = sd(famuss$ndrm.ch[female])
-n.1 = length((famuss$ndrm.ch[female]))
+### Triglyceride Level ~ Gender
 
-x.bar.2 =
-s.2 = 
-n.2 =
+3. Use your estimated simple linear regression model *Triglyceride Level ~ Gender* to predict the triglyceride level of a patient whos is 'Female'. 
 
-#calculate t-statistic
-t.num = (x.bar.1 - x.bar.2)
-t.den = sqrt( ((s.1^2)/n.1) + ((s.2^2)/n.2) )
-t.stat = t.num/t.den
-t.stat
-```  
-  
-  
-    
-  c) Calculate the $p$-value. The degrees of freedom for the $t$-statistic in this setting can be approximated as the smaller of $n_1 - 1$ and $n_2 - 1$; i.e., min($n_1 - 1$, $n_2 - 1$).
-    
-```{r, eval = FALSE}
-#calculate the p-value
-2*pt(t.stat, df = min(n.1 - 1, n.2 - 1), lower.tail = FALSE)
-```    
+4. Now use the R function `predict()` to confirm your answer in part 3 and provide a *prediction* interval.  
 
+## Checking Model Assumptions for Regression
 
+In order to use linear regression to better understand the relationship between two variables, the following conditions need to validated.  You will need to verify each is met or call out concerns based on your observations of the residual plots, normal probability plots, and histogram of your residuals. In this section we will only use the *Triglyceride Level ~ Waist Circumference* simple linear regression model.
 
-    
-  d) Draw a conclusion.
+- **Linearity**: data show a linear trend in change for response $y$ as a function of predictor $x$.
+- **Constant variability**: the variability of the response variable about the line remains roughly constant as the predictor variable changes.
+- **Independent observations**: the ($x$, $y$) pairs are independent; i.e., values of one pair provide no information about other pairs.
+- **Approximate normality of residuals**: $e_i = y_i - \hat{y}_i$ where $e_i$ are normally distributed under $N(0, \sigma)$.
 
+1. Create a residual plot where the predicted values, $\hat{y}$ are on the *x-axis* and the residuals are on the *y-axis*.  Use the following R function to add a horizontal line to your residual plot, *abline(h = 0, col = "red")*.  What do you observe regarding conditions 1 and 2?
 
+2. Create a normal probability plot where the theoretical quantiles for a normal distribution are on the *x-axis* and the observed quantiles from the data are on the *y-axis*, and a histogram of the residuals.  Observe the tails of the distribution in the normal probability to monitor for departures from normality.  Is the histogram of the residuals nearly normal? Does them confirm or deny assumption 4?  
 
+3. Use a common sense approach paired with your understanding of the study to validate assumption 3.  Explain your reasoning.
 
-    
-8. Calculate a 95\% confidence interval. Interpret the interval in the context of the data.
+4. Does your investigation of the conditions for linear regression provide pause for concern?  If so, what might you suggest to correct such issues and continue using linear regression as your choice for model building?  Hint: *Transformations, weighted regression, leverage values/outlier identification, etc.*  Explain.
 
-    \[( \overline{x}_{1} - \overline{x}_{2}) \pm  t^{\star} \times \sqrt{\frac{s_{1}^{2}}{n_{1}}+\frac{s_{2}^{2}}{n_{2}}} \]
 
-```{r, eval = FALSE}
-#use r as a calculator
-x.bar.1 = mean(famuss$ndrm.ch[female])
-s.1 = sd(famuss$ndrm.ch[female])
-n.1 = length((famuss$ndrm.ch[female]))
 
-x.bar.2 = 
-s.2 = 
-n.2 = 
 
-t.star = qt(0.975, df = min(n.1 - 1, n.2 - 2))
-m = t.star * sqrt( ((s.1^2)/n.1) + ((s.2^2)/n.2) )
 
-x.bar.1 - x.bar.2 - m; x.bar.1 - x.bar.2 + m
-```
 
-9. Verify the answers to Questions 7 and 8 using \texttt{t.test()}. Where do the values returned by \texttt{t.test()} differ from the hand calculation?
 
-<!---
-To use the t.test() command...
 
-x is the name of the variable containing the data from sample one
-y is the name of the variable containing the data from sample two
-mu is the mu_0 value specified by the null and alternative hypotheses
-alternative can be set to either
-  "two.sided" for a two-sided test
-  "greater" for a one-sided test, mu > mu_0
-  "less" for a one-sided test, mu < mu_0
-paired can be set to either TRUE or FALSE
-
-Note: the tilde syntax works like it does in a boxplot command... 
-  y ~ x conducts a test of the variable y between the two groups defined by x
---->  
-  
-```{r, eval = FALSE}
-#option 1: use x, y syntax
-t.test(x = , y = , mu = , alternative = "",
-       paired = FALSE)
-
-#option 2: use tilde syntax
-t.test( ~ , mu = , alternative = "",
-       paired = FALSE)
-```
-
-\newpage
-
-### Additional practice
-
-10. Suppose the \texttt{swim} data had been incorrectly identified as independent two-group data. 
-
-  a) Use \texttt{t.test()} to analyze the data accordingly and summarize the results. Do the results suggest a different conclusion than those of the original analysis?
-
-```{r}
-
-```
-
-
-
-    
-  b) Conjecture as to why a paired study design has more capacity to show evidence of a difference between two groups than an independent group design. (Hint: think about the variance between individuals, versus the variance between two measurements on the same individual).
-
-
-
-    
-    
-11. Chapter 1 (Section 7.1, Lab 2) presented an exploratory analysis of the relationship between age, ethnicity, and the amount of expenditures for supporting developmentally disabled residents in the State of California. When age is ignored, the expenditures per consumer is larger on average for White non-Hispanics than Hispanics, but the average differences by ethnicity were much smaller within age cohorts. Hypothesis testing can be used to conduct a more formal analysis of the differences in expenditures by ethnicity, both overall (i.e., ignoring age) and within age cohorts.
-
-    The data are in the \texttt{dds.discr} dataset in \texttt{oibiostat}. Descriptions of the variables are provided in the documentation file.
-
-  a) Is there evidence of a difference in mean expenditures by ethnic group, comparing Hispanics to White non-Hispanics? There is substantial skew in the distribution of expenditures within each group, so it is advisable to apply a natural log transformation before conducting a $t$-test. Summarize the results of the test.
-
-```{r}
-#load the data
-library(oibiostat)
-data("dds.discr")
-
-#apply transformation
-dds.discr$log.expenditures = log(dds.discr$expenditures)
-  
-#conduct test
-
-```
-
-
-    
-  b) One way to account for the effect of age is to compare mean expenditures within age cohorts. When comparing individuals of similar ages, are the differences in mean expenditures by ethnic group larger than would be expected by chance alone?
-    
-    Conduct two $t$-tests to examine the evidence against the null hypothesis of no difference in mean expenditures within the two largest age cohorts: 13-17 years and 22-50 years. Summarize the results.
-        
-```{r}
-#create subsets
-ages.13to17 = dds.discr[dds.discr$age.cohort == "13-17", ]
-ages.22to50 = dds.discr[dds.discr$age.cohort == "22-50", ]
-
-#conduct tests
-
-```
 
