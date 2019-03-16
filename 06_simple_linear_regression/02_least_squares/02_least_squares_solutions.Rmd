@@ -128,8 +128,10 @@ prevend.residuals = resid(lm(RFFT ~ Age, data = prevend.sample))
 prevend.predicted = predict(lm(RFFT ~ Age, data = prevend.sample))
 
 #create residual plot
-plot(prevend.residuals ~ prevend.predicted, cex = 0.5,
-     main = "Residual Plot for RFFT versus Age (n = 500)", xlab = "Predicted RFFT Score",
+plot(prevend.residuals ~ prevend.predicted, 
+     cex = 0.5,
+     main = "Residual Plot for RFFT versus Age (n = 500)", 
+     xlab = "Predicted RFFT Score",
      ylab = "Residual")
 abline(h = 0, col = "red", lty = 2)
 ```
@@ -189,7 +191,7 @@ data("frog")
 #create a scatterplot and add a regression line
 plot(frog$clutch.volume ~ frog$body.size, 
      main = "Clutch Volume versus Female Body Size",
-     xlab = "Female body size (cm)", ylab = "Clutch volume (mm^3)")
+     xlab = "Female body size (cm)", ylab = expression("Clutch Volume" ~ (mm^3)))
 abline(lm(frog$clutch.volume ~ frog$body.size), col = "red")
 ```
 
@@ -200,9 +202,9 @@ abline(lm(frog$clutch.volume ~ frog$body.size), col = "red")
 #create residual plot
 frog.model = lm(clutch.volume ~ body.size, data = frog)
 plot(resid(frog.model) ~ predict(frog.model),
-     main = "Residual Plot for Clutch Volume vs. Female Body Size",
+     main = "Residual Plot for Clutch Volume vs. Body Size",
      ylab = "Residual",
-     xlab = "Predicted Clutch Volume (mm^3)",
+     xlab = expression("Clutch Volume" ~ (mm^3)),
      cex = 0.75)
 abline(h = 0, col = "red", lty = 2)
 ```
@@ -218,14 +220,21 @@ abline(h = 0, col = "red", lty = 2)
     
 8. Assess whether it can be reasonably assumed that the observations are independent.
 
-    \textcolor{NavyBlue}{The data for body size and clutch volume are from frogs (and egg clutches) found at breeding ponds at five different study sites. In the absence of more specific biological information about the life cycle of this frog and its breeding habits, it seems reasonable to assume that the values of one pair (clutch volume and body size) provide no information about another pair. It would not be reasonable to assume independence if, for example, frogs found at a specific study site are much more likely to be related to each other and related frogs tend to have similar body sizes and/or clutch volumes.}
+    \textcolor{NavyBlue}{The data for body size and clutch volume are from frogs (and egg clutches) found at breeding ponds at five different study sites. In the absence of more specific biological information about the life cycle of this frog and its breeding habits, it seems reasonable to assume that the values of one pair (clutch volume and body size) provide no information about another pair. It would not be reasonable to assume independence if, for example, frogs found at a specific study site are more likely to be related to each other and that related frogs tend to have similar body sizes and/or clutch volumes.}
 
 9. Create a Q-Q plot and assess whether the residuals appear to be normally distributed.
 
-```{r}
-#create q-q plot
+    \textcolor{NavyBlue}{The majority of the residuals closely follow a normal distribution, but there exists some deviation from normality in both tails.}
 
+    ```{r, fig.height = 4, fig.width = 4}
+#create q-q plot
+qqnorm(resid(frog.model), cex = 0.75)
+qqline(resid(frog.model))
 ```
 
 
 10. Evaluate whether a least squares regression line is an appropriate model for estimating the relationship between female body size and clutch volume.
+
+    \textcolor{NavyBlue}{The least squares line seems to be a reasonable fit for the data such that predictions about average clutch volume can be made based on female body size. However, since the constant variability assumption is violated, caution is required when using the model to conduct inference; this concern will be discussed further once inference for regression is covered.}
+    
+    \textcolor{NavyBlue}{The main point of showing the model with the \texttt{frog} data is to highlight the fact that data tend to be messy---the previous regression using the PREVEND data actually represent a case where data fit model assumptions surprisingly well. When assumptions are violated, the question of how to proceed is often a subtle one, requiring topics that would be covered in a specialized course on regression.}
