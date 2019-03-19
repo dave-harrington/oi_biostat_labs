@@ -1,5 +1,5 @@
 ---
-title: "Least Squares Regression"
+title: "Intro to Least Squares Regression"
 author: "Chapter 6, Lab 2: Template"
 date: "OpenIntro Biostatistics"
 
