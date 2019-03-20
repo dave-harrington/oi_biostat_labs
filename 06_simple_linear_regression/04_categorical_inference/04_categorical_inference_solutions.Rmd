@@ -1,0 +1,336 @@
+---
+title: "Categorical Predictors with Two Levels and Inference with Regression"
+author: "Chapter 6, Lab 4: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Categorical predictors with two levels
+	  \item Inference with regression
+	\end{itemize}
+	
+\end{small}
+
+This lab introduces the idea of using a categorical predictor variable (specifically, a categorical predictor with two levels) in regression and also discusses the extension of statistical inference to the regression context. 
+
+The material in this lab corresponds to Sections 6.3.3 and 6.4 of *OpenIntro Biostatistics*.
+
+\vspace{0.5cm}
+
+### Introduction
+
+*Categorical predictors with two levels*
+
+Although the response variable in linear regression is necessarily numerical, the predictor variable may be either numerical or categorical. Simple linear regression only allows for categorical predictors with two levels; examining categorical predictors with more than two levels requires multiple linear regression.
+
+Fitting a simple linear regression model with a categorical predictor that has two levels is analogous to comparing the means of two groups, where the groups are defined by the categorical variable. The equation of the regression line has intercept $b_0$, which equals the mean of one of the groups, and slope $b_1$, which equals the difference in means between the two groups.\footnote{The group for which $b_0$ is the mean is usually referred as the \textit{baseline} group or \textit{reference} group.}
+
+*Inference with regression*
+
+When conducting inference in a regression context, observed data $(x_i, y_i)$ used for fitting a regression line are assumed to have been randomly sampled from a population where the explanatory variable $X$ and response variable $Y$ follow a population model
+\[Y = \beta_0 + \beta_1X + \epsilon, \]
+where $\epsilon \sim N(0, \sigma)$. Under this assumption, the slope and intercept of the regression line, $b_0$ and $b_1$, are estimates of the population parameters $\beta_0$ and $\beta_1$.
+
+Hypothesis tests and confidence intervals for regression population parameters have the same basic structure as tests and intervals about population means. Inference is usually done about the slope, $\beta_1$. Under the null hypothesis, the variables $X$ and $Y$ are not associated; $H_0: \beta_1 = 0$. Under the alternative hypothesis, the variables $X$ and $Y$ are associated; $H_1: \beta_1 \neq 0$.
+
+### Categorical predictors with two levels
+
+Obesity is known to be a leading risk factor for diabetes. The following questions step through exploring the association between BMI (\texttt{BMI}) and presence of diabetes (\texttt{DM}) in a random sample of $n = 500$ individuals from the PREVEND data.
+
+1. Run the code chunk shown in the template to create \texttt{prevend.sample}, the random sample of 500 individuals from the PREVEND data used in the previous labs in this chapter.
+
+    \textcolor{NavyBlue}{The code chunk has been run, but the code and output have been suppressed in this PDF using \texttt{echo = FALSE}.}
+
+    ```{r, echo = FALSE}
+#load the data
+library(oibiostat)
+data("prevend")
+
+#take a random sample
+set.seed(5011)
+sample.size = 500
+prevend.sample = prevend[sample(1:nrow(prevend), sample.size, replace = FALSE), ]
+```
+
+2. Examine the variable \texttt{DM} and identify how many individuals in \texttt{prevend.sample} have diabetes. Presence of diabetes is coded as \texttt{1} and absence is coded as \texttt{0}.
+
+    \textcolor{NavyBlue}{33 individuals in \texttt{prevend.sample} have diabetes.}
+
+    ```{r}
+#examine DM
+table(prevend.sample$DM)
+```
+
+
+3. Create plots that show the association between BMI and presence of diabetes.
+
+    a) Create a boxplot that shows the association between BMI and presence of diabetes.
+    
+    ```{r, fig.height = 4, fig.width = 3}
+boxplot(prevend.sample$BMI ~ prevend.sample$DM,
+        ylab = "BMI", xlab = "Diabetes Presence")
+```
+    
+    
+    b) Create a scatterplot of BMI versus presence of diabetes and plot the least-squares line.
+    
+    ```{r}
+plot(BMI ~ DM, data = prevend.sample,
+     main = "Association between BMI and Diabetes Presence")
+abline(lm(BMI ~ DM, data = prevend.sample), col = "red", lty = 2)
+```
+
+    
+    c) Based on the plots, comment briefly on the nature of the association.
+    
+    \textcolor{NavyBlue}{Overall, individuals with diabetes tend to have a higher BMI than individuals without diabetes. As seen in the boxplot, median BMI for individuals with diabetes is higher than median BMI for individuals without diabetes. }
+
+4. In the Chapter 1 Lab Notes, the **factor** data structure was introduced. Factors are ideal for storing categorical data. In a factor variable, the levels of the variable are displayed as characters (such as "Female" and "Male") while the data remain stored as integer values (such as \texttt{0} and \texttt{1}); each level of the variable is associated with a specific integer value.
+
+    a) Run the following code chunk to create the factor variable \texttt{DM.factor} from the integer vector \texttt{DM}. Note that while the \texttt{DM} variable is part of the \texttt{prevend.sample} dataframe, the variable \texttt{DM.factor} is not.
+    
+    ```{r}
+#create DM.factor
+DM.factor = factor(prevend.sample$DM, levels = c(0, 1),
+                                  labels = c("Absent", "Present"))
+```
+    
+    b) Run the \texttt{summary()} function on both \texttt{DM.factor} and \texttt{DM}. Compare the output and comment on which one has interpretive meaning.
+    
+        \textcolor{NavyBlue}{Running \texttt{summary()} on the factor variable returns the number of individuals in each level of the variable; this is informative. Running \texttt{summary()} on the integer vector gives a numerical summary of the 0 and 1 values, which has no interpretive meaning since the 0 and 1 values represent levels of a categorical variable rather than numeric data.}
+    
+    ```{r}
+#use summary( ) on DM.factor
+summary(DM.factor)
+
+#use summary( ) on DM
+summary(prevend.sample$DM)
+```
+    
+    c) Run the following code chunk to overwrite the \texttt{DM} variable (in \texttt{prevend.sample}) with the factor variable \texttt{DM.factor}. Confirm that the overwrite was successful by running \texttt{summary()} on \texttt{DM}.
+    
+    ```{r}
+#overwrite DM with DM.factor
+prevend.sample$DM <- DM.factor
+    
+#confirm the overwrite is successful
+summary(prevend.sample$DM)
+```
+    
+5. Calculate mean BMI for diabetic individuals and individuals without diabetes.
+
+    \textcolor{NavyBlue}{Mean BMI for diabetic individuals is 29.92 and mean BMI for individuals without diabetes is 26.69.}
+
+    ```{r}
+tapply(prevend.sample$BMI, prevend.sample$DM, mean)
+```
+
+
+6. Use a linear regression model to relate BMI and diabetes presence.
+
+    a) Using a residual plot and Q-Q plot, check the assumptions for linear regression. It is reasonable to assume that these observations are independent.
+    
+        \textcolor{NavyBlue}{Note how linearity is automatically satisfied for a categorical predictor variable; since the data are lined up at either of two points on the $x$-axis, the best fit line simply passes through the center of both groups. The variability in BMI is roughly constant between the groups; calculating the variance of BMI in each group can confirm this. The residuals are close to a normal distribution in the center, but there is deviation from normality in the upper tail.}
+    
+    ```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+
+#residual plot
+residuals = resid(lm(BMI ~ DM, data = prevend.sample))
+predicted = predict(lm(BMI ~ DM, data = prevend.sample))
+plot(residuals ~ predicted, 
+     xlab = "Residual", ylab = "Predicted BMI",
+     cex = 0.75)
+abline(h = 0, lty = 2, col = "red")
+
+#calculate variances
+tapply(prevend.sample$BMI, prevend.sample$DM, var)
+
+#Q-Q plot
+qqnorm(residuals, cex = 0.75)
+qqline(residuals)
+```
+    
+    b) Write the equation of the least-squares line in terms of the variable names (e.g., *BMI*).
+    
+        \color{NavyBlue}
+  
+        \[\widehat{BMI} = 26.69 + 3.23(DMPresent) \]
+    
+        \color{Black}
+    
+    ```{r}
+#print the values of the coefficients
+coef(lm(BMI ~ DM, data = prevend.sample))
+```
+    
+    
+    c) Based on part b), solve for the two possible values of $\widehat{BMI}$ and interpret the values.
+    
+        \color{NavyBlue}
+        
+        The predictor variable can take on either \texttt{0} or \texttt{1}. When $DMPresent$ is 0, $\widehat{BMI}$ is 26.69; this is the estimated average BMI of non-diabetic individuals. When $DMPresent$ is 1, $\widehat{BMI}$ is 29.92; this is the estimated average BMI of diabetic individuals.
+        
+        \color{Black}
+    
+    ```{r}
+#use r as a calculator
+b0 = coef(lm(BMI ~ DM, data = prevend.sample))[1]
+b1 = coef(lm(BMI ~ DM, data = prevend.sample))[2]
+
+x = c(0, 1)
+
+b0 + b1*x
+```
+    
+    
+    d) Confirm that the numbers obtained in part c) match those from Question 5.
+    
+        \textcolor{NavyBlue}{The numbers from part c) are identical to the answers from Question 5.}
+
+### Inference with regression
+
+Inference in a regression context is usually for the slope parameter, $\beta_1$. 
+
+The null hypothesis in regression is most commonly a hypothesis of 'no association', similar to how the null hypothesis when testing for a difference of means is often one of 'no difference'. When two variables are not associated, plotting them against each other results in a cloud of points with no apparent trend; in this setting, the slope of a least-squares line equals 0. 
+
+Thus, the hypotheses in regression can be written as:
+
+- $H_0: \beta_1 = 0$, the $X$ and $Y$ variables are not associated
+- $H_A: \beta_1 \neq 0$, the $X$ and $Y$ variables are associated
+
+The $t$-statistic for a null hypothesis $H_0: \beta_1 = \beta_1^0$ has degrees of freedom $df = n - 2$, where $n$ is the number of ordered pairs in the dataset. The value $\beta_1^0$ equals 0 when the null hypothesis is one of no association.
+\[t = \dfrac{b_1 - \beta_1^0}{\text{s.e.}(b_1)} = \dfrac{b_1}{\text{s.e.}(b_1)} \]
+
+A 95\% confidence interval for $\beta_1$ has the following formula, where $t^\star$ is the point on a $t$-distribution with $n - 2$ degrees of freedom and $\alpha/2$ area to the right.
+\[b_1 \pm \left( t^\star \times \text{s.e.}(b_1) \right) \]
+
+The formulas for calculating the standard error of $b_1$ (s.e.($b_1$)) are in Section 6.4 of *OpenIntro Biostatistics*. In practice, statistical software like \textsf{R} is used to obtain $t$-statistics and $p$-values for linear models.
+
+7. Carry out inference based on the linear model from Question 6.
+
+    ```{r}
+#view model summary
+summary(lm(BMI ~ DM, data = prevend.sample))
+```
+
+    a) Conduct a formal hypothesis test of no association between BMI and diabetes presence using \texttt{prevend.sample}, at the $\alpha = 0.05$ significance level.
+    
+        i. State the hypotheses.
+        
+            \textcolor{NavyBlue}{The null hypothesis is that BMI and diabetes presence are not associated, $H_0: \beta_1 = 0$. The alternative hypothesis is that BMI and diabetes presence are associated, $H_A: \beta_1 \neq 0$.}
+    
+        ii. Identify the relevant $t$-statistic and $p$-value from the output of the \texttt{summary(lm( ))} function. 
+        
+            \textcolor{NavyBlue}{The $t$-statistic of the slope coefficient is 3.96, with associated $p$ value of $8.47 \times 10^{-5}$. }
+            
+        iii. State a conclusion in the context of the data.
+        
+            \textcolor{NavyBlue}{Since $p < \alpha$, there is sufficient evidence to reject the null hypothesis in favor of the alternative that BMI and diabetes presence are associated. From the observed slope of 3.23, there is evidence of a positive association between BMI and diabetes; presence of diabetes is associated with a higher BMI of 3.23 units, on average. }
+    
+    b) Calculate and interpret the 95\% confidence interval for the slope coefficient of the model.
+    
+        \textcolor{NavyBlue}{With 95\% confidence, the interval (1.63, 4.84) captures the difference in average BMI between diabetic and non-diabetic individuals in the population. Note that since individuals selected for the PREVEND study were chosen on the basis of their urinary albumin excretion (which is associated with abnormalities in renal function), they are most likely not representative of the general population of adults in the Netherlands.}
+    
+    ```{r}
+#use r as a calculator
+
+#define parameters
+b1 = coef(summary(lm(BMI ~ DM, data = prevend.sample)))[2, 1]
+se.b1 = coef(summary(lm(BMI ~ DM, data = prevend.sample)))[2, 2]
+n = length(prevend.sample$BMI) - sum(is.na(prevend.sample$BMI))
+
+#calculate interval
+t.star = qt(0.975, df = n - 2)
+m = t.star*se.b1
+b1 - m; b1 + m
+```
+    
+
+8. Use \texttt{t.test( )} to conduct a $t$-test for the difference in mean BMI between diabetic and non-diabetic individuals. Compare the results of inference based on the linear model to those based on a two-group test.
+
+    \color{NavyBlue}
+    
+    The final conclusions are the same, although the $p$-value from the linear model is considerably smaller than the one from the two-group test. Since the estimated difference in means is the same, the different $p$-values arise from a difference in the associated standard error of the estimate; the standard error of the estimate is larger in the two-group test procedure. As expected, then, the confidence interval associated with the two-group test is wider than the one for the model slope coefficient.
+    
+    The sign of the $t$-statistic from the two-group test is negative, unlike the one from the linear model. Note that this is only reversed because for the two-group test, the difference is calculated as (non-diabetic BMI - diabetic BMI); the model slope specifically quantifies the difference \textit{from} the non-diabetic BMI and so is positive. A difference in sign does not affect the $p$-value.
+    
+    The difference in $t$-statistics and $p$-values is due to a modeling assumption. Linear regression assumes constant variance between groups, while the two-sample $t$-test does not. When constant variance is assumed...
+    
+    - The standard error of the difference in means is no longer $\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$, as in formulas shown previously for calculating the $t$-statistic in an independent two-group test.
+        
+    - The $p$-value is calculated using a distribution with degrees of freedom $n - 2$, unlike for a two-group test, which uses the Satterthwaite approximation for degrees of freedom.
+    
+    It is possible to conduct a two-group $t$-test under the assumption that variance between groups is constant, as discussed in Section 5.3.5 of *Openintro Biostatistics*. The relevant \textsf{R} output is shown below, and illustrates that once this assumption is in place, the $t$-statistic and $p$-value are identical to those from the linear model output.
+    
+    \color{Black}
+
+    ```{r}
+#t-test without constant variance assumption (default)
+t.test(BMI ~ DM, data = prevend.sample)
+
+#t-test with constant variance assumption
+t.test(BMI ~ DM, data = prevend.sample, var.equal = TRUE)
+```
+
+
+\vspace{0.25cm}
+
+The following questions return to the investigation of RFFT score as a main response variable of interest in the PREVEND data.
+
+9. The previous labs in this chapter have focused on exploring the association between RFFT score and age. The linear model with RFFT score as a response variable and age as a predictor was shown to reasonably satisfy the assumptions of linear regression.
+
+    a) Briefly discuss whether there is significant evidence of an association between RFFT score and age; be sure to report the relevant numerical evidence.
+    
+        \textcolor{NavyBlue}{There is highly significant evidence at the $\alpha = 0.05$ level that RFFT score and age are associated; $p < 0.0001$. An increase in age of one year is associated with a decrease in average RFFT score of 1.26 points. }
+    
+    ```{r}
+#assess significance
+summary(lm(RFFT ~ Age, data = prevend.sample))
+```
+    
+    b) Compute and interpret the 99\% confidence interval for the model slope.
+    
+        \textcolor{NavyBlue}{With 99\% confidence, the interval (-1.49, -1.03) captures the average change in RFFT score associated with an increase in one year of age.}
+    
+    ```{r}
+#compute 99% confidence interval
+confint(lm(RFFT ~ Age, data = prevend.sample), level = 0.99)
+```
+    
+10. Use a linear regression model to relate BMI and gender (\texttt{Gender}).
+
+    a) Convert \texttt{Gender} to a factor variable. In the original variable, males are coded as \texttt{0} and females are coded as \texttt{1}. 
+    
+    ```{r}
+#convert Gender to a factor variable
+prevend.sample$Gender <- factor(prevend.sample$Gender, levels = c(0, 1),
+                                labels = c("Male", "Female"))
+```
+    
+
+    b) Fit the model and interpret the model intercept and slope.
+    
+        \textcolor{NavyBlue}{The model intercept is 26.84; this is the estimated average BMI for males. The model slope is 0.116; thus, the estimated average BMI for females is $26.84 + 0.116 = 26.96.$}
+    
+    ```{r}
+#fit the BMI ~ Gender model
+coef(summary(lm(BMI ~ Gender, data = prevend.sample)))
+```
+    
+    c) Evaluate whether gender is a significant predictor of BMI.
+    
+        \textcolor{NavyBlue}{Since $p = 0.77$, gender is not a significant predictor of BMI at the $\alpha = 0.05$. The observed difference in average BMI between males and females may well be due to random variation.}

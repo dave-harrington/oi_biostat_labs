@@ -1,17 +1,11 @@
 ---
 title: "Categorical Predictors with Two Levels and Inference with Regression"
-author: "Chapter 6, Lab 4"
+author: "Chapter 6, Lab 4: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -52,46 +46,134 @@ Obesity is known to be a leading risk factor for diabetes. The following questio
 
 1. Run the code chunk shown in the template to create \texttt{prevend.sample}, the random sample of 500 individuals from the PREVEND data used in the previous labs in this chapter.
 
+```{r}
+#load the data
+library(oibiostat)
+data("prevend")
+
+#take a random sample
+set.seed(5011)
+sample.size = 500
+prevend.sample = prevend[sample(1:nrow(prevend), sample.size, replace = FALSE), ]
+```
+
 2. Examine the variable \texttt{DM} and identify how many individuals in \texttt{prevend.sample} have diabetes. Presence of diabetes is coded as \texttt{1} and absence is coded as \texttt{0}.
+
+```{r}
+#examine DM
+
+```
+
 
 3. Create plots that show the association between BMI and presence of diabetes.
 
-    a) Create a boxplot that shows the association between BMI and presence of diabetes.
+a) Create a boxplot that shows the association between BMI and presence of diabetes.
+
     
-    b) Create a scatterplot of BMI versus presence of diabetes and plot the least-squares line.
+```{r}
+
+```
     
-    c) Based on the plots, comment briefly on the nature of the association.
+    
+b) Create a scatterplot of BMI versus presence of diabetes and plot the least-squares line.
+
+
+```{r}
+
+```
+
+    
+c) Based on the plots, comment briefly on the nature of the association.
+
+
+
+
 
 4. In the Chapter 1 Lab Notes, the **factor** data structure was introduced. Factors are ideal for storing categorical data. In a factor variable, the levels of the variable are displayed as characters (such as "Female" and "Male") while the data remain stored as integer values (such as \texttt{0} and \texttt{1}); each level of the variable is associated with a specific integer value.
 
-    a) Run the following code chunk to create the factor variable \texttt{DM.factor} from the integer vector \texttt{DM}. Note that while the \texttt{DM} variable is part of the \texttt{prevend.sample} dataframe, the variable \texttt{DM.factor} is not.
+
+a) Run the following code chunk to create the factor variable \texttt{DM.factor} from the integer vector \texttt{DM}. Note that while the \texttt{DM} variable is part of the \texttt{prevend.sample} dataframe, the variable \texttt{DM.factor} is not.
     
-    ```{r, eval = FALSE}
+```{r}
 #create DM.factor
 DM.factor = factor(prevend.sample$DM, levels = c(0, 1),
                                   labels = c("Absent", "Present"))
 ```
     
-    b) Run the \texttt{summary()} function on both \texttt{DM.factor} and \texttt{DM}. Compare the output and comment on which one has interpretive meaning.
+
+
+b) Run the \texttt{summary()} function on both \texttt{DM.factor} and \texttt{DM}. Compare the output and comment on which one has interpretive meaning.
+
+```{r}
+#use summary( ) on DM.factor
+
+
+#use summary( ) on DM
+```
+
     
-    c) Run the following code chunk to overwrite the \texttt{DM} variable (in \texttt{prevend.sample}) with the factor variable \texttt{DM.factor}. Confirm that the overwrite was successful by running \texttt{summary()} on \texttt{DM}.
+
+c) Run the following code chunk to overwrite the \texttt{DM} variable (in \texttt{prevend.sample}) with the factor variable \texttt{DM.factor}. Confirm that the overwrite was successful by running \texttt{summary()} on \texttt{DM}.
     
-    ```{r, eval = FALSE}
+```{r}
 #overwrite DM with DM.factor
 prevend.sample$DM <- DM.factor
 ```
     
+
+
+    
 5. Calculate mean BMI for diabetic individuals and individuals without diabetes.
+
+```{r}
+
+```
+
+
+
+
 
 6. Use a linear regression model to relate BMI and diabetes presence.
 
-    a) Using a residual plot and Q-Q plot, check the assumptions for linear regression. It is reasonable to assume that these observations are independent.
+
+a) Using a residual plot and Q-Q plot, check the assumptions for linear regression. It is reasonable to assume that these observations are independent.
+
+```{r}
+#residual plot
+
+#Q-Q plot
+
+```
+
+
+
     
-    b) Write the equation of the least-squares line in terms of the variable names (e.g., *BMI*).
+b) Write the equation of the least-squares line in terms of the variable names (e.g., *BMI*).
+
+
+
+```{r}
+#print the values of the coefficients
+
+```
+
+
     
-    c) Based on part b), solve for the two possible values of $\widehat{BMI}$ and interpret the values.
+c) Based on part b), solve for the two possible values of $\widehat{BMI}$ and interpret the values.
+
+
+```{r}
+#use r as a calculator
+
+```
     
-    d) Confirm that the numbers obtained in part c) match those from Question 5.
+    
+    
+d) Confirm that the numbers obtained in part c) match those from Question 5.
+
+
+
+\newpage
 
 ### Inference with regression
 
@@ -112,19 +194,53 @@ A 95\% confidence interval for $\beta_1$ has the following formula, where $t^\st
 
 The formulas for calculating the standard error of $b_1$ (s.e.($b_1$)) are in Section 6.4 of *OpenIntro Biostatistics*. In practice, statistical software like \textsf{R} is used to obtain $t$-statistics and $p$-values for linear models.
 
+
+
 7. Carry out inference based on the linear model from Question 6.
 
-    a) Conduct a formal hypothesis test of no association between BMI and diabetes presence using \texttt{prevend.sample}, at the $\alpha = 0.05$ significance level.
+
+a) Conduct a formal hypothesis test of no association between BMI and diabetes presence using \texttt{prevend.sample}, at the $\alpha = 0.05$ significance level.
     
-        i. State the hypotheses.
+    i. State the hypotheses.
+        
+        
+        
     
-        ii. Identify the relevant $t$-statistic and $p$-value from the output of the \texttt{summary(lm( ))} function. 
+    ii. Identify the relevant $t$-statistic and $p$-value from the output of the \texttt{summary(lm( ))} function. 
     
-        iii. State a conclusion in the context of the data.
+
+    ```{r}
+#view model summary
+summary(lm(BMI ~ DM, data = prevend.sample))
+```
+        
+        
+        
+        
+    iii. State a conclusion in the context of the data.
     
-    b) Calculate and interpret the 95\% confidence interval for the slope coefficient of the model.
+
+
+
+
+b) Calculate and interpret the 95\% confidence interval for the slope coefficient of the model.
+
+```{r}
+#use r as a calculator
+
+```
+
+
 
 8. Use \texttt{t.test( )} to conduct a $t$-test for the difference in mean BMI between diabetic and non-diabetic individuals. Compare the results of inference based on the linear model to those based on a two-group test.
+
+```{r}
+#use t.test( )
+```
+
+
+
+
 
 \vspace{0.25cm}
 
@@ -132,14 +248,58 @@ The following questions return to the investigation of RFFT score as a main resp
 
 9. The previous labs in this chapter have focused on exploring the association between RFFT score and age. The linear model with RFFT score as a response variable and age as a predictor was shown to reasonably satisfy the assumptions of linear regression.
 
-    a) Briefly discuss whether there is significant evidence of an association between RFFT score and age; be sure to report the relevant numerical evidence.
+
+a) Briefly discuss whether there is significant evidence of an association between RFFT score and age; be sure to report the relevant numerical evidence.
     
-    b) Compute and interpret the 99\% confidence interval for the model slope.
+
+
+```{r}
+#assess significance
+
+```
+    
+    
+    
+    
+b) Compute and interpret the 99\% confidence interval for the model slope.
+    
+<!---
+To use confint( ), enter a model and specify the confidence level of the desired interval.
+
+For example,
+  confint(lm(y ~ x), level = 0.95)
+would output the 95% CIs for the estimated coefficients in the model y ~ x.
+
+--->
+
+```{r, eval = FALSE}
+#compute 99% confidence interval
+confint( )
+```
+
+    
+    
+    
     
 10. Use a linear regression model to relate BMI and gender (\texttt{Gender}).
 
-    a) Convert \texttt{Gender} to a factor variable. In the original variable, males are coded as \texttt{0} and females are coded as \texttt{1}. 
-
-    b) Fit the model and interpret the model intercept and slope.
+a) Convert \texttt{Gender} to a factor variable. In the original variable, males are coded as \texttt{0} and females are coded as \texttt{1}. 
     
-    c) Evaluate whether gender is a significant predictor of BMI.
+```{r}
+#convert Gender to a factor variable
+
+```
+
+
+
+b) Fit the model and interpret the model intercept and slope.
+    
+```{r}
+#fit the BMI ~ Gender model
+
+```
+    
+
+
+c) Evaluate whether gender is a significant predictor of BMI.
+
