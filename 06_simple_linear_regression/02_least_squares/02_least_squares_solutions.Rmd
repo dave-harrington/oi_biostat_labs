@@ -122,7 +122,7 @@ Even though linearity and constant variability can be assessed from the scatterp
 
     ```{r}
 #store the residuals from the linear model
-prevend.residuals = resid(lm(RFFT ~ Age, data = prevend.sample))
+prevend.residuals = residuals(lm(RFFT ~ Age, data = prevend.sample))
 
 #store the predicted RFFT scores from the linear model
 prevend.predicted = predict(lm(RFFT ~ Age, data = prevend.sample))

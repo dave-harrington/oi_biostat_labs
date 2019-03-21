@@ -41,11 +41,116 @@ Lab 4 discusses the use of binary categorical predictor variables and the extens
 
 # Lab 1: Examining Scatterplots
 
+### Fitting and Plotting a Least Squares Model
+
+The \textbf{\texttt{lm()}} function is used to fit linear models. It has the following generic structure:
+
+```{r, eval = FALSE}
+lm(y ~ x, data)
+```
+
+where the first argument specifies the variables used in the model; in this example, the model regresses a response variable \texttt{y} against an explanatory variable \texttt{x}. The second argument is used only when the dataframe name is not already specified in the first argument. Running the function creates an *object* (of class '\texttt{lm}') that contains several components, such as the model coefficients. The model coefficients are directly displayed upon running \texttt{lm()}, while other components can be accessed through either the \texttt{\$} notation or specific functions like \texttt{summary()}.
+
+The following example shows fitting a linear model that predicts BMI from age (in years) using data from \texttt{nhanes.samp.adult.500}, a sample of individuals 21 years of age or older from the NHANES data. The first use of \texttt{lm()} specifies the name of the dataframe using the \texttt{\$} notation with each variable name, while the second uses the \texttt{data} argument to indicate that both variables are in the \texttt{nhanes.samp.adult.500} dataframe.
+
+```{r}
+#load the data
+library(oibiostat)
+data("nhanes.samp.adult.500")
+
+#fitting linear model
+lm(nhanes.samp.adult.500$BMI ~ nhanes.samp.adult.500$Age)
+
+#equivalently...
+lm(BMI ~ Age, data = nhanes.samp.adult.500)
+```
+
+\newpage
+
+To add the least squares regression line to a scatterplot, use the \textbf{\texttt{abline()}} function on the model. The \texttt{abline()} function was introduced in the Chapter 4 Lab Notes (Lab 1).
+
+The following example shows a scatterplot with a least squares regression line. Additional plot options have been specified to add a plot title (\texttt{main}), change the plotting symbol (\texttt{pch}) so that an outline color (\texttt{col}) and fill color (\texttt{bg}) can be specified, and reduce the size of the dots (\texttt{cex}).
+
+```{r, fig.width = 6, fig.height = 5}
+#plot the data
+plot(BMI ~ Age, data = nhanes.samp.adult.500,
+     main = "BMI versus Age in the NHANES data (n = 500)",
+     pch = 21, col = "cornflowerblue", bg = "slategray2",
+     cex = 0.75)
+
+#add least squares line
+abline(lm(BMI ~ Age, data = nhanes.samp.adult.500),
+       col = "red", lty = 2, lwd = 2)
+```
 
 
 \newpage
 
 # Lab 2: Introduction to Least Squares Regression
+
+### Extracting Residuals and Predicted Values from a Model Fit
+
+The main type of residual plot used in *OpenIntro Biostatistics* is a scatterplot in which the residuals are plotted on the vertical axis against predicted values from the model on the horizontal axis. Predicted values can also be referred to as 'fitted' values.
+
+The residuals can be extracted from a model object using either the \textbf{\texttt{residuals()}} function (which can be abbreviated as \texttt{resid()}) or the \texttt{\$} notation.
+
+The following example demonstrates extracting residuals from the model of BMI versus age in the sample of 500 adults from the NHANES data, then printing out the first five residual values. It can be convenient to assign a model a specific name then refer to the model name in subsequent functions, rather than repeat the call to \texttt{lm()}.
+
+```{r}
+#name the model object
+model.BMIvsAge = lm(BMI ~ Age, data = nhanes.samp.adult.500)
+
+#extract residuals with residuals()
+residuals = residuals(model.BMIvsAge)
+residuals[1:5]
+
+#alternatively... extract residuals with $residuals
+residuals = model.BMIvsAge$residuals
+residuals[1:5]
+```
+
+\vspace{0.5cm}
+
+The predicted values can be extracted from a model object using either the \textbf{\texttt{predict()}} function, \textbf{\texttt{fitted()}} function, or the \texttt{\$} notation.
+
+The following example demonstrates extracting predicted values from the model of BMI versus age in \texttt{nhanes.samp.adult.500}, then printing out the first five predicted values.
+
+```{r}
+#extract predicted values with predict()
+predicted = predict(model.BMIvsAge)
+predicted[1:5]
+
+#alternatively... extract predicted values with $fitted.values
+predicted = model.BMIvsAge$fitted.values
+predicted[1:5]
+```
+
+The following example demonstrates a residual plot for the model regressing BMI on age in \texttt{nhanes.samp.adult.500}.
+
+```{r, fig.width = 5, fig.height = 4}
+plot(residuals ~ predicted,
+     main = "Residual Plot for BMI vs Age (n = 500)",
+     xlab = "Predicted BMI", ylab = "Residual",
+     pch = 21, col = "cornflowerblue", bg = "slategray2", 
+     cex = 0.75)
+abline(h = 0, lty = 2, lwd = 2, col = "red")
+```
+
+\newpage
+
+### Normal Probability Plot of Residuals
+
+The \textbf{\texttt{qqnorm()}} function produces a normal quantile-quantile plot of a set of values while \textbf{\texttt{qqline()}} adds a diagonal line through the first and third quartiles.
+
+The following example demonstrates a Q-Q plot of residuals from the model regressing BMI on age in \texttt{nhanes.samp.adult.500}. 
+
+```{r, fig.width = 4, fig.height = 4}
+#normal probability plot of residuals
+qqnorm(residuals,
+     pch = 21, col = "cornflowerblue", bg = "slategray2", cex = 0.75)
+qqline(residuals,
+       col = "red", lwd = 2)
+```
 
 
 
@@ -53,7 +158,200 @@ Lab 4 discusses the use of binary categorical predictor variables and the extens
 
 # Lab 3: Understanding $R^2$
 
+### Extracting $R^2$ from a Model Fit
+
+The use of \texttt{summary()} on a model object will be discussed in the next section. The $R^2$ of a model fit can be extracted directly from a model summary with the use of the \texttt{\$} syntax. For example, the following syntax prints the $R^2$ from the model regressing BMI on age in \texttt{nhanes.samp.adult.500}.
+
+```{r}
+#print R-squared value
+summary(model.BMIvsAge)$r.squared
+```
+
+
+### Removing Objects from the RStudio Environment
+
+To remove a specific object from the environment, use \textbf{\texttt{rm()}} on the name of the object. For example, to remove the previously created model object \texttt{model.BMIvsAge}, run
+
+```{r, eval = FALSE}
+rm(model.BMIvsAge)
+```
+
+To clear all objects from the environment, run \textbf{\texttt{rm(list = ls())}}; this is equivalent to clicking the broom icon in the Environment tab. 
+
 
 \newpage
 
-#Lab 4: Categorical Predictors with Two Levels and Inference in Regression
+#Lab 4: Categorical Predictors and Inference in Regression
+
+### Creating Factor Variables
+
+The \textbf{\texttt{factor()}} function has the following generic structure:
+
+```{r, eval = FALSE}
+factor(x, levels, labels)
+```
+ 
+where \texttt{x} is a vector of data (usually with a small number of distinct values), \texttt{levels} is a vector of the unique values that \texttt{x} might have taken, and \texttt{labels} is a character vector of labels for the levels (in the same order as \texttt{levels}).
+
+The following example shows the creation of a factor variable \texttt{DM.factor} based on the integer vector \texttt{DM} in \texttt{prevend.sample}. The variable \texttt{DM} takes on values of either \texttt{0} or \texttt{1}, where \texttt{0} corresponds to absence of diabetes and \texttt{1} corresponds to presence of diabetes.
+
+```{r}
+#load the data
+data("prevend")
+set.seed(5011)
+prevend.sample = prevend[sample(1:nrow(prevend), 500, replace = FALSE), ]
+
+#create DM.factor
+DM.factor = factor(prevend.sample$DM, levels = c(0, 1),
+                   labels = c("Absent", "Present"))
+```
+
+To overwrite the variable \texttt{DM} in \texttt{prevend.sample} with \texttt{DM.factor}, assign \texttt{DM.factor} to \texttt{DM}. For clarity of logic, the assignment operator \texttt{<-} is used rather than the equivalent \texttt{=} symbol; think of the factor version of the variable is being assigned *to* the existing variable name \texttt{DM} in \texttt{prevend.sample}.
+
+```{r}
+#overwrite DM with DM.factor
+prevend.sample$DM <- DM.factor
+
+#confirm the overwrite is successful
+summary(prevend.sample$DM)
+```
+
+\vspace{0.5cm}
+
+*Directly Converting a Variable in a Dataframe to a Factor*
+
+Note that the variable \texttt{DM.factor} was not part of the \texttt{prevend.sample} dataframe, even if it was created from a variable in \texttt{prevend.sample}. To specify that a created variable should be placed in a dataframe, specify the name of the dataframe with \texttt{\$} when using \texttt{factor()}. The variable will be added as the last variable in the dataframe.
+
+The following example shows a factor version of the variable \texttt{Gender} being added to \texttt{prevend.sample}.
+
+```{r}
+#create Gender.factor in prevend.sample
+prevend.sample$Gender.factor = factor(prevend.sample$Gender, levels = c(0, 1),
+                                      labels = c("Male", "Female"))
+
+#view first five rows and last three columns of prevend.sample
+prevend.sample[1:5, 30:32]
+```
+
+Using the same \texttt{\$} syntax, the factor version of the variable can be directly assigned to the original variable in the dataframe, essentially "converting" it from an integer vector to a factor with a single command:
+
+```{r}
+#convert Gender to a factor variable
+prevend.sample$Gender = factor(prevend.sample$Gender, levels = c(0, 1),
+                                      labels = c("Male", "Female"))
+
+#confirm that Gender is now a factor
+summary(prevend.sample$Gender)
+```
+
+
+### Working with Linear Models
+
+*Model Summary*
+
+Applying the \texttt{summary()} command to a model fit outputs a list of information about the model, including the coefficient estimates, standard errors, $t$-statistics, and $p$-values. The $R^2$ value is labeled 'Multiple R-squared'. 
+
+The following example shows the summary for the model regressing BMI on age in \texttt{nhanes.samp.adult.500}. An equivalent syntax would be to use the name of the model as defined previously, \texttt{summary(model.BMIvsAge)}.
+
+```{r}
+summary(lm(BMI ~ Age, data = nhanes.samp.adult.500))
+```
+
+\vspace{0.5cm}
+
+*Extracting Components of a Model Fit and Summary*
+
+The coefficients of a model fit can be extracted using either the \textbf{\texttt{coef()}} function or the \texttt{\$} syntax.
+
+```{r}
+#extract coefficients with coef()
+coef(model.BMIvsAge)
+
+#alternatively... extract coefficients with $coefficients
+model.BMIvsAge$coefficients
+```
+
+Similarly, the coefficients of a model summary can also be extracted; this will not only output the estimates of the coefficients, but also the associated standard errors, $t$-statistics, and $p$-values.
+
+```{r}
+#extract coefficients with coef()
+coef(summary(model.BMIvsAge))
+
+#alternatively... extract coefficients with $coefficients
+summary(model.BMIvsAge)$coefficients
+```
+
+Square bracket notation can be used to isolate specific information from the coefficients.
+
+```{r}
+#extract the estimate of age from the model fit
+coef(model.BMIvsAge)[2]
+
+#extract the standard error of age with coef( ) syntax
+coef(summary(model.BMIvsAge))[2, 2]
+
+#extract the t-statistic of age with $coefficients syntax
+summary(model.BMIvsAge)$coefficients[2, 3]
+```
+
+\vspace{0.5cm}
+
+*Letting \textsf{R} Do the Work: Confidence Intervals*
+
+To calculate confidence intervals for the parameters in a regression model, use \texttt{confint()}. The \textbf{\texttt{confint()}} function has the following generic structure:
+
+```{r, eval = FALSE}
+confint(object, parm, level = 0.95)
+```
+
+where \texttt{object} is the name of the fitted model, \texttt{parm} is an optional argument specifiying which parameters to calculate confidence intervals for, and \texttt{level} is the confidence level. The function outputs lower and upper confidence limits for each parameter. By default, the function calculates 95\% confidence intervals for all parameters.
+
+The following example shows the calculation of 95\% confidence intervals for both $\beta_0$ and $\beta_1$ and a 90\% confidence interval for only $\beta_1$, from the model regressing BMI on age in \texttt{nhanes.samp.adult.500}.
+
+```{r}
+#output CIs for all parameters (intercept and slope)
+confint(model.BMIvsAge)
+
+#output CI only for slope parameter
+confint(model.BMIvsAge, parm = "Age", level = 0.90)
+```
+
+\vspace{0.5cm}
+
+*Letting \textsf{R} Do the Work: Predicted Values*
+
+The \texttt{predict()} function has been previously used to extract the fitted values from a model object; i.e., the specific predicted $y$ values for all $x$-values observed in the data.
+
+The \texttt{predict()} function can also be used to evaluate the regression equation for specific $x$-values, or in other words, to calculate $\hat{y}$ values for values of $x$ that were not necessarily observed. To use \texttt{predict()} in this way, specify the $x$-values according to the following generic syntax:
+
+```{r, eval = FALSE}
+predict(object, newdata = data.frame( ))
+```
+
+where \texttt{object} is the name of the fitted model, and the name of the predictor variable and value at which to evaluate the equation are specified within \texttt{newdata = data.frame()}.
+
+\newpage
+
+The following example shows calculating $\widehat{BMI}$ for an individual 60 years of age in the model regressing BMI on age in \texttt{nhanes.samp.adult.500}, then checking the result by explicitly solving the regression equation.
+
+```{r}
+#BMI ~ Age in nhanes.samp.adult.500
+predict(model.BMIvsAge, newdata = data.frame(Age = 60))
+
+#confirm answer from solving 28.40 + 0.0198(60)
+coef(model.BMIvsAge)
+coef(model.BMIvsAge)[1] + coef(model.BMIvsAge)[2]*60
+```
+
+
+To use \texttt{predict()} with a categorical predictor variable (stored as a factor), enter the name of the factor level. The following example shows calculating $\widehat{BMI}$ for a male individual in the model regressing BMI on gender in \texttt{prevend.sample}, then checking the result by printing the model intercept.
+
+```{r}
+#BMI ~ Gender in prevend.sample
+predict(lm(BMI ~ Gender, data = prevend.sample), 
+        newdata = data.frame(Gender = "Male"))
+
+#confirm answer from checking intercept
+coef(lm(BMI ~ Gender, data = prevend.sample))
+```
+
