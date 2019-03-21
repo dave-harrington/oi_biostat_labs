@@ -303,8 +303,7 @@ sample.size = 500
 prevend.sample = prevend[sample(1:nrow(prevend), sample.size, replace = FALSE), ]
 
 #plot RFFT scores versus age
-plot(RFFT ~ Age, data = prevend.sample, 
-     cex = 0.5)
+plot(RFFT ~ Age, data = prevend.sample, cex = 0.5)
 abline(lm(RFFT ~ Age, data = prevend.sample), col = "red")
 
 #calculate R-squared

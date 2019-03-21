@@ -1,5 +1,5 @@
 ---
-title: "Categorical Predictors with Two Levels and Inference with Regression"
+title: "Categorical Predictors with Two Levels and Inference in Regression"
 author: "Chapter 6, Lab 4: Solutions"
 date: "OpenIntro Biostatistics"
 
@@ -19,7 +19,7 @@ output:
 	\textbf{Topics}
 	\begin{itemize}
 	  \item Categorical predictors with two levels
-	  \item Inference with regression
+	  \item Inference in regression
 	\end{itemize}
 	
 \end{small}
@@ -38,7 +38,7 @@ Although the response variable in linear regression is necessarily numerical, th
 
 Fitting a simple linear regression model with a categorical predictor that has two levels is analogous to comparing the means of two groups, where the groups are defined by the categorical variable. The equation of the regression line has intercept $b_0$, which equals the mean of one of the groups, and slope $b_1$, which equals the difference in means between the two groups.\footnote{The group for which $b_0$ is the mean is usually referred as the \textit{baseline} group or \textit{reference} group.}
 
-*Inference with regression*
+*Inference in regression*
 
 When conducting inference in a regression context, observed data $(x_i, y_i)$ used for fitting a regression line are assumed to have been randomly sampled from a population where the explanatory variable $X$ and response variable $Y$ follow a population model
 \[Y = \beta_0 + \beta_1X + \epsilon, \]
@@ -180,11 +180,7 @@ coef(lm(BMI ~ DM, data = prevend.sample))
     
     c) Based on part b), solve for the two possible values of $\widehat{BMI}$ and interpret the values.
     
-        \color{NavyBlue}
-        
-        The predictor variable can take on either \texttt{0} or \texttt{1}. When $DMPresent$ is 0, $\widehat{BMI}$ is 26.69; this is the estimated average BMI of non-diabetic individuals. When $DMPresent$ is 1, $\widehat{BMI}$ is 29.92; this is the estimated average BMI of diabetic individuals.
-        
-        \color{Black}
+        \textcolor{NavyBlue}{The predictor variable can take on either \texttt{0} or \texttt{1}. When $DMPresent$ is 0, $\widehat{BMI}$ is 26.69; this is the estimated average BMI of non-diabetic individuals. When $DMPresent$ is 1, $\widehat{BMI}$ is 29.92; this is the estimated average BMI of diabetic individuals.}
     
     ```{r}
 #use r as a calculator
@@ -196,12 +192,23 @@ x = c(0, 1)
 b0 + b1*x
 ```
     
+    \textcolor{NavyBlue}{Alternatively, use the \texttt{predict( )} function.}
+    
+    ```{r}
+#store the model fit
+model.BMIvsDM = lm(BMI ~ DM, data = prevend.sample)
+
+#use predict( )
+predict(model.BMIvsDM, newdata = data.frame(DM = "Absent"))
+predict(model.BMIvsDM, newdata = data.frame(DM = "Present"))
+```
+    
     
     d) Confirm that the numbers obtained in part c) match those from Question 5.
     
         \textcolor{NavyBlue}{The numbers from part c) are identical to the answers from Question 5.}
 
-### Inference with regression
+### Inference in regression
 
 Inference in a regression context is usually for the slope parameter, $\beta_1$. 
 
@@ -235,11 +242,13 @@ summary(lm(BMI ~ DM, data = prevend.sample))
     
         ii. Identify the relevant $t$-statistic and $p$-value from the output of the \texttt{summary(lm( ))} function. 
         
-            \textcolor{NavyBlue}{The $t$-statistic of the slope coefficient is 3.96, with associated $p$ value of $8.47 \times 10^{-5}$. }
+            \textcolor{NavyBlue}{The $t$-statistic of the slope coefficient is 3.96, with associated $p$-value of $8.47 \times 10^{-5}$. }
             
         iii. State a conclusion in the context of the data.
         
             \textcolor{NavyBlue}{Since $p < \alpha$, there is sufficient evidence to reject the null hypothesis in favor of the alternative that BMI and diabetes presence are associated. From the observed slope of 3.23, there is evidence of a positive association between BMI and diabetes; presence of diabetes is associated with a higher BMI of 3.23 units, on average. }
+    
+    \newpage
     
     b) Calculate and interpret the 95\% confidence interval for the slope coefficient of the model.
     
@@ -299,7 +308,7 @@ The following questions return to the investigation of RFFT score as a main resp
     
     ```{r}
 #assess significance
-summary(lm(RFFT ~ Age, data = prevend.sample))
+coef(summary(lm(RFFT ~ Age, data = prevend.sample)))
 ```
     
     b) Compute and interpret the 99\% confidence interval for the model slope.
