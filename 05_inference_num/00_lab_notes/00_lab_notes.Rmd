@@ -268,7 +268,7 @@ The \textbf{\texttt{aov()}} function fits an ANOVA model to data; wrapping with 
 aov(y ~ x)
 ```
 
-where \texttt{y} is the data vector and \texttt{y} is the grouping variable.
+where \texttt{y} is the data vector and \texttt{x} is the grouping variable.
 
 The following code shows the summary of the ANOVA model fit for the association of change in non-dominant arm strength by genotype at the $r577x$ locus on the $ACTN3$ gene.
 
