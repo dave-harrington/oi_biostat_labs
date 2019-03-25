@@ -36,7 +36,7 @@ The material in this lab corresponds to Section 5.5 of *OpenIntro Biostatistics*
 
 In the Functional polymorphisms Associated with Human Muscle Size and Strength study (FAMuSS), researchers examined the relationship between muscle strength and genotype at a particular location on the *ACTN3* gene. The \texttt{famuss} dataset in the \texttt{oibiostat} package contains a subset of data from the study. 
 
-The percent change in non-dominant arm strength, comparing strength after resistance training to before training, is stored as \texttt{ndrm.ch}. There are three possible genotypes (CC, CT, TT) at the *r577x* position on the *ACTN3* gene; genotype is stored as \texttt{actn3.r557x}.
+The percent change in non-dominant arm strength, comparing strength after resistance training to before training, is stored as \texttt{ndrm.ch}. There are three possible genotypes (CC, CT, TT) at the *r577x* position on the *ACTN3* gene; genotype is stored as \texttt{actn3.r577x}.
 
 1. Load the data. Create a plot that shows the association between change in non-dominant arm strength and *ACTN3* genotype. Describe what you see.
 

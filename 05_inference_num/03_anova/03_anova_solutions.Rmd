@@ -36,7 +36,7 @@ The material in this lab corresponds to Section 5.5 of *OpenIntro Biostatistics*
 
 In the Functional polymorphisms Associated with Human Muscle Size and Strength study (FAMuSS), researchers examined the relationship between muscle strength and genotype at a particular location on the *ACTN3* gene. The \texttt{famuss} dataset in the \texttt{oibiostat} package contains a subset of data from the study. 
 
-The percent change in non-dominant arm strength, comparing strength after resistance training to before training, is stored as \texttt{ndrm.ch}. There are three possible genotypes (CC, CT, TT) at the *r577x* position on the *ACTN3* gene; genotype is stored as \texttt{actn3.r557x}.
+The percent change in non-dominant arm strength, comparing strength after resistance training to before training, is stored as \texttt{ndrm.ch}. There are three possible genotypes (CC, CT, TT) at the *r577x* position on the *ACTN3* gene; genotype is stored as \texttt{actn3.r577x}.
 
 1. Load the data. Create a plot that shows the association between change in non-dominant arm strength and *ACTN3* genotype. Describe what you see.
 
@@ -56,7 +56,7 @@ plot(famuss$ndrm.ch ~ famuss$actn3.r577x)
 
 2. Assess whether the assumptions for conducting an ANOVA are reasonably satisfied: 1) observations are independent within and across groups, 2) the data within each group are nearly normal, and 3) the variability across the groups is about equal.
 
-    \textcolor{NavyBlue}{It is reasonable to assume that the observations are independent within and across groups; it is unlikely that participants in the study were related, or that data collection was carried out in a way that one participant's change in arm strength could influence another's. Based on the Q-Q plots, there is some evidence of skew and presence of outliers, but the data are approximately normal. The variance between groups is roughly constant.}
+    \textcolor{NavyBlue}{It is reasonable to assume that the observations are independent within and across groups; it is unlikely that participants in the study were related, or that data collection was carried out in a way that one participant's change in arm strength could influence another's. Based on the Q-Q plots, there is evidence of moderate right skew; the data does not follow a normal distribution very closely, but could be considered to 'loosely' follow a normal distribution.\footnote{\textcolor{NavyBlue}{In a more advanced course, it can be shown that the ANOVA procedure still holds with deviations from normality when sample sizes are moderately large. Additionally, a more advanced course would discuss appropriate transformations to induce normality.}} The variance between groups is roughly constant.}
 
     ```{r, fig.width = 8, fig.height = 3}
 #check assumptions
@@ -125,7 +125,7 @@ pairwise.t.test(famuss$ndrm.ch, famuss$actn3.r577x, p.adj = "bonf")
       
       \textcolor{NavyBlue}{A conclusion can be made by either comparing the unadjusted $p$-values to $\alpha^\star$, or comparing the adjusted $p$-values to $\alpha$. When the Bonferroni correction is applied in \texttt{pairwise.t.test()}, \textsf{R} multiplies the $p$-value by $K$. Comparing a $p$-value to $\alpha/K$ is equivalent to comparing the quantity $(K \times p\text{-value})$ to $\alpha$.}
 
-      \textcolor{NavyBlue}{Only the \texttt{CC} versus \texttt{TT} comparison results in a $p$-value less than $\alpha^{\star} = 0.0167$. There is evidence that mean strength change for individuals of genotype \texttt{CC} and \texttt{TT} are different, and that individuals of \texttt{TT} genotype have higher mean strength change in the non-dominant arm than \texttt{CC} individuals. The other two comparisons did not result in $p$-values less than $\alpha^\star$; thus, there is not evidence that mean strength change in non-dominant arm strength for \texttt{CT} individuals is distinguishable from the mean strength change for \texttt{CC} or \texttt{TT} individuals.}
+      \textcolor{NavyBlue}{Only the \texttt{CC} versus \texttt{TT} comparison results in a $p$-value less than $\alpha^{\star} = 0.0167$. There is evidence that mean strength change for individuals of genotype \texttt{CC} and \texttt{TT} are different, and that individuals of \texttt{TT} genotype have higher mean strength change in the non-dominant arm than \texttt{CC} individuals. The other two comparisons did not result in $p$-values less than $\alpha^\star$; thus, there is not evidence that mean strength change in non-dominant arm strength for \texttt{CT} individuals is distinguishable from the mean strength change for \texttt{CC} or \texttt{TT} individuals. In conclusion, the data suggest that having two copies of the T allele is significantly associated with higher mean strength change in the non-dominant arm relative to having two copies of the C allele.}
 
         
 ### NHANES: comparing BMI by educational level
@@ -155,7 +155,7 @@ boxplot(nhanes.samp.adult.500$BMI ~ nhanes.samp.adult.500$Education)
 
 5. Examine the normality and equal variance assumptions across the groups. Explain why it is advisable to restrict the analysis to participants who have completed at least $9^{th}$ grade.
 
-    \textcolor{NavyBlue}{In this sample, there are not many participants in the $8^{th}$ grade category; this affects both the normality and equal variance assumptions. The variance in the $8^{th}$ grade group is small relative to the other groups, and the center of the distribution shows departures from normality. Across the other groups, normality and equal variance are reasonably satisfied. One rule of thumb for assessing equal variance in the ANOVA context is to check the ratio of the largest variance to the smallest variance; a ratio less than 3 is considered acceptable for conducting the ANOVA $F$-test.}
+    \textcolor{NavyBlue}{In this sample, there are not many participants in the $8^{th}$ grade category; this affects both the normality and equal variance assumptions. The variance in the $8^{th}$ grade group is small relative to the other groups, and the center of the distribution shows departures from normality. Across the other groups, normality and equal variance are reasonably satisfied. One rule of thumb for assessing equal variance in the ANOVA context is to check the ratio of the largest variance to the smallest variance; a ratio less than 3 is considered acceptable for conducting the ANOVA $F$-test. There are some departures from normality in the tails (specifically, indicating right skew), but the centers are close to what would be expected in a normal distribution.}
 
     ```{r, fig.width = 6, fig.height = 9}
 #check assumptions
