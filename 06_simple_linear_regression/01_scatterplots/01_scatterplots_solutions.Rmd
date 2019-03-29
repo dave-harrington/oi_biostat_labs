@@ -79,7 +79,7 @@ lm(prevend.sample$RFFT ~ prevend.sample$Age)
     
     b) Interpret the slope and intercept values in the context of the data; i.e., explain the linear model in terms that a non-statistician would understand. Comment on whether the intercept value has any interpretive meaning in this setting.
     
-        \textcolor{NavyBlue}{According to the model slope, RFFT score declines an average of 1.3 points for every increase in age of 1 year. The intercept model suggests that the average RFFT score for an individual of age 0 is 137.55. The intercept value does not have interpretive meaning in this setting, since it is not reasonable to assess a newborn's cognitive function with a test like the RFFT.}
+        \textcolor{NavyBlue}{According to the model slope, an increase in age of 1 year is associated with an average decrease in RFFT score by 1.3 points. The model intercept suggests that the average RFFT score for an individual of age 0 is 137.55. The intercept value does not have interpretive meaning in this setting, since it is not reasonable to assess a newborn's cognitive function with a test like the RFFT.}
     
     c) Based on the linear model, how much does RFFT score differ, on average, between an individual who is 60 years old versus an individual who is 50 years old?
     
