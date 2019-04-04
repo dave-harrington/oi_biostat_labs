@@ -1,0 +1,32 @@
+---
+title: "Introduction to Multiple Regression"
+author: "Chapter 7, Lab 1"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Multiple regression model
+	  \item Interpreting model coefficients
+	  \item Adjusting for potential confounders
+	\end{itemize}
+	
+\end{small}
+
+
+
+The material in this lab corresponds to Sections 7.1 and 7.2 of *OpenIntro Biostatistics*.
+
+\vspace{0.5cm}
