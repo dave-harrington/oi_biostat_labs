@@ -1,17 +1,11 @@
 ---
 title: "Introduction to Multiple Regression"
-author: "Chapter 7, Lab 1"
+author: "Chapter 7, Lab 1: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -57,6 +51,10 @@ The questions in this lab use data from a random sample of $n = 500$ individuals
 
     Examine the scatterplot and describe what you see regarding the relationship between RFFT score, age, and statin use.
 
+
+
+
+
     ```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 5}
 #load the data
 library(openintro)
@@ -90,27 +88,82 @@ abline(v = 70, lty = 2)
 abline(v = 80, lty = 2)
 ```
 
+
+
+
+
 2. Explore the relationship between RFFT score and statin use with the data in \texttt{prevend.samp}. 
 
-    a) Statin use is coded as an integer vector, where \texttt{0} represents a non-user and \texttt{1} represents a user. Convert the variable \texttt{Statin} into a factor variable, with levels \texttt{NonUser} and \texttt{User}.
-    
-    b) Create a plot showing the association between RFFT score and statin use. Describe what you see.
+a) Statin use is coded as an integer vector, where \texttt{0} represents a non-user and \texttt{1} represents a user. Convert the variable \texttt{Statin} into a factor variable, with levels \texttt{NonUser} and \texttt{User}.
 
-    c) Fit a simple regression model and interpret the slope coefficient.
-    
-    d) Discuss whether the model from part c) is sufficient for understanding whether statin use is associated with decreased cognitive ability.
+```{r, eval = FALSE}
+#convert statin to a factor
+prevend.samp$Statin <- factor(prevend.samp$Statin, 
+                              levels = , labels = )
+```
 
-\newpage
+    
+    
+    
+b) Create a plot showing the association between RFFT score and statin use. Describe what you see.
+
+```{r}
+#create a plot
+
+```
+
+
+
+
+c) Fit a simple regression model and interpret the slope coefficient.
+
+```{r}
+#fit a model and print the model coefficients
+
+```
+
+    
+    
+    
+d) Discuss whether the model from part c) is sufficient for understanding whether statin use is associated with decreased cognitive ability.
+
+
+
+
+
+
+
     
 3. Age is a potential confounder for the relationship between statin use and cognitive function. If older participants tend to use statins, and higher age is associated with lower cognitive ability, perhaps the observed negative association between cognitive ability and statin use is primarily driven by age.
 
-    a) Subset the participants in \texttt{prevend.samp} by age to create three age cohorts:
+a) Subset the participants in \texttt{prevend.samp} by age to create three age cohorts:
     
-        - \texttt{youngest}: individuals with age < 50 years
-        - \texttt{younger}: individuals with age $\geq 50$ years and < 60 years
-        - \texttt{older}: individuals with age $\geq 60$ years
+  - \texttt{youngest}: individuals with age < 50 years
+  - \texttt{younger}: individuals with age $\geq 50$ years and < 60 years
+  - \texttt{older}: individuals with age $\geq 60$ years
+
+```{r}
+#create youngest subset
+youngest = prevend.samp[prevend.samp$Age < 50, ]
+
+#create younger subset
+
+#create older subset
+
+```
     
-    b) For each age cohort, create a plot showing the association between RFFT score and statin use. Compare these plots to each other and to the plot from Question 2, part b). Does the nature of the association between RFFT score and statin use seem to differ depending on age?
+
+
+b) For each age cohort, create a plot showing the association between RFFT score and statin use. Compare these plots to each other and to the plot from Question 2, part b). Does the nature of the association between RFFT score and statin use seem to differ depending on age?
+
+```{r}
+#create plot for youngest
+
+#create plot for younger
+
+#create plot for oldest
+
+```
 
 
 
@@ -118,24 +171,71 @@ abline(v = 80, lty = 2)
 
 4. Fit a multiple regression model for predicting RFFT score from statin use and age.
 
-    a) Write the equation of the linear model.
+```{r}
+#fit the multiple regression model
+```
+
+
+a) Write the equation of the linear model.
     
-    b) Interpret the slope coefficient for statin use. Compare the coefficient to the one from the simple regression model between RFFT score and statin use.
     
-    c) Interpret the slope coefficient for age.
-        
-    d) Make predictions.
     
-        i. How does the predicted mean RFFT score for a 65-year-old individual using statins compare to that of an individual of the same age who is not using statins?
-        
-        ii. How does the predicted mean RFFT score for a 50-year-old individual compare to that of a 60-year-old individual, if they both use statins?
-        
-        iii. How does the predicted mean RFFT score for a 70-year-old individual who uses statins compare to that of a 50-year-old individual who does not use statins?
-        
-    e) As in simple linear regression, inferences can be made about the slope parameters estimated by the model slope coefficients.\footnote{Inference in multiple regression will be introduced formally in Chapter 7, Lab 3.} Based on the multiple regression model, is there a statistically significant association between RFFT score and statin use? 
-        
-    f) In a clinical setting, the interpretive focus lies on reporting the nature of the association between the primary predictor and the response, while specifying which potential confounders have been adjusted for. Briefly respond to a clinician who is concerned about a possible association between statin use and decreased cognitive function, based on the analyses conducted in this lab.
+b) Interpret the slope coefficient for statin use. Compare the coefficient to the one from the simple regression model between RFFT score and statin use.
     
-    g) Can the results of this study be used to conclude that as one ages, one's cognitive function (as measured by RFFT) declines?
+
+
+c) Interpret the slope coefficient for age.
+        
+
+
+
+d) Make predictions.
+    
+  i. How does the predicted mean RFFT score for a 65-year-old individual using statins compare to that of an individual of the same age who is not using statins?
+  
+  
+  
+        
+  ii. How does the predicted mean RFFT score for a 50-year-old individual compare to that of a 60-year-old individual, if they both use statins?
+  
+  
+  
+        
+  iii. How does the predicted mean RFFT score for a 70-year-old individual who uses statins compare to that of a 50-year-old individual who does not use statins?
+  
+
+```{r}
+#use predict( )
+
+
+#alternatively, use r as a calculator...
+
+```
+  
+  
+  
+        
+e) As in simple linear regression, inferences can be made about the slope parameters estimated by the model slope coefficients.\footnote{Inference in multiple regression will be introduced formally in Chapter 7, Lab 3.} Based on the multiple regression model, is there a statistically significant association between RFFT score and statin use? 
+
+
+    
+```{r}
+#use summary(lm( ))
+
+```        
+        
+        
+
+        
+f) In a clinical setting, the interpretive focus lies on reporting the nature of the association between the primary predictor and the response, while specifying which potential confounders have been adjusted for. Briefly respond to a clinician who is concerned about a possible association between statin use and decreased cognitive function, based on the analyses conducted in this lab.
+
+
+
+
+    
+g) Can the results of this study be used to conclude that as one ages, one's cognitive function (as measured by RFFT) declines?
+        
+        
+        
         
         
