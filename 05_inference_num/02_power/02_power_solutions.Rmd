@@ -38,7 +38,7 @@ The power of a test can be expressed as $P$(reject $H_0$|$H_A$ is true) = $1 - \
 \hline
  & Type I error, & No error,\\
 $H_0$ is true & probability = $\alpha$ & probability = $1 - \alpha$ \\
- & (false positive) & (true positive) \\ \hline
+ & (false positive) & (true negative) \\ \hline
  &  No error, & Type II error,\\
 $H_A$ is true &  probability = $1 - \beta$ & probability = $\beta$\\
  & (true positive) & (false negative) \\ \hline
