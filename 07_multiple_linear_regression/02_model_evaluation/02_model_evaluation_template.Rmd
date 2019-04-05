@@ -1,17 +1,11 @@
 ---
 title: "Evaluating Model Fit"
-author: "Chapter 7, Lab 2"
+author: "Chapter 7, Lab 2: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -63,7 +57,7 @@ Adding a variable to a regression model always increases the value of $R^2$. The
 
 The questions in this section use data from \texttt{prevend.samp}, a random sample of $n = 500$ individuals from the \texttt{prevend} dataset. Run the code shown in the template to load \texttt{prevend.samp} from the \texttt{oibiostat} package and convert the statin use variable into a factor.
 
-```{r, echo = FALSE}
+```{r}
 #load the data
 library(oibiostat)
 data("prevend.samp")
@@ -76,15 +70,56 @@ prevend.samp$Statin = factor(prevend.samp$Statin, levels = c(0, 1),
 
 1. Fit a multiple regression model predicting RFFT score from statin use and age. Check the assumptions for multiple linear regression.
 
-    a) Assess linearity with respect to age using a scatterplot with residual values on the $y$-axis and values of age on the $x$-axis. Is it necessary to assess linearity with respect to statin use?
+```{r}
+#fit a multiple regression model
+
+```
+
+
+  a) Assess linearity with respect to age using a scatterplot with residual values on the $y$-axis and values of age on the $x$-axis. Is it necessary to assess linearity with respect to statin use?
+
+
+  
+```{r}
+#assess linearity
+
+```
+
     
-    b) Assess whether the residuals have approximately constant variance.
+  b) Assess whether the residuals have approximately constant variance.
+
+
     
-    c) Is it reasonable to assume that each set of observations is independent of the others?
+```{r}
+#assess constant variance
+
+```
+
     
-    d) Assess whether the residuals are approximately normally distributed.
+  c) Is it reasonable to assume that each set of observations is independent of the others?
+    
+    
+    
+    
+  d) Assess whether the residuals are approximately normally distributed.
+  
+```{r}
+#assess normality of residuals
+
+```
+
+
     
 2. How well does the model explain the variability in observed RFFT score?
+
+
+```{r}
+
+```
+
+
+
+
 
 \vspace{0.2cm}
 
@@ -94,6 +129,22 @@ where $n$ is the number of cases and $p$ is the number of predictor variables.
 
 3. Using the formula, calculate the adjusted $R^2$ for the multiple regression model predicting RFFT score from statin use and age.
 
+```{r, eval = FALSE}
+#use r as a calculator
+var.resid =
+var.y = 
+n = 
+p = 
+
+1 - ( (var.resid/var.y) * ((n - 1)/(n - p - 1)))
+
+#check answer with summary(lm( ))$adj.r.squared
+
+```
+
+
+
+
 4. In the previous lab, a multiple regression model was used to estimate the association between statin use and RFFT score while adjusting for age as a potential confounder. Suppose that instead, the goal was to build a model that effectively explains the observed variation in RFFT score; in other words, to build a predictive model for RFFT score. In such a setting, there is no primary predictor of interest.
 
     The adjusted $R^2$ is useful as a statistic for comparing models to select a best predictive model. Model selection will be discussed in Chapter 7, Lab 5.
@@ -102,7 +153,31 @@ where $n$ is the number of cases and $p$ is the number of predictor variables.
 
     a) Would you expect the adjusted $R^2$ for the multiple regression model to be very different from the adjusted $R^2$ for the simple regression model predicting RFFT score from age? Explain your answer.
 
+    
+<!---
+
+Hint: look at the multiple regression model RFFT ~ Statin + Age
+
+Is statin use a 'useful' variable for predicting RFFT?
+
+--->
+    
+    
+    
+
     b) Would you expect the adjusted $R^2$ for the multiple regression model to be very different from the adjusted $R^2$ for the simple regression model predicting RFFT score from statin use? Explain your answer.
+
+    
+<!---
+
+Hint: look at the multiple regression model RFFT ~ Statin + Age
+
+Is age a 'useful' variable for predicting RFFT?
+
+--->
+        
+    
+    
 
 \newpage
 
@@ -128,14 +203,57 @@ dds.subset$ethnicity = droplevels(dds.subset$ethnicity)
 
 6. Fit a multiple regression model predicting expenditures from ethnicity and age using the data in \texttt{dds.subset} and write the equation of the linear model.
 
+
+
+```{r}
+#fit the model
+
+```
+
+
+
+
 7. Evaluate the model fit.
     
-    a) Assess linearity with respect to age.
+  a) Assess linearity with respect to age.
+  
+  
+  
+```{r}
+
+```
+
+
     
-    b) Assess whether the residuals have approximately constant variance.
+  b) Assess whether the residuals have approximately constant variance.
+  
+  
+  
+```{r}
+
+```
+
+
+
+  
+  c) Is it reasonable to assume that each set of observations is independent of the others?
+  
+  
+  
+  
+  
+  d) Assess whether the residuals are approximately normally distributed.
+  
+
+  
+```{r}
+
+```
+
+
     
-    c) Is it reasonable to assume that each set of observations is independent of the others?
-    
-    d) Assess whether the residuals are approximately normally distributed.
-    
-    e) Overall, does a linear model seem appropriate for modeling the relationship between expenditures, ethnicity, and age?
+  e) Overall, does a linear model seem appropriate for modeling the relationship between expenditures, ethnicity, and age?
+  
+  
+  
+  

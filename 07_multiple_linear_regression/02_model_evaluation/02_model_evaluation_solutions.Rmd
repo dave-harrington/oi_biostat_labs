@@ -1,6 +1,6 @@
 ---
 title: "Evaluating Model Fit"
-author: "Chapter 7, Lab 2"
+author: "Chapter 7, Lab 2: Solutions"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
@@ -63,7 +63,7 @@ Adding a variable to a regression model always increases the value of $R^2$. The
 
 The questions in this section use data from \texttt{prevend.samp}, a random sample of $n = 500$ individuals from the \texttt{prevend} dataset. Run the code shown in the template to load \texttt{prevend.samp} from the \texttt{oibiostat} package and convert the statin use variable into a factor.
 
-```{r, echo = FALSE}
+```{r}
 #load the data
 library(oibiostat)
 data("prevend.samp")
@@ -76,15 +76,68 @@ prevend.samp$Statin = factor(prevend.samp$Statin, levels = c(0, 1),
 
 1. Fit a multiple regression model predicting RFFT score from statin use and age. Check the assumptions for multiple linear regression.
 
+    ```{r}
+#fit a multiple regression model
+model1 = lm(RFFT ~ Statin + Age, data = prevend.samp)
+```
+
+
     a) Assess linearity with respect to age using a scatterplot with residual values on the $y$-axis and values of age on the $x$-axis. Is it necessary to assess linearity with respect to statin use?
+    
+        \textcolor{NavyBlue}{There are no apparent trends; the data scatter evenly above and below the horizontal line. There does not seem to be remaining nonlinearity with respect to age after the model is fit.}
+    
+        \textcolor{NavyBlue}{It is not necessary to assess linearity with respect to statin use since statin use is measured as a categorical variable. A line drawn through two points (that is, the mean of the two groups defined by a binary variable) is necessarily linear.}
+    
+    ```{r, fig.height = 4}
+#assess linearity
+plot(resid(model1) ~ prevend.samp$Age,
+     main = "Residuals vs Age in PREVEND (n = 500)",
+     xlab = "Age (years)", ylab = "Residual",
+     pch = 21, col = "cornflowerblue", bg = "slategray2",
+     cex = 0.60)
+abline(h = 0, col = "red", lty = 2)
+```
+    
     
     b) Assess whether the residuals have approximately constant variance.
     
+        \textcolor{NavyBlue}{The variance of the residuals is somewhat smaller for lower predicted values of RFFT score, but this may simply be an artifact from observing few individuals with relatively low predicted scores. It seems reasonable to assume approximately constant variance. }
+    
+    ```{r, fig.height = 4}
+#assess constant variance of residuals
+plot(resid(model1) ~ fitted(model1),
+     main = "Resid. vs Predicted RFFT in PREVEND (n = 500)",
+     xlab = "Predicted RFFT Score", ylab = "Residual",
+     pch = 21, col = "cornflowerblue", bg = "slategray2",
+     cex = 0.60)
+abline(h = 0, col = "red", lty = 2)
+```
+    
     c) Is it reasonable to assume that each set of observations is independent of the others?
+    
+        \textcolor{NavyBlue}{As discussed in previous labs using the PREVEND data, it is reasonable to assume that the observations in this dataset are independent. The participants were recruited from a large city in the Netherlands for a study focusing on factors associated with renal and cardiovascular disease. }
     
     d) Assess whether the residuals are approximately normally distributed.
     
+        \textcolor{NavyBlue}{The residuals are reasonably normally distributed, with only slight departures from normality in the tails.}
+    
+    ```{r, fig.width = 4, fig.height = 4}
+#assess normality of residuals
+qqnorm(resid(model1),
+       pch = 21, col = "cornflowerblue", bg = "slategray2", cex = 0.75,
+       main = "Q-Q Plot of Residuals")
+qqline(resid(model1), col = "red", lwd = 2)
+```
+    
+    
 2. How well does the model explain the variability in observed RFFT score?
+
+    \textcolor{NavyBlue}{The $R^2$ is 0.285; the model explains 28.5\% of the observed variation in RFFT score. The moderately low $R^2$ suggests that the model is missing other predictors of RFFT score.}
+
+    ```{r}
+summary(model1)$r.squared
+```
+
 
 \vspace{0.2cm}
 
@@ -94,6 +147,21 @@ where $n$ is the number of cases and $p$ is the number of predictor variables.
 
 3. Using the formula, calculate the adjusted $R^2$ for the multiple regression model predicting RFFT score from statin use and age.
 
+    \textcolor{NavyBlue}{The adjusted $R^2$ for the model is 0.282.}
+
+    ```{r}
+#use r as a calculator
+var.resid = var(resid(model1))
+var.y = var(prevend.samp$RFFT)
+n = nrow(prevend.samp)
+p = 2
+
+1 - ( (var.resid/var.y) * ((n - 1)/(n - p - 1)))
+
+#check answer with summary(lm( ))$adj.r.squared
+summary(lm(model1))$adj.r.squared
+```
+
 4. In the previous lab, a multiple regression model was used to estimate the association between statin use and RFFT score while adjusting for age as a potential confounder. Suppose that instead, the goal was to build a model that effectively explains the observed variation in RFFT score; in other words, to build a predictive model for RFFT score. In such a setting, there is no primary predictor of interest.
 
     The adjusted $R^2$ is useful as a statistic for comparing models to select a best predictive model. Model selection will be discussed in Chapter 7, Lab 5.
@@ -101,10 +169,30 @@ where $n$ is the number of cases and $p$ is the number of predictor variables.
     While $R^2$ increases with the addition of any predictor to a model, adjusted $R^2$ only increases substantially when a 'useful' predictor is added; that is, a predictor that contributes to explaining observed variation in the response.
 
     a) Would you expect the adjusted $R^2$ for the multiple regression model to be very different from the adjusted $R^2$ for the simple regression model predicting RFFT score from age? Explain your answer.
+    
+        \textcolor{NavyBlue}{The multiple regression model shows that while age is strongly associated with RFFT score ($p < 0.0001$), statin use is not ($p = 0.74$). Thus, relative to a model that contains age, the multiple regression model that includes statin use will not explain much more variation in RFFT score. Thus, it is reasonable to expect that the adjusted $R^2$ values will not be very different.}
+    
+        \textcolor{NavyBlue}{The adjusted $R^2$ of a model containing only age is actually slightly higher than the adjusted $R^2$ of the multiple regression model, at 0.284. If the goal is to build as simple a model as possible that predicts RFFT score well, the model with only age is preferable to the model with age and statin use.}
+
+    ```{r}
+#look at coefficients in the multiple regression model
+summary(model1)$coef
+```
+
+    ```{r}
+summary(lm(RFFT ~ Age, data = prevend.samp))$adj.r.squared
+```
+    
 
     b) Would you expect the adjusted $R^2$ for the multiple regression model to be very different from the adjusted $R^2$ for the simple regression model predicting RFFT score from statin use? Explain your answer.
+        
+        \textcolor{NavyBlue}{Relative to a model that contains statin use, the multiple regression model that includes age will do much better at explaining variation in RFFT score. Thus, it is reasonable to expect that the adjusted $R^2$ value for the multiple regression model to be much higher. This is confirmed below; the adjusted $R^2$ of the model with only statin use as a predictor is 0.022, which is much lower than 0.282.}
+        
+        \textcolor{NavyBlue}{Of the three models (statin use only, age only, statin use and age), a model with age as the single predictor of RFFT score most 'efficiently' predicts RFFT score. }
 
-\newpage
+    ```{r}
+summary(lm(RFFT ~ Statin, data = prevend.samp))$adj.r.squared
+```
 
 ### Expenditures, race, and age in the \texttt{dds.discr} data
 
@@ -128,14 +216,67 @@ dds.subset$ethnicity = droplevels(dds.subset$ethnicity)
 
 6. Fit a multiple regression model predicting expenditures from ethnicity and age using the data in \texttt{dds.subset} and write the equation of the linear model.
 
-7. Evaluate the model fit.
+    \color{NavyBlue}
     
+    \[ \widehat{expenditures} = -3920.07 + 4489.61(ethnicity_{WhitenotHisp}) + 862.48(age) \]
+    
+    \color{Black}
+
+    ```{r}
+#fit the model
+model2 <- lm(expenditures ~ ethnicity + age, data = dds.subset)
+coef(model2)
+```
+
+
+7. Evaluate the model fit.
+
     a) Assess linearity with respect to age.
+    
+        \textcolor{NavyBlue}{The residuals clearly show a pattern, rather than random scatter about the $y = 0$ line. There is remaining nonlinearity with respect to age after the model is fit.}
+    
+    ```{r, fig.height = 4}
+#evaluate linearity
+plot(resid(model2) ~ dds.subset$age,
+     main = "Residuals vs Age in DDS Data",
+     xlab = "Age (years)", ylab = "Residual",
+     pch = 21, col = "cornflowerblue", bg = "slategray2",
+     cex = 0.60)
+abline(h = 0, col = "red", lty = 2)
+```
     
     b) Assess whether the residuals have approximately constant variance.
     
+        \textcolor{NavyBlue}{The variance of the residuals is clearly not constant. It is also possible to see in this plot that in the middle range of predicted expenditures, the model consistently underpredicts, while in the upper and lower ranges, the model consistently overpredicts. This is a particularly serious issue with the model fit.}
+    
     c) Is it reasonable to assume that each set of observations is independent of the others?
+    
+        \textcolor{NavyBlue}{Yes, it is reasonable to assume that the values in one set of observation do not influence the values in another set.}
     
     d) Assess whether the residuals are approximately normally distributed.
     
+        \textcolor{NavyBlue}{The residuals show marked departures from normality, particularly in the upper tail. There are many more large residuals than expected if the residuals were normally distributed.}
+    
     e) Overall, does a linear model seem appropriate for modeling the relationship between expenditures, ethnicity, and age?
+    
+        \textcolor{NavyBlue}{A linear regression model is not appropriate for these data.}
+
+
+    ```{r, fig.height = 4, fig.width = 8.5}
+#evaluate constant variance and normality of residuals
+par(mfrow = c(1, 2))
+    
+plot(resid(model2) ~ fitted(model2),
+    main = "Resid. vs Predicted Exp. in DDS Data",
+     xlab = "Predicted Expenditures", ylab = "Residual",
+     pch = 21, col = "cornflowerblue", bg = "slategray2",
+     cex = 0.60)
+abline(h = 0, col = "red", lty = 2)
+
+qqnorm(resid(model2),
+       pch = 21, col = "cornflowerblue", bg = "slategray2", cex = 0.75,
+       main = "Q-Q Plot of Residuals")
+qqline(resid(model2),
+       col = "red", lty = 2)
+```
+
