@@ -1,17 +1,11 @@
 ---
 title: "Categorical Predictors with Several Levels and Inference in Regression"
-author: "Chapter 7, Lab 3"
+author: "Chapter 7, Lab 3: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -54,21 +48,96 @@ The variable \texttt{Education} in the PREVEND data indicates the highest level 
 
 1. Load \texttt{prevend.samp} and convert \texttt{Education} to a factor variable. The variable currently takes on values of either \texttt{0}, \texttt{1}, \texttt{2}, or \texttt{3}, where \texttt{0} denotes at most a primary school education, \texttt{1} a lower secondary school education, \texttt{2} a higher secondary education, and \texttt{3} a university education.
 
+```{r, eval = FALSE}
+#load the data
+library(oibiostat)
+data("prevend.samp")
+
+#convert Education to a factor
+prevend.samp$Education = factor(prevend.samp$Education,
+                                levels = ,
+                                labels = c("Primary", "LowerSecond",
+                                           "HigherSecond", "Univ"))
+```
+
+
 2. Identify how many individuals are in each level of \texttt{Education}.
+
+
+
+```{r}
+#find number of individuals in each group
+
+```
+
+
 
 3. Create a plot that shows the association between RFFT score and educational level. Describe what you see.
 
+```{r}
+#create a plot
+
+```
+
+
 4. Calculate mean RFFT score for each educational attainment group.
+
+
+```{r}
+#calculate means
+
+```
+
+
 
 5. Fit a linear regression model relating RFFT score and educational attainment.
 
-    a) Write the equation of the least-squares line in terms of the variable names (e.g., *RFFT*).
+```{r}
+#fit the linear model
+
+```
+
+
+  a) Write the equation of the least-squares line in terms of the variable names (e.g., *RFFT*).
+
+
+
+
+
     
-    b) Based on part a), solve for the four possible values of $\widehat{RFFT}$ and interpret the values.
+  b) Based on part a), solve for the four possible values of $\widehat{RFFT}$ and interpret the values.
+
+
+
+```{r}
+#use r as a calculator
+
+```
+
+
     
-    c) Confirm that the numbers obtained in part b) match those from Question 4.
+  c) Confirm that the numbers obtained in part b) match those from Question 4.
+  
+  
+  
+  
+  
     
-    d) Using a residual plot and a Q-Q plot, check the assumptions for linear regression. It is reasonable to assume that these observations are independent. Why is it not necessary to check the linearity assumption for the predictors in this model?
+  d) Using a residual plot and a Q-Q plot, check the assumptions for linear regression. It is reasonable to assume that these observations are independent. Why is it not necessary to check the linearity assumption for the predictors in this model?
+  
+  
+```{r}
+#residual plot
+
+
+#Q-Q plot
+
+
+```
+
+
+
+\newpage  
     
 ### Inference in regression
 
@@ -80,29 +149,79 @@ A 95\% confidence interval for $\beta_k$ has the following formula, where $t^\st
 
 The $F$-statistic in multiple regression is used to test hypotheses similar to those in ANOVA. The null hypothesis $H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0$ is tested against the alternative that at least one of the slope coefficients is not 0. A significant $p$-value for the $F$-statistic is evidence that the predictor variables in the model, when considered as a group, are associated with the response variable.
 
-\newpage
-
 6. Carry out inference based on the linear model in Question 5.
 
-    a) Identify the $t$-statistics and $p$-values for each slope coefficient in the model. Interpret the $p$-values in the context of the data.
+```{r}
+#use summary(lm( ))
+```
+
+
+  a) Identify the $t$-statistics and $p$-values for each slope coefficient in the model. Interpret the $p$-values in the context of the data.
     
-    b) Calculate and interpret the 95\% confidence interval for the slope coefficient of $X_3$, university education.
     
-    c) From the $F$-statistic, determine whether there is evidence of a significant association between RFFT score and educational level.
+    
+    
+    
+  b) Calculate and interpret the 95\% confidence interval for the slope coefficient of $X_3$, university education.
+  
+  
+    
+```{r}
+#calculate confidence interval
+
+```
+    
+
+
+    
+  c) From the $F$-statistic, determine whether there is evidence of a significant association between RFFT score and educational level.
+  
+  
+  
+  
     
 7. Conduct ANOVA to compare mean RFFT score among the four educational levels. Compare the results of inference based on the linear model to those based on ANOVA. For comparison purposes, leave the $p$-values uncorrected.
 
+
+```{r}
+#ANOVA F-test
+
+
+#pairwise testing
+
+```
+
+
+
 8. Suppose that the linear model in Question 5 had been fit with the original version of \texttt{Education} that had not been converted to a factor.
 
-    a) Load the \texttt{prevend.samp} data to return \texttt{Education} to its original coding as an integer vector.
+  a) Load the \texttt{prevend.samp} data to return \texttt{Education} to its original coding as an integer vector.
     
-    b) Fit a linear model predicting RFFT from educational level without converting \texttt{Education} to a factor. 
+```{r}
+#re-load data to clear factor coding
+data("prevend.samp")
+```
     
-        i. Interpret the slope coefficient of the model.
-        
-        ii. What does this model imply about the change in mean RFFT between groups?  Explain why this model is flawed.
+    
+  b) Fit a linear model predicting RFFT from educational level without converting \texttt{Education} to a factor. 
+  
+```{r}
+#fit linear model
 
-\vspace{0.5cm}
+```
+  
+  i. Interpret the slope coefficient of the model.
+        
+        
+        
+  ii. What does this model imply about the change in mean RFFT between groups? Explain why this model is flawed.
+  
+  
+  
+  
+  
+
+\newpage
 
 *Reanalyzing the PREVEND data*
 
@@ -111,11 +230,39 @@ The following questions return to examining the association between cognitive de
 In addition to age, there are two natural candidates for potential confounders: educational level and presence of cardiovascular disease (CVD). Individuals with more education tend to have higher incomes and consequently, better access to health care and medication; also, individuals with more education may be more comfortable with assessments like the RFFT. Individuals with cardiovascular disease are often prescribed statins to lower cholesterol; cardiovascular disease can lead to vascular dementia and cognitive decline.
   
 9. Fit the multiple regression model relating RFFT (\texttt{RFFT}) with statin use (\texttt{Statin}), adjusting for the potential confounders age (\texttt{Age}), educational level (\texttt{Education}), and presence of CVD (\texttt{CVD}). The variable \texttt{CVD} is coded \texttt{0} if CVD is absent and \texttt{1} if CVD is present. 
+
+```{r}
+#convert variables to factors
+
+
+#fit the model
+
+```
+
     
 10. Based on the model from Question 9, summarize the evidence for an association between statin use and decreased cognitive function.
 
+
+
+
+
+
 11. Evaluate the fit of the model.
 
-    a) Assess the assumptions for linear regression.
+  a) Assess the assumptions for linear regression.
     
-    b) Comment on the $R^2$ and adjusted $R^2$ of the model. The adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
+    
+```{r}
+#check assumptions
+
+```
+
+  
+  
+  
+  
+  b) Comment on the $R^2$ and adjusted $R^2$ of the model. The adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
+  
+  
+  
+  

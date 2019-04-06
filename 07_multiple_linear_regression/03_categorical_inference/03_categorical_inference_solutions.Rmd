@@ -1,0 +1,291 @@
+---
+title: "Categorical Predictors with Several Levels and Inference in Regression"
+author: "Chapter 7, Lab 3: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Categorical predictors with several levels
+	  \item Inference in multiple regression
+	\end{itemize}
+	
+\end{small}
+
+This lab expands on the topics introduced in Chapter 6, Lab 4 (Categorical Predictors with Two Levels and Inference in Regression) by discussing categorical predictors with more than two levels and generalizing inference in regression to the setting where there are several slope parameters. 
+
+The material in this lab corresponds to Sections 7.4 - 7.6 and 7.9 in *OpenIntro Biostatistics*.
+
+### Introduction
+
+*Categorical predictors with several levels*
+
+Fitting a regression model with a categorical predictor that has several levels is analogous to comparing the means of several groups, where the groups are defined by the categorical variable. The equation of the regression line has intercept $b_0$, which equals the mean of one of the groups, and slopes $b_1, b_2, \dots, b_{p+1}$, where $p+1$ equals the number of groups and each slope $b_k$ for $k = 1, 2, \dots, p + 1$ equals the difference in means between the reference group and group $k$.
+
+*Inference in multiple regression*
+
+The observed data $(y_i, x_{i1}, x_{i2}, \dots, x_{ip})$ for $i = 1, 2, \dots, n$ cases are assumed to have been randomly sampled from a population where the response variable $Y$ and $p$ explanatory variables $X_1, X_2, \dots, X_p$ follow a population model
+\[Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots + \beta_pX_p + \epsilon, \]
+where $\epsilon \sim N(0, \sigma)$. Under this assumption, the intercept and slopes of the regression line, $b_0$ and $b_1, b_2, \dots, b_p$, are estimates of the population parameters $\beta_0$ and $\beta_1, \beta_2, \dots, \beta_p$.
+
+In multiple regression, the coefficient $\beta_j$ of a predictor $X_j$ denotes the change in the response variable $Y$ associated with a one unit change in $X_j$ when the values of the other predictors are held constant.
+
+Hypothesis tests and confidence intervals for regression population parameters have the same basic structure as tests and intervals about population means. Inference is usually done about the slope parameters, $\beta_1, \beta_2, \dots, \beta_p$. 
+
+The $F$-statistic is used in an overall test of the model to assess whether the predictors in the model, considered as a group, are associated with the response.
+
+\newpage
+
+### Categorical predictors with several levels
+
+The variable \texttt{Education} in the PREVEND data indicates the highest level of education that an individual completed in the Dutch educational system: primary school, lower secondary school, higher secondary education, or university education. This following questions step through exploring the association between RFFT score (\texttt{RFFT}) and educational level (\texttt{Education}) in \texttt{prevend.samp}, a random sample of $n = 500$ individuals from the PREVEND data.
+
+1. Load \texttt{prevend.samp} and convert \texttt{Education} to a factor variable. The variable currently takes on values of either \texttt{0}, \texttt{1}, \texttt{2}, or \texttt{3}, where \texttt{0} denotes at most a primary school education, \texttt{1} a lower secondary school education, \texttt{2} a higher secondary education, and \texttt{3} a university education.
+
+    ```{r}
+#load the data
+library(oibiostat)
+data("prevend.samp")
+
+#convert Education to a factor
+prevend.samp$Education = factor(prevend.samp$Education,
+                                levels = c(0, 1, 2, 3),
+                                labels = c("Primary", "LowerSecond",
+                                           "HigherSecond", "Univ"))
+```
+
+
+2. Identify how many individuals are in each level of \texttt{Education}.
+
+    \textcolor{NavyBlue}{51 individuals have completed at most primary school, 157 have completed at most lower secondary school, 134 have completed at most higher secondary school, and 158 have completed a university education.}
+
+    ```{r}
+table(prevend.samp$Education)
+```
+
+
+3. Create a plot that shows the association between RFFT score and educational level. Describe what you see.
+
+    \textcolor{NavyBlue}{There is a positive association between RFFT score and educational level. Individuals who have completed a higher level of education have higher median RFFT score; for example, median RFFT in the primary school group is about 35, while median RFFT score among those who have completed a university degree is about 85. The variability in RFFT score seems equal between the groups. In the primary and lower secondary school groups, there are a few upper outliers indicating individuals who had unusually high RFFT scores relative to others in the same educational group.}
+
+    ```{r, fig.width = 4.5, fig.height = 6, warning = FALSE}
+#load package for color palette
+library(RColorBrewer)
+
+#create plot
+plot(RFFT ~ Education, data = prevend.samp,
+     xlab = "Educational Level", ylab = "RFFT Score",
+     main = "RFFT by Education in PREVEND (n = 500)",
+     names = c("Primary", "LowSec", "HighSec", "Univ"),
+     col = brewer.pal(4, "GnBu"))
+```
+
+
+4. Calculate mean RFFT score for each educational attainment group.
+    
+    \textcolor{NavyBlue}{Mean RFFT is 40.94 in the primary school group, 55.72 in the lower secondary school group, 73.07 in the higher secondary school group, and 85.91 in the university group.}
+
+    ```{r}
+#calculate means
+tapply(prevend.samp$RFFT, prevend.samp$Education, mean)
+```
+
+
+5. Fit a linear regression model relating RFFT score and educational attainment.
+
+    ```{r}
+#fit a model
+model.RFFTvsEdu = lm(RFFT ~ Education, data = prevend.samp)
+coef(model.RFFTvsEdu)
+```
+
+
+    a) Write the equation of the least-squares line in terms of the variable names (e.g., *RFFT*).
+    
+        \color{NavyBlue}
+        
+        \[\widehat{RFFT} = 40.94 + 14.78(EduLowSec) + 32.13(EduHighSec) + 44.96(EduUniv) \]
+        
+        \color{Black}
+    
+    b) Based on part a), solve for the four possible values of $\widehat{RFFT}$ and interpret the values.
+    
+        \color{NavyBlue}
+        
+        The values of the predictors can all be 0, or one predictor can be 1.
+        
+        When all predictors are 0, $\widehat{RFFT}$ is 40.94. This is the mean RFFT score in the primary school group.
+        
+        When $EduLowSec$ is 1, $\widehat{RFFT} = 40.94 + 14.78 = 55.72.$ This is the mean RFFT score in the lower secondary school group. 
+        
+        When $EduHighSec$ is 1, $\widehat{RFFT} = 40.94 + 32.13 = 73.07.$ This is the mean RFFT score in the higher secondary school group. 
+        
+        When $EduUniv$ is 1, $\widehat{RFFT} = 40.94 + 44.96 = 85.90.$ This is the mean RFFT score in the university group. 
+        
+        \color{Black}
+    
+    c) Confirm that the numbers obtained in part b) match those from Question 4.
+    
+        \textcolor{NavyBlue}{The numbers match, with a small rounding discrepancy (85.90 versus 85.91) for the mean RFFT score in the university group.}
+    
+    d) Using a residual plot and a Q-Q plot, check the assumptions for linear regression. It is reasonable to assume that these observations are independent. Why is it not necessary to check the linearity assumption for the predictors in this model?
+    
+        \textcolor{NavyBlue}{The plots show that the model fits the data reasonably well. The residuals are roughly constant across predicted RFFT score; although variability seems somewhat lower for individuals in the primary school group (on the left side of the plot), this may be an artifact from having relatively few individuals in this group. The residuals are approximately normal, with only small deviations from normality in the tails.}
+        
+        \textcolor{NavyBlue}{Each predictor in the model can be thought of as a binary variable, since each represents a group being compared to the reference group. Linearity is automatically satisfied for binary variables.}
+    
+    ```{r, fig.height = 4.5, fig.width = 8, message = FALSE}
+#load color package
+library(openintro)
+data(COL)
+
+par(mfrow = c(1, 2))
+
+#residual plot
+plot(resid(model.RFFTvsEdu) ~ fitted(model.RFFTvsEdu),
+     xlab = "Predicted RFFT Score", 
+     ylab = "Residual",
+     main = "Residual Plot for RFFT vs Edu",
+     pch = 21, col = COL[1], bg = COL[1, 4],
+     cex = 0.8)
+abline(h = 0, col = COL[4], lty = 2)
+
+#Q-Q plot
+qqnorm(resid(model.RFFTvsEdu),
+       main = "Q-Q Plot for RFFT vs Edu",
+       pch = 21, col = COL[1], bg = COL[1, 4],
+       cex = 0.8)
+qqline(resid(model.RFFTvsEdu),
+       col = COL[4])
+```
+
+
+\newpage    
+    
+### Inference in regression
+
+The $t$-statistic for a null hypothesis $H_0: \beta_k = \beta_k^0$ has degrees of freedom $df = n - p - 1$, where $n$ is the number of cases and $p$ is the number of predictors in the model. The value $\beta_k^0$ equals 0 when the null hypothesis is one of no association.
+\[t = \dfrac{b_k - \beta_k^0}{\text{s.e.}(b_1)} = \dfrac{b_k}{\text{s.e.}(b_1)} \]
+
+A 95\% confidence interval for $\beta_k$ has the following formula, where $t^\star$ is the point on a $t$-distribution with $n - p - 1$ degrees of freedom and $\alpha/2$ area to the right.
+\[b_k \pm \left( t^\star \times \text{s.e.}(b_k) \right) \]
+
+The $F$-statistic in multiple regression is used to test hypotheses similar to those in ANOVA. The null hypothesis $H_0: \beta_1 = \beta_2 = \cdots = \beta_p = 0$ is tested against the alternative that at least one of the slope coefficients is not 0. A significant $p$-value for the $F$-statistic is evidence that the predictor variables in the model, when considered as a group, are associated with the response variable.
+
+6. Carry out inference based on the linear model in Question 5.
+
+    ```{r}
+#use summary(lm( ))
+summary(model.RFFTvsEdu)
+```
+
+    a) Identify the $t$-statistics and $p$-values for each slope coefficient in the model. Interpret the $p$-values in the context of the data.
+    
+        \textcolor{NavyBlue}{The $t$-statistics and $p$-values for the slope coefficients $EduLowSec$, $EduHighSec$, and $EduUniv$ are 14.78 ($p < 0.0001$), 32.13 ($p < 0.0001$), and 44.96 ($p < 0.0001$). The three $p$-values are each smaller than $\alpha = 0.05$, indicating there is sufficient evidence to conclude that, for each group, the mean RFFT is significantly different from the mean RFFT for the baseline group, primary school education. In each case, the mean RFFT is higher than mean RFFT for individuals who completed at most a primary school education.}
+    
+    b) Calculate and interpret the 95\% confidence interval for the slope coefficient of $X_3$, university education.
+    
+        \textcolor{NavyBlue}{The 95\% confidence interval is (37.72, 52.20). We are 95\% confident that the interval (37.72, 52.50) captures the amount by which mean RFFT score for individuals who have completed a university education is higher than mean RFFT score for those who have completed at most a primary school education. }
+    
+
+    ```{r}
+#calculate confidence interval
+confint(model.RFFTvsEdu, level = 0.95)
+```
+    
+    
+    c) From the $F$-statistic, determine whether there is evidence of a significant association between RFFT score and educational level.
+    
+        \textcolor{NavyBlue}{The $F$-statistic is 73.3, with an associated $p$-value that is less than 0.0001. There is sufficient evidence to conclude that as a group, these variables are associated with the response variable; i.e., there is evidence of a significant association between RFFT score and educational level. }
+    
+7. Conduct ANOVA to compare mean RFFT score among the four educational levels. Compare the results of inference based on the linear model to those based on ANOVA. For comparison purposes, leave the $p$-values uncorrected.
+
+    \textcolor{NavyBlue}{The $F$-statistic from ANOVA and from linear regression are the same (73.3). The null hypotheses that all the group means are equal (ANOVA) and that all the model slopes are equal to 0 (regression) are equivalent. Consider that each coefficient in the linear model is an estimate of the difference in mean RFFT for a particular educational level versus the baseline category. A significant $F$-statistic in regression indicates that at least one of the slope parameters does not equal 0; i.e., that at least one group mean is different from the mean of the reference category. }
+    
+    \textcolor{NavyBlue}{Inference based on the linear model tests the differences in means for each group relative to the reference group. Thus, the $p$-values in the first column of the table produced by \texttt{pairwise.t.test()} correspond to those from the regression approach, since these are for comparisons relative to the primary school group. The $p$-values provided by a summary of the regression model are unadjusted for multiple comparisons. }
+    
+    \textcolor{NavyBlue}{For a more detailed discussion of the connection between ANOVA and regression, refer to Section 7.9 in \textit{OpenIntro Biostatistics}.}
+
+    ```{r}
+#ANOVA F-test
+summary(aov(RFFT ~ Education, data = prevend.samp))
+
+#pairwise testing
+pairwise.t.test(prevend.samp$RFFT, prevend.samp$Education,
+                p.adj = "none")
+```
+
+
+8. Suppose that the linear model in Question 5 had been fit with the original version of \texttt{Education} that had not been converted to a factor.
+
+    a) Load the \texttt{prevend.samp} data to return \texttt{Education} to its original coding as an integer vector.
+    
+    ```{r}
+#load the data
+data("prevend.samp")
+    
+#fit the model
+lm(RFFT ~ Education, data = prevend.samp)
+```
+    
+    
+    b) Fit a linear model predicting RFFT from educational level without converting \texttt{Education} to a factor. 
+    
+        i. Interpret the slope coefficient of the model.
+        
+            \textcolor{NavyBlue}{According to this model, a one unit change in \texttt{Education} is associated with an increase in mean RFFT score of 15.16 points. }
+        
+        ii. What does this model imply about the change in mean RFFT between groups? Explain why this model is flawed.
+        
+            \textcolor{NavyBlue}{This model implies that the change in mean RFFT score associated with a one unit change in \texttt{Education} is necessarily equal regardless of the identity of the groups.}
+        
+            \textcolor{NavyBlue}{This model is flawed because it is not reasonable to assume that the difference in mean RFFT score when comparing, for example, the primary school group to the lower secondary group, will be equal to the difference in mean RFFT score between the higher secondary group and the university group. }
+            
+            \textcolor{NavyBlue}{Another point to be careful about with this model is that it would not provide consistent results if the numerical codes were altered. The numerical codes assigned to the groups are simply short-hand labels, and are assigned arbitrarily.}
+
+\vspace{0.5cm}
+
+*Reanalyzing the PREVEND data*
+
+The following questions return to examining the association between cognitive decline and statin use, after adjusting for potential confounders. 
+
+In addition to age, there are two natural candidates for potential confounders: educational level and presence of cardiovascular disease (CVD). Individuals with more education tend to have higher incomes and consequently, better access to health care and medication; also, individuals with more education may be more comfortable with assessments like the RFFT. Individuals with cardiovascular disease are often prescribed statins to lower cholesterol; cardiovascular disease can lead to vascular dementia and cognitive decline.
+  
+9. Fit the multiple regression model relating RFFT (\texttt{RFFT}) with statin use (\texttt{Statin}), adjusting for the potential confounders age (\texttt{Age}), educational level (\texttt{Education}), and presence of CVD (\texttt{CVD}). The variable \texttt{CVD} is coded \texttt{0} if CVD is absent and \texttt{1} if CVD is present. 
+    
+10. Based on the model from Question 9, summarize the evidence for an association between statin use and decreased cognitive function.
+
+11. Evaluate the fit of the model.
+
+    a) Assess the assumptions for linear regression.
+    
+    b) Comment on the $R^2$ and adjusted $R^2$ of the model. The adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
+
+```{r}
+
+
+#convert Statin to a factor
+prevend.samp$Statin = factor(prevend.samp$Statin,
+                             levels = c(0, 1),
+                             labels = c("NonUser", "User"))
+
+#convert CVD to a factor
+prevend.samp$CVD = factor(prevend.samp$CVD,
+                          levels = c(0, 1),
+                          labels = c("Absent", "Present"))
+
+model1 = lm(RFFT ~ Statin + Age + Education + CVD, data = prevend.samp)
+summary(model1)
+```
