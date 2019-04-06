@@ -280,3 +280,70 @@ qqline(resid(model2),
        col = "red", lty = 2)
 ```
 
+\newpage
+
+```{r, message = FALSE, echo = FALSE, fig.height = 4, fig.align = "center"}
+#load colors from openintro
+library(openintro)
+data(COL)
+
+#create hispanic and white.not.hisp logicals
+hispanic = (dds.subset$ethnicity == "Hispanic")
+white.not.hisp = (dds.subset$ethnicity == "White not Hispanic")
+
+
+#plot red points, hispanic
+plot(fitted(model2)[hispanic] ~ dds.subset$age[hispanic],
+     pch = 21, bg = COL[4, 4], col = COL[4],
+     cex = 0.8,
+     xlab = "Age (yrs)",
+     ylab = "Predicted Expenditures",
+     main = "Predicted Expenditures vs Age in DDS")
+
+#plot blue points, white not hispanic
+points(fitted(model2)[white.not.hisp] ~ dds.subset$age[white.not.hisp],
+     pch = 21, bg = COL[1, 4], col = COL[1],
+     cex = 0.8)
+```
+
+```{r, eval = F, echo = F}
+par(mfrow = c(1, 2))
+hist(dds.subset$age[hispanic],
+     main = "Age in Hispanics",
+     xlab = "Age (yrs)", ylim = c(0, 200),
+     xlim = c(0, 100))
+hist(dds.subset$age[white.not.hisp],
+     main = "Age in White non-Hispanics",
+     xlab = "Age (yrs)", ylim = c(0, 200),
+     xlim = c(0, 100))
+
+plot(dds.subset$age.cohort[hispanic],
+     main = "Age Cohorts in Hispanics",
+     xlab = "Age (yrs)")
+plot(dds.subset$age.cohort[white.not.hisp],
+     main = "Age Cohorts in White non-Hispanics",
+     xlab = "Age (yrs)")
+```
+
+
+```{r, fig.width = 10.5, fig.height = 7, echo = FALSE}
+library(RColorBrewer)
+par(mfrow = c(1, 2))
+boxplot(dds.subset$expenditures[hispanic] ~ dds.subset$age.cohort[hispanic],
+        ylab = "Expenditures",
+        xlab = "Age (yrs)",
+        col = brewer.pal(5, "Reds"),
+        ylab = "Expenditures",
+        xlab = "Age (yrs)",
+        main = "Age in Hispanics",
+        ylim = c(0, 70000))
+boxplot(dds.subset$expenditures[white.not.hisp] ~ dds.subset$age.cohort[white.not.hisp],
+        ylab = "Expenditures",
+        xlab = "Age (yrs)",
+        col = brewer.pal(5, "Blues"),
+        ylab = "Expenditures",
+        xlab = "Age (yrs)",
+        main = "Age in White non-Hispanics")
+
+```
+
