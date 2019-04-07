@@ -102,6 +102,7 @@ plot(RFFT ~ Education, data = prevend.samp,
 tapply(prevend.samp$RFFT, prevend.samp$Education, mean)
 ```
 
+\newpage
 
 5. Fit a linear regression model relating RFFT score and educational attainment.
 
@@ -265,17 +266,13 @@ In addition to age, there are two natural candidates for potential confounders: 
   
 9. Fit the multiple regression model relating RFFT (\texttt{RFFT}) with statin use (\texttt{Statin}), adjusting for the potential confounders age (\texttt{Age}), educational level (\texttt{Education}), and presence of CVD (\texttt{CVD}). The variable \texttt{CVD} is coded \texttt{0} if CVD is absent and \texttt{1} if CVD is present. 
     
-10. Based on the model from Question 9, summarize the evidence for an association between statin use and decreased cognitive function.
-
-11. Evaluate the fit of the model.
-
-    a) Assess the assumptions for linear regression.
+    ```{r}
+#convert Education to a factor 
+prevend.samp$Education = factor(prevend.samp$Education,
+                                levels = c(0, 1, 2, 3),
+                                labels = c("Primary", "LowerSecond",
+                                           "HigherSecond", "Univ"))
     
-    b) Comment on the $R^2$ and adjusted $R^2$ of the model. The adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
-
-```{r}
-
-
 #convert Statin to a factor
 prevend.samp$Statin = factor(prevend.samp$Statin,
                              levels = c(0, 1),
@@ -286,6 +283,52 @@ prevend.samp$CVD = factor(prevend.samp$CVD,
                           levels = c(0, 1),
                           labels = c("Absent", "Present"))
 
+#fit the model
 model1 = lm(RFFT ~ Statin + Age + Education + CVD, data = prevend.samp)
 summary(model1)
+```    
+    
+10. Based on the model from Question 9, summarize the evidence for an association between statin use and decreased cognitive function.
+
+    \textcolor{NavyBlue}{After adjusting for age, educational level, and the presence of cardiovascular disease, statin use is associated with a 4.7 point higher mean RFFT score (relative to non-use, when all other variables are held constant). The $p$-value for the slope coefficient is 0.056, which suggests moderate evidence of an association (significant at $\alpha = 0.10$, but not at $\alpha = 0.10$). These data do not support an association between statin use and decreased cognitive function. }
+
+
+11. Evaluate the fit of the model.
+
+    a) Assess the assumptions for linear regression.
+    
+        \textcolor{NavyBlue}{Linearity only needs to be checked with respect to age. There does not appear to be remaining non-linearity with respect to age once the model is fit; the residuals scatter evenly across the $y = 0$ line with no apparent pattern. The residual plot indicates that constant variability of the residuals is reasonable; there is only a slight increase in variability for lager predicted values. The normal probability plot shows that the residuals depart slightly from normality in the tails. Overall, the assumptions for linear regression are reasonably satisfied.}
+    
+    ```{r, fig.width = 8, fig.height = 4.5}
+#load color package
+library(openintro)
+data(COL)
+
+par(mfrow = c(1, 2))
+
+#linearity with respect to age
+plot(resid(model1) ~ prevend.samp$Age,
+     xlab = "Age", ylab = "Residual",
+     main = "Residual vs Age",
+     pch = 21, col = COL[1], bg = COL[1, 4], cex = 0.8)
+abline(h = 0, col = COL[4], lty = 2)
+
+#residual plot
+plot(resid(model1) ~ fitted(model1),
+     xlab = "Predicted RFFT Score",  ylab = "Residual",
+     main = "Residual Plot for Final Model",
+     pch = 21, col = COL[1], bg = COL[1, 4], cex = 0.8)
+abline(h = 0, col = COL[4], lty = 2)
+
+#Q-Q plot
+qqnorm(resid(model1),
+       main = "Q-Q Plot for Final Model",
+       pch = 21, col = COL[1], bg = COL[1, 4], cex = 0.8)
+qqline(resid(model1),
+       col = COL[4])
 ```
+    
+    
+    b) Comment on the $R^2$ and adjusted $R^2$ of the model. For comparison, the adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
+    
+        \textcolor{NavyBlue}{The $R^2$ of the model is 0.436; the model explains 43.6\% of the observed variability in RFFT score. The adjusted $R^2$ is 0.429; the additional predictors relative to the model with only age as a confounder increase the strength of the model enough to justify the additional complexity.}

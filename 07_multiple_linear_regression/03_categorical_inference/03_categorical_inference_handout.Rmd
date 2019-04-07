@@ -118,4 +118,4 @@ In addition to age, there are two natural candidates for potential confounders: 
 
     a) Assess the assumptions for linear regression.
     
-    b) Comment on the $R^2$ and adjusted $R^2$ of the model. The adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
+    b) Comment on the $R^2$ and adjusted $R^2$ of the model. For comparison, the adjusted $R^2$ from the model including only age as a potential confounder is 0.282.
