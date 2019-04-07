@@ -1,0 +1,25 @@
+---
+title: "Model Selection for Explanatory Models"
+author: "Chapter 7, Lab 5"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Adjusting for a potential confounder
+	  \item Fitting and interpreting a model
+	\end{itemize}
+	
+\end{small}
