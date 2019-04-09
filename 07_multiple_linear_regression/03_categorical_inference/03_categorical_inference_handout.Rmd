@@ -73,7 +73,7 @@ The variable \texttt{Education} in the PREVEND data indicates the highest level 
 ### Inference in regression
 
 The $t$-statistic for a null hypothesis $H_0: \beta_k = \beta_k^0$ has degrees of freedom $df = n - p - 1$, where $n$ is the number of cases and $p$ is the number of predictors in the model. The value $\beta_k^0$ equals 0 when the null hypothesis is one of no association.
-\[t = \dfrac{b_k - \beta_k^0}{\text{s.e.}(b_1)} = \dfrac{b_k}{\text{s.e.}(b_1)} \]
+\[t = \dfrac{b_k - \beta_k^0}{\text{s.e.}(b_k)} = \dfrac{b_k}{\text{s.e.}(b_k)} \]
 
 A 95\% confidence interval for $\beta_k$ has the following formula, where $t^\star$ is the point on a $t$-distribution with $n - p - 1$ degrees of freedom and $\alpha/2$ area to the right.
 \[b_k \pm \left( t^\star \times \text{s.e.}(b_k) \right) \]
