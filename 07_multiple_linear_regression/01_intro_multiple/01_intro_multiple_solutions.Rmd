@@ -49,7 +49,7 @@ This lab uses data from the Prevention of REnal and Vascular END-stage Disease (
 
 ### Adjusting for a confounder
 
-Recall that the Unit 6 labs explored the association between cognitive function and age. Cognitive function in the PREVEND study was measured with the Ruff Figural Fluency Test (RFFT). Scores on the RFFT range from 0 to 175 points, where higher scores are indicative of better cognitive function. An analysis of the relationship between age and RFFT score showed evidence of a negative association between cognitive function and age; older individuals tend to have lower mean RFFT score than younger individuals.
+Recall that the Chapter 6 labs explored the association between cognitive function and age. Cognitive function in the PREVEND study was measured with the Ruff Figural Fluency Test (RFFT). Scores on the RFFT range from 0 to 175 points, where higher scores are indicative of better cognitive function. An analysis of the relationship between age and RFFT score showed evidence of a negative association between cognitive function and age; older individuals tend to have lower mean RFFT score than younger individuals.
 
 The questions in this lab use data from a random sample of $n = 500$ individuals from the \texttt{prevend} dataset; the sample is stored as \texttt{prevend.samp} in the \texttt{oibiostat} package.
 
