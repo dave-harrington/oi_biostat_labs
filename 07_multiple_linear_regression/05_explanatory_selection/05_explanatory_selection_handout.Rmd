@@ -71,10 +71,67 @@ The dataset consists of the following variables, measured for each of the 57 pat
 
 ### Data exploration
 
-1. 
+1. Identify the variables in the dataset relevant for modeling the relationship between species abundance and features of a habitat; that is, the response variable and the potential predictor variables. 
+
+2. Explore the distribution of each variable with numerical and graphical summaries.
+
+    a) Briefly describe the distribution of each variable. 
+    
+    b) A common technique to improve model fit in linear regression (particularly in regards to achieving approximate linearity) is to transform variables that exhibit skew. A natural log transformation can help induce symmetry in right-skewed variables.
+    
+        Identify which variables could benefit from a natural log transformation. Apply the transformation and use the transformed version going forward.
+        
+    c) Examine the relationships between the predictor and response variables, as well as the relationships between predictor variables.
+    
+        i. Run the code in the template to create a scatterplot matrix. Each subplot in the matrix is a simple scatterplot; the variable names are listed along the diagonal of the matrix and the diagonal divides the matrix into symmetric plots.
+        
+            Describe what you see. Which variables seem to be strongly associated with the response? Do any predictor variables seem strongly associated with each other?
+            
+        ii. Run the code in the template to create a correlation matrix. Confirm that the numerical summaries cohere with what you observed from the graphical summaries.
+
 
 ### Initial model fitting
 
+3. Based on the data exploration, which predictor variables should be included in an initial model?
+
+4. Fit the initial model. 
+
+    a) Report the $R^2$ and adjusted $R^2$ of the model.
+    
+    b) Identify which variables are statistically significant at the $\alpha = 0.05$ level.
+
 ### Model comparison
 
+5. Fit models excluding the predictors that were not statistically significant. Based on comparing the adjusted $R^2$ values, consider whether any of these models are an improvement from the initial model.
+
+6. The working model contains the grazing intensity variable. Only one of the coefficients associated with grazing intensity is statistically significant: heavy grazing. Individual categories of a categorical variable cannot simply be dropped, so a data analyst has the choice of leaving the variable as is, or collapsing it into fewer categories.
+
+    For this model, it might be useful to collapse grazing-intensity into a two-level variable, with one category corresponding to the original classification of heavy, and another category corresponding to the other four categories. 
+    
+    a) Create a plot of abundance versus grazing intensity. Does it seem that the distribution of abundance within the lowest four grazing intensity categories is roughly similar, relative to that within the highest category?
+    
+    b) Run the code in the template to create \texttt{grazing.binary}, which has levels \texttt{NotHeavy} and \texttt{Heavy}.
+    
+    c) Fit a model with the binary version of grazing intensity. Is this model an improvement over the model with the original version of grazing intensity?
+    
+7. Check whether incorporating an interaction term improves the model.
+
+8. Report the variables in the final model and the model $R^2$. 
+
 ### Model assessment
+
+9. Assess whether the residuals are normally distributed.
+
+10. Run the code in the template to generate three plots that allow for a closer look at the residuals: a plot of residuals versus predicted abundance, and plots of residuals versus the two predictors.
+
+    a) Recall that the definition of a residual is $e_i = y_i - \hat{y}_i$. Residual values closer to 0 are indicative of a more accurate prediction. In terms of comparing an observed value and a value predicted from a model, what does a large positive residual indicate? What does a large negative residual indicate?
+    
+    b) Examine the left and middle plot. For what predicted values of bird abundance do large positive residuals tend to occur, versus large negative residuals? For what values of area do large positive residuals versus large negative residuals tend to occur?
+    
+    c) In the middle plot, patches with heavy grazing are represented with red points. From the middle plot and right plot, assess how prediction error varies between patches where grazing intensity was between "light" and "moderately heavy" versus patches where grazing intensity was heavy.
+    
+### Conclusions
+
+11. Summarize the final model; interpret the model coefficients and $R^2$ value.
+
+12. Ecologists might be interested in using the model to predict bird abundance based on features of a forest patch. Summarize the model accuracy, in terms accessible to a non-statistician.

@@ -1,0 +1,389 @@
+---
+title: "Model Selection for Explanatory Models"
+author: "Chapter 7, Lab 5: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Building explanatory models
+	  \item Transforming variables
+	  \item Model comparison with adjusted $R^2$
+	\end{itemize}
+	
+\end{small}
+
+In previous labs, multiple regression modeling was shown in the context of estimating an association while adjusting for possible confounders. This lab introduces explanatory modeling, in which the goal is to construct a model that explains the observed variation in the response variable. Explanatory modeling is concerned with identifying predictors associated with the response; there is no pre-specified primary predictor of interest.
+
+The material in this lab corresponds to Section 7.8 in *OpenIntro Biostatistics*.
+
+### Introduction
+
+Approaches to model selection vary from those based on careful study of a relatively small set of predictors to purely algorithmic methods that screen a large set of predictors and choose a final model by optimizing a numerical criterion. This course discusses model selection in the context of a small set of potential predictors.
+
+Model selection for explanatory modeling follows these general steps:
+
+  1. *Data exploration*. Examine both the distributions of individual variables and the relationships between variables.
+  
+  2. *Initial model fitting*. Fit an initial model with the predictors that seem most highly associated with the response variable, based on the data exploration.
+  
+  3. *Model comparison*. Work towards a model with the highest adjusted $R^2$. 
+  
+  4. *Model assessment*. Use residual plots to assess the fit of the final model.
+  
+The process behind model selection will be illustrated with a case study in which a regression model is built to examine the association between the abundance of forest birds in a habitat patch and features of a patch.
+
+### Background Information
+
+Habitat fragmentation is the process by which a habitat in a large contiguous space is divided into smaller, isolated pieces. Smaller patches of habitat are only able to support limited populations of organisms, which reduces genetic diversity and overall population fitness. Ecologists study habitat fragmentation to understand its effect on species abundance. 
+
+The \texttt{forest.birds} dataset in the \texttt{oibiostat} package contains a subset of the variables from a 1987 study analyzing the effect of habitat fragmentation on bird abundance in the Latrobe Valley of southeastern Victoria, Australia.\footnote{Loyn, R.H. 1987. "Effects of patch area and habitat on bird abundances, species numbers and tree health in fragmented Victorian forests." Printed in Nature Conservation: The Role of Remnants of Native Vegetation. Saunders DA, Arnold GW, Burbridge AA, and Hopkins AJM eds. Surrey Beatty and Sons, Chipping Norton, NSW, 65-77, 1987.}
+
+The dataset consists of the following variables, measured for each of the 57 patches.
+
+  - \texttt{abundance}: average number of forest birds observed in the patch, as calculated from several independent 20-minute counting sessions. 
+
+  - \texttt{patch.area}: patch area, measured in hectares. 1 hectare is 10,000 square meters and approximately 2.47 acres.
+
+  - \texttt{dist.nearest}: distance to the nearest patch, measured in kilometers.
+
+  - \texttt{dist.larger}: distance to the nearest patch larger than the current patch, measured in kilometers.
+
+  - \texttt{altitude}: patch altitude, measured in meters above sea level.
+
+  - \texttt{grazing.intensity}: extent of livestock grazing, recorded as either "light", "less than average", "average", "moderately heavy", or "heavy". 
+
+  - \texttt{year.of.isolation}: year in which the patch became isolated due to habitat fragmentation.
+
+  - \texttt{yrs.isolation}: number of years since patch became isolated due to habitat fragmentation.\footnote{The Loyn study completed data collection in 1983;  $\texttt{yrs.isolation} = 1983 - \texttt{year.of.isolation}$.}
+
+### Data exploration
+
+1. Identify the variables in the dataset relevant for modeling the relationship between species abundance and features of a habitat; that is, the response variable and the potential predictor variables. 
+
+    \textcolor{NavyBlue}{The response variable is \texttt{abundance}; this variable contains information on the average number of birds observed in a particular patch over several independent 20-minute counting sessions. There are six potential predictor variables: patch area, distance to the nearest patch, distance to the nearest patch larger than the current patch, patch altitude, grazing intensity, and number of years since isolation. The variable \texttt{year.of.isolation} is used to calculate the more informative variable, \texttt{yrs.isolation}, which is a measure of the number of years the patch became isolated as of the time the study was conducted. }
+
+2. Explore the distribution of each variable with numerical and graphical summaries.
+
+    a) Briefly describe the distribution of each variable. 
+    
+        \textcolor{NavyBlue}{Bird abundance ranges from 1.5 to 39.6, with a mean of 21.0. The distribution of bird abundance is bimodal, with modes at small values of abundance and at between 25 and 30 birds. }
+        
+        \textcolor{NavyBlue}{There is right skewing visible in patch area, distance to nearest patch, distance to larger patch, and years of isolation. The right skewing is particularly notable for patch area; 75\% of patches have area lower than 30 hectares, but a few patches have area well past 500 hectares. The altitude variable is roughly symmetric, centered around a mean of 146.2 meters above sea level. The grazing intensity variable indicates that the three largest categories are light grazing, average grazing, and heavy grazing.}
+
+    ```{r, message = FALSE, fig.width = 8, fig.height = 4, echo = FALSE}
+#load the data
+library(oibiostat)
+data("forest.birds")
+
+#load colors
+library(openintro)
+data("COL")
+
+#summarize abundance
+par(mfrow = c(1, 2))
+
+hist(forest.birds$abundance, col = COL[1, 3],
+     xlab = "Abundance", main = "Forest Bird Abundance")
+boxplot(forest.birds$abundance, 
+        ylab = "Abundance",
+        col = COL[1, 4], border = COL[1],
+        main = "Forest Bird Abundance")
+```
+
+    ```{r, fig.width = 8, fig.height = 6, echo = FALSE}
+par(mfrow = c(2, 3))
+
+#summarize potential predictors
+
+hist(forest.birds$patch.area, col = COL[1, 3],
+     xlab = "Area (hectares)",
+     main = "Patch Area")
+
+hist(forest.birds$altitude, col = COL[1, 3],
+     xlab = "Altitude (m above sea level)",
+     main = "Patch Altitude")
+
+hist(forest.birds$dist.nearest, col = COL[1, 3],
+     xlab = "Distance (m)",
+     main = "Distance to Nearest Patch")
+
+hist(forest.birds$dist.larger, col = COL[1, 3],
+     xlab = "Distance (m)",
+     main = "Distance to Larger Patch")
+
+hist(forest.birds$yrs.isolation, col = COL[1, 3],
+     xlab = "Years",
+     main = "Years of Isolation")
+
+barplot(table(forest.birds$grazing.intensity), col = COL[1, 3],
+        xlab = "Grazing Intensity",
+        main = "Extent of Grazing")
+```
+
+    ```{r}
+#numerical summaries
+summary(forest.birds$abundance)
+
+summary(forest.birds$patch.area)
+summary(forest.birds$altitude)
+summary(forest.birds$dist.nearest)
+summary(forest.birds$dist.larger)
+summary(forest.birds$yrs.isolation)
+table(forest.birds$grazing.intensity)
+```
+
+    
+    
+    b) A common technique to improve model fit in linear regression (particularly in regards to achieving approximate linearity) is to transform variables that exhibit skew. A natural log transformation can help induce symmetry in right-skewed variables.
+    
+        Identify which variables could benefit from a natural log transformation. Apply the transformation and use the transformed version going forward.
+        
+        \textcolor{NavyBlue}{The variables patch area, distance to nearest patch, distance to larger patch, and years of isolation should be log-transformed.}
+        
+    ```{r}
+#transform variables
+forest.birds$log.area = log(forest.birds$patch.area)
+forest.birds$log.dist.nearest = log(forest.birds$dist.nearest)
+forest.birds$log.dist.larger = log(forest.birds$dist.larger)
+forest.birds$log.yrs.isolation = log(forest.birds$yrs.isolation)
+```
+        
+        
+    c) Examine the relationships between the predictor and response variables, as well as the relationships between predictor variables.
+    
+        i. Run the code in the template to create a scatterplot matrix. Each subplot in the matrix is a simple scatterplot; the variable names are listed along the diagonal of the matrix and the diagonal divides the matrix into symmetric plots.
+        
+            Describe what you see. Which variables seem to be strongly associated with the response? Do any predictor variables seem strongly associated with each other?
+            
+            \textcolor{NavyBlue}{The plots in the first row show the relationships between abundance and the predictors. There is a strong positive association between \texttt{abundance} and \texttt{log.area} and a moderate negative association between \texttt{abundance} and \texttt{log.yrs.isolation}. Both distance variables seem weakly positively associated with \texttt{abundance}. There is high variance of \texttt{abundance} and somewhat similar centers for the first for grazing intensity categories, but abundance does clearly tend to be lower in the highest category than the others.}
+            
+            \textcolor{NavyBlue}{The distance variables appear strongly associated; a model may only need one of the two, as they may be essentially "redundant" in explaining variability in the response variable. In this case, however, since both are only weakly associated with the response, both may be unnecessary in a model.}
+            
+        ii. Run the code in the template to create a correlation matrix. Confirm that the numerical summaries cohere with what you observed from the graphical summaries.
+        
+            \textcolor{NavyBlue}{A numerical approach confirms some of the features observable from the graphical summaries. Correlations between \texttt{abundance} and \texttt{log.area} and between \texttt{abundance} and \texttt{log.yrs.isolation} are relatively high, at 0.74 and -0.48, respectively. In contrast, the correlations between bird abundance and the distance variables are much smaller, at 0.13 and 0.12. Additionally, the two distance variables have correlation of 0.60.}
+        
+    ```{r, fig.width = 7, fig.height = 7, fig.align = "center"}
+#create a scatterplot matrix
+pairs(~ abundance + log.area + log.dist.nearest
+      + log.dist.larger  + altitude + log.yrs.isolation +
+        grazing.intensity, data = forest.birds,
+      pch = 21, cex = 0.7, bg = COL[1, 3], col = COL[1])
+```
+
+```{r}
+#subset numerical variables
+forest.subset = subset(forest.birds, select = c(abundance, log.area, log.dist.nearest,
+                                      log.dist.larger, altitude, log.yrs.isolation))
+
+#create a correlation matrix
+cor(forest.subset)
+```
+
+
+
+### Initial model fitting
+
+3. Based on the data exploration, which predictor variables should be included in an initial model?
+
+    \textcolor{NavyBlue}{Based on the data exploration, the initial model should include the variables \texttt{log.area}, \texttt{altitude}, \texttt{log.yrs.isolation}, and \texttt{grazing.intensity}.}
+
+4. Fit the initial model. 
+
+    ```{r}
+#fit the model
+model0 = lm(abundance ~ log.area + altitude + log.yrs.isolation + 
+                     grazing.intensity, data = forest.birds)
+
+#print model summary
+summary(model0)
+```
+
+    a) Report the $R^2$ and adjusted $R^2$ of the model.
+    
+        \textcolor{NavyBlue}{The $R^2$ of the model is 0.73. The adjusted $R^2$ of the model is 0.69.}
+    
+    b) Identify which variables are statistically significant at the $\alpha = 0.05$ level.
+    
+        \textcolor{NavyBlue}{The variables altitude and years isolation (transformed) are significant, as well as one of the categories of grazing intensity.}
+
+### Model comparison
+
+5. Fit models excluding the predictors that were not statistically significant. Based on comparing the adjusted $R^2$ values, consider whether any of these models are an improvement from the initial model.
+
+    \textcolor{NavyBlue}{Models excluding either variable have adjusted $R^2$ of 0.69, while the model excluding both variables has an adjusted $R^2$ of 0.70. This is a small but noticeable increase from the initial model (adjusted $R^2$ of 0.69) which suggests both variables can be dropped from the model. At this point, the working model contains only \texttt{log.area} and \texttt{grazing.intensity}.}
+
+    ```{r}
+#model excluding altitude
+model1 = lm(abundance ~ log.area + grazing.intensity + log.yrs.isolation,
+            data = forest.birds)
+
+summary(model1)$adj.r.squared
+
+#model excluding log.yrs.isolation
+model2 = lm(abundance ~ log.area + grazing.intensity + altitude,
+            data = forest.birds)
+
+summary(model2)$adj.r.squared
+
+#model excluding both
+model3 = lm(abundance ~ log.area + grazing.intensity,
+            data = forest.birds)
+
+summary(model3)$adj.r.squared
+```
+
+
+6. The working model contains the grazing intensity variable. Only one of the coefficients associated with grazing intensity is statistically significant: heavy grazing. Individual categories of a categorical variable cannot simply be dropped, so a data analyst has the choice of leaving the variable as is, or collapsing it into fewer categories.
+
+    For this model, it might be useful to collapse grazing-intensity into a two-level variable, with one category corresponding to the original classification of heavy, and another category corresponding to the other four categories. 
+    
+    a) Create a plot of abundance versus grazing intensity. Does it seem that the distribution of abundance within the lowest four grazing intensity categories is roughly similar, relative to that within the highest category?
+    
+        \textcolor{NavyBlue}{Yes, the centers of the distributions of bird abundance in the four lowest categories are roughly similar, with median bird abundance in the 20 to 30 range. The median bird abundance in the heavy grazing patches is much lower, at about 3 birds; as shown in the plot, the entire distribution is shifted lower than the IQRs of the other grazing categories.}
+
+    ```{r, warning = FALSE, fig.height = 4.25, fig.width = 4}
+#load color package
+library(RColorBrewer)
+
+boxplot(abundance ~ grazing.intensity, data = forest.birds,
+        main = "Bird Abundance by Grazing Intensity",
+        col = brewer.pal(5, "Blues"))
+```
+    
+    
+    b) Run the code in the template to create \texttt{grazing.binary}, which has levels \texttt{NotHeavy} and \texttt{Heavy}.
+    
+    ```{r}
+#create the grazing.binary variable
+forest.birds$grazing.binary = forest.birds$grazing.intensity
+
+#redefine the factor levels of grazing.binary
+levels(forest.birds$grazing.binary) = list(NotHeavy = c("light", 
+                                                        "less than average",
+                                                        "average", 
+                                                        "moderately heavy"),
+                                               Heavy = c("heavy"))
+```
+    
+    
+    c) Fit a model with the binary version of grazing intensity. Is this model an improvement over the model with the original version of grazing intensity?
+    
+        \textcolor{NavyBlue}{The model with the binary version of grazing intensity is an improvement over the previous model; the adjusted $R^2$ increases to 0.71.}
+    
+    ```{r}
+#fit model with grazing.binary
+model4 = lm(abundance ~ log.area + grazing.binary, data = forest.birds)
+summary(model4)$adj.r.squared
+```
+    
+    
+7. Check whether incorporating an interaction term improves the model.
+
+    \textcolor{NavyBlue}{Incorporating an interaction term does not improve the model; adding an interaction term decreases the adjusted $R^2$ to 0.709.}
+
+    ```{r}
+#fit model with interaction term
+model5 = lm(abundance ~ log.area*grazing.binary, data = forest.birds)
+summary(model5)$adj.r.squared
+```
+
+8. Report the variables in the final model and the model $R^2$. 
+
+    \textcolor{NavyBlue}{The final model is \texttt{model4}, the model with \texttt{log.area} and \texttt{grazing.binary} as predictors. The model $R^2$ is 0.724.}
+
+### Model assessment
+
+9. Assess whether the residuals are normally distributed.
+
+    \textcolor{NavyBlue}{The residuals follow a normal distribution in the center, but fit less well to a normal curve in the tails. There are too many large positive and large negative values, relative to a normal distribution.}
+
+    ```{r, fig.width = 4, fig.height = 4.5}
+#define final model
+final.model = model4
+
+#create q-q plot
+qqnorm(resid(final.model),
+       pch = 21, col = COL[1], bg = COL[1, 4],
+       main = "Q-Q Plot of Model Residuals")
+qqline(resid(final.model))
+```
+
+\newpage
+
+10. Run the code in the template to generate three plots that allow for a closer look at the residuals: a plot of residuals versus predicted abundance, and plots of residuals versus the two predictors.
+
+
+    ```{r, fig.width = 8, fig.height = 4, echo = FALSE}
+#create grazing binary
+grazing = (forest.birds$grazing.binary == "Heavy")
+
+par(mfrow = c(1, 3))
+
+#plot residuals vs fitted
+plot(resid(final.model) ~ fitted(final.model),
+     pch = 21, bg = COL[1, 3], col = COL[1],
+     xlab = "Predicted Abundance", ylab = "Residual")
+abline(h = 0, lty = 2)
+
+#plot residuals vs log.area, color pts by grazing.binary
+plot(resid(final.model)[grazing == F] ~ forest.birds$log.area[grazing == F],
+     pch = 21, bg = COL[1, 3], col = COL[1],
+     xlab = "log.area", ylab = "Residual")
+points(resid(final.model)[grazing == T] ~ forest.birds$log.area[grazing == T],
+     pch = 21, bg = COL[4, 3], col = COL[4])
+abline(h = 0, lty = 2)
+
+#plot residuals vs grazing.binary
+boxplot(resid(final.model) ~ forest.birds$grazing.binary,
+        ylab = 'Residual', xlab = "grazing.binary",
+        pch = 21,
+        border = COL[1], col = COL[1, 4],
+        outcol = COL[1], outbg = COL[1, 3],
+        medlwd = 1.25,
+        names = c("not heavy", "heavy"))
+```
+
+    a) Recall that the definition of a residual is $e_i = y_i - \hat{y}_i$. Residual values closer to 0 are indicative of a more accurate prediction. In terms of comparing an observed value and a value predicted from a model, what does a large positive residual indicate? What does a large negative residual indicate?
+    
+        \textcolor{NavyBlue}{A large positive residual occurs when the predicted value from the model is much smaller than the observed value; i.e., the model is underpredicting the value. A large negative residual indicates the model is overpredicting the value, and $\hat{y_i} \gg y_i$. }
+    
+    b) Examine the left and middle plot. For what predicted values of bird abundance do large positive residuals tend to occur, versus large negative residuals? For what values of area do large positive residuals versus large negative residuals tend to occur?
+    
+        \textcolor{NavyBlue}{In the left plot, the large positive residuals occur across the range of predicted values, while the large negative residuals occur around 20 (predicted birds). The middle plot shows that the large positive and negative residuals occur at intermediate values of \texttt{log.area}; they occur for values of \texttt{log.area} between 0 and 4 or equivalently for values of area between $\exp(0) = 1$ and $\exp(4) = 54.5$ hectares. In the same range, there are also relatively accurate predictions with most residuals being between -5 and 5.}
+    
+    c) In the middle plot, patches with heavy grazing are represented with red points. From the middle plot and right plot, assess how prediction error varies between patches where grazing intensity was between "light" and "moderately heavy" versus patches where grazing intensity was heavy.
+    
+        \textcolor{NavyBlue}{The prediction error is smaller for patches with heavy grazing than for patches where grazing intensity was between "light" and "moderately heavy". Patches with heavy grazing mostly cluster around the $y = 0$ line, with the exception of one point with a residual value of about 10.}
+    
+### Conclusions
+
+11. Summarize the final model; interpret the model coefficients and $R^2$ value.
+
+    \textcolor{NavyBlue}{The $R^2$ indicates that the final model explains 72\% of the observed variability in bird abundance, which suggests that patch area and extent of grazing (either heavy or not) are important features associated with bird abundance. Larger area is associated with an increaes in abundance; when grazing intensity does not change, the model predicts an increase in average bird abundance by 3.18 birds for every one unit increase in log area (or equivalently, every $\exp(1) = 2.7$ hectares increase in area). A patch with heavy grazing is estimated to have a mean abundance of about 11.58 birds lower than a patch that has not been heavily grazed, assuming the patches are the same size.}
+    
+    
+    ```{r}
+#print model summary of final model
+summary(final.model)
+```
+
+
+12. Ecologists might be interested in using the model to predict bird abundance based on features of a forest patch. Summarize the model accuracy, in terms accessible to a non-statistician.
+
+    \textcolor{NavyBlue}{The final model may not be particularly accurate. For most observations, the predictions made by the model area accurate between $\pm 5$ birds, but there are several instances of overpredictions as high as around 10 birds and underpredictions of about 15 birds. A major weakness of the model is that the accurate and inaccurate predictions occur at similar ranges of area; if the model only tended to be inaccurate at a specific range, such as for small patches, it would be possible to provide clearer advice about when the model should be used. The model does seem to be more reliable for patches with heavy grazing.}
+    
+\textcolor{Blue}{Refer to Section 7.8 in \textit{OpenIntro Biostatistics} for a discussion of reasons to avoid using a model with all potential predictor variables in this setting.}
