@@ -32,7 +32,7 @@ The material in this lab corresponds to Sections 7.4 - 7.6 and 7.9 in *OpenIntro
 
 *Categorical predictors with several levels*
 
-Fitting a regression model with a categorical predictor that has several levels is analogous to comparing the means of several groups, where the groups are defined by the categorical variable. The equation of the regression line has intercept $b_0$, which equals the mean of one of the groups, and slopes $b_1, b_2, \dots, b_{p+1}$, where $p+1$ equals the number of groups and each slope $b_k$ for $k = 1, 2, \dots, p + 1$ equals the difference in means between the reference group and group $k$.
+Fitting a regression model with a categorical predictor that has several levels is analogous to comparing the means of several groups, where the groups are defined by the categorical variable. The equation of the regression line has intercept $b_0$, which equals the mean of one of the groups, and slopes $b_1, b_2, \dots, b_p$, where $p+1$ equals the number of groups and each slope $b_k$ for $k = 1, 2, \dots, p$ equals the difference in means between the reference group and group $k$.
 
 *Inference in multiple regression*
 
