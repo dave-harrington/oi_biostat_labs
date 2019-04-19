@@ -218,7 +218,7 @@ summary(model0)
     
     b) Identify which variables are statistically significant at the $\alpha = 0.05$ level.
     
-        \textcolor{NavyBlue}{The variables altitude and years isolation (transformed) are significant, as well as one of the categories of grazing intensity.}
+        \textcolor{NavyBlue}{The variable area (transformed) and one of the categories of grazing intensity.}
 
 ### Model comparison
 
