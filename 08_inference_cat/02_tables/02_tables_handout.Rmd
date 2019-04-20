@@ -1,0 +1,86 @@
+---
+title: "Inference for Two-Way Tables"
+author: "Chapter 8, Lab 2"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item The $\chi^2$ test for independence
+	  \item Measures of association in two-by-two tables
+	\end{itemize}
+	
+\end{small}
+
+This lab generalizes inference for binomial proportions to the setting of two-way contingency tables. Hypothesis testing in a two-way table assesses whether the two variables of interest are associated; this approach can be applied to settings with two or more groups and for responses that have two or more categories. Measures of association in two-by-two tables are also discussed.
+
+The material in this lab corresponds to Sections 8.3 and 8.5 in *OpenIntro Biostatistics*.
+
+### Introduction
+
+*The $\chi^2$ test of independence*
+
+In the $\chi^2$ test of independence, the observed number of cell counts are compared to the number of **expected** cell counts, where the expected counts are calculated under the null hypothesis.
+
+  - $H_0$: the row and column variables are not associated
+
+  - $H_A$: the row and column variables are associated
+
+The expected count for the $i^{th}$ row and $j^{th}$ column is
+\[E_{i, j} = \dfrac{(\text{row $i$ total}) \times (\text{column $j$ total}) }{n}, \]
+where $n$ is the total number of observations.
+
+The **$\chi^2$ test statistic** is calculated as
+\[\chi^2 = \sum_{i = 1}^r \sum_{j = 1}^c \dfrac{(E_{i, j} - O_{i, j})^2}{E_{i, j}}, \]
+and is approximately distributed $\chi^2$ with degrees of freedom $(r - 1)(c - 1)$, where $r$ is the number of rows and $c$ is the number of columns. $O_{i, j}$ represents the observed count in row $i$, column $j$.
+
+For each cell in a table, the **residual** equals
+\[\dfrac{O_{i, j} - E_{i, j}}{\sqrt{E_{i,j}}}. \]
+Residuals with a large magnitude contribute the most to the $\chi^2$ statistic. If a residual is positive, the observed value is greater than the expected value; if a residual is negative, the observed value is less than the expected.
+
+*Measures of association in two-by-two tables*
+
+Unit 1 introduced the **relative risk (RR)**, a measure of the risk of a certain event occurring in one group relative to the risk of the event occurring in another group, as a numerical summary for two-by-two ($2 \times 2$) table. The relative risk can also be thought of as a measure of association for $2 \times 2$ tables.
+
+Consider the following hypothetical two-by-two table. The relative risk of Outcome A can be calculated by using either Group 1 or Group 2 as the reference group:
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{r|rrr}
+		\hline
+		& Outcome A & Outcome B & Sum\\ 
+		\hline
+		Group 1 & $a$ & $b$ & $a + b$ \\ 
+		Group 2 & $c$ & $d$ & $c + d$ \\
+		Sum & $a + c$ & $b + d$ & $a + b + c + d = n$ \\
+		\hline
+	\end{tabular}	
+	\caption{A hypothetical two-by-two table of outcome by group.}
+\end{table}
+
+
+\[RR_{\text{A, comparing Group 1 to Group 2}} = \dfrac{a/(a + b)}{c/(c+d)} \]
+\[RR_{\text{A, comparing Group 2 to Group 1}} = \dfrac{c/(c + d)}{a/(a+b)} \]
+
+The relative risk should only be calculated for tables where the proportions $a/(a + b)$ and $c/(c + d)$ represent the incidence of Outcome A within the populations from which Groups 1 and 2 are sampled.
+
+The **odds ratio (OR)** is a measure of association that remains valid even when it is not possible to estimate incidence of an outcome from the sample data. The **odds** of Outcome A in Group 1 are $a/b$, while the odds of Outcome A in Group 2 are $c/d$.
+
+\[OR_{\text{A, comparing Group 1 to Group 2}} = \dfrac{a/b}{c/d} = \dfrac{ad}{bc} \]
+\[OR_{\text{A, comparing Group 2 to Group 1}} = \dfrac{c/d}{a/b} = \dfrac{bc}{ad} \]
+
+### The $\chi^2$ test of independence
+
+### Measures of association: the odds ratio
