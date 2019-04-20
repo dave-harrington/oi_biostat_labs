@@ -38,7 +38,7 @@ Inference for $p$ can be made using the normal approximation to the binomial, or
 
   - *Inference with the normal approximation*
   
-      - The sampling distribution of $\hat{p}$ is approximately normal when 1) the sample observations are independent, 2) $np \geq 10$, $n(1 - p) \geq 10$, where $\hat{p}$ can be substituted since $p$ is unknown.\footnote{The second condition is commonly referred to as the \textbf{success-failure condition}.} Under these conditions, the sampling distribution of $\hat{p}$ is approximately normally distributed with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$.
+      - The sampling distribution of $\hat{p}$ is approximately normal when 1) the sample observations are independent, 2) $np \geq 10$, $n(1 - p) \geq 10$.\footnote{The second condition is commonly referred to as the \textbf{success-failure condition}, since it can be effectively restated as the number of successes is greater than 10 and the number of failures is greater than 10.} Under these conditions, the sampling distribution of $\hat{p}$ is approximately normally distributed with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$. For confidence intervals, substitute $\hat{p}$ for $p$; for hypothesis testing, substitute $p_0$ for $p$.
       
       - The approximate two-sided 95\% confidence interval for $p$ is given by 
       \[\hat{p} \pm 1.96 \sqrt{\dfrac{\hat{p}(1 - \hat{p})}{n}}\]
@@ -72,7 +72,7 @@ To check success-failure in the context of hypothesis testing, check that $\hat{
 
 1. Advanced melanoma is an aggressive form of skin cancer that until recently was almost uniformly fatal. In rare instances, a patient's melanoma stopped progressing or disappeared altogether when the patient's immune system successfully mounted a response to the cancer. Those observations led to research into therapies that might trigger an immune response. 
 
-    A 2013 report in the New England Journal of Medicine by Wolchok, et al. reported the results of a study in which patients were treated concurrently with two new therapies, nivolumab and ipilimumab. Of 52 patients, 21 (40\%) experienced an immune response.
+    A 2013 report in the New England Journal of Medicine by Wolchok, et al. reported the results of a study in which patients were treated concurrently with two new therapies, nivolumab and ipilimumab. Of 52 patients, 21 experienced an immune response.
     
     a) What is the estimate of the population probability of an immune response after concurrent treatment with nivolumab and ipilimumab, $\hat{p}$?
     
@@ -117,4 +117,4 @@ To check success-failure in the context of hypothesis testing, check that $\hat{
   
   b) Analyze the results; do the data suggest that annual mammography results in a reduction in breast cancer mortality relative to standard exams? Be sure to check the assumptions for using the normal approximation.
 
-  c) Calculate a 95\% confidence interval for the difference in proportions of deaths from breast cancer. Be sure to check the assumptions for using the normal approximation.
+  c) Calculate and interpret a 95\% confidence interval for the difference in proportions of deaths from breast cancer. Be sure to check the assumptions for using the normal approximation.

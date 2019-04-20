@@ -38,7 +38,7 @@ Inference for $p$ can be made using the normal approximation to the binomial, or
 
   - *Inference with the normal approximation*
   
-      - The sampling distribution of $\hat{p}$ is approximately normal when 1) the sample observations are independent, 2) $np \geq 10$, $n(1 - p) \geq 10$, where $\hat{p}$ can be substituted since $p$ is unknown.\footnote{The second condition is commonly referred to as the \textbf{success-failure condition}.} Under these conditions, the sampling distribution of $\hat{p}$ is approximately normally distributed with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$.
+      - The sampling distribution of $\hat{p}$ is approximately normal when 1) the sample observations are independent, 2) $np \geq 10$, $n(1 - p) \geq 10$.\footnote{The second condition is commonly referred to as the \textbf{success-failure condition}, since it can be effectively restated as the number of successes is greater than 10 and the number of failures is greater than 10.} Under these conditions, the sampling distribution of $\hat{p}$ is approximately normally distributed with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$. For confidence intervals, substitute $\hat{p}$ for $p$; for hypothesis testing, substitute $p_0$ for $p$.
       
       - The approximate two-sided 95\% confidence interval for $p$ is given by 
       \[\hat{p} \pm 1.96 \sqrt{\dfrac{\hat{p}(1 - \hat{p})}{n}}\]
@@ -72,27 +72,108 @@ To check success-failure in the context of hypothesis testing, check that $\hat{
 
 1. Advanced melanoma is an aggressive form of skin cancer that until recently was almost uniformly fatal. In rare instances, a patient's melanoma stopped progressing or disappeared altogether when the patient's immune system successfully mounted a response to the cancer. Those observations led to research into therapies that might trigger an immune response. 
 
-    A 2013 report in the New England Journal of Medicine by Wolchok, et al. reported the results of a study in which patients were treated concurrently with two new therapies, nivolumab and ipilimumab. Of 52 patients, 21 (40\%) experienced an immune response.
+    A 2013 report in the New England Journal of Medicine by Wolchok, et al. reported the results of a study in which patients were treated concurrently with two new therapies, nivolumab and ipilimumab. Of 52 patients, 21 experienced an immune response.
     
     a) What is the estimate of the population probability of an immune response after concurrent treatment with nivolumab and ipilimumab, $\hat{p}$?
     
+        \textcolor{NavyBlue}{The sample proportion $\hat{p}$ is given by $x/n = 21/52 = 0.404$.}
+      
+    ```{r}
+#use r as a calculator
+x = 21
+n = 52
+p.hat = x/n
+p.hat
+```
+      
+      
     b) Evaluate whether the assumptions for using the normal approximation are met.
+    
+        \textcolor{NavyBlue}{The outcome of one patient should not affect that of other patients, so independence is reasonable. The success-failure condition is satisfied since $n\hat{p} = (52)(0.404) = 21 > 10$ and $n(1 - \hat{p}) = (52)(1 - 0.404) = 31 > 10$.}
+        
+    ```{r}
+#use r as a calculator
+n*p.hat
+n*(1 - p.hat)
+```
+        
     
     c) Calculate an approximate 95\% confidence interval for $p$ and interpret the interval in context of the data.
     
+        \color{NavyBlue}
+        
+        The standard error is estimated as $\sqrt{\dfrac{\hat{p}(1 - \hat{p})}{n}} =  \sqrt{\dfrac{(0.404)(1 - 0.404)}{52}}$. 
+        
+        Thus, the 95\% confidence interval is
+        \[0.404 \pm 1.96(0.068) \rightarrow (0.27, 0.54) \]
+        
+        \color{Black}
+
+    ```{r}
+#use r as a calculator
+se = sqrt((p.hat*(1-p.hat))/n)
+z.star = qnorm(0.975)
+m = z.star*se
+p.hat - m; p.hat + m
+```
+
+    
     d) Confirm the answer to part c) using \texttt{prop.test( )}.
     
+        \textcolor{NavyBlue}{The result from \texttt{prop.test( )} is (0.27, 0.55), which is very similar to the answer from part c).}
+    
+    ```{r}
+#use prop.test
+prop.test(x = 21, n = 52)$conf.int
+```
+    
+\newpage
 
 2. Suppose that out of a cohort of 120 patients with stage I lung cancer at the Dana-Farber Cancer Institute (DFCI), 80 of the patients survive at least 5 years. National Cancer Institute statistics indicate that the 5-year-survival probability for stage I lung cancer patients nationally is 0.60. Do the data collected from the 120 patients support the claim that the DFCI population with stage I lung cancer has a different 5-year-survival probability than the national population? Let $\alpha = 0.05$.
 
     a) State the null and alternative hypotheses. 
     
+        \textcolor{NavyBlue}{The null hypothesis is that the proportion in the DFCI population is equal to the national statistic, $H_0: p = 0.60$. The alternative hypothesis is that the proportion in the DFCI population is different from the national statistic, $H_A: p \neq 0.60$.}
+    
     b) Evaluate whether the assumptions for using the normal approximation are met. If so, conduct the hypothesis test based on the normal approximation.
+    
+        \textcolor{NavyBlue}{It is reasonable to assume independence; knowing cancer status of one patient is not likely informative about the cancer patient of another. The success-failure condition is met: $n\hat{p} = (120)(80/120) = 80$ and $n(1-\hat{p}) = (120)(40/120) = 40$. }
+        
+        \textcolor{NavyBlue}{The $p$-value is 0.16, which is greater than $\alpha = 0.05$. There is insufficient evidence to reject the null hypothesis that the 5-year survival probability in the DFCI population is different from 0.60.}
+        
+    ```{r}
+#use prop.test
+prop.test(x = 80, n = 120, p = 0.60)
+```
+        
     
     c) Compare the results in part b) to those from conducting the hypothesis test based on exact binomial methods.
     
+        \textcolor{NavyBlue}{The exact binomial $p$-value is 0.1619, which is very close to the $p$-value from the normal approximation approach ($p = 0.1623$). This is to be expected since the number of successes and number of failures are both much larger than 10.}
+      
+    ```{r}
+#use binom.test
+binom.test(x = 80, n = 120, p = 0.60)
+```
+  
+    
 3. In 2009, the FDA Oncology Drug Advisory Committee (ODAC) recommended that the drug Avastin be approved for use in glioblastoma, a form of brain cancer. Tumor shrinkage after taking a drug is called a response; out of 85 patients, 24 exhibited a response. Historically, response probabilities for brain cancer drugs were approximately 0.05, or about 5\%. Assess whether there is evidence that the response probability for Avastin is different from previous drugs. Report both a $p$-value and 95\% confidence interval; summarize your findings.
 
+    \color{NavyBlue}
+
+    Test $H_0: p = 0.05$ against $H_A: p \neq 0.05$. Let $\alpha = 0.05$. 
+    
+    Check assumptions. The independence assumption is reasonable in the context of a drug trial; participants are typically recruited independently. The success-failure condition is not met, since under the null hypothesis, only $(85)(0.05) = 4.25$ successes are expected. Exact binomial methods should be used.
+
+    The $p$-value is highly significant ($p = 2.67 \times 10^{-12}$); there is sufficient evidence to reject the null hypothesis that the population response probability for Avastin is equal to 0.05. The observed response probability is 0.28, which suggests the population response probability to Avastin is higher than 0.05. With 95\% confidence, the interval (0.19, 0.39) captures the population response probability (i.e., the response probability in a hypothetical population of glioblastoma patients treated with Avastin).
+
+    \color{Black}
+
+    ```{r}
+binom.test(x = 24, n = 85, p = 0.05)
+```
+
+\newpage
 
 ### Inference for the difference of two proportions
 
@@ -115,6 +196,61 @@ To check success-failure in the context of hypothesis testing, check that $\hat{
 
   a) Calculate $\hat{p}_1$ and $\hat{p}_2$, the two sample proportions of interest. 
   
+      \textcolor{NavyBlue}{The two sample proportions of interest are the proportion of breast cancer deaths in the mammogram group and the proportion of breast cancer deaths in the control group: $\hat{p}_M = 500/(500 + 44425) = 0.0111$, $\hat{p}_C = 505/(505 + 44405) = 0.0112$.}
+      
+    ```{r}
+#use r as a calculator
+x = c(500, 505)
+n = c(500 + 44425, 505 + 44405)
+p.hat.vector = x/n
+p.hat.vector
+```
+      
+  
   b) Analyze the results; do the data suggest that annual mammography results in a reduction in breast cancer mortality relative to standard exams? Be sure to check the assumptions for using the normal approximation.
 
-  c) Calculate a 95\% confidence interval for the difference in proportions of deaths from breast cancer. Be sure to check the assumptions for using the normal approximation.
+    \color{NavyBlue}
+    
+    Since the participants were randomly assigned to each group, the groups can be treated as independent, and it is reasonable to assume independence of patients within each group.
+    
+    The pooled proportion $\hat{p}$ is
+    \[\hat{p} = \dfrac{x_1 + x_2}{n_1 + n_2} = 0.0112\]
+    
+    The success-failure condition is met; the expected number of successes is about 503 in both groups (and expected number of failures is naturally much larger, given that both $\hat{p}$ is less than 0.50 and $n$ is very large).
+    
+    Test $H_0: p_M = p_C$ against $H_A: p_M \neq p_C$. Let $\alpha = 0.05$.
+    
+    The two-sided $p$-value is 0.895. Since $p > \alpha$, there is insufficient evidence to reject the null hypothesis; the observed difference in proportions of breast cancer deaths is reasonably explained by chance. The results do not suggest that annual mammography results in a reduction in breast cancer mortality relative to standard exams.
+    
+    \color{Black}
+    
+    ```{r}
+#use r as a calculator
+p.hat.pooled = sum(x)/sum(n)
+p.hat.pooled
+
+#check success-failure
+n*p.hat.pooled
+n*(1 - p.hat.pooled)
+
+#conduct inference
+prop.test(x = x, n = n)
+```
+    
+
+  c) Calculate and interpret a 95\% confidence interval for the difference in proportions of deaths from breast cancer. Be sure to check the assumptions for using the normal approximation.
+  
+      \color{NavyBlue}
+  
+      The success-failure condition should be checked for each sample: from the data, the number of successes and failures are both well over 10 in each group.
+  
+      The 95\% confidence interval is (-0.0015, 0.0013). With 95\% confidence, the difference in probability of death is within the interval (-0.15\%, 0.13\%); i.e., 0.15\% lower in the mammogram group to 0.13\% higher in the mammogram group. As expected from the large $p$-value, the confidence interval contains the null value 0.
+  
+      \color{Black}
+  
+    ```{r}
+#conduct inference
+prop.test(x = x, n = n)$conf.int
+```
+  
+  
