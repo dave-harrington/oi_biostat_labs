@@ -113,8 +113,8 @@ To check success-failure in the context of hypothesis testing, check that $\hat{
 	\end{tabular}
 \end{table}
 
-  a) Calculate $\hat{p}_1$ and $\hat{p}_2$, the two sample proportions of interest. 
+    a) Calculate $\hat{p}_1$ and $\hat{p}_2$, the two sample proportions of interest. 
   
-  b) Analyze the results; do the data suggest that annual mammography results in a reduction in breast cancer mortality relative to standard exams? Be sure to check the assumptions for using the normal approximation.
+    b) Analyze the results; do the data suggest that annual mammography results in a reduction in breast cancer mortality relative to standard exams? Be sure to check the assumptions for using the normal approximation.
 
-  c) Calculate and interpret a 95\% confidence interval for the difference in proportions of deaths from breast cancer. Be sure to check the assumptions for using the normal approximation.
+    c) Calculate and interpret a 95\% confidence interval for the difference in proportions of deaths from breast cancer. Be sure to check the assumptions for using the normal approximation.
