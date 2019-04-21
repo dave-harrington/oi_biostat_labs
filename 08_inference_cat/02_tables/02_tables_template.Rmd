@@ -1,17 +1,11 @@
 ---
 title: "Inference for Two-Way Tables"
-author: "Chapter 8, Lab 2"
+author: "Chapter 8, Lab 2: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -106,34 +100,170 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
 
     \vspace{0.5cm}
     
-    a) State the null and alternative hypotheses.
+a) State the null and alternative hypotheses.
+
+
+
+
     
-    b) Calculate the expected cell counts.
+b) Calculate the expected cell counts.
+
+
+```{r, eval = FALSE}
+#use r as a calculator
+
+#set parameters
+n = 287
+row.1.total = 87
+row.2.total = 200
+col.1.total = 147
+col.2.total = 140
+
+#calculate expected values
+exp.1.1 = (row.1.total * col.1.total)/n
+exp.1.1
+
+exp.1.2 = 
+  
+exp.2.1 =
+  
+exp.2.2 =
+```
+
     
-    c) Check the assumptions for using the $\chi^2$ test.
+c) Check the assumptions for using the $\chi^2$ test.
+
+
+
+
     
-    d) Calculate the $\chi^2$ test statistic.
+d) Calculate the $\chi^2$ test statistic.
     
-    e) Calculate the $p$-value for the test statistic using \texttt{pchisq()}. The $p$-value represents the probability of observing a result as or more extreme than the sample data.
+
+```{r, eval = FALSE}
+#use r as a calculator
+obs.1.1 = 60
+chi.sq.1.1 = ((obs.1.1 - exp.1.1)^2)/exp.1.1
+
+obs.1.2 =
+chi.sq.1.2 =   
+
+obs.2.1 =
+chi.sq.2.1 =
+  
+obs.2.2 =
+chi.sq.2.2 =
+  
+chi.sq = chi.sq.1.1 + chi.sq.1.2 + chi.sq.2.1 + chi.sq.2.2
+chi.sq
+```
+
+
+
+e) Calculate the $p$-value for the test statistic using \texttt{pchisq()}. The $p$-value represents the probability of observing a result as or more extreme than the sample data.
+
+
+```{r, eval = FALSE}
+#use pchisq()
+pchisq( , df = )
+```
+
     
-    f) Confirm the results from parts c) and d) using \texttt{chisq.test()}. Note that the value of the test statistic will be slightly different because \textsf{R} is applying a 'continuity correction'.
+f) Confirm the results from parts c) and d) using \texttt{chisq.test()}. Note that the value of the test statistic will be slightly different because \textsf{R} is applying a 'continuity correction'.
+
+```{r}
+#enter the data as a table
+hiv.table = matrix(c(60, 27, 87, 113), 
+                  nrow = 2, ncol = 2, byrow = T)
+
+#use chisq.test()
+chisq.test(hiv.table)
+```
+
     
-    g) Summarize the conclusions; be sure to include which drug is recommended for treatment, based on the data.
+g) Summarize the conclusions; be sure to include which drug is recommended for treatment, based on the data.
+
+
+
+```{r}
+#look at residuals
+chisq.test(hiv.table)$resid
+```
+
     
-    h) Repeat the analysis using inference for the difference of two proportions and confirm that the results are the same.
+h) Repeat the analysis using inference for the difference of two proportions and confirm that the results are the same.
+
+
+```{r}
+#use prop.test( )
+
+```
+
     
 2. In the PREVEND study introduced in Unit 6, researchers measured various features of study participants, including data on statin use and highest level of education attained. From the data in \texttt{prevend.samp}, is there evidence of an association between statin use and educational level? Summarize the results.
+
+
+
+```{r}
+#load the data
+library(oibiostat)
+data("prevend.samp")
+
+#convert variables to factors
+prevend.samp$Statin = factor(prevend.samp$Statin, levels = c(0, 1),
+                             labels = c("NonUser", "User"))
+
+prevend.samp$Education = factor(prevend.samp$Education, levels = 0:3,
+                                labels = c("Primary", "LowerSec",
+                                           "UpperSec", "Univ"))
+
+#create a table
+
+#run chi-squared test
+
+```
+
+
+\newpage
 
 ### Measures of association in two-by-two tables
 
 3. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
 
+
+
+```{r}
+#use r as a calculator
+
+```
+
+
 4. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
 
-    a) Is relative risk an appropriate measure of association for these data? Explain your answer.
+
+a) Is relative risk an appropriate measure of association for these data? Explain your answer.
     
-    b) Calculate the odds of CVD among smokers and the odds of CVD among non-smokers.
+
+
+b) Calculate the odds of CVD among smokers and the odds of CVD among non-smokers.
     
-    c) Calculate and interpret the odds ratio of CVD, comparing smokers to non-smokers.
+
+```{r}
+#use r as a calculator
+
+```
+
+
+
+c) Calculate and interpret the odds ratio of CVD, comparing smokers to non-smokers.
     
-    d) What would an odds ratio of CVD (comparing smokers to non-smokers) equal to 1 represent, in terms of the association between smoking and CVD? What would an odds ratio of CVD less than 1 represent?
+
+```{r}
+#use r as a calculator
+```
+
+
+d) What would an odds ratio of CVD (comparing smokers to non-smokers) equal to 1 represent, in terms of the association between smoking and CVD? What would an odds ratio of CVD less than 1 represent?
+
+
+
