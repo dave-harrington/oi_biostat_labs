@@ -58,7 +58,7 @@ Residuals with a large magnitude contribute the most to the $\chi^2$ statistic. 
 
 *Measures of association in two-by-two tables*
 
-Unit 1 introduced the **relative risk (RR)**, a measure of the risk of a certain event occurring in one group relative to the risk of the event occurring in another group, as a numerical summary for two-by-two ($2 \times 2$) tables. The relative risk can also be thought of as a measure of association.
+Chapter 1 introduced the **relative risk (RR)**, a measure of the risk of a certain event occurring in one group relative to the risk of the event occurring in another group, as a numerical summary for two-by-two ($2 \times 2$) tables. The relative risk can also be thought of as a measure of association.
 
 Consider the following hypothetical two-by-two table. The relative risk of Outcome A can be calculated by using either Group 1 or Group 2 as the reference group:
 
@@ -122,7 +122,7 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
     
     h) Repeat the analysis using inference for the difference of two proportions and confirm that the results are the same.
     
-2. In the PREVEND study introduced in Unit 6, researchers measured various features of study participants, including data on statin use and highest level of education attained. From the data in \texttt{prevend.samp}, is there evidence of an association between statin use and educational level? Summarize the results.
+2. In the PREVEND study introduced in Chapter 6, researchers measured various features of study participants, including data on statin use and highest level of education attained. From the data in \texttt{prevend.samp}, is there evidence of an association between statin use and educational level? Summarize the results.
 
 ### Measures of association in two-by-two tables
 

@@ -1,0 +1,327 @@
+---
+title: "Lab Notes"
+author: "Chapter 8"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 6.5
+    fig_height: 3.5
+---
+
+# Overview
+
+1. Inference for Binomial Proportions
+    - *OI Biostat* Sections 8.1 and 8.2
+    
+2. Inference for Two-Way Tables
+    - *OI Biostat* Sections 8.3 and 8.5
+
+Lab 1 introduces methods of inference for binomial proportions in the one-sample and two-sample cases.
+
+Lab 2 generalizes inference for binomial proportions to the setting of two-way contingency tables and also discusses measures of association in two-by-two tables.
+
+
+\newpage
+
+# Lab 1: Inference for Binomial Proportions
+
+### Hypothesis Testing with \texttt{prop.test()}
+
+The function \texttt{prop.test()} is used to conduct a hypothesis test for a single proportion or for the difference of two proportions, under the assumption that the sampling distribution for each sample proportion is approximately normal.
+
+The \textbf{\texttt{prop.test()}} function has the following generic structure:
+
+```{r, eval = FALSE}
+prop.test(x, n, alternative = "two.sided", p = 0.5, conf.level = 0.95, correct = TRUE)
+```
+
+where \texttt{x} is the count of successes, \texttt{n} is the number of trials, \texttt{alternative} specifies the form of the alternative hypothesis, \texttt{p} is $p_0$, and \texttt{conf.level} refers to the confidence level. The argument for \texttt{alternative} can be either \texttt{"two.sided"} ($H_A: p \neq p_0$), \texttt{"less"} ($H_A: p < p_0$), or \texttt{"greater"} ($H_A: p > p_0$. By default, confidence level is set to 95\% and a two-sided alternative is tested. To conduct the two-sample test, enter \texttt{x} and \texttt{n} as vectors; i.e., enter the number of successes in each group and the number of trials in each group. 
+
+By default, Yates' continuity correction is applied where possible (\texttt{correct = TRUE}). The purpose of the continuity correction is to adjust for the error introduced by using a continuous distribution (the $\chi^2$ distribution) to model discrete probabilities; the correction is meant to protect from underestimating $p$-values when sample sizes are small. It has been shown, however, that the correction can be overly strict and contribute to Type II error. In modern practice, exact tests like the binomial test and Fisher's test are used when sample sizes are small.
+
+The following example shows a hypothesis test for testing the one-sided hypothesis that the proportion of patients who respond to combined therapy with nivolumab and ipilimumab is greater than 0.30, using data that 21 out of 52 patients experienced a response.
+
+```{r}
+prop.test(x = 21, n = 52, alternative = "greater", p = 0.30, conf.level = 0.95)
+```
+
+
+The output of \texttt{prop.test()} is organized as a list object, and so specific pieces can be extracted using the dollar sign (\texttt{\$}) and the name of the desired component. The following examples show the $p$-value and the confidence interval being selectively output from the example shown above.
+
+```{r}
+prop.test(x = 21, n = 52, alternative = "greater", p = 0.30, conf.level = 0.95)$p.val
+```
+
+```{r}
+prop.test(x = 21, n = 52, alternative = "greater", p = 0.30, conf.level = 0.95)$conf.int
+```
+
+The following example shows a hypothesis test for testing the one-sided hypothesis that the proportion of American adults who have sleep trouble is less than 0.40, using data from \texttt{nhanes.samp.adult}.
+
+```{r}
+#load the data
+library(oibiostat)
+data("nhanes.samp.adult")
+
+prop.test(sum(nhanes.samp.adult$SleepTrouble == "Yes"), 
+          length(nhanes.samp.adult$SleepTrouble), alternative = "less", p = 0.40)
+```
+
+The following example shows a hypothesis test for the difference in population proportions of breast cancer deaths between women who received annual mammograms and women who received standard physical exams. Of the 44,925 women in the mammogram group, 500 died of breast cancer; of the 44,910 women in the control group, 505 died of breast cancer.
+
+```{r}
+prop.test(x = c(500, 505), n = c(44925, 44910), alternative = "two.sided", 
+          conf.level = 0.95)
+```
+
+The following example shows a hypothesis test for the difference in population proportions of sleep trouble between American men and women, using data from \texttt{nhanes.samp.adult}.
+
+```{r}
+x1 = sum(nhanes.samp.adult$Gender == "female" & nhanes.samp.adult$SleepTrouble == "Yes")
+x2 = sum(nhanes.samp.adult$Gender == "male" & nhanes.samp.adult$SleepTrouble == "Yes")
+n1 = length(nhanes.samp.adult$Gender == "female")
+n2 = length(nhanes.samp.adult$Gender == "male")
+
+prop.test(x = c(x1, x2), n = c(n1, n2), alternative = "two.sided", conf.level = 0.90)
+```
+
+### Hypothesis Testing with \texttt{binom.test()}
+
+The function \texttt{binom.test()} is used to conduct a hypothesis test for a single proportion based on exact binomial probabilities.
+
+The \textbf{\texttt{binom.test()}} function has the following generic structure:
+
+```{r, eval = FALSE}
+binom.test(x, n, alternative = "two.sided", p = 0.5, conf.level = 0.95)
+```
+
+where \texttt{x} is the count of successes, \texttt{n} is the number of trials, \texttt{alternative} specifies the form of the alternative hypothesis, \texttt{p} is $p_0$, and \texttt{conf.level} refers to the confidence level. The argument for \texttt{alternative} can be either \texttt{"two.sided"} ($H_A: p \neq p_0$), \texttt{"less"} ($H_A: p < p_0$), or \texttt{"greater"} ($H_A: p > p_0$. By default, confidence level is set to 95\% and a two-sided alternative is tested.
+
+The following example shows a hypothesis test for testing the one-sided hypothesis that the proportion of glioblastoma patients who respond to Avastin is different from 0.05, using data that 24 out of 85 patients experienced a response.
+
+```{r}
+binom.test(x = 24, n = 85, alternative = "two.sided", p = 0.05, conf.level = 0.95)
+```
+
+Note how an attempt to use \texttt{prop.test()} in this setting produces a warning that the $\chi^2$ (i.e., Normal) approximation may be incorrect.
+
+```{r}
+prop.test(x = 24, n = 85, alternative = "two.sided", p = 0.05, conf.level = 0.95)
+```
+
+\newpage
+
+# Lab 2: Inference for Two-Way Tables
+
+### $\chi^2$ Distribution Functions
+
+The function \textbf{\texttt{pchisq()}} used to calculate $P(X \leq k)$ or $P(X > k)$ has the generic structure
+
+```{r, eval = FALSE}
+pchisq(q, df, lower.tail = TRUE)
+```
+
+where \texttt{q} is $k$ and \texttt{df} is the degrees of freedom. By default, \textsf{R} calculates $P(X \leq k)$. In order to compute $P(X > k)$, specify \texttt{lower.tail = FALSE}.
+
+The following example shows how to calculate $P(X \leq 29.5)$ and $P(X > 29.5)$ for $X \sim \chi^2_{df = 20}$.
+
+```{r}
+#probability X is less than (or equal to) 1.20
+pchisq(29.5, df = 20)
+
+#probability X is greater than 1.20
+pchisq(29.5, df = 20, lower.tail = FALSE)
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{qchisq()}} used to identify the observation that corresponds to a particular probability $p$ has the generic structure
+
+```{r, eval = FALSE}
+qchisq(p, df, lower.tail = TRUE)
+```
+
+where \texttt{p} is $p$ and \texttt{df} is the degrees of freedom. By default, \textsf{R} identifies the observation that corresponds to area $p$ in the lower tail (i.e., to the left). To identify the observation with area $p$ in the upper tail, specify \texttt{lower.tail = FALSE}.
+
+The following example shows how to calculate the value of the observation where there is 0.922 area to the left (and 0.078 area to the right) on a $\chi^2$ distribution with 20 degrees of freedom.
+
+```{r}
+#identify X value
+qchisq(0.922, df = 20)
+
+#probability X is greater than 1.20
+qchisq(0.078, df = 20, lower.tail = FALSE)
+```
+
+\newpage
+
+### Entering Data Tables
+
+The use of the function \texttt{matrix()} to construct matrices was previously introduced in the Chapter 1 Lab Notes. For clarity when displaying contingency tables, the matrix dimensions can be labeled using \textbf{\texttt{dimnames()}}. The first entry in \texttt{dimnames()} labels the rows and the second entry labels the columns.
+
+The following example shows a matrix from the HIV study comparing nevirapine (NVP) and lopinarvir (LPV) with labeled dimensions.
+
+```{r}
+#enter the data
+hiv.table = matrix(c(60, 27, 87, 113),
+                   nrow = 2, ncol = 2, byrow = T)
+
+#add labels
+dimnames(hiv.table) = list("Outcome" = c("Virologic Failure", "Stable Disease"),
+                           "Drug" = c("NVP", "LPV"))
+
+hiv.table
+```
+
+### Hypothesis Testing with \texttt{chisq.test()}
+
+The \textbf{\texttt{chisq.test()}} has the following generic structure
+
+```{r, eval = FALSE}
+chisq.test(x, y, correct = TRUE)
+```
+
+where \texttt{x} is either a matrix or a vector, \texttt{y} is a vector, and Yates' continuity correction is applied by default. If \texttt{x} is a matrix, the argument \texttt{y} is ignored.
+
+The following example shows a test of independence for treatment and outcome in the HIV data.
+
+```{r}
+chisq.test(hiv.table)
+```
+
+
+The output of \texttt{chisq.test()} is organized as a list object, and so specific pieces can be extracted using the dollar sign (\texttt{\$}) and the name of the desired component. The following examples show the residuals and expected values being selectively output from the test conducted above.
+
+```{r}
+chisq.test(hiv.table)$residuals
+
+chisq.test(hiv.table)$expected
+```
+
+The following example shows a test of independence for statin use and educational level from \texttt{prevend.samp}, using both entry options.
+
+```{r}
+#load the data
+data("prevend.samp")
+
+#use x, y format
+chisq.test(prevend.samp$Statin, prevend.samp$Education)
+
+#enter x as a table
+statin.edu.table = table(prevend.samp$Statin, prevend.samp$Education)
+chisq.test(statin.edu.table)
+```
+
+### Relative Risk and Odds Ratio with \texttt{epitools}
+
+The \texttt{epitools} package contains various useful calculators for epidemiology, including functions to calculate relative risk and odds ratios in two-way tables. First, install and load the package:
+
+```{r, eval = FALSE}
+install.packages("epitools")
+library(epitools)
+```
+
+```{r, echo = FALSE, warning = FALSE}
+library(epitools)
+```
+
+
+The package requires that the rows of the table contain information on exposure (i.e., treatment) while the columns of the table contain information on outcome (i.e., disease), where the first row specifies the baseline treatment group and the second column specifies presence of the disease outcome. 
+
+The following example shows the HIV data re-entered to be in the preferred format, where the rows of the table specify the type of drug treament and the columns specify the outcome. Note that the second column specifies virologic failure.
+
+```{r}
+#enter the data
+hiv.table = matrix(c(87, 113, 60, 27),
+                   nrow = 2, ncol = 2, byrow = F)
+
+#add labels
+dimnames(hiv.table) = list("Drug" = c("NVP", "LPV"),
+                           "Outcome" = c("Stable Disease", "Virologic Failure"))
+
+hiv.table
+```
+
+\vspace{0.5cm}
+
+The function \textbf{\texttt{riskratio()}} calculates the relative risk and has the following generic structure
+
+```{r, eval = FALSE}
+riskratio(x, y = NULL, rev = "neither")$measure
+```
+
+where \texttt{x} is either a matrix or a vector and \texttt{y} is a vector; if \texttt{x} is a matrix, then \texttt{y} is ignored. The argument \texttt{rev} can be either \texttt{"neither"}, \texttt{"rows"}, \texttt{"columns"}, or \texttt{"both"}, and will either leave the data as-is, reverse the ordering of the rows, reverse the ordering of the columns, or reverse the ordering of both. To specifically output the estimated relative risk, use \texttt{\$measure}.
+
+In the following example, the relative risk of virologic failure is calculated, first with nevirapine as the baseline then with lopinarvir as the baseline. The estimated RR for the baseline group appears as 1. The RR of virologic failure comparing NVP to LPV is 2.12; the risk of virologic failure for individuals treated with nevirapine is over twice that of the risk for those treated with lopinarvir. 
+
+The RR can also be calculated in terms of the risk of 'success' (ie., stable disease); for example, the RR of stable disease comparing LPV to NVP is 1.37; the risk of stable disease for individuals treated with lopinarvir is 1.37 times that of the risk for those treated with nevirapine.\footnote{Note that all combinations are only shown to illustrate use of \texttt{rev}; relative risks are generally interpreted in terms of presence of disease.}
+
+```{r}
+#calculate RR of failure with respect to NVP
+riskratio(hiv.table)$measure
+
+#calculate RR of failure with respect to LPV
+riskratio(hiv.table, rev = "rows")$measure
+
+#calculate RR of success with respect to NVP
+riskratio(hiv.table, rev = "columns")$measure
+
+#calculate RR of success with respect to LPV
+riskratio(hiv.table, rev = "both")$measure
+```
+
+The following example shows the use of \texttt{riskratio} with vectors; specifically, vectors from a larger dataframe. The relative risk of cardiovascular disease comparing smokers to non-smokers is 1.09; smokers have a 9\% higher risk of cardiovascular disease compared to non-smokers, as estimated from \texttt{prevend.samp}.
+
+```{r}
+#load the data
+data("prevend.samp")
+
+#convert to factors
+prevend.samp$Smoking = factor(prevend.samp$Smoking, levels = c(0, 1),
+                             labels = c("SmokeNo", "SmokeYes"))
+prevend.samp$CVD = factor(prevend.samp$CVD, levels = c(0, 1),
+                          labels = c("CVDNo", "CVDYes"))
+
+#calculate the relative risk of CVD with respect to not smoking
+riskratio(prevend.samp$Smoking, prevend.samp$CVD)$measure
+
+#view the data table
+riskratio(prevend.samp$Smoking, prevend.samp$CVD)$data
+```
+
+\newpage
+
+The function \textbf{\texttt{oddsratio()}} calculates the odds ratio and has the following generic structure
+
+```{r, eval = FALSE}
+oddsratio(x, y = NULL, rev = "neither", method = "wald")$measure
+```
+
+where \texttt{x} is either a matrix or a vector and \texttt{y} is a vector; if \texttt{x} is a matrix, then \texttt{y} is ignored. The argument \texttt{rev} can be either \texttt{"neither"}, \texttt{"rows"}, \texttt{"columns"}, or \texttt{"both"}, and will either leave the data as-is, reverse the ordering of the rows, reverse the ordering of the columns, or reverse the ordering of both. The argument \texttt{"wald"} specifies that the odds ratio should be calculated using unconditional maximum likelihood estimation; this corresponds to the formula used in *OI Biostat*. To specifically output the estimated odds, use \texttt{\$measure}.
+
+In the following example, the odds ratio of virologic failure is calculated, first with nevirapine as the baseline then with lopinarvir as the baseline. The OR for the baseline group appears as 1. The OR of virologic failure comparing NVP to LPV is 2.87; the odds of virologic failure for individuals treated with NVP are over twice as large as the odds of failure for those treated with LPV. 
+
+```{r}
+#calculate OR of failure with respect to NVP
+oddsratio(hiv.table, method = "wald")$measure
+
+#calculate OR of failure with respect to LPV
+oddsratio(hiv.table, rev = "rows", method = "wald")$measure
+```
+
+The following example shows the use of \texttt{oddsratio} with vectors; specifically, vectors from a larger dataframe. The odds ratio of cardiovascular disease comparing smokers to non-smokers is 1.10, as estimated from \texttt{prevend.samp}; the odds of cardiovascular disease in smokers are 10\% larger than in non-smokers.
+
+```{r}
+#calculate the odds ratio of CVD with respect to not smoking
+oddsratio(prevend.samp$Smoking, prevend.samp$CVD, method = "wald")$measure
+
+#view the data table
+oddsratio(prevend.samp$Smoking, prevend.samp$CVD)$data
+```
+

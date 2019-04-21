@@ -24,7 +24,7 @@ output:
 	
 \end{small}
 
-This lab introduces methods of inference for binomial proportions, as a parallel to the one-sample and two-sample methods for means introduced in Units 4 and 5. In the setting where a binary outcome is recorded for a single group of participants, inference about the binomial probability of success provides information about a population proportion $p$. Just as inference can be done for the difference of two population means, inference can also be done in the setting of comparing two population proportions $p_1$ and $p_2$.
+This lab introduces methods of inference for binomial proportions, as a parallel to the one-sample and two-sample methods for means introduced in Chapters 4 and 5. In the setting where a binary outcome is recorded for a single group of participants, inference about the binomial probability of success provides information about a population proportion $p$. Just as inference can be done for the difference of two population means, inference can also be done in the setting of comparing two population proportions $p_1$ and $p_2$.
 
 The material in this lab corresponds to Sections 8.1 and 8.2 in *OpenIntro Biostatistics*.
 
