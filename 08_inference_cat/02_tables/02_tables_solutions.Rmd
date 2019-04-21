@@ -212,6 +212,11 @@ pchisq(chi.sq, df = (2 - 1)*(2 - 1), lower.tail = FALSE)
 #enter the data as a table
 hiv.table = matrix(c(60, 27, 87, 113), 
                   nrow = 2, ncol = 2, byrow = T)
+    
+#add labels and confirm the table was entered correctly
+dimnames(hiv.table) = list("Outcome" = c("Virologic Failure", "Stable Disease"),
+                            "Drug" = c("NVP", "LPV"))
+hiv.table
 
 #use chisq.test()
 chisq.test(hiv.table)
@@ -281,7 +286,7 @@ statin.edu.table = table(prevend.samp$Statin, prevend.samp$Education)
 #run chi-squared test
 chisq.test(statin.edu.table)
 
-chisq.test(statin.edu.table)
+chisq.test(statin.edu.table)$residuals
 ```
 
 
