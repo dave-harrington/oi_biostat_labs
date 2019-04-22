@@ -137,7 +137,7 @@ prop.test(x = 21, n = 52)$conf.int
     
     b) Evaluate whether the assumptions for using the normal approximation are met. If so, conduct the hypothesis test based on the normal approximation.
     
-        \textcolor{NavyBlue}{It is reasonable to assume independence; knowing cancer status of one patient is not likely informative about the cancer patient of another. The success-failure condition is met: $n\hat{p} = (120)(80/120) = 80$ and $n(1-\hat{p}) = (120)(40/120) = 40$. }
+        \textcolor{NavyBlue}{It is reasonable to assume independence; knowing cancer status of one patient is not likely informative about the cancer patient of another. The success-failure condition is met: $np_0 = (120)(0.60) = 72$ and $n(1-p_0) = (120)(0.40) = 48$. }
         
         \textcolor{NavyBlue}{The $p$-value is 0.16, which is greater than $\alpha = 0.05$. There is insufficient evidence to reject the null hypothesis that the 5-year survival probability in the DFCI population is different from 0.60.}
         
@@ -149,7 +149,7 @@ prop.test(x = 80, n = 120, p = 0.60)
     
     c) Compare the results in part b) to those from conducting the hypothesis test based on exact binomial methods.
     
-        \textcolor{NavyBlue}{The exact binomial $p$-value is 0.1619, which is very close to the $p$-value from the normal approximation approach ($p = 0.1623$). This is to be expected since the number of successes and number of failures are both much larger than 10.}
+        \textcolor{NavyBlue}{The result from \texttt{prop.test( )} is (0.27, 0.55), which is very similar to the answer from part c). As sample size increases, the normal approximation improves such that the results from the $z$-test and exact binomial become very close.}
       
     ```{r}
 #use binom.test
