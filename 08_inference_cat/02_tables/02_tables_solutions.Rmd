@@ -305,6 +305,7 @@ risk.nonsmokers = 32/(231-111)
 risk.smokers / risk.nonsmokers
 ```
 
+\newpage
 
 4. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
 
@@ -314,12 +315,14 @@ risk.smokers / risk.nonsmokers
 
     b) Calculate the odds of CVD among smokers and the odds of CVD among non-smokers.
     
-        \textcolor{NavyBlue}{The odds of CVD among smokers is the number of smokers with CVD divided by the number of smokers without CVD: $40/50 = 0.80$. The odds of CVD among non-smokers is the number of non-smokers with CVD divided by the number of non-smokers without CVD: $30/80 = 0.375$.}
+        \textcolor{NavyBlue}{Since there are 110 individuals without CVD and 80 of those are non-smokers, there are 30 individuals without CVD who smoke. Thus, there are $30 + 40 = 70$ individuals who smoke, and $(110 + 90) - 70 = 130$ individuals who do smoke. Of the 130 non-smokers, 80 do not have CVD; thus, 50 non-smokers have CVD.} 
+        
+        \textcolor{NavyBlue}{The odds of CVD among smokers is the number of smokers with CVD divided by the number of smokers without CVD: $40/30 = 1.33$. The odds of CVD among non-smokers is the number of non-smokers with CVD divided by the number of non-smokers without CVD: $50/80 = 0.625$.}
     
     ```{r}
 #use r as a calculator
-odds.smokers = 40/(90-40)
-odds.nonsmokers = (110 - 80)/80
+odds.smokers = 40/30
+odds.nonsmokers = 50/80
 
 odds.smokers
 odds.nonsmokers
