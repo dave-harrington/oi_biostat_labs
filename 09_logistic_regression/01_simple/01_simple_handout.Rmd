@@ -28,6 +28,29 @@ This lab introduces simple logistic regression, a model for the association of a
 
 The material in this lab corresponds to Section 9.xx in *OpenIntro Biostatistics*.
 
+### Introduction
+
+*Odds and probabilities*
+
+If the probability of an event $A$ is $p$, the odds of the event are 
+\[\dfrac{p}{1 - p}. \]
+
+Given the odds of an event $A$, the probability of the event is
+\[\dfrac{\text{odds}}{1 + \text{odds}}. \]
+
+*Simple logistic regression*
+
+Suppose that $Y$ is a binary response variable and $X$ is a predictor variable, where $Y = 1$ represents the particular outcome of interest.
+
+The model for a single variable logistic regression, where $p(x) = P(Y = 1 | X = x)$, is
+\[\text{log} \left[ \dfrac{p(x)}{1 - p(x)} \right] = \beta_0 + \beta_1 x \]
+
+The estimated model equation has the form
+\[\text{log} \left[ \dfrac{\hat{p}(x)}{1 - \hat{p}(x)} \right] = b_0 + b_1 x, \]
+where $b_0$ and $b_1$ are estimates of the model parameters $\beta_0$ and $\beta_1$.
+
+\newpage
+
 ### Background Information
 
 Patients admitted to an intensive care unit (ICU) are either extremely ill or considered to be at great risk of serious complications. There are no widely accepted criteria for distinguishing between patients who should be admitted to an ICU and those for whom admission to other hospital units would be more appropriate. Thus, among different ICUs, there are wide ranges in a patient's chance of survival. When studies are done to compare effectiveness of ICU care, it is critical to have a reliable means of assessing the comparability of the different patient populations.
@@ -47,39 +70,36 @@ The following table provides a list of the variables in the dataset and their de
 \texttt{can} & cancer part of current issue, either \texttt{No} or \texttt{Yes} \\
 \texttt{crn} & history of chronic renal failure, either \texttt{No} or \texttt{Yes}\\
 \texttt{inf} & infection probable at admission, either \texttt{No} or \texttt{Yes} \\
-\texttt{cpr} & CPR prior to admission either \texttt{No} or \texttt{Yes} \\
-\texttt{sys} & systolic blood press at admission, in mm Hg \\
+\texttt{cpr} & CPR prior to admission, either \texttt{No} or \texttt{Yes} \\
+\texttt{sys} & systolic blood pressure at admission, in mm Hg \\
 \texttt{hra} & heart rate at admission, in beats per minute \\
 \texttt{pre} & previous admission to an ICU within 6 months, either \texttt{No} or \texttt{Yes} \\
 \texttt{type} & type of admission, either \texttt{Elective} or \texttt{Emergency} \\
 \texttt{fra} & long bone, multiple, neck, single area, or hip fracture, either \texttt{No} or \texttt{Yes} \\
-\texttt{po2} & $PO_2$ from initial blood gases, either \texttt{60} or \texttt{<=60} \\
+\texttt{po2} & $PO_2$ from initial blood gases, either \texttt{60} or \texttt{<=60}, in mm Hg\\
 \texttt{ph} & $pH$ from initial blood gases, either \texttt{>= 7.25} or \texttt{< 7.25} \\
-\texttt{pco} & $PCO_2$ from initial blood gases, either \texttt{<= 45} or \texttt{>45}
+\texttt{pco} & $PCO_2$ from initial blood gases, either \texttt{<= 45} or \texttt{>45}, in mm Hg \\
+\texttt{bic} & $HCO_3$ (bicarbonate) from initial blood gases, either \texttt{>= 18} or \texttt{<18}, in mm Hg \\
+\texttt{crea} & creatinine from initial blood gases, either \texttt{<= 2.0} or \texttt{> 2.0}, in mg/dL \\
+\texttt{loc} & level of consciousness at admission, either \texttt{no coma or deep stupor}, \texttt{deep stupor}, or \texttt{coma}
 \end{tabular}
 \end{center}
 
-### Introduction
 
-*Odds and probabilities*
-
-If the probability of an event $A$ is $p$, the odds of the event are 
-\[\dfrac{p}{1 - p}. \]
-
-Given the odds of an event $A$, the probability of the event is
-\[\dfrac{\text{odds}}{1 + \text{odds}}. \]
-
-*Simple logistic regression*
-
-Suppose that $Y$ is a binary response variable and $X$ is a predictor variable, where $Y = 1$ represents the particular outcome of interest.
-
-The model for a single variable logistic regression, where $p(x) = P(Y = 1 | X = x)$, is
-\[\text{log} \left[ \dfrac{p(x)}{1 - p(x)} \right] = \beta_0 + \beta_1 x \]
 
 \newpage
 
 ### Odds and probabilities
 
+1. 
+
+2. Creatinine level in the data are recorded as being either less than or equal to 2.0 mg/dL or greater than 2.0 mg/dL. A typical creatinine level is between 0.5 - 1.0 mg/dL, and elevated creatinine may be a sign of renal failure.
+
+    a) Calculate the odds of survival to discharge for patients who have a creatinine level less than or equal to 2.0 mg/dL. From the odds, calculate the probability of survival to discharge for these patients.
+  
+    b) Calculate the probability of survival to discharge for patients who have a creatinine level greater than 2.0 mg/dL. From the probability, calculate the odds of survival to discharge for these patients.
+  
+    c) Compute and interpret the odds ratio of survival to discharge, comparing patients with creatinine $> 2.0$ mg/dL to those with creatinine $\leq$ 2.0 mg/dL.
 
 ### Simple logistic regression
 
