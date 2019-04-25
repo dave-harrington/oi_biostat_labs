@@ -1,17 +1,11 @@
 ---
 title: "Simple Logistic Regression"
-author: "Chapter 9, Lab 1"
+author: "Chapter 9, Lab 1: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
 geometry: margin=1in
-
-output:
-  pdf_document:
-    includes:
-      in_header: ../../header.tex
-    fig_width: 5
-    fig_height: 3.5
+output: pdf_document
 ---
 
 \begin{small}
@@ -93,54 +87,221 @@ The following table provides a list of the variables in the dataset and their de
 
 1. Create a two-way table of survival to discharge by whether CPR was administered prior to admission. The template provides code for re-leveling the \texttt{sta} variable such that \texttt{0} corresponds to \texttt{Died} and \texttt{1} corresponds to \texttt{Lived}.
 
-    a) Calculate the odds of survival to discharge for those who did not receive CPR prior to ICU admission. Is someone who did not receive CPR prior to admission more likely to survive to discharge than to not survive to discharge?
+```{r, eval = FALSE}
+#install the package (only needs to be done once)
+install.packages("aplore3")
+```
+
+
+```{r, warning = FALSE}
+#load the data
+library(aplore3)
+data("icu")
+
+#relevel survival so that 1 corresponds to surviving to discharge
+icu$sta = factor(icu$sta, levels = rev(levels(icu$sta)))
+
+#create two-way table
+addmargins(table(icu$sta, icu$cpr,
+                 dnn = c("Survival", "Prior CPR")))
+```
+
+
+  a) Calculate the odds of survival to discharge for those who did not receive CPR prior to ICU admission. Is someone who did not receive CPR prior to admission more likely to survive to discharge than to not survive to discharge?
     
-    b) Calculate the odds of survival to discharge for those who received CPR prior to ICU admission. Is someone who received CPR prior to admission more likely to survive to discharge than not?
     
-    c) Calculate the odds ratio of survival to discharge, comparing patients who receive CPR prior to admission to those who do not receive CPR prior to admission.
+```{r}
+#use r as a calculator
+```
+    
+    
+  b) Calculate the odds of survival to discharge for those who received CPR prior to ICU admission. Is someone who received CPR prior to admission more likely to survive to discharge than not?
+    
+    
+```{r}
+#use r as a calculator
+
+```
+    
+    
+  c) Calculate the odds ratio of survival to discharge, comparing patients who receive CPR prior to admission to those who do not receive CPR prior to admission.
+    
+    
+```{r}
+#use r as a calculator
+    
+```
+    
+    
+    
+    
+    
 
 2. Creatinine level in the data are recorded as being either less than or equal to 2.0 mg/dL or greater than 2.0 mg/dL. A typical creatinine level is between 0.5 - 1.0 mg/dL, and elevated creatinine may be a sign of renal failure.
 
-    a) Calculate the odds of survival to discharge for patients who have a creatinine level less than or equal to 2.0 mg/dL. From the odds, calculate the probability of survival to discharge for these patients.
+```{r}
+#create two-way table
+
+```
+
+
+  a) Calculate the odds of survival to discharge for patients who have a creatinine level less than or equal to 2.0 mg/dL. From the odds, calculate the probability of survival to discharge for these patients.
+
   
-    b) Calculate the probability of survival to discharge for patients who have a creatinine level greater than 2.0 mg/dL. From the probability, calculate the odds of survival to discharge for these patients.
+```{r}
+#use r as a calculator
+
+```
+
   
-    c) Compute and interpret the odds ratio of survival to discharge, comparing patients with creatinine $> 2.0$ mg/dL to those with creatinine $\leq$ 2.0 mg/dL.
+  b) Calculate the probability of survival to discharge for patients who have a creatinine level greater than 2.0 mg/dL. From the probability, calculate the odds of survival to discharge for these patients.
+  
+  
+```{r}
+#use r as a calculator
+
+```
+
+  
+  c) Compute and interpret the odds ratio of survival to discharge, comparing patients with creatinine $> 2.0$ mg/dL to those with creatinine $\leq$ 2.0 mg/dL.
+
+  
+```{r}
+#use r as a calculator
+
+```
+
+
+
+
+\newpage
 
 ### Simple logistic regression
 
 3. Fit a logistic regression model to predict survival to discharge from prior CPR.
 
-    a) Write the model equation estimated from the data.
+```{r}
+#fit a model
+glm(sta ~ cpr, data = icu, family = binomial(link = "logit"))
+```
+
+
+  a) Write the model equation estimated from the data.
+  
+  
+  
     
-    b) Interpret the intercept. Confirm that the interpretation coheres with the answer to Question 1, part a).
+  b) Interpret the intercept. Confirm that the interpretation coheres with the answer to Question 1, part a).
+  
+  
+  
     
-    c) Interpret the slope coefficient. Compute the exponential of the slope coefficient and confirm that this matches the answer to Question 1, part c).
+  c) Interpret the slope coefficient. Compute the exponential of the slope coefficient and confirm that this matches the answer to Question 1, part c).
+  
+  
+  
     
-    d) Compute and interpret an odds ratio that summarizes the association between survival to discharge and prior CPR.
+  d) Compute and interpret an odds ratio that summarizes the association between survival to discharge and prior CPR.
+  
+  
+  
+```{r}
+#compute odds ratio
+
+```
+  
     
-    e) Is there evidence of a statistically significant association between survival to discharge and prior CPR at $\alpha = 0.05$?
+  e) Is there evidence of a statistically significant association between survival to discharge and prior CPR at $\alpha = 0.05$?
+  
+  
+  
+```{r}
+#use summary(glm( ))
+
+```
+  
 
 \newpage
     
 4. Fit a logistic regression model to predict survival to discharge from an indicator of elevated creatinine.
 
-    a) Write the model equation estimated from the data.
+```{r}
+#fit the model
+
+```
+
+  a) Write the model equation estimated from the data.
     
-    b) Interpret the intercept and slope coefficient.
+  
+  
+  
+  b) Interpret the intercept and slope coefficient.
     
-    c) Compute and interpret an odds ratio that summarizes the association between survival to discharge and an indicator of elevated creatinine.
+  
+  
+  
+  c) Compute and interpret an odds ratio that summarizes the association between survival to discharge and an indicator of elevated creatinine.
     
-    d) Is there evidence of a statistically significant association between survival to discharge and an indicator of elevated creatinine at $\alpha = 0.05$?
+  
+```{r}
+#compute odds ratio
+
+```
+  
+  
+  
+  d) Is there evidence of a statistically significant association between survival to discharge and an indicator of elevated creatinine at $\alpha = 0.05$?
+  
+  
+```{r}
+
+```
+  
 
 5. Fit a logistic regression model to predict survival to discharge from age.
 
-    a) Write the model equation estimated from the data.
-    
-    b) Does the intercept have a meaningful interpretation in the context of the data?
-    
-    c) Interpret the slope coefficient. 
-    
-    d) Calculate the odds of survival to discharge for a 70-year-old individual. Is a 70-year-old individual more likely to survive than not?
+```{r}
+#fit the model
 
-    e) Calculate the odds ratio of survival to discharge comparing a 45-year-old individual to a 70-year-old individual.
+```
+
+
+  a) Write the model equation estimated from the data.
+  
+    
+    
+  b) Does the intercept have a meaningful interpretation in the context of the data?
+    
+  
+  
+  
+  
+  c) Interpret the slope coefficient. 
+    
+  
+  
+  
+  d) Calculate the odds of survival to discharge for a 70-year-old individual. Is a 70-year-old individual more likely to survive than not?
+
+  
+```{r}
+#use r as a calculator
+
+
+#alternatively, use predict()...
+
+```
+  
+  
+  
+  e) Calculate the odds ratio of survival to discharge comparing a 45-year-old individual to a 70-year-old individual.
+  
+  
+```{r}
+#use r as a calculator
+
+#alternatively, use predict()...
+
+```
+  
+  
