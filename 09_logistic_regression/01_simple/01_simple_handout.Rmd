@@ -1,0 +1,85 @@
+---
+title: "Simple Logistic Regression"
+author: "Chapter 9, Lab 1"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Odds and probabilities
+	  \item Simple logistic regression
+	\end{itemize}
+	
+\end{small}
+
+This lab introduces simple logistic regression, a model for the association of a binary response variable with a single predictor variable. Logistic regression generalizes methods for two-way tables and gives a numerical estimate about both direction and size of an association.
+
+The material in this lab corresponds to Section 9.xx in *OpenIntro Biostatistics*.
+
+### Background Information
+
+Patients admitted to an intensive care unit (ICU) are either extremely ill or considered to be at great risk of serious complications. There are no widely accepted criteria for distinguishing between patients who should be admitted to an ICU and those for whom admission to other hospital units would be more appropriate. Thus, among different ICUs, there are wide ranges in a patient's chance of survival. When studies are done to compare effectiveness of ICU care, it is critical to have a reliable means of assessing the comparability of the different patient populations.
+
+One such strategy for doing so involves the use of statistical modeling to relate empirical data for many patient variables to outcomes of interest. The following dataset consists of a sample of 200 subjects who were part of a much larger study on survival of patients following admission to an adult ICU.\footnote{From Hosmer D.W., Lemeshow, S., and Sturdivant, R.X. \textit{Applied Logistic Regression}. 3$^{rd}$ ed., 2013. Accessible from \texttt{http://www.umass.edu/statdata/statdata/data/icu.txt}} The major goal of the study was to develop a logistic regression model to predict the probability of survival to hospital discharge.\footnote{Lemeshow S., et al. Predicting the outcome of intensive care unit patients. \textit{Journal of the American Statistical Association} 83.402 (1988): 348-356.}
+
+The following table provides a list of the variables in the dataset and their description.
+
+\begin{center}
+\begin{tabular}{r|l}
+\textbf{Variable} & \textbf{Description} \\
+\hline
+\texttt{id} & patient ID number \\
+\texttt{sta} & patient status at discharge, either \texttt{Lived} or \texttt{Died} \\
+\texttt{age} & age in years \\
+\texttt{gender} & gender, either \texttt{Male} or \texttt{Female} \\
+\texttt{can} & cancer part of current issue, either \texttt{No} or \texttt{Yes} \\
+\texttt{crn} & history of chronic renal failure, either \texttt{No} or \texttt{Yes}\\
+\texttt{inf} & infection probable at admission, either \texttt{No} or \texttt{Yes} \\
+\texttt{cpr} & CPR prior to admission either \texttt{No} or \texttt{Yes} \\
+\texttt{sys} & systolic blood press at admission, in mm Hg \\
+\texttt{hra} & heart rate at admission, in beats per minute \\
+\texttt{pre} & previous admission to an ICU within 6 months, either \texttt{No} or \texttt{Yes} \\
+\texttt{type} & type of admission, either \texttt{Elective} or \texttt{Emergency} \\
+\texttt{fra} & long bone, multiple, neck, single area, or hip fracture, either \texttt{No} or \texttt{Yes} \\
+\texttt{po2} & $PO_2$ from initial blood gases, either \texttt{60} or \texttt{<=60} \\
+\texttt{ph} & $pH$ from initial blood gases, either \texttt{>= 7.25} or \texttt{< 7.25} \\
+\texttt{pco} & $PCO_2$ from initial blood gases, either \texttt{<= 45} or \texttt{>45}
+\end{tabular}
+\end{center}
+
+### Introduction
+
+*Odds and probabilities*
+
+If the probability of an event $A$ is $p$, the odds of the event are 
+\[\dfrac{p}{1 - p}. \]
+
+Given the odds of an event $A$, the probability of the event is
+\[\dfrac{\text{odds}}{1 + \text{odds}}. \]
+
+*Simple logistic regression*
+
+Suppose that $Y$ is a binary response variable and $X$ is a predictor variable, where $Y = 1$ represents the particular outcome of interest.
+
+The model for a single variable logistic regression, where $p(x) = P(Y = 1 | X = x)$, is
+\[\text{log} \left[ \dfrac{p(x)}{1 - p(x)} \right] = \beta_0 + \beta_1 x \]
+
+\newpage
+
+### Odds and probabilities
+
+
+### Simple logistic regression
+
