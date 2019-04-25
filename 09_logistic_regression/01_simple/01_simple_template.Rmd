@@ -37,7 +37,7 @@ Given the odds of an event $A$, the probability of the event is
 Suppose that $Y$ is a binary response variable and $X$ is a predictor variable, where $Y = 1$ represents the particular outcome of interest.
 
 The model for a single variable logistic regression, where $p(x) = P(Y = 1 | X = x)$, is
-\[\text{log} \left[ \dfrac{p(x)}{1 - p(x)} \right] = \beta_0 + \beta_1 x \]
+\[\text{log} \left[ \dfrac{p(x)}{1 - p(x)} \right] = \beta_0 + \beta_1 x. \]
 
 The estimated model equation has the form
 \[\text{log} \left[ \dfrac{\hat{p}(x)}{1 - \hat{p}(x)} \right] = b_0 + b_1 x, \]
@@ -75,7 +75,7 @@ The following table provides a list of the variables in the dataset and their de
 \texttt{pco} & $PCO_2$ from initial blood gases, either \texttt{<= 45} or \texttt{>45}, in mm Hg \\
 \texttt{bic} & $HCO_3$ (bicarbonate) from initial blood gases, either \texttt{>= 18} or \texttt{<18}, in mm Hg \\
 \texttt{crea} & creatinine from initial blood gases, either \texttt{<= 2.0} or \texttt{> 2.0}, in mg/dL \\
-\texttt{loc} & level of consciousness at admission, either \texttt{no coma or deep stupor}, \texttt{deep stupor}, or \texttt{coma}
+\texttt{loc} & level of consciousness at admission, either \texttt{Nothing}, \texttt{Stupor}, or \texttt{Coma}
 \end{tabular}
 \end{center}
 
