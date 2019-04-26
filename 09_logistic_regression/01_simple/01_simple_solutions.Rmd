@@ -80,7 +80,7 @@ The following table provides a list of the variables in the dataset and their de
 \texttt{ph} & $pH$ from initial blood gases, either \texttt{>= 7.25} or \texttt{< 7.25} \\
 \texttt{pco} & $PCO_2$ from initial blood gases, either \texttt{<= 45} or \texttt{>45}, in mm Hg \\
 \texttt{bic} & $HCO_3$ (bicarbonate) from initial blood gases, either \texttt{>= 18} or \texttt{<18}, in mm Hg \\
-\texttt{crea} & creatinine from initial blood gases, either \texttt{<= 2.0} or \texttt{> 2.0}, in mg/dL \\
+\texttt{cre} & creatinine from initial blood gases, either \texttt{<= 2.0} or \texttt{> 2.0}, in mg/dL \\
 \texttt{loc} & level of consciousness at admission, either \texttt{Nothing}, \texttt{Stupor}, or \texttt{Coma}
 \end{tabular}
 \end{center}
@@ -248,11 +248,11 @@ glm(sta ~ cre, data = icu, family = binomial(link = "logit"))$coef
     
     b) Interpret the intercept and slope coefficient.
     
-        \textcolor{NavyBlue}{The intercept is the log odds of survival to discharge for individuals with creatinine less than or equal to 2.0 mg/dL. The slope coefficient is the difference in the odds of survival to discharge between the groups defined by creatinine; log odds are 1.488 lower in the group with creatinine higher than 2.0 mg/dL}
+        \textcolor{NavyBlue}{The intercept is the log odds of survival to discharge for individuals with creatinine less than or equal to 2.0 mg/dL. The slope coefficient is the difference in the log odds of survival to discharge between the groups defined by creatinine; log odds are 1.488 lower in the group with creatinine higher than 2.0 mg/dL}
     
     c) Compute and interpret an odds ratio that summarizes the association between survival to discharge and an indicator of elevated creatinine.
     
-        \textcolor{NavyBlue}{The odds ratio of survival to discharge, comparing those with lower creatinine to those with higher creatinine, is 4.43; the odds of survival to discharge are over 4 times as large in the group with creatinine less than 2.0 mg/dL. }
+        \textcolor{NavyBlue}{The odds ratio of survival to discharge, comparing those with lower creatinine to those with higher creatinine, is $e^{1.488} = 4.43$; the odds of survival to discharge are over 4 times as large in the group with creatinine less than 2.0 mg/dL. }
     
     d) Is there evidence of a statistically significant association between survival to discharge and an indicator of elevated creatinine at $\alpha = 0.05$?
     
@@ -306,7 +306,7 @@ exp(log.odds)
 
     e) Calculate the odds ratio of survival to discharge comparing a 45-year-old individual to a 70-year-old individual.
     
-        \textcolor{NavyBlue}{The odds ratio can be calculated directly from the model slope, or from calculating the odds at each age then dividing to obtain the ratio. The odds ratio of survival to discharge comparing a 45-year-old individual to a 70-year-old individual is 1.99; the odds of survival to discharge are almost twice as large for a 45-year-old than a 70-year-old.}
+        \textcolor{NavyBlue}{The odds ratio can be calculated directly from the model slope, or from calculating the odds at each age then dividing to obtain the ratio. The odds ratio of survival to discharge comparing a 45-year-old individual to a 70-year-old individual is $e^{(70-45)(0.02754)} = 1.99$; the odds of survival to discharge are almost twice as large for a 45-year-old than a 70-year-old.}
         
     ```{r}
 #use r as a calculator
