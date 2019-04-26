@@ -169,7 +169,7 @@ glm( , data = icu, family = binomial(link = "logit"))
   
     
     
-    b) Assess whether this model is a better parsimonious model than the model fit in Question 1.
+  b) Assess whether this model is a better parsimonious model than the one from \text{Question~1}.
   
   
 ```{r}
@@ -255,7 +255,7 @@ levels(icu$loc.binary) = list("Conscious" = c("Nothing"),
 ```
   
   
-  iii. Suppose that a 70-year-old individual enters the ICU: CPR was not administered prior to admission, they entered the ICU conscious, and infection was not probable. Suppose that a 40-year-old enters the ICU: CPR was not administered prior to admission, they entered the ICU unconscious, and infection was not probable. Compare the odds of survival for these two individuals.
+  iii. Suppose that a 70-year-old individual enters the ICU: CPR was administered prior to admission, they entered the ICU conscious, and infection was probable. Suppose that a 40-year-old enters the ICU: CPR was not administered prior to admission, they entered the ICU unconscious, and infection was not probable. Compare the odds of survival for these two individuals.
 
 
     

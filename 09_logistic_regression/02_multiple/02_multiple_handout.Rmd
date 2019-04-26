@@ -116,7 +116,7 @@ The following table provides a list of the variables in the dataset and their de
 
     a) Interpret the slope of the interaction term.
     
-    b) Assess whether this model is a better parsimonious model than the model fit in Question 1.
+    b) Assess whether this model is a better parsimonious model than the one from \text{Question~1}.
     
 3. Consider two additional variables: the level of consciousness at admission (\texttt{loc}) and whether infection was probable (\texttt{inf}).
 
@@ -140,6 +140,6 @@ The following table provides a list of the variables in the dataset and their de
         
         ii. Compare the odds of survival for a 50-year-old versus a 30-year-old, if infection was probable for both, and both received CPR prior to admission and entered the ICU conscious.
         
-        iii. Suppose that a 70-year-old individual enters the ICU: CPR was not administered prior to admission, they entered the ICU conscious, and infection was not probable. Suppose that a 40-year-old enters the ICU: CPR was not administered prior to admission, they entered the ICU unconscious, and infection was not probable. Compare the odds of survival for these two individuals.
+        iii. Suppose that a 70-year-old individual enters the ICU: CPR was administered prior to admission, they entered the ICU conscious, and infection was probable. Suppose that a 40-year-old enters the ICU: CPR was not administered prior to admission, they entered the ICU unconscious, and infection was not probable. Compare the odds of survival for these two individuals.
         
     d) Assess whether the model from part c) is a better parsimonious model than the model fit in Question 1.

@@ -95,28 +95,118 @@ The following table provides a list of the variables in the dataset and their de
 
     Fit a single model to predict survival to discharge (\texttt{sta}) from age (\texttt{age}), CPR prior to admission (\texttt{cpr}), and an indicator of elevated creatinine level (\texttt{cre}).
     
+    ```{r}
+#load the data
+library(aplore3)
+data("icu")
+
+#relevel survival so that 1 corresponds to surviving to discharge
+icu$sta = factor(icu$sta, levels = rev(levels(icu$sta)))
+
+#fit the model
+glm(sta ~ age + cpr + cre, data = icu, family = binomial(link = "logit"))
+```
     
     a) Write the model equation.
     
+        \color{NavyBlue}
+        
+        \[\log\left[\frac{\hat{p}( \text{status = lived} |\text{age, cpr, cre})}{1 - \hat{p}(\text{status = lived} | \text{age, cpr, cre})}\right] = 3.329 -0.0281(age) -1.697(cpr_{yes} -1.133(cre_{> 2.0})\]
+        
+        \[\log(\widehat{\text{odds}}\text{ of lived | age, cpr, creatinine}) = 3.329 -0.0281(age) -1.697(cpr_{yes} -1.133(cre_{> 2.0})\]
+        
+        \color{Black}
+    
     b) Interpret the slope coefficients.
+        
+        \color{NavyBlue}
+        
+        The slope coefficient for age indicates that an increase in 1 year of age is associated with a decrease of 0.0281 in the estimated log odds of survival to discharge, when the values of the other variables do not change.
+        
+        The slope coefficient for prior CPR indicates that the estimated log odds of survival to discharge are 1.697 lower in individuals who receive CPR prior to admission (versus not receiving CPR), when the values of the other variables do not change.
+        
+        The slope coefficient for creatinine indicates that the estimated log odds of survival to discharge are 1.133 lower in individuals with creatinine higher than 2.0 mg/dL (versus lower than or equal to), when the values of the other variables do not change.
+        
+        \color{Black}
     
     c) Make predictions.
     
         i. Compare the odds of survival for those who did receive CPR prior to admission to those who did not receive CPR prior to admission.
         
+            \textcolor{NavyBlue}{The odds ratio, comparing those who did receive CPR to those who did not, can be directly calculated from the slope coefficient: $\exp(-1.697) = 0.183$. It can be easier to interpret the reciprocal, $\exp(1.697) = 5.46$. The odds of survival to discharge for those who do not receive CPR prior to admission are almost 6 times as large as those for patients who do receive CPR prior to ICU admission.}
+        
         ii. Compare the odds of survival for those who had elevated creatinine level beyond 2.0 mg/dL to those who did not.
+        
+            \textcolor{NavyBlue}{The odds ratio, comparing those who did have creatinine above 2.0 mg/dL to those who did not, can be directly calculated from the slope coefficient: $\exp(-1.133) = 0.322$, or $\exp(1.133) = 3.105$. The odds of survival to discharge for those who have creatinine under or equal to 2.0 mg/dL are about 3 times as large as the odds of survival to discharge for those who have creatinine over 2.0 mg/dL.}
         
         iii. Calculate the odds of survival for a 65-year-old individual who did not receive CPR prior to admission and had creatinine level of 1.1 mg/dL. Is this individual more likely to survive than not survive?
         
+            \textcolor{NavyBlue}{The odds of survival for the described individual are $\exp(3.329 - (0.0281)(65) - (1.697)(0) - (1.133)(0)) = 4.480.$ Since odds greater than 1 correspond to probability greater than 0.50, this individual is more likely to survive than not survive.}
+        
         iv. Compare the odds of survival for a 30-year-old individual who received CPR prior to admission and had creatinine level of 1.5 mg/dL to the odds of survival for the individual described in part iii.
+        
+            \textcolor{NavyBlue}{The odds of survival for the described 30-year-old individual are $\exp(3.329 - (0.0281)(30) - (1.697)(1) - (1.133)(0)) = 2.199$. The odds ratio, comparing the 65-year-old to the 30-year-old, is 2.04; the odds of the older individual surviving to discharge are about twice as large as the those of the younger individual surviving to discharge.}
+        
+    ```{r}
+#part i.
+exp(-1.697); exp(1.697)
+
+#part ii.
+exp(-1.133); exp(1.133)
+    
+#part iii.
+model.1 = glm(sta ~ age + cpr + cre, data = icu, 
+              family = binomial(link = "logit"))
+log.odds = predict(model.1, newdata = data.frame(age = 65, 
+                                                 cpr = "No",
+                                                 cre = "<= 2.0"))
+exp(log.odds)
+
+#part iv.
+log.odds.a = predict(model.1, newdata = data.frame(age = 65, 
+                                                 cpr = "No",
+                                                 cre = "<= 2.0"))
+exp(log.odds.a)
+log.odds.b = predict(model.1, newdata = data.frame(age = 30, 
+                                                 cpr = "Yes",
+                                                 cre = "<= 2.0"))
+exp(log.odds.b)
+exp(log.odds.a)/exp(log.odds.b)
+```        
         
     d) Identify the significant predictors of survival to discharge from this model.
     
+        \textcolor{NavyBlue}{The significant predictors of survival to discharge are age and prior CPR; each have $p$-value lower than 0.05.}
+        
+    ```{r}
+summary(model.1)$coef
+```
+        
+    
 2. Fit a model for predicting survival to discharge from age, CPR prior to admission, and the interaction between age and CPR prior to admission.
+
+    ```{r}
+#fit a model
+glm(sta ~ age*cpr, data = icu, family = binomial(link = "logit"))
+```
+
 
     a) Interpret the slope of the interaction term.
     
-    b) Assess whether this model is a better parsimonious model than the model fit in Question 1.
+        \textcolor{NavyBlue}{The slope of the interaction term indicates the association between estimated log odds of survival to discharge and age is more negative for individuals who received CPR prior to admission compared to those who did not receive CPR prior to admission. In other words, an increase in age is associated with a greater decrease in log odds of survival for patients who received CPR. The slope coefficient for age is -0.0248 in the group who did not receive prior CPR, and $-0.0248 - 0.0942 = -0.119$ in the group who received \text{prior~CPR}.}
+    
+    b) Assess whether this model is a better parsimonious model than the one from \text{Question~1}.
+    
+        \textcolor{NavyBlue}{The AIC of this model is 189.1, while the AIC of the earlier model is 189.5. By only a very slim margin, AIC indicates that this model is a better parsimonious model.}
+        
+    ```{r}
+model.interact = glm(sta ~ age*cpr, data = icu, 
+                     family = binomial(link = "logit"))
+
+AIC(model.1)
+AIC(model.interact)
+```
+        
     
 3. Consider two additional variables: the level of consciousness at admission (\texttt{loc}) and whether infection was probable (\texttt{inf}).
 
@@ -124,22 +214,127 @@ The following table provides a list of the variables in the dataset and their de
     
         i. Create a two-way table; explore the relationship of level of consciousness at admission and survival to discharge. Summarize your findings.
         
+            \textcolor{NavyBlue}{The proportion of individuals who survive to discharge of those who enter conscious is $158/185 = 0.85$. No individuals who entered in a stupor survived to discharge. Of the individuals who entered in a coma, $2/10 = 0.20$ survived to discharge.}
+        
         ii. Create a two-way table; explore the relationship of probable infection at admission and survival to discharge. Summarize your findings.
         
+            \textcolor{NavyBlue}{The proportion of individuals who survived to discharge when infection was not probable is $100/116 = 0.86$. The proportion of individuals who survived when infection was probable is $60/84 = 0.71$.}
+        
+    ```{r}
+#table: survival and consciousness
+addmargins(table(icu$sta, icu$loc,
+           dnn = c("Survival", "Consciousness")))
+
+#table: survival and probable infection
+addmargins(table(icu$sta, icu$inf,
+           dnn = c("Survival", "Infection")))
+```
+        
     b) Fit a logistic regression model to predict survival to discharge from age, prior CPR, probable infection, and level of consciousness.
+
     
         i. Write the model equation.
         
+            \color{NavyBlue}
+            
+            \begin{align*}
+            \log\left[\frac{\hat{p}( \text{status = lived} |\text{age, cpr, inf, loc})}{1 - \hat{p}(\text{status = lived} | \text{age, cpr, inf, loc})}\right] =& 2.865 - 0.0277(age) -1.0945(cpr_{yes}) \\
+            & \quad - 0.705(inf_{yes}) - 18.381(loc_{stupor}) -2.637(loc_{coma})
+            \end{align*}
+            
+            \begin{align*}
+            \log(\widehat{\text{odds}}\text{ of lived | age, cpr, inf, loc}) =& 2.865 - 0.0277(age) -1.0945(cpr_{yes}) - 0.705(inf_{yes}) \\
+            & \quad - 18.381(loc_{stupor}) -2.637(loc_{coma})
+            \end{align*}
+            
+            \color{Black}
+        
         ii. Interpret the slope coefficients.
         
+            \color{NavyBlue}
+            
+            The coefficient for age indicates that an increase of 1 year of age is associated with a decrease in estimated log odds of survival of 0.0277, when the values of the other variables do not change.
+            
+            The coefficient for prior CPR indicates that the estimated log odds of survival for an individual who received CPR prior to admission are 1.094 lower than those for an individual who did not receive prior CPR, when the values of the other variables do not change.
+            
+            The coefficient for probable infection indicates that the estimated log odds of survival for an individual for whom infection is probable are 0.705 lower than those for an individual for whom infection is not probable, when the values of the other variables do not change.
+            
+            The coefficient for stupor indicates that the estimated log odds of survival for an individual who entered the ICU in a stupor are 18.381 lower than those for an individual who entered conscious, when the values of the other variables do not change.
+            
+            The coefficient for coma indicates that the estimated log odds of survival for an individual who entered the ICU in a coma are 2.637 lower than those for an individual who entered conscious, when the values of the other variables do not change.
+            
+            \color{Black}
+        
         iii. Examine the output of \texttt{summary(glm())}. Do you notice anything surprising or unexpected?
+        
+            \textcolor{NavyBlue}{The estimate and standard error for stupor are extremely large (-18.381 and 1052.97, respectively). The $p$-value is insignificant, yet the earlier table showed that of the 5 individuals admitted in a stupor, none survived. It seems the model should indicate that the odds of survival for individuals who entered in a stupor are very different from the odds of survival for individuals who entered conscious.}
+            
+            \textcolor{NavyBlue}{The logistic regression model fails when there are empty or near empty cells for a particular variable; in this case, there were no observations of individuals who entered in a stupor and survived to discharge. The large standard error reflects the lack of precision in the estimate of the slope coefficient and leads to the very large $p$-value. This example illustrates the importance of examining data prior to fitting a model so as to be able to anticipate potential problems. }
+            
+            \textcolor{NavyBlue}{One possible solution is to collapse the levels of \texttt{loc} and create a binary version of the variable that records only whether or not a patient was conscious at admission.}
+        
+    ```{r}
+#fit a model
+model.2 = glm(sta ~ age + cpr + inf + loc, data = icu, 
+    family = binomial(link = "logit"))
+coef(model.2) 
+
+#model summary
+summary(model.2)
+```
         
     c) Run the code in the template to create a binary version of \texttt{loc} that records whether or not an individual was conscious upon being admitted to the ICU. Fit the model from part b) using \texttt{loc.binary}.
     
         i. Interpret the slope coefficient of \texttt{loc.binary}.
         
+            \textcolor{NavyBlue}{The estimated log odds of survival for a patient who enters the ICU unconscious (either in stupor or coma) are 3.372 lower than a patient who enters the ICU conscious. }
+        
         ii. Compare the odds of survival for a 50-year-old versus a 30-year-old, if infection was probable for both, and both received CPR prior to admission and entered the ICU conscious.
         
-        iii. Suppose that a 70-year-old individual enters the ICU: CPR was not administered prior to admission, they entered the ICU conscious, and infection was not probable. Suppose that a 40-year-old enters the ICU: CPR was not administered prior to admission, they entered the ICU unconscious, and infection was not probable. Compare the odds of survival for these two individuals.
+            \textcolor{NavyBlue}{Since the values of the other variables in the model remain constant, it is possible to directly compare the odds via the slope coefficient for age. The slope coefficient represents the log of the odds ratio for a change of one year, when other variables are held constant. The odds ratio, comparing the younger individual to the older individual, is $\exp(0.0267 \times (50-30)) = 1.71$; the odds of survival to discharge for the 30-year-old are 1.7 times as large as the odds of survival for the 50-year-old.}
+        
+        iii. Suppose that a 70-year-old individual enters the ICU: CPR was administered prior to admission, they entered the ICU conscious, and infection was probable. Suppose that a 40-year-old enters the ICU: CPR was not administered prior to admission, they entered the ICU unconscious, and infection was not probable. Compare the odds of survival for these two individuals.
+        
+            \textcolor{NavyBlue}{The estimated odds of survival for the older individual are 1.308; the estimated odds of survival for the younger individual are 2.506. The odds ratio, comparing the older individual to the younger individual, is 2.51; the odds of survival to discharge for the older individual are about 2.5 times as large as the odds of survival to discharge for the younger individual.}
+        
+    ```{r}
+#create the loc.binary variable
+icu$loc.binary = icu$loc
+
+#redefine the factor levels of loc.binary
+levels(icu$loc.binary) = list("Conscious" = c("Nothing"),
+                       "Unconscious" = c("Stupor", "Coma"))
+
+#fit the model (part i.)
+model.3 = glm(sta ~ age + cpr + inf + loc.binary, data = icu, 
+    family = binomial(link = "logit"))
+coef(model.3) 
+
+#50-year-old vs 30-year-old (part ii.)
+exp(model.3$coef[2]*(50-30)); exp(-model.3$coef[2]*(50-30))
+
+#70-year-old vs 40-year-old (part iii.)
+log.odds.70 = predict(model.3, newdata = data.frame(age = 70,
+                                                    cpr = "Yes",
+                                                    inf = "Yes",
+                                                    loc.binary = "Conscious"))
+log.odds.40 = predict(model.3, newdata = data.frame(age = 40,
+                                                    cpr = "No",
+                                                    inf = "No",
+                                                    loc.binary = "Unconscious"))
+exp(log.odds.70); exp(log.odds.40) #calculate odds
+exp(log.odds.70)/exp(log.odds.40)  #calculate odds ratio
+```
+    
+    \newpage
         
     d) Assess whether the model from part c) is a better parsimonious model than the model fit in Question 1.
+    
+        \textcolor{NavyBlue}{The model from part c) has a lower AIC than the model from Question 1 (164.8 versus 189.5), so the model from part c) is a better parsimonious model. The addition of probable infection and level of consciousness (and removal of creatinine) result in a better predictive model; i.e., these additional variables are 'worth' adding.}
+    
+    ```{r}
+AIC(model.1)
+AIC(model.3)
+```
+    
+    
