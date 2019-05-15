@@ -1,0 +1,225 @@
+---
+title: "A Closer Look at the $P$-Value"
+author: "Chapter 5, Lab 5: Handout"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+This lab uses simulation and the principles of conditional probability to highlight some specific misconceptions about $p$-values. It can also be viewed as an informal introduction to the paradigm of Bayesian inference.
+
+### The ASA Statement on Statistical Significance and $P$-Values
+
+In 2016, the American Statistical Association released a formal statement clarifying principles about the proper use and interpretation of the $p$-value, with the aim of improving the way research is conducted in the scientific community.\footnote{Wasserstein, R.L. and Lazar, N.A. (2016). The ASA's statement on p-values: context, process, and purpose. \textit{The American Statistician}, \textit{70}(2), 129-133.} The main points of the statement are reproduced below.
+
+  1. $P$-values can indicate how incompatible the data are with a specified statistical model. 
+  2. $P$-values do not measure the probability that the studied hypothesis is true, or the probability that the data were produced by random chance alone. 
+  3. Scientific conclusions and business or policy decisions should not be based only on whether a $p$-value passes a specific threshold. Many other contextual factors should be considered, such as the design of a study, the external evidence for the phenomenon under study, and the validity of the assumptions that underlie the data analysis.
+  4. Proper inference requires full reporting and transparency. Conducting multiple analyses and reporting only those with certain $p$-values compromises interpretation of the results.
+  5. A $p$-value does not measure the size of an effect or the importance of a result. Statistical significance is not equivalent to scientific, human, or economic significance.
+  6. By itself, a $p$-value does not provide a good measure of evidence regarding a model or hypothesis. 
+  
+The second point touches on an especially common misconception about $p$-values---that if a $p$-value equals, say, 0.04, the null hypothesis has only a 4\% chance of being true (or that the alternative hypothesis has a 96\% chance of being true). This misconception will be explored in the lab, along with an approach for quantifying external evidence for a phenomenon (as mentioned in the third point).
+
+\newpage
+  
+### Introduction
+
+Treatment for Alzheimer's disease is an active research area because of the aging population in the United States and other high-income countries. The Dementia Severity Rating Scale (DSRS) is a questionnaire completed by a knowledgeable informant (typically a spouse or other close relative) to measure the impairment severity of a person with Alzheimer's disease.\footnote{Clark C.M., Ewbank D.C. (1996). Performance of the dementia severity rating scale: a caregiver questionnaire for rating severity in Alzheimer disease. \textit{Alzheimer Disease and Associated Disorders}, \textit{10}(1),31-9.} Scores on the DSRS range from 0 (indicating no impairment) to 54 (extreme impairment).
+
+Cognitive decline over several years is measured by the annual rate in change in DSRS score. For example, a patient scored for three consecutive years whose score increased from 7 to 14.5 has an annual rate of change of $7.5/3 = 2.5$ points per year. A negative rate of change is indicative of improvement from baseline.
+
+Suppose a pharmaceutical company has developed a drug to slow cognitive decline in individuals with Alzheimer's disease. In a randomized trial, the company will compare mean annual rate of change in DSRS score for participants receiving a placebo to mean annual rate of change for participants treated with the new drug. The study will enroll individuals newly diagnosed with Alzheimer's and randomize each participant to either the control group or the treatment group, with DSRS being measured for each participant at the beginning of the study and three years later.
+
+1. The company scientists have decided that a 1.0 point difference in mean rate of change in DSRS score between the groups will be sufficient to warrant further study of the drug. Individuals newly diagnosed with Alzheimer's have an average DSRS score of about 20 and typically experience cognitive decline at the rate of +3.5 points per year. The standard deviation of rate of decline can be assumed to be 6 points per year. The study results will be analyzed with a two-sided $t$-test conducted at $\alpha = 0.05$.
+
+    How many participants per treatment group will be necessary for the study to have 80\% power?
+    
+
+2. Suppose that the null hypothesis of no difference between treatment groups is true, and that the mean rate of change in DSRS score in both groups is 3.5 points/year, with standard deviation of 6 points. Assume that average rate of change is normally distributed.
+
+    a) Run the following code to simulate rate of change in DSRS score for 567 individuals in the control group and 567 individuals in the treatment group, stored in the vectors \texttt{control} and \texttt{treatment}.
+    
+    ```{r}
+#set the parameters
+control.mean = 3.5
+treatment.mean = 3.5
+control.sigma = treatment.sigma = 6
+control.n = treatment.n = 567
+
+alpha = 0.05
+
+#set seed
+set.seed(2018)
+
+#simulate data
+control = rnorm(n = control.n, mean = control.mean, sd = control.sigma)
+treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
+
+#conduct the test
+
+```
+    
+    b) Conduct a two-sided test of the null hypothesis of no difference from the simulated data. 
+    
+        i. Summarize your conclusions.
+        
+        
+        ii. Does this represent an instance of Type I error?
+        
+        iii. Based on the study design, what is the probability of making a Type I error?
+
+\vspace{0.5cm}        
+
+3. Now, suppose that the alternative hypothesis of a difference between treatment groups is true, and that the mean rate of change in DSRS score in the treatment group is 2.5 points/year while mean rate of change in the control group is 3.5 points/year.
+
+    a) Run the following code to simulate rate of change in DSRS score for 567 individuals in the control group and 567 individuals in the treatment group, stored in the vectors \texttt{control} and \texttt{treatment}.
+    
+    ```{r}
+#set the parameters
+control.mean = 3.5
+treatment.mean = 2.5
+control.sigma = treatment.sigma = 6
+control.n = treatment.n = 567
+
+alpha = 0.05
+
+#set seed
+set.seed(2018)
+
+#simulate data
+control = rnorm(n = control.n, mean = control.mean, sd = control.sigma)
+treatment = rnorm(n = treatment.n, mean = treatment.mean, sd = treatment.sigma)
+
+#conduct the test
+
+```
+    
+    b) Conduct a two-sided test of the null hypothesis of no difference from the simulated data. 
+    
+        i. Summarize your conclusions.
+        
+    
+        ii. Does this represent an instance of Type II error?
+        
+        
+        iii. Based on the study design, what is the probability of making a Type II error?
+        
+
+\newpage
+
+### Applying Bayes' Rule to Hypothesis Testing
+
+4. In reality, it is not possible to know whether a Type I or Type II error has been made. 
+
+    a) Suppose the scientists conduct the trial as specified previously, and the two-sided test of a null of no difference in mean rate of annual change produces a $p$-value of 0.49. Is it necessarily the case that the null hypothesis is true (and the alternative hypothesis is false)? Explain your answer.
+    
+
+    b) Suppose the scientists conduct the trial as specified previously, and the two-sided test of a null of no difference in mean rate of annual change produces a $p$-value of 0.04. Is it necessarily the case that the null hypothesis is false (and the alternative hypothesis is true)? Explain your answer.
+
+
+5. Now, consider a new piece of information. Very few helpful therapies for Alzheimer's disease have been identified; four drugs are currently approved and used for symptomatic treatment, but over 100 tested as potential therapies have either been abandoned in development or failed in clinical trials.\footnote{Mehta, D., et al. (2017). Why do trials for Alzheimer's disease drugs keep failing? A discontinued drug perspective for 2010-2015. \textit{Expert opinion on investigational drugs}, \textit{26}(6), 735-739.} Most recently, in March 2019, pharmaceutical company Biogen halted two phase-three trials of the drug aducanumab after it was determined that the drug was unlikely to provide benefit compared to a placebo.
+
+    a) As in the previous question, suppose that testing for a difference in mean rate of annual change in DSRS score results in a $p$-value of 0.49. With the information about the outcomes of previous potential therapies for Alzheimer's in mind, are you inclined to believe that this outcome is an instance of Type II error? Explain your answer.
+    
+    
+    b) As in the previous question, suppose that testing for a difference in mean rate of annual change in DSRS score results in a $p$-value of 0.04. With the information about the outcomes of previous potential therapies for Alzheimer's in mind, are you inclined to believe that this outcome is an instance of Type I error? Explain your answer.
+    
+    
+We can quantify skepticism about whether a new drug is effective by assigning probabilities to the null and alternative hypotheses. Suppose that prior to seeing the observed data, we believe that there is a 90\% chance the drug is not effective and a 10\% chance the drug is effective. Let  \[P(H_0) = 0.90 \text{ and }P(H_A) = 0.10.\]
+
+Once the data are observed, update belief about the hypotheses according to Bayes' Theorem:
+\[P(H_0|\text{data}) = \dfrac{P(\text{data}|H_0)P(H_0)}{P(\text{data}|H_0)P(H_0) + P(\text{data}|H_A)P(H_A)} \]
+\[P(H_A|\text{data}) = \dfrac{P(\text{data}|H_A)P(H_A)}{P(\text{data}|H_0)P(H_0) + P(\text{data}|H_A)P(H_A)} \]
+
+The probabilities for the hypotheses conditional on the data are referred to as **posterior probabilities**, in the language of Bayesian inference. These are distinct from the unconditional **prior probabilities**, $P(H_0)$ and $P(H_A)$.
+
+6. Run the following code to conduct a simulation that estimates $P(H_0|\text{data})$ and $P(H_A|\text{data})$. Note that "data" is essentially a placeholder term for whether a particular set of observed data results in rejecting or failing to reject $H_0$. 
+
+    For each iteration, data are simulated according to either the null distribution or the alternative distribution. With each iteration, the code draws a new set of control and treatment values, conducts the two-sample $t$-test, and records the $p$-value. The logical vector \texttt{reject} records whether the $p$-value for a particular iteration was significant at $\alpha$ (i.e., less than or equal to $\alpha$).
+
+    \small
+
+    ```{r, eval = FALSE}
+#define parameters
+num.iterations = 10000
+p.alternative = 0.10; p.null = 1 - p.alternative
+n.control = n.treatment = 567
+alpha = 0.05
+
+control.mean.null = treatment.mean.null = 3.5
+control.mean.alternative = 3.5
+treatment.mean.alternative = 2.5
+control.sigma = treatment.sigma = 6
+
+#set the seed
+set.seed(2018)
+
+#create empty vectors to store results
+hypothesis = vector("numeric", num.iterations)
+p.vals = vector("numeric", num.iterations)
+
+#assign state of nature
+hypothesis = sample(c("null", "alternative"), size = num.iterations,
+                    prob = c(1 - p.alternative, p.alternative), replace = TRUE)
+
+#simulate data and p-values
+for(k in 1:num.iterations){
+  
+  if(hypothesis[k] == "null"){
+    
+    control = rnorm(n.control, mean = control.mean.null, sd = control.sigma)
+    treatment = rnorm(n.treatment, mean = treatment.mean.null, sd = treatment.sigma)
+    
+    p.vals[k] = t.test(control, treatment, alternative = "two.sided",
+                       mu = 0, conf.level = 1 - alpha)$p.val
+    
+  }
+  
+  if(hypothesis[k] == "alternative"){
+    
+    control = rnorm(n = n.control, mean = control.mean.alternative, sd = control.sigma)
+    treatment = rnorm(n = n.treatment, mean = treatment.mean.alternative, sd = treatment.sigma)
+    
+    p.vals[k] = t.test(control, treatment, alternative = "two.sided",
+                        mu = 0, conf.level = 1 - alpha)$p.val
+    
+  }
+  
+}
+
+#logical vector for whether a test accepts or rejects
+reject = (p.vals <= alpha)
+
+#table of results
+addmargins(table(hypothesis, reject))
+
+
+```
+
+    \normalsize
+
+    The results of the simulation are in the form of a two-way table; each of the 10,000 $t$-tests (and sets of control and treatment observations) are classified based on which state of nature (i.e., hypothesis) they occurred under and whether they resulted in rejecting $H_0$. 
+
+    a) From the results, check that the estimates of $P(H_0)$ and $P(H_A)$ are reasonably close to 0.90 and 0.10, respectively, as specified in the parameters.
+    
+    b) From the results, check that the estimates of power and $\alpha$ are reasonably close to 0.80 and 0.05, respectively, as specified in the parameters.\footnote{Power is not explicitly specified in the parameters, but Question 1 determined that a sample size of 567 individuals per group is sufficient for 80\% power (for the previously stated $\alpha$, effect size, and standard deviation).}
+
+    
+    c) Estimate the probability that the null hypothesis is true, given that we fail to reject $H_0$. This is analogous to estimating the probability of a "true negative" result, in the language of diagnostic testing.
+
+    
+    d) Estimate the probability that the alternative hypothesis is true, given that we reject $H_0$. This is analogous to estimating the probability of a "true positive" result, in the language 
+    
+    e) How would you expect the probabilities estimated in parts c) and d) to change if $P(H_A)$ were greater than 0.10, or less than 0.10?
+
+    
+7. Address the misconception mentioned at the beginning of the lab---what is the logical flaw in concluding that if a $p$-value equals, say, 0.04, the null hypothesis has only a 4\% chance of being true (or that the alternative hypothesis has a 96\% chance of being true)?

@@ -28,7 +28,7 @@ output:
 4. Multiple Testing
     - Extension to *OI Biostat* Section 5.5
     
-5. Bayesian Hypothesis Testing
+5. A Closer Look at the $P$-Value
     - Extension to *OI Biostat* Section 5.6
 
 
@@ -381,4 +381,45 @@ table(reject)
 
 \newpage
 
-#Lab 5: Bayesian Hypothesis Testing
+# Lab 5: A Closer Look at the $P$-Value
+
+The simulation for estimating posterior probabilities follows the same logical structure as used when simulating populations based on known conditional probabilities (as discussed in Chapter 2), such as in a diagnostic testing context. 
+
+In fact, the language of diagnostic testing can be used to frame the ideas of prior and posterior probabilities in hypothesis testing. Suppose that the alternative hypothesis represents presence of a disease condition (i.e., think of the event $H_A$ is true as the event of having a disease, $D$), and that to reject the null hypothesis is to obtain a positive test result (i.e., think of rejecting $H_0$ as the event $T^+$). The posterior probability of rejecting $H_0$ when $H_A$, given that $H_0$ was rejected, is analogous to the positive predictive value $P(D|T^+)$.
+
+The loop used in the lab is reproduced here for reference:
+
+  - Prior to running the loop, the state of nature (whether $H_0$ or $H_A$ is true) was randomly assigned using \texttt{sample()} and stored in the vector \texttt{hypothesis}. This is akin to randomly assigning which individuals in the population have the disease and which do not.
+  
+  - The first \texttt{if} statement has the condition \texttt{hypothesis[k] == "null"}. If the $k^{th}$ element of \texttt{hypothesis} is \texttt{null}, then the data are simulated under the null hypothesis where the control and treatment means are equal. This is comparable to simulating the number of positive tests obtained when an individual does not have the disease.
+  
+  - The second \texttt{if} statement has the condition \texttt{hypothesis[k] == "alternative"}.  If the $k^{th}$ element of \texttt{hypothesis} is \texttt{alternative}, then the data are simulated under the alternative hypothesis where the control and treatment means are not equal. This is comparable to simulating the number of positive tests obtained when an individual has the disease. 
+
+\small
+
+```{r, eval = FALSE}
+for(k in 1:num.iterations){
+  
+  if(hypothesis[k] == "null"){
+    
+    control = rnorm(n.control, mean = control.mean.null, sd = control.sigma)
+    treatment = rnorm(n.treatment, mean = treatment.mean.null, sd = treatment.sigma)
+    
+    p.vals[k] = t.test(control, treatment, alternative = "two.sided",
+                       mu = 0, conf.level = 1 - alpha)$p.val
+    
+  }
+  
+  if(hypothesis[k] == "alternative"){
+    
+    control = rnorm(n = n.control, mean = control.mean.alternative, sd = control.sigma)
+    treatment = rnorm(n = n.treatment, mean = treatment.mean.alternative, sd = treatment.sigma)
+    
+    p.vals[k] = t.test(control, treatment, alternative = "two.sided",
+                        mu = 0, conf.level = 1 - alpha)$p.val
+    
+  }
+  
+}
+```
+
