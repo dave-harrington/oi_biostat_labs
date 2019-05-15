@@ -29,7 +29,7 @@ A natural way to estimate features of a population, such as a population mean, i
 
 The material in this lab corresponds to Section 4.1 of *OpenIntro Biostatistics*.
 
-#### Background information
+### Background information
 
 This lab uses data from the Youth Risk Behavioral Surveillance System (YRBSS), a yearly survey conducted by the US Centers for Disease Control to measure health-related activity in high-school aged youth. The dataset \texttt{yrbss} contains responses from the 13,572 participants in 2013 for a subset of the variables included in the complete survey data.
 
@@ -47,7 +47,7 @@ The goal in this lab is to observe the effect of sampling by treating the 13,572
 
 \newpage
 
-#### Taking one sample
+### Taking one sample
 
 1. Run the following code to take a random sample of 10 individuals from \texttt{yrbss} and store the subset as \texttt{yrbss.sample}.
 
@@ -153,7 +153,7 @@ summary(yrbss.sample$weight)
 
 \newpage
 
-#### Taking many samples
+### Taking many samples
 
 <!---
 Set eval = TRUE for the results to display in the knitted PDF.

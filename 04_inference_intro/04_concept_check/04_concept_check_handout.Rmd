@@ -30,7 +30,7 @@ The previous labs in this unit discussed the mechanics of calculating confidence
 
 The material in this lab corresponds to Sections 4.3.3 - 4.3.5 of *OpenIntro Biostatistics*.
 
-#### Hypothesis Testing and Confidence Intervals
+### Hypothesis Testing and Confidence Intervals
 
 Suppose we would like to assess whether the mean weight in the \texttt{yrbss} "population" is different from 60 kilograms, using the information from a random sample. The YRBSS data was introduced in the first lab in this unit (Chapter 4, Lab 1).
 
@@ -76,7 +76,7 @@ yrbss.sample = yrbss.complete[sample.rows, ]
     c) How far apart are the two values calculated in part b) from each other? How does the distance relate to $m$, as calculated in part a)?
     
     
-#### One-sided hypothesis tests and confidence intervals
+### One-sided hypothesis tests and confidence intervals
 
 One-sided confidence intervals for a population mean provide either a lower bound or upper bound, but not both. One-sided confidence intervals have the form:
 
@@ -95,7 +95,7 @@ A one-sided hypothesis test with $\alpha = 0.05$ and $H_A: \mu > \mu_0$ correspo
     c) Suppose we were instead interesting in testing whether American adults sleep more than 7 hours per night on average. Calculate the $p$-value for the test and the corresponding 90\% confidence interval.
     
     
-#### Choosing between one-sided and two-sided tests
+### Choosing between one-sided and two-sided tests
 
 5. A standard test for diabetes involves measuring blood sugar levels after an overnight fast. Someone without diabetes typically has a fasting blood sugar level of around 5.31 mmol/L. High fasting blood sugar levels are indicative of diabetes or prediabetes.
 
@@ -114,7 +114,7 @@ A one-sided hypothesis test with $\alpha = 0.05$ and $H_A: \mu > \mu_0$ correspo
         ii. The values in the two datasets are actually identical. Why are the $p$-values from the two tests different from each other?
         
         
-#### The definition of $\alpha$ as the acceptable error probability
+### The definition of $\alpha$ as the acceptable error probability
 
 The significance level $\alpha$ can be thought of as the value that quantifies how rare or unlikely an event must be in order to represent sufficient evidence against the null hypothesis. For example, an $\alpha$ level of 0.05 means that an event occurring with probability lower than 5\% will be considered sufficient evidence against $H_0$.
 

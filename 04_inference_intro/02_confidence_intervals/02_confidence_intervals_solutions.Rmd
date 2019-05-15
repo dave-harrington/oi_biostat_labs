@@ -28,7 +28,7 @@ The previous lab discussed calculating point estimates from samples drawn from a
 
 The material in this lab corresponds to Section 4.2 of *OpenIntro Biostatistics*.
 
-#### Background information
+### Background information
 
 This lab uses data from the Youth Risk Behavioral Surveillance System (YRBSS), a yearly survey conducted by the US Centers for Disease Control to measure health-related activity in high-school aged youth. The dataset \texttt{yrbss} contains responses from the 13,572 participants in 2013 for a subset of the variables included in the complete survey data.
 
@@ -46,7 +46,7 @@ The goal in this lab is to observe the effect of sampling by treating the 13,572
 
 \newpage
 
-#### Calculating confidence intervals
+### Calculating confidence intervals
 
 Run the following code to take a random sample of 30 individuals from \texttt{yrbss} and store the subset as \texttt{yrbss.sample}. The code includes a section that removes any rows from \texttt{yrbss} where there are no data recorded for \texttt{weight}. The version of \texttt{yrbss} without missing weight values is stored as \texttt{yrbss.complete}.
 
@@ -301,7 +301,7 @@ t.test(yrbss.sample$weight, conf.level = 0.95)$conf.int
 
 \newpage
 
-#### The interpretation of "confidence"
+### The interpretation of "confidence"
 
 4. The method discussed for computing an $x\%$ confidence interval will produce an interval that $x$ times out of 100 (on average) contains the population mean.
 

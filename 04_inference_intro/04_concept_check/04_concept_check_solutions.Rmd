@@ -30,7 +30,7 @@ The previous labs in this unit discussed the mechanics of calculating confidence
 
 The material in this lab corresponds to Sections 4.3.3 - 4.3.5 of *OpenIntro Biostatistics*.
 
-#### Hypothesis Testing and Confidence Intervals
+### Hypothesis Testing and Confidence Intervals
 
 Suppose we would like to assess whether the mean weight in the \texttt{yrbss} "population" is different from 60 kilograms, using the information from a random sample. The YRBSS data was introduced in the first lab in this unit (Chapter 4, Lab 1).
 
@@ -170,7 +170,7 @@ x.upper; x.lower
     \color{Black}
 
     
-#### One-sided hypothesis tests and confidence intervals
+### One-sided hypothesis tests and confidence intervals
 
 One-sided confidence intervals for a population mean provide either a lower bound or upper bound, but not both. One-sided confidence intervals have the form:
 
@@ -244,7 +244,7 @@ ci.lower.bound
 ```
   
     
-#### Choosing between one-sided and two-sided tests
+### Choosing between one-sided and two-sided tests
 
 5. A standard test for diabetes involves measuring blood sugar levels after an overnight fast. Someone without diabetes typically has a fasting blood sugar level of around 5.31 mmol/L. High fasting blood sugar levels are indicative of diabetes or prediabetes.
 
