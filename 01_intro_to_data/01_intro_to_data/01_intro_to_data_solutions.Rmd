@@ -36,7 +36,7 @@ As you work through the lab, remember that it is not necessary to knit the entir
 --->
 
 
-#### Section 1: BRFSS. 
+### Section 1: BRFSS. 
 
 The Behavioral Risk Factor Surveillance System (BRFSS) is an annual telephone survey of 350,000 people in the United States. The BRFSS is designed to identify risk factors in the adult population and report emerging health trends. For example, respondents are asked about their diet, weekly exercise, possible tobacco use, and healthcare coverage. 
 
@@ -145,7 +145,7 @@ plot(cdc[1:100, 5], cdc[1:100, 6])
 
 \newpage
 
-#### Section 2: Gene Transcript Lengths.
+### Section 2: Gene Transcript Lengths.
 
 Before genes can be translated into proteins, DNA must first be transcribed into RNA. The dataset \texttt{coding.mrna} contains the length of known protein-coding transcripts (measured in base pairs). Load the dataset from the \texttt{oibiostat} package.
 
@@ -275,7 +275,7 @@ boxplot(transcript.sample)
 7. Make side-by-side boxplots of transcript lengths by chromosome. Use the command: 
 
 
-    ```{r}
+    ```{r, fig.width = 10, fig.height = 4}
 boxplot(coding.mrna$transcript_length ~ coding.mrna$chromosome_name)
 ```
 
@@ -310,7 +310,7 @@ nrow(chr.Y)
 
 \newpage
 
-#### Section 3: NHANES.
+### Section 3: NHANES.
 
 The National Health and Nutrition Examination Survey (NHANES) is a survey conducted annually by the US National Center for Health Statistics (NCHS). While the original data uses a survey design that oversamples certain subpopulations, the data have been reweighted to undo oversampling effects and can be treated as if it were a simple random sample from the American population.
 

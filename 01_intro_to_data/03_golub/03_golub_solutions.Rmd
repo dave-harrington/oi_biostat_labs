@@ -16,7 +16,7 @@ output:
 
 This lab presents the details of how to conduct the analysis discussed in Section 1.7.2 of \textit{OpenIntro Biostatistics}. We recommend that a reader carefully review the material in the text prior to working through the lab, as the lab will focus on demonstrating techniques in \textsf{R} rather than reviewing the conceptual strategy behind the analysis. 
 
-#### Background information 
+### Background information 
 
 The 1999 Golub leukemia study represents one of the earliest applications of microarray technology for diagnostic purposes. At the time of the Golub study, no single diagnostic test was sufficient for distinguishing between acute myeloid leukemia (AML) and acute lymphoblastic leukemia (ALL). To investigate whether gene expression profiling could be a tool for classifying acute leukemia type, Golub and co-authors used Affymetrix DNA microarrays to measure the expression level of 7,129 genes from children known to have either AML or ALL.
 
@@ -30,7 +30,7 @@ All datasets used in this lab are available from the \texttt{oibiostat} package.
 
 \newpage
 
-#### Identifying informative genes
+### Identifying informative genes
 
 The discussion in the text begins by illustrating concepts using a simplified version of the dataset (\texttt{golub.small}) that contains only data from the 10 patients and 10 genes. Here, instead of starting with \texttt{golub.small}, we will examine a random sample of 100 genes for all patients in \texttt{golub.train}. The methods from the initial analysis can then be applied to the data from all 7,129 genes.
 
@@ -167,16 +167,16 @@ diff.mean.expression.matrix[1, ]
 
     \textcolor{NavyBlue}{From the histogram, a vast majority of the observations are between -1000 and 1000; more precisely, the middle 50\% of the data are between -181.47 and 71.63. However, the boxplot indicates the presence of both small and large outliers; these genes may be ones useful for differentiating between AML and ALL. }
 
-    ```{r}
+    ```{r, fig.height = 4, fig.width = 8}
 #numerical summaries
 summary(diff.mean.expression)
 
 #graphical summaries
+par(mfrow = c(1, 2))
 hist(diff.mean.expression)
 boxplot(diff.mean.expression)
 ```
 
-\newpage
 
 6. Identify the outliers. Run the following code to set up the definition of outliers as specified in Chapter 1 of *OpenIntro Biostatistics*:
 
@@ -334,7 +334,7 @@ ordered.small.out[1:5, ]
 
 \newpage
 
-#### Predicting leukemia type
+### Predicting leukemia type
 
 Figure \ref{golubPrediction} illustrates the main ideas behind the strategy developed by the Golub team to predict leukemia type from expression data.The vertical orange bars represent the gene expression levels of a patient for each gene, relative to the mean expression for AML patients and ALL patients from the training dataset (vertical blue bars). A gene will "vote" for either AML or ALL, depending on whether the patient's expression level is closer to $\mu_{AML}$ or $\mu_{ALL}$. In the example shown, three of the genes are considered to have ALL-like expression, versus the other two that are more AML-like. The votes are also weighted to account for how far an observation is from the midpoint between the two means (horizontal dotted blue line); i.e., the length of the dotted line shows the deviation from the midpoint. For example, the observed expression value for gene 2 is not as strong an indicator of ALL as the expression value for gene 1. The magnitude of the deviations $(v_1, v_2, \dots)$ are summed to obtain $V_{AML}$ and $V_{ALL}$, and a higher value indicates a prediction of either AML or ALL, respectively.
 

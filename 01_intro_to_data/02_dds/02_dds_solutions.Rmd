@@ -16,7 +16,7 @@ output:
 
 This lab presents the details of how to conduct the analysis discussed in Section 1.7.1 of \textit{OpenIntro Biostatistics}. A reader interested in applied data analysis may benefit from working through this lab and reviewing the solutions instead of reading the section in the text.
 
-#### Background information 
+### Background information 
 
 In the United States, individuals with developmental disabilities typically receive services and support from state governments. The State of California allocates funds to developmentally-disabled residents through the California Department of Developmental Services (DDS); individuals receiving DDS funds are referred to as 'consumers'. The dataset \texttt{dds.discr} represents a sample of 1,000 DDS consumers (out of a total population of approximately 250,000), and includes information about age, gender, ethnicity, and the amount of financial support per consumer provided by the DDS. The dataset is available in the \texttt{oibiostat} package.
 
@@ -24,7 +24,7 @@ A team of researchers examined the mean annual expenditure on consumers by ethni
 
 Does this finding represent sufficient evidence of ethnic discrimination, or might there be more to the story? This lab provides a walkthrough to conducting an exploratory analysis that not only investigates the relationship between two variables of interest, but also considers whether other variables might be influencing that relationship.
 
-#### Distributions of single variables
+### Distributions of single variables
 
 To begin understanding a dataset and developing a sense of context, start by examining the distributions of single variables.
 
@@ -47,7 +47,7 @@ dds.discr[1:5,]
   
         \textcolor{NavyBlue}{The distribution of annual expenditures exhibits right skew, indicating that for a majority of consumers, expenditures are relatively low; most are within the \$0 - \$5,000 range. There are some consumers for which expenditures are much higher, such as within the \$60,000 - \$80,000 range. The quartiles for \texttt{expenditures} are \$2,899, \$7,026, and \$37,710.}
 
-        ```{r, fig.width = 8}
+    ```{r, fig.width = 8}
 #graphical summaries
 par(mfrow = c(1, 2))  #displays plots as 1 row / 2 column layout
 hist(dds.discr$expenditures)
@@ -68,7 +68,7 @@ summary(dds.discr$expenditures)
 
         \textcolor{NavyBlue}{As indicated in the histogram, there is right-skewing; most consumers are younger than 30 years old. The median age is 18 years. There are approximately 200 individuals in each of the middle four cohorts, and about 100 individuals in the other two cohorts.}
   
-        ```{r, fig.width = 8}
+    ```{r, fig.width = 8}
 #graphical summaries
 par(mfrow = c(1, 2))  #displays the following plots as 1 row / 2 column layout
 hist(dds.discr$age)
@@ -89,7 +89,7 @@ table(dds.discr$age.cohort)
 
         \textcolor{NavyBlue}{There are eight ethnic groups represented in the data, however there is not equal representation. The two largest groups, Hispanics and White non-Hispanics, together represent about 80\% of the consumers.}  
 
-        ```{r,fig.width = 6}
+    ```{r,fig.width = 6}
 #graphical summaries
 plot(dds.discr$ethnicity)
 
@@ -108,7 +108,7 @@ prop.table(table(dds.discr$ethnicity))  #converts a table of counts to proportio
   
         \textcolor{NavyBlue}{Yes, approximately half the individuals are female and half are male.} 
   
-        ```{r}
+    ```{r}
 #graphical summaries
 plot(dds.discr$gender)
 
@@ -122,7 +122,7 @@ table(dds.discr$gender)
 
 \newpage
 
-#### Relationships between two variables
+### Relationships between two variables
 
 After examining variables individually, explore how variables are related to each other. It is often useful to start by investigating the relationships between two variables, particularly between the primary response variable of interest and the exploratory variables. For this case study, the response variable is \texttt{expenditures}, the amount of funds the California DDS allocates annually to each consumer.
 
@@ -189,7 +189,7 @@ summary(dds.discr$expenditures[dds.discr$ethnicity == "White not Hispanic"])
 
 
 
-#### A closer look 
+### A closer look 
 
 As shown in Question 2c), two of the ethnic groups, Hispanic and White non-Hispanic, comprise the majority of the data; some ethnic groups represent less than 10\% of the observations. For ethnic groups with relatively small sample sizes, it is possible that the observed samples are not representative of the larger populations. The rest of this analysis will focus on comparing how \texttt{expenditures} varies between the two largest ethnic groups.
 
@@ -301,7 +301,7 @@ nonhisp.means - hisp.means
     \textcolor{NavyBlue}{There does not seem to be evidence of ethnic discrimination. Although the average annual expenditures is lower for Hispanics than for White non-Hispanics, this is due to the difference in age distributions between the two ethnic groups. The population of Hispanic consumers is relatively young compared to the population of White non-Hispanic consumers,and the amount of expenditures for younger consumers tends to be lower than for older consumers. When individuals of similar ages are compared, there are not large differences in the average amount of financial support provided to a Hispanic consumer versus a White non-Hispanic consumer.}
 
 
-#### Simpson's paradox
+### Simpson's paradox
 
 Identifying confounding variables is essential for understanding data. Confounders are often context-specific; for example, age is not necessarily a confounder for the relationship between ethnicity and expenditures in a different population. Additionally, it is rarely immediately obvious which variables in a dataset are confounders; looking for confounding variables is an integral part of exploring a dataset.
 

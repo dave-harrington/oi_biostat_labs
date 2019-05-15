@@ -11,7 +11,7 @@ output: pdf_document
 
 This lab presents the details of how to conduct the analysis discussed in Section 1.7.1 of \textit{OpenIntro Biostatistics}. A reader interested in applied data analysis may benefit from working through this lab and reviewing the solutions instead of reading the section in the text.
 
-#### Background information 
+### Background information 
 
 In the United States, individuals with developmental disabilities typically receive services and support from state governments. The State of California allocates funds to developmentally-disabled residents through the California Department of Developmental Services (DDS); individuals receiving DDS funds are referred to as 'consumers'. The dataset \texttt{dds.discr} represents a sample of 1,000 DDS consumers (out of a total population of approximately 250,000), and includes information about age, gender, ethnicity, and the amount of financial support per consumer provided by the DDS. The dataset is available in the \texttt{oibiostat} package.
 
@@ -19,7 +19,7 @@ A team of researchers examined the mean annual expenditure on consumers by ethni
 
 Does this finding represent sufficient evidence of ethnic discrimination, or might there be more to the story? This lab provides a walkthrough to conducting an exploratory analysis that not only investigates the relationship between two variables of interest, but also considers whether other variables might be influencing that relationship.
 
-#### Distributions of single variables
+### Distributions of single variables
 
 To begin understanding a dataset and developing a sense of context, start by examining the distributions of single variables.
 
@@ -116,7 +116,7 @@ d) Does gender appear to be balanced in this sample of consumers?
   
 
   
-#### Relationships between two variables
+### Relationships between two variables
 
 After examining variables individually, explore how variables are related to each other. It is often useful to start by investigating the relationships between two variables, particularly between the primary response variable of interest and the exploratory variables. For this case study, the response variable is \texttt{expenditures}, the amount of funds the California DDS allocates annually to each consumer.
 
@@ -174,7 +174,7 @@ summary(dds.discr$expenditures[dds.discr$age.cohort == "0-5"])
 
 
 
-#### A closer look 
+### A closer look 
 
 As shown in Question 2c), two of the ethnic groups, Hispanic and White non-Hispanic, comprise the majority of the data; some ethnic groups represent less than 10\% of the observations. For ethnic groups with relatively small sample sizes, it is possible that the observed samples are not representative of the larger populations. The rest of this analysis will focus on comparing how \texttt{expenditures} varies between the two largest ethnic groups.
 
@@ -247,7 +247,7 @@ Recall that a confounding variable is a variable that is associated with the res
 
 
 
-#### Simpson's paradox
+### Simpson's paradox
 
 Identifying confounding variables is essential for understanding data. Confounders are often context-specific; for example, age is not necessarily a confounder for the relationship between ethnicity and expenditures in a different population. Additionally, it is rarely immediately obvious which variables in a dataset are confounders; looking for confounding variables is an integral part of exploring a dataset.
 

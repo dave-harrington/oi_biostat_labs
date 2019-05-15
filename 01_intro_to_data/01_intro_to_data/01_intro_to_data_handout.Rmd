@@ -30,7 +30,7 @@ The first two sections of this lab introduce basic tools for working with data m
 
 
 
-#### Section 1: BRFSS. 
+### Section 1: BRFSS. 
 
 The Behavioral Risk Factor Surveillance System (BRFSS) is an annual telephone survey of 350,000 people in the United States. The BRFSS is designed to identify risk factors in the adult population and report emerging health trends. For example, respondents are asked about their diet, weekly exercise, possible tobacco use, and healthcare coverage. 
 
@@ -57,17 +57,14 @@ plot(cdc$weight ~ cdc$height)
 
     Do \texttt{height} and \texttt{weight} appear to be associated?
 
-\vspace{2cm}
 
 4. The conversion from inches to meters is 1 in = .0254 m. Create a new variable \texttt{height.m} that records height in meters. Similarly, the conversion from pounds to kilograms is 1 lb = .454 kg. Create a new variable \texttt{weight.kg} that records weight in kilograms.
 
 5. BMI is calculated as weight in kilograms divided by height squared. Create a new variable \texttt{bmi} and make a scatterplot of \texttt{height} and \texttt{BMI}. Do \texttt{height} and \texttt{BMI} seem to be associated?
 
-    \vspace{2cm}
 	
     A BMI of 30 or above is considered overweight. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
 
-    \vspace{3cm}
 
 
 6. Row-and-column notation in combination with square brackets can be used to access a subset of the data. For example, to access the sixth variable (\texttt{weight}) of the 567th respondent, use the command:
@@ -99,7 +96,7 @@ cdc[ ,6]
 
 \newpage
 
-#### Section 2: Gene Transcript Lengths.
+### Section 2: Gene Transcript Lengths.
 
 Before genes can be translated into proteins, DNA must first be transcribed into RNA. The dataset \texttt{coding.mrna} contains the length of known protein-coding transcripts (measured in base pairs). Load the dataset from the \texttt{oibiostat} package.
 
@@ -109,15 +106,13 @@ Before genes can be translated into proteins, DNA must first be transcribed into
 nrow(coding.mrna)
 ```
 
-\vspace{1cm}
+
 
 2. Calculate the 5-number summary for the transcript lengths using the \texttt{summary()} command. What striking feature do you notice in the summary?
 
-\vspace{3cm}
 
 3. Draw a histogram and a boxplot of the distribution of transcript lengths. When you see them, you will notice that the plots are not particularly informative. Explain why you think that is the case.
 
-\vspace{3cm}
 
 4. For a data item \texttt{x}, the notation \texttt{x < a} is used to reference the subset of values of \texttt{x} that are less than the value \texttt{a}. Pick a reasonable length \texttt{a} and use the \texttt{subset()} command to create a trimmed version of \texttt{coding.mrna} called \texttt{lengths.subset} that only contains data for transcripts with length less than \texttt{a}. This is one simple strategy for making the structure of the data easier to view in the plot.
 
@@ -128,11 +123,9 @@ lengths.subset = subset(coding.mrna, coding.mrna$transcript_length < a)
     With the trimmed data, draw a histogram and boxplot, and calculate summary statistics. Now describe the shape of the data. Explain your choice of where to trim the data.
 		
 
-\vspace{3cm}
 
 5. Use \textsf{R} to find out how many transcripts you have trimmed from the dataset. Hint: this might involve notation used in Questions 1 and 4.
 
-\vspace{2cm}
 
 6. One way of manipulating a large dataset is to take a random sample and construct numerical and graphical summaries of the sample. Use the following code to construct a random sample that consists of 10\% of the original number of transcripts; the sampling is done without replacement, such that a single transcript cannot be chosen more than once.
 		
@@ -147,7 +140,6 @@ transcript.sample = sample(coding.mrna$transcript_length, size = sample.size,
 
     Now with \texttt{transcript.sample}, calculate the number of transcripts in the dataset, the five-number summary, and draw a histogram and boxplot. Does the sample data more closely resemble the complete version of the data or the trimmed version from Question 4?
 		
-\vspace{3cm}
 
 7. Make side-by-side boxplots of transcript lengths by chromosome. Use the command: 
 
@@ -157,7 +149,6 @@ boxplot(coding.mrna$transcript_length ~ coding.mrna$chromosome_name)
 
     Select "Show in New Window" above the plot and expand the window to be able to see all the chromosome numbers displayed. Where are the longest transcripts located?
 		
-\vspace{1cm}
 
 8. Subset \texttt{coding.mrna} to only include values from chromosome 2. Repeat for the Y chromosome. Hint: the notation is similar to that used in Question 4. 
 		
@@ -166,7 +157,7 @@ boxplot(coding.mrna$transcript_length ~ coding.mrna$chromosome_name)
 
 \newpage
 
-#### Section 3: NHANES.
+### Section 3: NHANES.
 
 The National Health and Nutrition Examination Survey (NHANES) is a survey conducted annually by the US National Center for Health Statistics (NCHS). While the original data uses a survey design that oversamples certain subpopulations, the data have been reweighted to undo oversampling effects and can be treated as if it were a simple random sample from the American population.
 
@@ -201,15 +192,13 @@ For convenience, descriptions of the variables used in this lab exercise are inc
 \newpage  
 
 
-#### Question 1.
+#### Question 1. 
 
   a) Describe in words the distribution of ages for the study participants.
   
-\vspace{3cm}
   
   b) Using numerical and graphical summaries, describe the distribution of heights among study participants in terms of inches.  Note that 1 centimeter is approximately 0.39 inches.   
 
-\vspace{3cm}
 
   c) Use the following code to draw a random sample of 200 participants from the entire dataset. Using the random sample, \texttt{nhanes.samp}, investigate at which age people generally reach their adult height. Is it possible to do the same for weight; why or why not?
 
@@ -220,29 +209,23 @@ row.num = sample(1:nrow(NHANES), 200, replace = FALSE)
 nhanes.samp = NHANES[row.num, ]  
 ```  
 
-\vspace{3cm}
 
 
 #### Question 2.
 
   a) What proportion of Americans at least 25 years of age are college graduates?
   
-  \vspace{2cm}
-   
   b) What proportion of Americans with a high school degree are college graduates?
   
-  \vspace{2cm}
    
    
 #### Question 3.
 
   a) Calculate the median and interquartile range of the distribution of the variable \texttt{Poverty}. Write a sentence explaining the median in the context of these data.
 
-\vspace{3cm}
 
   b) Compare the distribution of \texttt{Poverty} across each group in \texttt{Education} among adults (defined as individuals 25 years of age or older). Describe any trends or interesting observations.
 
- \vspace{5cm}
  
  
 #### Question 4.
@@ -253,10 +236,7 @@ nhanes.samp = NHANES[row.num, ]
 addmargins(table(PhysActive=NHANES$PhysActive, Diabetes=NHANES$Diabetes))
 ```
 
-\vspace{2cm}
 
 b) In this context, relative risk is the ratio of the proportion of participants who have diabetes among those who are not physically active to the proportion of participants with diabetes among those physically active. Relative risks greater than 1 indicate that people who are not physically active seem to be at a higher risk for diabetes than physically active people. Calculate the relative risk of diabetes for the participants.
 
     From these calculations, is it possible to conclude that being physically active reduces one's chance of becoming diabetic?
-
-\vspace{3cm}

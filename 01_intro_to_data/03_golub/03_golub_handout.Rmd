@@ -16,7 +16,7 @@ output:
 
 This lab presents the details of how to conduct the analysis discussed in Section 1.7.2 of \textit{OpenIntro Biostatistics}. We recommend that a reader carefully review the material in the text prior to working through the lab, as the lab will focus on demonstrating techniques in \textsf{R} rather than reviewing the conceptual strategy behind the analysis. 
 
-#### Background information 
+### Background information 
 
 The 1999 Golub leukemia study represents one of the earliest applications of microarray technology for diagnostic purposes. At the time of the Golub study, no single diagnostic test was sufficient for distinguishing between acute myeloid leukemia (AML) and acute lymphoblastic leukemia (ALL). To investigate whether gene expression profiling could be a tool for classifying acute leukemia type, Golub and co-authors used Affymetrix DNA microarrays to measure the expression level of 7,129 genes from children known to have either AML or ALL.
 
@@ -30,7 +30,7 @@ All datasets used in this lab are available from the \texttt{oibiostat} package.
 
 \newpage
 
-#### Identifying informative genes
+### Identifying informative genes
 
 The discussion in the text begins by illustrating concepts using a simplified version of the dataset (\texttt{golub.small}) that contains only data from the 10 patients and 10 genes. Here, instead of starting with \texttt{golub.small}, we will examine a random sample of 100 genes for all patients in \texttt{golub.train}. The methods from the initial analysis can then be applied to the data from all 7,129 genes.
 
@@ -64,23 +64,18 @@ gene.matrix.sample = gene.matrix[ ,gene.index.set]
 
     a) What are the first five values of \texttt{gene.index.set}? How were the numbers in \texttt{gene.index.set} chosen?
 
-    \vspace{2cm}
-
     b) Why is it important to sample without replacement?
 
-    \vspace{2cm}
 
     c) View \texttt{gene.matrix.sample}; what does it contain? How is \texttt{gene.matrix.sample} related to \texttt{gene.index.set}?
 
-    \vspace{2cm}
 
     d) What are the first five gene names of the 100 genes sampled?
 
-    \vspace{1cm}
 
     e) Plot a histogram showing the distribution of the expression levels of the second gene across patients. Describe the distribution.
 
-\vspace{2cm}
+\newpage
 
 3. Create a logical variable, \texttt{leuk.type}, that has value \texttt{1} for AML and value \texttt{0} for anything that is not AML (i.e., \texttt{allT} and \texttt{allB}).
 
@@ -94,11 +89,8 @@ table(leuk.type)
 
     a) When creating the logical variable, why not write \texttt{"allT"} or \texttt{"allB"} instead of \texttt{"aml"}?
 
-    \vspace{3cm}
-
     b) How many patients have AML? How many have ALL?
 
-    \vspace{1cm}
 
 4. Summarize the data separately for AML patients and for ALL patients.
 
@@ -112,12 +104,8 @@ aml.mean.expression = apply(gene.matrix.sample[leuk.type == TRUE, ], 2, mean)
     Run the code to create \texttt{aml.mean.expression}, then create \texttt{all.mean.expression}, a vector containing the mean expression levels for each gene in ALL patients.
 
     b) Explain the logic behind the code to generate \texttt{aml.mean.expression} and \texttt{all.mean.expression}. In other words, what do the separate components instruct \textsf{R} to do?
-
-    \vspace{3cm}
-
+    
     c) View the contents of \texttt{aml.mean.expression}. What is the average expression level of the first sampled gene across AML patients?
-
-    \vspace{1cm}
 
 
 5. For each gene, compare the mean expression value among AML patients to the mean among ALL patients; calculate the differences in mean expression levels between AML and ALL patients.
@@ -133,11 +121,8 @@ diff.mean.expression.matrix
 
     a) What is the difference in mean expression level between AML and ALL for the first gene on the list; on average, is this gene more highly expressed in AML patients or ALL patients? Does it seem like this gene could be a good predictor of leukemia type? Why or why not?
 
-    \vspace{3cm}
-
     b) Using numerical and graphical summaries, describe the distribution of differences in mean expression levels.
 
-    \vspace{3cm}
 
 \newpage
 
@@ -172,27 +157,16 @@ ordered.large.out
 
     a) What are the upper and lower outlier bounds?
 
-    \vspace{1cm}
-
     b) How many large outliers are present in the sample?
-
-    \vspace{1cm}
 
     c) How many rows and columns does \texttt{large.out} have? Explain why.
 
-    \vspace{2cm}
-
     d) View \texttt{order.large.out}. What do these numbers represent?
-
-    \vspace{2cm}
 
     e) Modify the code to find small outliers. How many small outliers are present in the sample?
 
-    \vspace{1cm}
 
     f) Which gene has the largest positive difference in mean expression between AML and ALL samples? Which gene has the largest negative difference in mean expression between AML and ALL samples?
-
-    \vspace{1cm}
 
     g) In a research setting, it can also be useful to inspect the entire list and examine genes that are close to the outlier cutoff. Run the following code to order the entire list of expression differences in decreasing order:
 
@@ -203,15 +177,13 @@ ordered.outliers = as.matrix(diff.mean.expression.matrix[order.decreasing, ])
 
     Which gene just missed the cutoff to qualify as a large outlier? Which gene is closest to the cutoff for qualifying as a small outlier?
 
-    \vspace{1cm}
+\newpage
 
 7. The genes previously identified as outliers are only outliers of the specific 100 genes chosen in the sample. From the complete set of data in \texttt{golub.train}, identify the five largest outliers and five smallest outliers out of all 7,129 genes. (*Hint*: this can be done with only a few modifications to the code run for the initial analysis.) 
 
-\vspace{2cm}
-
 \newpage
 
-#### Predicting leukemia type
+### Predicting leukemia type
 
 Figure \ref{golubPrediction} illustrates the main ideas behind the strategy developed by the Golub team to predict leukemia type from expression data. The vertical orange bars represent the gene expression levels of a patient for each gene, relative to the mean expression for AML patients and ALL patients from the training dataset (vertical blue bars). A gene will "vote" for either AML or ALL, depending on whether the patient's expression level is closer to $\mu_{AML}$ or $\mu_{ALL}$. In the example shown, three of the genes are considered to have ALL-like expression, versus the other two that are more AML-like. The votes are also weighted to account for how far an observation is from the midpoint between the two means (horizontal dotted blue line); i.e., the length of the dotted line shows the deviation from the midpoint. For example, the observed expression value for gene 2 is not as strong an indicator of ALL as the expression value for gene 1. The magnitude of the deviations $(v_1, v_2, \dots)$ are summed to obtain $V_{AML}$ and $V_{ALL}$, and a higher value indicates a prediction of either AML or ALL, respectively.
 
@@ -251,7 +223,6 @@ predictor.cols = predictors + 6
 
 9. Calculate $\mu_{AML}$ and $\mu_{ALL}$ for each of the predictor genes. Store the results in \texttt{predictor.means.aml} and \texttt{predictor.means.all}. What are $\mu_{AML}$ and $\mu_{ALL}$ for the first predictor gene?
 
-\vspace{1cm}
 
 10. Determine the vote direction for each gene. Let \texttt{0} represent a vote for AML and \texttt{1} represent a vote for ALL. 
 
@@ -290,29 +261,21 @@ for(i in 1:dim(votes)[1]){
 
     a) The loop stores the results in a matrix called \texttt{votes}. What are the dimensions of the matrix? Does a single row contain the votes for a single patient, or the votes for a single gene? (*Hint*: refer to the syntax used to create the empty \texttt{votes} matrix.)
 
-    \vspace{2cm}
-
     b) Inside the loop, the two vectors \texttt{dist.from.aml} and \texttt{dist.from.all} store the distance between an expression value and the AML or ALL mean, respectively; the distance is calculated as the absolute value of the expression value in a specific cell minus a predictor mean (either AML or ALL). The loop extends in two directions, where \texttt{i} ranges from 1:10 and \texttt{j} ranges from 1:10, since the dimensions of the \texttt{votes} matrix are 10 (rows) by 10 (columns).
 
         i. In the first step of the loop, \texttt{i = 1} and \texttt{j = 1}. Based on what you know about bracket notation, describe what is being calculated and stored in \texttt{dist.from.aml} and \texttt{dist.from.all} for these values of \texttt{i} and \texttt{j.}
     
-        \vspace{2cm}
     
         ii. What is being calculated and stored when \texttt{i = 2} and \texttt{j = 1}?
     
-        \vspace{2cm}
     
         iii. What is being calculated and stored when \texttt{i = 1} and \texttt{j = 2}?
     
-        \vspace{2cm}
     
         iv. Based on the previous answers, why does it make sense for the loop to calculate distance based on \texttt{predictor.means.aml[j]} and \texttt{predictor.means.all[j]} instead of \texttt{predictor.means.aml[i]} and \texttt{predictor.means.all[i]}?
     
-        \vspace{2cm}
     
     c) View the first row of the matrix \texttt{votes}. For which predictor genes does this patient have AML-like expression, and for which does this patient have ALL-like expression?
-
-    \vspace{1cm}
 
 
 
@@ -337,11 +300,9 @@ colnames(deviation.magnitude) <- colnames(test.gene.matrix)
 
     a) View \texttt{deviation.magnitude}. What is the deviation from the midpoint at the M19507\_at probe for patient 1? For which patient is the deviation at this gene probe the largest?
 
-    \vspace{2cm}
 
     b) For patient 1, which values should be summed to calculate $V_{AML}$? (*Hint*: Refer to Question 10, part c.) 
 
-    \vspace{2cm}
 
 12. Calculate $V_{AML}$ and $V_{ALL}$ for each patient, and determine which leukemia type is predicted.
 
@@ -371,15 +332,12 @@ predicted.leuk.type
 
     a) Briefly describe how the \texttt{for()} loop to create \texttt{V.aml} and \texttt{V.all} works.
   
-    \vspace{2cm}
   
     b) Briefly describe how the \texttt{for()} loop and \texttt{if} statements to create \texttt{predicted.leuk.type} work.
   
-    \vspace{2cm}
   
     c) What are the predicted leukemia types for the 10 patients in \texttt{golub.test}?
   
-    \vspace{1cm}
 
 13. Assess the prediction accuracy, comparing the prediction to the actual leukemia status of each patient in \texttt{golub.test}. How well do the predictions match patient leukemia status?
 
