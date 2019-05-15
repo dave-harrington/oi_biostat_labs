@@ -29,7 +29,7 @@ A random variable numerically summarizes the possible outcomes of a random exper
 
 The material in this lab corresponds to Sections 3.1 and 3.2 of *OpenIntro Biostatistics*.
 
-#### Clinical Trial Simulation
+### Clinical Trial Simulation
 
 1. Suppose that a clinical trial to test a new drug will be conducted on 8 patients, in which the probability of a good response to the drug is thought to be 0.15. The following code simulates the trial with 500 replicates.
 
@@ -202,7 +202,7 @@ prop.table(table(number.responses))
 
 \newpage
 
-#### Binomial Distribution
+### Binomial Distribution
 
 Let $X$ represent the number of successes in a series of independent Bernoulli trials. Suppose the probability of a single trial being a success is $p$. The probability of observing exactly $k$ successes in $n$ independent trials is given by
 \[P(X = k) = { n \choose k} p^k (1-p)^{n-k} = \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}. \]

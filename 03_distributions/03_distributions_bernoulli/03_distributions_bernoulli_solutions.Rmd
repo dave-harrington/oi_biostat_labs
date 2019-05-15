@@ -30,7 +30,7 @@ This lab discusses other distributions derived from a series of repeated Bernoul
 The material in this lab corresponds to Section 3.5 of *OpenIntro Biostatistics*.
 
 
-#### Geometric distribution
+### Geometric distribution
 
 Let $X$ represent the number of trials required to obtain a success in a series of independent Bernoulli trials, including the (last) successful trial. If the probability of success in one trial is $p$ and the probability of failure is $1 - p$, then the probability of obtaining the first success in the $k^{th}$ trial is given by
 \[P(X = k) = (1-p)^{k-1} p .\]
@@ -245,7 +245,7 @@ pgeom(3 - 1, 0.08)
 
 \newpage    
   
-#### Negative binomial distribution
+### Negative binomial distribution
 
 The negative binomial distribution is a generalization of the geometric distribution. While the geometric distribution describes the probability of observing the first success on the $k^{th}$ trial, the negative binomial describes the probability of observing the $r^{th}$ success on the $k^{th}$ trial.
 
@@ -461,7 +461,7 @@ sd = sqrt(variance); sd
     
 \newpage
 
-#### Hypergeometric distribution
+### Hypergeometric distribution
 
 Let $X$ represent the number of successes in a series of repeated Bernoulli trials, where sampling is done without replacement. Suppose that in the population of size $N$, there are $m$ total successes. The probability of observing exactly $k$ successses in a sample of size $n$ (i.e., $n$ dependent trials) is given by 
 \[P(X = k) = \dfrac{{m \choose k} {N - m \choose n-k}}{{N \choose n}}. \]
