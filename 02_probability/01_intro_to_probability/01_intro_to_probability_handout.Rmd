@@ -29,7 +29,7 @@ Probabilities for events can be calculated via simulation by simply repeating an
 
 The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostatistics}.
 
-#### Introduction
+### Introduction
 
 Suppose that a biased coin is tossed 5 times; the coin is weighted such that the probability of obtaining a heads is 0.6. What is the probability of obtaining exactly 3 heads?
 
@@ -112,7 +112,7 @@ table(heads.3)
     g) How do the values calculated in parts d) and e) compare to the value calculated in part f)? Of the two values derived from simulation, why can the one calculated from 1,000 replicates be considered more reliable?
 
 
-#### Mandatory Drug Testing
+### Mandatory Drug Testing
 
 The simulation framework illustrated in the previous section can easily be adapted for other scenarios that may seem more complicated than coin tossing. The drug testing scenario examined in this section appears in *OI Biostat* as Example 2.30.
 
@@ -135,7 +135,7 @@ Mandatory drug testing in the workplace is common practice for certain professio
     c) Based on 100,000 replicates, estimate the probability that at least one employee tests positive out of 150 drug-free employees.
     
 
-#### Mammograms
+### Mammograms
 
 5. The specificity of a diagnostic test refers to the probability that a test is negative in the absence of disease. Mammograms have a specificity of 95\% for detecting breast cancer.
 

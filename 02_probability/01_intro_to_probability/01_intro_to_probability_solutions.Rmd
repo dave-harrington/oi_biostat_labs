@@ -29,7 +29,7 @@ Probabilities for events can be calculated via simulation by simply repeating an
 
 The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostatistics}.
 
-#### Introduction
+### Introduction
 
 Suppose that a biased coin is tossed 5 times; the coin is weighted such that the probability of obtaining a heads is 0.6. What is the probability of obtaining exactly 3 heads?
 
@@ -124,7 +124,7 @@ table(heads.3)
 
         \textcolor{NavyBlue}{In the fourth replicate of the experiment, 2 heads were observed.}
 
-        ```{r}
+    ```{r}
 outcomes[4]
 ```
 
@@ -141,7 +141,7 @@ outcomes[4]
   
         \textcolor{NavyBlue}{The new estimate of the probability is 3521/10000 = 0.352.}
   
-        ```{r, echo = FALSE}
+    ```{r, echo = FALSE}
 #define parameters
 prob.heads = 0.6
 number.tosses = 5
@@ -171,7 +171,7 @@ table(heads.3)
   
         \textcolor{NavyBlue}{There are 10 ways that exactly 3 heads can occur when a coin is tossed 5 times: TTHHH, HTTHH, HHTTH, HHHTT, THTHH, THHTH, THHHT, HTHHT, HTHTH, HHTHT. Each sequence represents a disjoint outcome, so the addition rule can be used. In this case, the probability of each disjoint outcome is equal. The exact probability of observing exactly 3 heads when a coin is tossed 5 times is $10 \times (0.60)^3(0.40)^2 = 0.346.$}
   
-        ```{r}
+    ```{r}
 prob.heads = 0.6
 
 10*prob.heads^3*(1-prob.heads)^2
@@ -185,7 +185,7 @@ prob.heads = 0.6
 
 \newpage
 
-#### Mandatory Drug Testing
+### Mandatory Drug Testing
 
 The simulation framework illustrated in the previous section can easily be adapted for other scenarios that may seem more complicated than coin tossing. The drug testing scenario examined in this section appears in *OI Biostat* as Example 2.30.
 
@@ -226,7 +226,7 @@ prob.true.negative = 1 - prob.false.positive
         \textcolor{NavyBlue}{Yes, there was at least one employee who tested positive. In this set of tests, two employees tested positive.}
 
 
-        ```{r, eval = TRUE}
+    ```{r, eval = TRUE}
 #define parameters
 prob.false.positive = 0.012
 number.employees = 150
@@ -249,7 +249,7 @@ sum(results)
 
         \textcolor{NavyBlue}{The estimated probability that at least one employee tests positve out of 150 drug-free employees is $83,718/100,000 = 0.837.$}
 
-        ```{r, eval = TRUE}
+    ```{r, eval = TRUE}
 #define parameters
 prob.false.positive = 0.012
 number.employees = 150
@@ -282,7 +282,7 @@ table(at.least.1.pos)
 
 \newpage
 
-#### Mammograms
+### Mammograms
 
 5. The specificity of a diagnostic test refers to the probability that a test is negative in the absence of disease. Mammograms have a specificity of 95\% for detecting breast cancer.
 
@@ -295,7 +295,7 @@ table(at.least.1.pos)
         \textcolor{NavyBlue}{The probability that no more than 1 woman will test positive if none of the woman have breast cancer is 0.28.}
 
   
-        ```{r}
+    ```{r}
 #define parameters
 specificity = 0.95
 number.women = 50
@@ -331,7 +331,7 @@ table(at.most.1.pos)
         \textcolor{NavyBlue}{With the probability of a false positive result at 0.01 (i.e., specificity of 0.99), the probability that no more than 1 woman will test positive if none of the woman have breast cancer is 0.91.}
   
   
-        ```{r}
+    ```{r}
 #define parameters
 specificity = 0.99
 number.women = 50

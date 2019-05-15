@@ -18,7 +18,7 @@ This lab contains examples of relatively complex conditioning problems that requ
 
 The first problem is from the context of allele inheritance, like Examples 2.4 and 2.32 in the text. The second problem is approached algebraically in the text in Section 2.3; a familiarity with both algebraic and simulation methods is instructive. 
 
-#### Problem 1: Eye Color Inheritance. 
+### Problem 1: Eye Color Inheritance. 
 
 One of the earliest models for the genetics of eye color was developed in 1907, and proposed a single-gene inheritance model, for which brown eye color is always dominant over blue eye color.\footnote{This model has since been shown to be incorrect---eye color inheritance is actually controlled by multiple genes.} 
 
@@ -192,7 +192,7 @@ c) Given that their first child has brown eyes, what is the probability that the
 
 \newpage
 
-#### Problem 2: Cat Genetics.
+### Problem 2: Cat Genetics.
 
 The gene that controls white coat color in cats, $KIT$, is known to be responsible for multiple phenotypes such as deafness and blue eye color. A dominant allele $W$ at one location in the gene has complete penetrance for white coat color; all cats with the $W$ allele have white coats. There is incomplete penetrance for blue eyes and deafness; not all white cats will have blue eyes and not all white cats will be deaf. However, deafness and blue eye color are strongly linked, such that white cats with blue eyes are much more likely to be deaf. The variation in penetrance for eye color and deafness may be due to other genes as well as environmental factors.
 

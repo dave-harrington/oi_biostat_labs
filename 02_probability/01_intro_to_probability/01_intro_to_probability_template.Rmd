@@ -23,7 +23,7 @@ Probabilities for events can be calculated via simulation by simply repeating an
 
 The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostatistics}.
 
-#### Introduction
+### Introduction
 
 Suppose that a biased coin is tossed 5 times; the coin is weighted such that the probability of obtaining a heads is 0.6. What is the probability of obtaining exactly 3 heads?
 
@@ -167,7 +167,7 @@ Remember that R can be used as a calculator.
 
 \newpage
 
-#### Mandatory Drug Testing
+### Mandatory Drug Testing
 
 The simulation framework illustrated in the previous section can easily be adapted for other scenarios that may seem more complicated than coin tossing. The drug testing scenario examined in this section appears in *OI Biostat* as Example 2.30.
 
@@ -269,7 +269,7 @@ table(at.least.1.pos)
     
 \newpage
 
-#### Mammograms
+### Mammograms
 
 5. The specificity of a diagnostic test refers to the probability that a test is negative in the absence of disease. Mammograms have a specificity of 95\% for detecting breast cancer.
 
@@ -343,7 +343,7 @@ at.most.1.pos = (results <= 1)
 table(at.most.1.pos)
 ```
 
-#### Mammograms
+### Mammograms
 
 5. The specificity of a diagnostic test refers to the probability that a test is negative in the absence of disease. Mammograms have a specificity of 95\% for detecting breast cancer.
 

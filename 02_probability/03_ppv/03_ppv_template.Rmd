@@ -24,7 +24,7 @@ The **positive predictive value (PPV)** of a diagnostic test is the probability 
 The material in this lab corresponds to Section 2.2.5 of *OpenIntro Biostatistics*.
 
 
-#### Introduction
+### Introduction
 
 Suppose a child tests positive for trisomy 21 from a cell-free fetal DNA (cfDNA) test. What is the probability that the child does have trisomy 21, given the positive test result?
 
@@ -245,13 +245,12 @@ P(D|T^+) =& \dfrac{P(D \text{ and } T^+)}{P(T^+)} \\
     
     
     
-#### Challenge Questions
+### Challenge Questions
 
 4. The strongest risk factor for breast cancer is age; as a woman gets older, her risk of developing breast cancer increases. The following table shows the average percentage of American women in each age group who develop breast cancer, according to statistics from the National Cancer Institute. For example, approximately 3.56\% of women in their 60's get breast cancer. 
 
       \begin{table}[htb!]
 	\caption{Prevalence of Breast Cancer by Age Group}
-	\label{table:label}
 	\centering
 	\begin{tabular}{l|l}
 		\textbf{Age Group}  & \textbf{Prevalence} \\ \hline
@@ -295,7 +294,6 @@ d) Suppose that two new mammogram imaging technologies have been developed which
 
     \begin{table}[htb!]
 	\caption{Prevalence of Prostate Cancer by Age Group}
-	\label{table:label}
 	\centering
 	\begin{tabular}{l|l|l|l}
 		\textbf{Age Group}  & \textbf{Prevalence} & \textbf{PPV} & \textbf{NPV}\\ \hline

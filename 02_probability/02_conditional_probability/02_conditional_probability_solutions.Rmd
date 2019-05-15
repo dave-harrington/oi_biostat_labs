@@ -28,7 +28,7 @@ The previous lab demonstrated the use of \texttt{for} loops to simulate many rep
 
 The material in this lab corresponds to Sections 2.2.1 - 2.2.4 of \textit{OpenIntro Biostatistics}.
 
-#### Counting successes with \texttt{if} statements
+### Counting successes with \texttt{if} statements
 
 A bag contains 3 red and 3 white balls. Two balls are drawn from the bag, one at a time; the first ball is not replaced before the second ball is drawn.
 
@@ -182,7 +182,7 @@ sum(successes)/replicates
     
         \textcolor{NavyBlue}{The estimated probability of drawing exactly one red ball is 0.60.}
   
-        ```{r}
+    ```{r}
 #define parameters
 balls = rep(c("R", "W"), c(3,3))
 number.draws = 2
@@ -223,7 +223,7 @@ sum(successes)/replicates
 
 \newpage
 
-#### Simulating a population with \texttt{if} statements
+### Simulating a population with \texttt{if} statements
 
 3. In the United States population, approximately 20\% of men and 3\% of women are taller than 6 feet (72 inches). Let $F$ be the event that a person is female and $T$ be the event that a person is taller than 6 feet. Assume that the ratio of males to females in the population is 1:1. 
 
@@ -300,7 +300,7 @@ addmargins(table(sex, tall))
   
         \textcolor{NavyBlue}{The desired probabilities can be calculated from the numbers shown in the table, or from explicitly using \textsf{R}. The estimated probability of being female and taller than 6 feet is 0.017 and the estimated probability of being tall is 0.119.}
   
-        ```{r}
+    ```{r}
 #probability of female and tall
 sum(tall == 1 & sex == 1)/population.size
 
@@ -348,7 +348,7 @@ sum(tall)/population.size
   
     b) Suppose the disease is not fully penetrant, so that the probability of developing the disease is 0.8 for genotype $AA$, 0.4 for genotype $Aa$, and 0.1 for genotype $aa$. Simulate a population of 10,000 individuals, recording their genotype and disease status. 
     
-        ```{r}
+    ```{r}
 #define parameters
 p.disease.AA = 0.8
 p.disease.Aa = 0.4
@@ -398,56 +398,54 @@ for(k in 1:population.size){
 addmargins(table(genotype, disease))
 ```
     
-          i. What is the prevalence (overall probability) of disease in the population?
+      i. What is the prevalence (overall probability) of disease in the population?
   
-              \textcolor{NavyBlue}{The estimated prevalence of disease $P(D)$ is 0.718.}
+          \textcolor{NavyBlue}{The estimated prevalence of disease $P(D)$ is 0.718.}
   
-            ```{r}
+    ```{r}
 sum(disease)/population.size
 ```
   
       
-          ii. Given that an individual is known to have the disease, what is the probability they are genotype $AA$? 
+      ii. Given that an individual is known to have the disease, what is the probability they are genotype $AA$? 
   
-              \textcolor{NavyBlue}{The estimated probability of being genotype AA given having disease is estimated to be 0.900. To calculate this from the table, divide the number of individuals who have the disease and are genotype AA by the number of individuals with disease: $6464/7182 = 0.900.$}
+          \textcolor{NavyBlue}{The estimated probability of being genotype AA given having disease is estimated to be 0.900. To calculate this from the table, divide the number of individuals who have the disease and are genotype AA by the number of individuals with disease: $6464/7182 = 0.900.$}
   
-            ```{r}
+    ```{r}
 sum(genotype == "AA" & disease == 1)/sum(disease)
 ```
 
       
-          iii. Using algebraic methods, confirm your answers to parts i. and ii.
+      iii. Using algebraic methods, confirm your answers to parts i. and ii.
   
-              \color{NavyBlue}
-
-              Let $D$ represent the event of developing the disease. There are three possible ways to have the disease: be either genotype $AA$, $Aa$, or $aa$. 
+          \textcolor{NavyBlue}{Let $D$ represent the event of developing the disease. There are three possible ways to have the disease: be either genotype $AA$, $Aa$, or $aa$.}
   
 
-            ```{r, out.width = "200px", echo = FALSE, fig.align = 'center'}
+        ```{r, out.width = "200px", echo = FALSE, fig.align = 'center'}
 knitr::include_graphics("partition_space.png")
 ```
 
-              \color{NavyBlue}
+          \color{NavyBlue}
 
-              (part i.) The total probability of developing the disease, $P(D)$, can be calculated by adding together the joint probabilities of having the disease and being a certain genotype; i.e., $P(D \cap AA)$, $P(D \cap Aa)$, and $P(D \cap aa)$.
+          (part i.) The total probability of developing the disease, $P(D)$, can be calculated by adding together the joint probabilities of having the disease and being a certain genotype; i.e., $P(D \cap AA)$, $P(D \cap Aa)$, and $P(D \cap aa)$.
 
-              The problem statement gives conditional probabilities: $P(D|AA)$, $P(D|Aa)$, and $P(D|aa)$. Use the definition of conditional probability, $P(A|B) = P(A \cap B) / P(B)$ to re-write the joint probabilities:
+          The problem statement gives conditional probabilities: $P(D|AA)$, $P(D|Aa)$, and $P(D|aa)$. Use the definition of conditional probability, $P(A|B) = P(A \cap B) / P(B)$ to re-write the joint probabilities:
   
-              \begin{align*}
+          \begin{align*}
               P(D) =& P(D \cap AA) + P(D \cap Aa) + P(D \cap aa) \\
               =& P(D|AA)P(AA) + P(D|Aa)P(Aa) + P(D|aa)P(aa) \\
               =& (0.8)(0.81) + (0.4)(0.18) + (0.1)(0.01) \\
               =& 0.721
-              \end{align*}
+          \end{align*}
   
   
-              (part ii.) The probability of interest is $P(AA|D)$. Use the definition of conditional probability:
+          (part ii.) The probability of interest is $P(AA|D)$. Use the definition of conditional probability:
 
-              \begin{align*}
+          \begin{align*}
               P(AA|D) =& \dfrac{P(AA \cap D)}{P(D)} \\
               =& \dfrac{P(D|AA)P(AA)}{P(D)} \\
               =& \dfrac{(0.8)(0.81)}{0.721} \\
               =& 0.899
-              \end{align*}
+          \end{align*}
 
-              \color{Black}
+        \color{Black}
