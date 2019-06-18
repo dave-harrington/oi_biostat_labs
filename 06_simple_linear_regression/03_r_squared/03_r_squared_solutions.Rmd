@@ -290,24 +290,19 @@ summary(lm(y ~ x + I(x^2)))$r.squared
 
 ### $R^2$ with the PREVEND data
 
-4. Run the code chunk shown in the template to create \texttt{prevend.sample}, the random sample of 500 individuals from the PREVEND data used in the previous labs in this chapter.
+4. Run the code chunk shown in the template to load \texttt{prevend.samp}, the random sample of 500 individuals from the PREVEND data used in the previous labs in this chapter.
 
     ```{r}
 #load the data
 library(oibiostat)
-data("prevend")
-
-#take a random sample
-set.seed(5011)
-sample.size = 500
-prevend.sample = prevend[sample(1:nrow(prevend), sample.size, replace = FALSE), ]
+data("prevend.samp")
 
 #plot RFFT scores versus age
-plot(RFFT ~ Age, data = prevend.sample, cex = 0.5)
-abline(lm(RFFT ~ Age, data = prevend.sample), col = "red")
+plot(RFFT ~ Age, data = prevend.samp, cex = 0.5)
+abline(lm(RFFT ~ Age, data = prevend.samp), col = "red")
 
 #calculate R-squared
-summary(lm(RFFT ~ Age, data = prevend.sample))$r.squared
+summary(lm(RFFT ~ Age, data = prevend.samp))$r.squared
 ```
 
     a) Plot RFFT scores versus age and confirm that these data seem reasonably linear.

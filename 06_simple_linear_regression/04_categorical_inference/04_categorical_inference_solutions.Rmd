@@ -42,7 +42,7 @@ Fitting a simple linear regression model with a categorical predictor that has t
 
 When conducting inference in a regression context, observed data $(x_i, y_i)$ used for fitting a regression line are assumed to have been randomly sampled from a population where the explanatory variable $X$ and response variable $Y$ follow a population model
 \[Y = \beta_0 + \beta_1X + \epsilon, \]
-where $\epsilon \sim N(0, \sigma)$. Under this assumption, the slope and intercept of the regression line, $b_0$ and $b_1$, are estimates of the population parameters $\beta_0$ and $\beta_1$.
+where $\epsilon \sim N(0, \sigma)$. Under this assumption, the intercept and slope of the regression line, $b_0$ and $b_1$, are estimates of the population parameters $\beta_0$ and $\beta_1$.
 
 Hypothesis tests and confidence intervals for regression population parameters have the same basic structure as tests and intervals about population means. Inference is usually done about the slope, $\beta_1$. Under the null hypothesis, the variables $X$ and $Y$ are not associated; $H_0: \beta_1 = 0$. Under the alternative hypothesis, the variables $X$ and $Y$ are associated; $H_1: \beta_1 \neq 0$.
 
@@ -50,28 +50,23 @@ Hypothesis tests and confidence intervals for regression population parameters h
 
 Obesity is known to be a leading risk factor for diabetes. The following questions step through exploring the association between BMI (\texttt{BMI}) and presence of diabetes (\texttt{DM}) in a random sample of $n = 500$ individuals from the PREVEND data.
 
-1. Run the code chunk shown in the template to create \texttt{prevend.sample}, the random sample of 500 individuals from the PREVEND data used in the previous labs in this chapter.
+1. Run the code chunk shown in the template to load \texttt{prevend.samp}, the random sample of 500 individuals from the PREVEND data used in the previous labs in this chapter.
 
     \textcolor{NavyBlue}{The code chunk has been run, but the code and output have been suppressed in this PDF using \texttt{echo = FALSE}.}
 
     ```{r, echo = FALSE}
 #load the data
 library(oibiostat)
-data("prevend")
-
-#take a random sample
-set.seed(5011)
-sample.size = 500
-prevend.sample = prevend[sample(1:nrow(prevend), sample.size, replace = FALSE), ]
+data("prevend.samp")
 ```
 
-2. Examine the variable \texttt{DM} and identify how many individuals in \texttt{prevend.sample} have diabetes. Presence of diabetes is coded as \texttt{1} and absence is coded as \texttt{0}.
+2. Examine the variable \texttt{DM} and identify how many individuals in \texttt{prevend.samp} have diabetes. Presence of diabetes is coded as \texttt{1} and absence is coded as \texttt{0}.
 
-    \textcolor{NavyBlue}{33 individuals in \texttt{prevend.sample} have diabetes.}
+    \textcolor{NavyBlue}{33 individuals in \texttt{prevend.samp} have diabetes.}
 
     ```{r}
 #examine DM
-table(prevend.sample$DM)
+table(prevend.samp$DM)
 ```
 
 
@@ -80,7 +75,7 @@ table(prevend.sample$DM)
     a) Create a boxplot that shows the association between BMI and presence of diabetes.
     
     ```{r, fig.height = 4, fig.width = 3}
-boxplot(prevend.sample$BMI ~ prevend.sample$DM,
+boxplot(prevend.samp$BMI ~ prevend.samp$DM,
         ylab = "BMI", xlab = "Diabetes Presence")
 ```
     
@@ -88,9 +83,9 @@ boxplot(prevend.sample$BMI ~ prevend.sample$DM,
     b) Create a scatterplot of BMI versus presence of diabetes and plot the least-squares line.
     
     ```{r}
-plot(BMI ~ DM, data = prevend.sample,
+plot(BMI ~ DM, data = prevend.samp,
      main = "Association between BMI and Diabetes Presence")
-abline(lm(BMI ~ DM, data = prevend.sample), col = "red", lty = 2)
+abline(lm(BMI ~ DM, data = prevend.samp), col = "red", lty = 2)
 ```
 
     
@@ -100,11 +95,11 @@ abline(lm(BMI ~ DM, data = prevend.sample), col = "red", lty = 2)
 
 4. In the Chapter 1 Lab Notes, the **factor** data structure was introduced. Factors are ideal for storing categorical data. In a factor variable, the levels of the variable are displayed as characters (such as "Female" and "Male") while the data remain stored as integer values (such as \texttt{0} and \texttt{1}); each level of the variable is associated with a specific integer value.
 
-    a) Run the following code chunk to create the factor variable \texttt{DM.factor} from the integer vector \texttt{DM}. Note that while the \texttt{DM} variable is part of the \texttt{prevend.sample} dataframe, the variable \texttt{DM.factor} is not.
+    a) Run the following code chunk to create the factor variable \texttt{DM.factor} from the integer vector \texttt{DM}. Note that while the \texttt{DM} variable is part of the \texttt{prevend.samp} dataframe, the variable \texttt{DM.factor} is not.
     
     ```{r}
 #create DM.factor
-DM.factor = factor(prevend.sample$DM, levels = c(0, 1),
+DM.factor = factor(prevend.samp$DM, levels = c(0, 1),
                                   labels = c("Absent", "Present"))
 ```
     
@@ -117,17 +112,17 @@ DM.factor = factor(prevend.sample$DM, levels = c(0, 1),
 summary(DM.factor)
 
 #use summary( ) on DM
-summary(prevend.sample$DM)
+summary(prevend.samp$DM)
 ```
     
-    c) Run the following code chunk to overwrite the \texttt{DM} variable (in \texttt{prevend.sample}) with the factor variable \texttt{DM.factor}. Confirm that the overwrite was successful by running \texttt{summary()} on \texttt{DM}.
+    c) Run the following code chunk to overwrite the \texttt{DM} variable (in \texttt{prevend.samp}) with the factor variable \texttt{DM.factor}. Confirm that the overwrite was successful by running \texttt{summary()} on \texttt{DM}.
     
     ```{r}
 #overwrite DM with DM.factor
-prevend.sample$DM <- DM.factor
+prevend.samp$DM <- DM.factor
     
 #confirm the overwrite is successful
-summary(prevend.sample$DM)
+summary(prevend.samp$DM)
 ```
     
 5. Calculate mean BMI for diabetic individuals and individuals without diabetes.
@@ -135,7 +130,7 @@ summary(prevend.sample$DM)
     \textcolor{NavyBlue}{Mean BMI for diabetic individuals is 29.92 and mean BMI for individuals without diabetes is 26.69.}
 
     ```{r}
-tapply(prevend.sample$BMI, prevend.sample$DM, mean)
+tapply(prevend.samp$BMI, prevend.samp$DM, mean)
 ```
 
 
@@ -149,15 +144,15 @@ tapply(prevend.sample$BMI, prevend.sample$DM, mean)
 par(mfrow = c(1, 2))
 
 #residual plot
-residuals = resid(lm(BMI ~ DM, data = prevend.sample))
-predicted = predict(lm(BMI ~ DM, data = prevend.sample))
+residuals = resid(lm(BMI ~ DM, data = prevend.samp))
+predicted = predict(lm(BMI ~ DM, data = prevend.samp))
 plot(residuals ~ predicted, 
      xlab = "Residual", ylab = "Predicted BMI",
      cex = 0.75)
 abline(h = 0, lty = 2, col = "red")
 
 #calculate variances
-tapply(prevend.sample$BMI, prevend.sample$DM, var)
+tapply(prevend.samp$BMI, prevend.samp$DM, var)
 
 #Q-Q plot
 qqnorm(residuals, cex = 0.75)
@@ -174,7 +169,7 @@ qqline(residuals)
     
     ```{r}
 #print the values of the coefficients
-coef(lm(BMI ~ DM, data = prevend.sample))
+coef(lm(BMI ~ DM, data = prevend.samp))
 ```
     
     
@@ -184,8 +179,8 @@ coef(lm(BMI ~ DM, data = prevend.sample))
     
     ```{r}
 #use r as a calculator
-b0 = coef(lm(BMI ~ DM, data = prevend.sample))[1]
-b1 = coef(lm(BMI ~ DM, data = prevend.sample))[2]
+b0 = coef(lm(BMI ~ DM, data = prevend.samp))[1]
+b1 = coef(lm(BMI ~ DM, data = prevend.samp))[2]
 
 x = c(0, 1)
 
@@ -196,7 +191,7 @@ b0 + b1*x
     
     ```{r}
 #store the model fit
-model.BMIvsDM = lm(BMI ~ DM, data = prevend.sample)
+model.BMIvsDM = lm(BMI ~ DM, data = prevend.samp)
 
 #use predict( )
 predict(model.BMIvsDM, newdata = data.frame(DM = "Absent"))
@@ -231,10 +226,10 @@ The formulas for calculating the standard error of $b_1$ (s.e.($b_1$)) are in Se
 
     ```{r}
 #view model summary
-summary(lm(BMI ~ DM, data = prevend.sample))
+summary(lm(BMI ~ DM, data = prevend.samp))
 ```
 
-    a) Conduct a formal hypothesis test of no association between BMI and diabetes presence using \texttt{prevend.sample}, at the $\alpha = 0.05$ significance level.
+    a) Conduct a formal hypothesis test of no association between BMI and diabetes presence using \texttt{prevend.samp}, at the $\alpha = 0.05$ significance level.
     
         i. State the hypotheses.
         
@@ -258,9 +253,9 @@ summary(lm(BMI ~ DM, data = prevend.sample))
 #use r as a calculator
 
 #define parameters
-b1 = coef(summary(lm(BMI ~ DM, data = prevend.sample)))[2, 1]
-se.b1 = coef(summary(lm(BMI ~ DM, data = prevend.sample)))[2, 2]
-n = length(prevend.sample$BMI) - sum(is.na(prevend.sample$BMI))
+b1 = coef(summary(lm(BMI ~ DM, data = prevend.samp)))[2, 1]
+se.b1 = coef(summary(lm(BMI ~ DM, data = prevend.samp)))[2, 2]
+n = length(prevend.samp$BMI) - sum(is.na(prevend.samp$BMI))
 
 #calculate interval
 t.star = qt(0.975, df = n - 2)
@@ -289,10 +284,10 @@ b1 - m; b1 + m
 
     ```{r}
 #t-test without constant variance assumption (default)
-t.test(BMI ~ DM, data = prevend.sample)
+t.test(BMI ~ DM, data = prevend.samp)
 
 #t-test with constant variance assumption
-t.test(BMI ~ DM, data = prevend.sample, var.equal = TRUE)
+t.test(BMI ~ DM, data = prevend.samp, var.equal = TRUE)
 ```
 
 
@@ -308,7 +303,7 @@ The following questions return to the investigation of RFFT score as a main resp
     
     ```{r}
 #assess significance
-coef(summary(lm(RFFT ~ Age, data = prevend.sample)))
+coef(summary(lm(RFFT ~ Age, data = prevend.samp)))
 ```
     
     b) Compute and interpret the 99\% confidence interval for the model slope.
@@ -317,7 +312,7 @@ coef(summary(lm(RFFT ~ Age, data = prevend.sample)))
     
     ```{r}
 #compute 99% confidence interval
-confint(lm(RFFT ~ Age, data = prevend.sample), level = 0.99)
+confint(lm(RFFT ~ Age, data = prevend.samp), level = 0.99)
 ```
     
 10. Use a linear regression model to relate BMI and gender (\texttt{Gender}).
@@ -326,7 +321,7 @@ confint(lm(RFFT ~ Age, data = prevend.sample), level = 0.99)
     
     ```{r}
 #convert Gender to a factor variable
-prevend.sample$Gender <- factor(prevend.sample$Gender, levels = c(0, 1),
+prevend.samp$Gender <- factor(prevend.samp$Gender, levels = c(0, 1),
                                 labels = c("Male", "Female"))
 ```
     
@@ -337,7 +332,7 @@ prevend.sample$Gender <- factor(prevend.sample$Gender, levels = c(0, 1),
     
     ```{r}
 #fit the BMI ~ Gender model
-coef(summary(lm(BMI ~ Gender, data = prevend.sample)))
+coef(summary(lm(BMI ~ Gender, data = prevend.samp)))
 ```
     
     c) Evaluate whether gender is a significant predictor of BMI.

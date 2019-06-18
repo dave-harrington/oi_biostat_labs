@@ -57,20 +57,15 @@ To assess the normality of residuals, **normal probability plots** are used. The
 
 ### Calculating a least squares line
 
-1. Run the following code chunk to load the \texttt{prevend} data and store a random sample of 500 individuals as \texttt{prevend.sample}.
+1. Run the following code chunk to load the \texttt{prevend.samp} dataset.
 
     ```{r}
 #load the data
 library(oibiostat)
-data("prevend")
-
-#take a random sample
-set.seed(5011)
-sample.size = 500
-prevend.sample = prevend[sample(1:nrow(prevend), sample.size, replace = FALSE), ]
+data("prevend.samp")
 ```
 
-2. From the data in \texttt{prevend.sample}, calculate the least squares regression line for the relationship between RFFT score (\texttt{RFFT}) and age in years (\texttt{Age}).
+2. From the data in \texttt{prevend.samp}, calculate the least squares regression line for the relationship between RFFT score (\texttt{RFFT}) and age in years (\texttt{Age}).
 
     a) Calculate $b_1$ and $b_0$ from summary statistics, using the formulas on the previous page.
     
@@ -90,10 +85,10 @@ Even though linearity and constant variability can be assessed from the scatterp
 
     ```{r, fig.show = 'hide'}
 #store the residuals from the linear model
-prevend.residuals = resid(lm(RFFT ~ Age, data = prevend.sample))
+prevend.residuals = resid(lm(RFFT ~ Age, data = prevend.samp))
 
 #store the predicted RFFT scores from the linear model
-prevend.predicted = predict(lm(RFFT ~ Age, data = prevend.sample))
+prevend.predicted = predict(lm(RFFT ~ Age, data = prevend.samp))
 
 #create residual plot
 plot(prevend.residuals ~ prevend.predicted)

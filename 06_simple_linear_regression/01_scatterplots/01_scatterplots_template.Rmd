@@ -39,23 +39,17 @@ The goal of this lab is to begin exploring the relationship between age and RFFT
 
 ### Fitting and interpreting a line
 
-The questions in this lab will be based around data from a random sample of $n = 500$ individuals from the \texttt{prevend} dataset.
+The questions in this lab will be based around data from a random sample of $n = 500$ individuals from the \texttt{prevend} dataset; the sample is stored as \texttt{prevend.samp} in the \texttt{oibiostat} package.
 
-1. Run the following code chunk to load the \texttt{prevend} data and store a random sample of 500 individuals as \texttt{prevend.sample}.
+1. Run the following code chunk to load the \texttt{prevend.samp} dataset.
 
-```{r}
+    ```{r}
 #load the data
 library(oibiostat)
-data("prevend")
-
-#take a random sample
-set.seed(5011)
-sample.size = 500
-sample.rows = sample(1:nrow(prevend), sample.size, replace = FALSE)
-prevend.sample = prevend[sample.rows, ]
+data("prevend.samp")
 ```
 
-2. Create a scatterplot of RFFT score (\texttt{RFFT}) and age in years (\texttt{Age}) in \texttt{prevend.sample}, then add a line of best fit.
+2. Create a scatterplot of RFFT score (\texttt{RFFT}) and age in years (\texttt{Age}) in \texttt{prevend.samp}, then add a line of best fit.
 
 <!---
 Where y is the response variable and x is the predictor, 
@@ -132,10 +126,10 @@ The next lab discusses specialized plots for checking assumptions. For now, the 
 ```{r, echo = FALSE, fig.width = 8, fig.height = 5, message = FALSE}
 library(openintro)
 data("COL")
-plot(prevend.sample$RFFT ~ prevend.sample$Age, ylab = "RFFT Score", xlab = "Age (years)",
+plot(prevend.samp$RFFT ~ prevend.samp$Age, ylab = "RFFT Score", xlab = "Age (years)",
      main = "Association of RFFT Score with Age in the PREVEND data (n = 500)", 
      col = COL[1], bg = COL[1, 3], pch = 21)
-abline(lm(prevend.sample$RFFT ~ prevend.sample$Age), lwd = 3, col = COL[4])
+abline(lm(prevend.samp$RFFT ~ prevend.samp$Age), lwd = 3, col = COL[4])
 ```
 
 3. Perform an informal check of assumptions 1 - 3.
