@@ -57,7 +57,7 @@ View(cdc)
 
     Each row of the data matrix represents a case and each column represents a variable. Each variable corresponds to a question that was asked in the survey. For \texttt{genhlth}, respondents were asked to evaluate their general health as either "excellent", "very good", "good", "fair", or "poor". The variables \texttt{exerany}, \texttt{hlthplan}, and \texttt{smoke100} are binary variables, with responses recorded as either 0 for "no" and 1 for "yes": whether the respondent exercised in the past month, has health coverage, or has smoked at least 100 cigarettes in their lifetime. The other variables record the respondents' height in inches, weight in pounds, their desired weight (\texttt{wtdesire}), age in years, and gender.
 
-3. The \$ operator in \textsf{R} is used to access variables within a dataset; for example, \texttt{cdc\$height} tells \textsf{R} to look in the \texttt{cdc} dataframe for the \texttt{weight} variable. Make a scatterplot of \texttt{height} and \texttt{weight} using the \texttt{plot( )} command:
+3. The \$ operator in \textsf{R} is used to access variables within a dataset; for example, \texttt{cdc\$height} tells \textsf{R} to look in the \texttt{cdc} dataframe for the \texttt{height} variable. Make a scatterplot of \texttt{height} and \texttt{weight} using the \texttt{plot( )} command:
 
 
     ```{r, fig.width = 7, fig.height = 5}
