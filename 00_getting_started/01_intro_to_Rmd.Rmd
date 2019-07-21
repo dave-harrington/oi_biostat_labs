@@ -53,11 +53,11 @@ To make a "comment" in an R Markdown document, use the syntax on the lines prece
 
 The real power of R Markdown is that it allows for R programs to be included in the Rmd file, with both the program and its output automatically being produced in the PDF document.
 
-R programs in an Rmd file are located in **code chunks**. You can embed an R code chunk by either typing the three apostrophes followed by an "r" enclosed in braces, then the additional three apostrophes to close the chunk, or simply press the *Insert Chunk* button from the *Chunks* menu on the far right of the toolbar on top of the script editor. 
+R programs in an Rmd file are located in **code chunks**, which appear as grey-shaded blocks as shown below starting on line 60. You can embed an R code chunk by either typing the three backticks (`) followed by an "r" enclosed in braces, then the additional three backticks to close the chunk, or simply press the *Insert Chunk* button from the *Chunks* menu on the far right of the toolbar on top of the script editor. 
 
 6. Datasets for the labs are contained within the *oibiostat* package. To install the *oibiostat* package, run the code in the following chunk. The package only needs to be installed once. 
 
-```{r}
+```{r, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("OI-Biostat/oi_biostat_data")
 ```
