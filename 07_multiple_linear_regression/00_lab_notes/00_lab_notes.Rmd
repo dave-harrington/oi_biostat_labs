@@ -377,3 +377,32 @@ nhanes.subset = subset(nhanes.samp.adult.500, select = c(BMI, Height, Weight))
 cor(nhanes.subset, use = "complete.obs")
 ```
 
+### Collapsing Factor Levels
+
+The \texttt{factor()} function can also be used to collapse levels of a factor.
+
+The following example shows the re-defining of the levels of \texttt{grazing.intensity}; the variable initially has five levels (\texttt{light}, \texttt{less than average}, \texttt{average}, \texttt{moderately heavy}, \texttt{heavy}). The first four levels can be combined into a single level \texttt{NotHeavy}, while the level \texttt{heavy} is renamed \texttt{Heavy}.
+
+```{r}
+#load data
+data("forest.birds")
+
+#view levels of grazing.intensity
+levels(forest.birds$grazing.intensity)
+
+#create the grazing.binary variable
+forest.birds$grazing.binary = forest.birds$grazing.intensity
+
+#redefine the levels of grazing.binary
+levels(forest.birds$grazing.binary) = list("NotHeavy" = c("light", "less than average",
+                                                          "average", "moderately heavy"),
+                                           "Heavy" = "heavy")
+
+#view levels of grazing.binary
+levels(forest.birds$grazing.binary)
+
+#compare tables
+table(forest.birds$grazing.intensity)
+table(forest.birds$grazing.binary)
+```
+
