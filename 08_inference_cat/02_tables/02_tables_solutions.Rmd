@@ -93,7 +93,7 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
 
 1. In resource-limited settings, single-dose nevirapine (NVP) is given to an HIV-positive woman during birth to prevent mother-to-child transmission of the virus. Exposure of the infant to NVP may foster the growth of more virulent strains of the virus in the child.
 
-    If a child is HIV-positive, should they be treated with NVP or a more expensive drug, lopinarvir (LPV)? In this setting, success means preventing a growth of the virus in the child (i.e., preventing virologic failure).
+    If a child is HIV-positive, should they be treated with NVP or a more expensive drug, lopinavir (LPV)? In this setting, success means preventing a growth of the virus in the child (i.e., preventing virologic failure). The following table contains data from a 2012 study conducted in six African countries and India.\footnote{A. Violari, et al. "Nevirapine versus ritonavir-boosted lopinavir for HIV-infected children." \textit{NEJM} 366: 2380-2389.}
     
     \begin{center}
 \begin{tabular}{l|cc|c} 
