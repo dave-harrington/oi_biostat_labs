@@ -235,7 +235,7 @@ addmargins(table(hypothesis, reject))
 
     a) From the results, check that the estimates of $P(H_0)$ and $P(H_A)$ are reasonably close to 0.90 and 0.10, respectively, as specified in the parameters.
     
-        \textcolor{NavyBlue}{The estimates of $P(H_0)$ and $P(H_A)$ are calculated from the column totals: $925/10000 = 0.093$ and $9075/10000 = 0.908$. These marginal probabilities are reasonably close to $P(H_0)$ and $P(H_A)$ that were specified in the parameters of 0.10 and 0.90, respectively.}
+        \textcolor{NavyBlue}{The estimates of $P(H_0)$ and $P(H_A)$ are calculated from the row totals: $925/10000 = 0.093$ and $9075/10000 = 0.908$. These marginal probabilities are reasonably close to $P(H_0)$ and $P(H_A)$ that were specified in the parameters of 0.10 and 0.90, respectively.}
         
     ```{r}
 #use r as a calculator
@@ -250,7 +250,7 @@ addmargins(table(hypothesis, reject))
         
         Recall that power is the probability of rejecting $H_0$ when $H_A$ is true. In probability notation, power is $P(\text{reject } H_0|H_A)$; from the results, this is estimated as $752/925 = 0.813$, which is reasonably close to 0.80.
         
-        Recall that $\alpha$ is the probability of failing to reject $H_0$ when $H_0$ is true. In probability notation, $\alpha$ is $P(\text{fail to reject } H_0|H_0)$; from the results, this is estimated as $484/9075 = 0.053$, which is reasonably close to 0.05.
+        Recall that $\alpha$ is the probability of rejecting $H_0$ when $H_0$ is true. In probability notation, $\alpha$ is $P(\text{rejecting } H_0|H_0)$; from the results, this is estimated as $484/9075 = 0.053$, which is reasonably close to 0.05.
         
         \color{Black}
         
