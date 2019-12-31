@@ -30,11 +30,11 @@ output:
     
 Lab 1 introduces the basic commands for working with data, including those for manipulating dataframes, producing numerical and graphical summaries, and drawing pseudorandom samples. The questions in the last section focus on interpreting summaries and exploring relationships between variables.
 
-Lab 2 provides a walkthrough for conducting an exploratory analysis of a dataset in which confounding may be present. Most of the commands required were introduced previously in Lab 1; this lab more heavily emphasizes interpretation. 
+Lab 2 provides a walk-through for conducting an exploratory analysis of a dataset in which confounding may be present. Most of the commands required were introduced previously in Lab 1; this lab more heavily emphasizes interpretation. 
 
 Lab 3 demonstrates the use of statistical first principles in conducting a basic analysis of a small microarray dataset. New commands for manipulating matrices are introduced, along with a first look at control structures. 
 
-Lab 4 reinforces the commands introduced in Lab 3 and data interpretation skills from Labs 1 and 2, in the context of an RNA sequencing dataset. Both Labs 3 and 4 demonstrate how computing is essential for data analysis; even though the two datsets are relatively small by modern standards, they are already too large to feasibly analyze without statistical computing software.
+Lab 4 reinforces the commands introduced in Lab 3 and data interpretation skills from Labs 1 and 2, in the context of an RNA sequencing dataset. Both Labs 3 and 4 demonstrate how computing is essential for data analysis; even though the two datasets are relatively small by modern standards, they are already too large to feasibly analyze without statistical computing software.
 
 \newpage
 

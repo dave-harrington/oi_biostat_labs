@@ -111,7 +111,7 @@ d.bar
 
     a) Suppose the parameter $\delta$ is the population mean of the differences in velocities during a 1500m swim if all competitive swimmers recorded swim velocities with both suit types. State the null and alternative hypotheses.
 
-    \textcolor{NavyBlue}{The null hypothesis is that there is no difference in mean swim velocities when swimming with a wetsuit versus aswim suit, $H_0: \delta = 0$. The alternative hypothesis is that there is a difference in mean swim velocities when swimming with a wetsuit versus a swimsuit, $H_A: \delta \neq 0$.}
+    \textcolor{NavyBlue}{The null hypothesis is that there is no difference in mean swim velocities when swimming with a wetsuit versus a swim suit, $H_0: \delta = 0$. The alternative hypothesis is that there is a difference in mean swim velocities when swimming with a wetsuit versus a swimsuit, $H_A: \delta \neq 0$.}
 
 
     
@@ -399,7 +399,7 @@ t.test(dds.discr$log.expenditures[dds.discr$ethnicity == "White not Hispanic"],
     
         Conduct two $t$-tests to examine the evidence against the null hypothesis of no difference in mean expenditures within the two largest age cohorts: 13-17 years and 22-50 years. Summarize the results.
     
-    \textcolor{NavyBlue}{The $p$-values are large (0.75 and 0.51); it is not unlikely to see the observed discrepancy in means if the population means are actually the same. There is not evidence of a difference between mean expenditures in Hispanics and White non-Hispanics within either age cohort. This inference-based approach supports the conclusions from the earlier exploratory lab.}  
+    \textcolor{NavyBlue}{The $p$-values are large (0.75 and 0.51); the observed descrepancies in means are not unlikely under the assumption that the population means are the same. There is not evidence of a difference between mean expenditures in Hispanics and White non-Hispanics within either age cohort. This inference-based approach supports the conclusions from the earlier exploratory lab.}  
         
     ```{r}
 #create subsets
