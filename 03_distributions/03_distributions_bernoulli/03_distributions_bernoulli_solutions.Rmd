@@ -463,7 +463,7 @@ sd = sqrt(variance); sd
 
 ### Hypergeometric distribution
 
-Let $X$ represent the number of successes in a series of repeated Bernoulli trials, where sampling is done without replacement. Suppose that in the population of size $N$, there are $m$ total successes. The probability of observing exactly $k$ successses in a sample of size $n$ (i.e., $n$ dependent trials) is given by 
+Let $X$ represent the number of successes in a series of repeated Bernoulli trials, where sampling is done without replacement. Suppose that in the population of size $N$, there are $m$ total successes. The probability of observing exactly $k$ successes in a sample of size $n$ (i.e., $n$ dependent trials) is given by 
 \[P(X = k) = \dfrac{{m \choose k} {N - m \choose n-k}}{{N \choose n}}. \]
 
 For a hypergeometric random variable, $E(X) = np$ and $Var(X) = np(1-p)\frac{N-n}{N-1}$, where $p = m/N$.

@@ -247,7 +247,7 @@ abline(h = 0, col = "red", lty = 2)
     
     b) Assess whether the residuals have approximately constant variance.
     
-        \textcolor{NavyBlue}{The variance of the residuals is clearly not constant. It is also possible to see in this plot that in the middle range of predicted expenditures, the model consistently underpredicts, while in the upper and lower ranges, the model consistently overpredicts. This is a particularly serious issue with the model fit.}
+        \textcolor{NavyBlue}{The variance of the residuals is clearly not constant. It is also possible to see in this plot that in the middle range of predicted expenditures, the model consistently under-predicts, while in the upper and lower ranges, the model consistently over-predicts. This is a particularly serious issue with the model fit.}
         
         \textcolor{NavyBlue}{Refer to the end of these solutions for a further look into why a linear model is not appropriate for modeling the relationship between expenditures, age, and ethnicity.}
     

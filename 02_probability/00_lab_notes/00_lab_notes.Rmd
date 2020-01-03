@@ -267,7 +267,7 @@ if(sum(draw == "R") == 1){
 
 #### Simulating populations
 
-The last two problems in the lab use \texttt{if} statements to simulate populations based on known conditional probabilities. This approach is useful when probabilites other than those provided are of interest, such as joint probabilities or the reverse conditional probabilities.
+The last two problems in the lab use \texttt{if} statements to simulate populations based on known conditional probabilities. This approach is useful when probabilities other than those provided are of interest, such as joint probabilities or the reverse conditional probabilities.
 
 The loop from Question 3 is reproduced here for reference.
 

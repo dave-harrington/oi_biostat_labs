@@ -234,7 +234,7 @@ library(epitools)
 
 The package requires that the rows of the table contain information on exposure (i.e., treatment) while the columns of the table contain information on outcome (i.e., disease), where the first row specifies the baseline treatment group and the second column specifies presence of the disease outcome. 
 
-The following example shows the HIV data re-entered to be in the preferred format, where the rows of the table specify the type of drug treament and the columns specify the outcome. Note that the second column specifies virologic failure.
+The following example shows the HIV data re-entered to be in the preferred format, where the rows of the table specify the type of drug treatment and the columns specify the outcome. Note that the second column specifies virologic failure.
 
 ```{r}
 #enter the data

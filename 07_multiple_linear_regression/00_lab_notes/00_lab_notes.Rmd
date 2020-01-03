@@ -210,7 +210,7 @@ The \texttt{RColorBrewer} package is a helpful tool for selecting colors. The pa
 
   - Sequential palettes are ideal for ordered data that progress across a range from low to high. 
   
-  - Diverging palettes place equal emhasis on extremes at both ends of the data range.
+  - Diverging palettes place equal emphasis on extremes at both ends of the data range.
   
   - Qualitative palettes are useful for unordered categorical data.
 

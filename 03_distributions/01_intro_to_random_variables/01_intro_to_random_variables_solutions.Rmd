@@ -236,7 +236,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 
     a) Confirm that the clinical trial satisfies the conditions for a binomial experiment.
   
-    \textcolor{NavyBlue}{There is a fixed number of trials, $n$, at 8 patients; it is reasonable to assume that the response of each patient is indepedent of the others. Each outcome can be classified as either success or failure. The probability of a good response, $p$, is assumed to be the same for each patient.}
+    \textcolor{NavyBlue}{There is a fixed number of trials, $n$, at 8 patients; it is reasonable to assume that the response of each patient is independent of the others. Each outcome can be classified as either success or failure. The probability of a good response, $p$, is assumed to be the same for each patient.}
   
   
     b) Calculate $E(X)$ and $\text{Var}(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.

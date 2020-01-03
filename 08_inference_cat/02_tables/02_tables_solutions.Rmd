@@ -112,7 +112,7 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
   
         The null hypothesis is that there is no association between treatment and outcome; i.e., treatment and outcome are independent.
   
-        The alternative hypothesis is that there is an association betweeen treatment and outcome; i.e., treatment and outcome are not independent.
+        The alternative hypothesis is that there is an association between treatment and outcome; i.e., treatment and outcome are not independent.
   
         \color{Black}
 
