@@ -64,7 +64,7 @@ gene.matrix.sample = gene.matrix[ ,gene.index.set]
 
     a) What are the first five values of \texttt{gene.index.set}? How were the numbers in \texttt{gene.index.set} chosen?
 
-    \textcolor{NavyBlue}{The first five values of \texttt{gene.index.set} are 2309, 733, 4275, 5187, and 5867. The numbers in \texttt{gene.index.set} were randomly sampled from the integers between 1 and 7,129. }
+        \textcolor{NavyBlue}{The first five values of \texttt{gene.index.set} are 4841, 6731, 6535, 6743, 4804. The numbers in \texttt{gene.index.set} were randomly sampled from the integers between 1 and 7,129. }
 
     ```{r}
 #view gene.index.set
@@ -74,15 +74,15 @@ gene.index.set[1:5]
 
     b) Why is it important to sample without replacement?
 
-    \textcolor{NavyBlue}{Sampling without replacement is necessary to ensure that a number does not get chosen more than once. Since the numbers are used to identify the column numbers of particular genes, sampling without replacement allows for 100 distinct genes to be drawn from the pool of 7,129 genes.}
+        \textcolor{NavyBlue}{Sampling without replacement is necessary to ensure that a number does not get chosen more than once. Since the numbers are used to identify the column numbers of particular genes, sampling without replacement allows for 100 distinct genes to be drawn from the pool of 7,129 genes.}
 
     c) View \texttt{gene.matrix.sample}; what does it contain? How is \texttt{gene.matrix.sample} related to \texttt{gene.index.set}?
 
-    \textcolor{NavyBlue}{The matrix contains gene expression data for the 100 genes corresponding to the columns specified by the numbers in \texttt{gene.index.set}, for each of the 62 patients.}
+        \textcolor{NavyBlue}{The matrix contains gene expression data for the 100 genes corresponding to the columns specified by the numbers in \texttt{gene.index.set}, for each of the 62 patients.}
 
     d) What are the first five gene names of the 100 genes sampled?
 
-    \textcolor{NavyBlue}{Each column contains expression information for agene; the first five gene names are given at the top of the first five columns:}
+        \textcolor{NavyBlue}{Each column contains expression information for agene; the first five gene names are given at the top of the first five columns:}
 
     ```{r}
 colnames(gene.matrix.sample)[1:5]
@@ -90,7 +90,7 @@ colnames(gene.matrix.sample)[1:5]
 
     e) Plot a histogram showing the distribution of the expression levels of the second gene across patients. Describe the distribution.
 
-    \textcolor{NavyBlue}{The histogram is approximately symmetric, although there is some slight skewing to the left. The values are all negative, and centered around -900.}
+        \textcolor{NavyBlue}{The histogram is approximately symmetric, although there is some slight skewing to the right. The values are all positive, and centered around 25,000.}
 
 
     ```{r}
@@ -99,6 +99,7 @@ hist(gene.matrix.sample[ ,2])
 ```
 
 
+\newpage
 
 3. Create a logical variable, \texttt{leuk.type}, that has value \texttt{1} for AML and value \texttt{0} for anything that is not AML (i.e., \texttt{allT} and \texttt{allB}).
 
@@ -112,11 +113,11 @@ table(leuk.type)
 
     a) When creating the logical variable, why not write \texttt{"allT"} or \texttt{"allB"} instead of \texttt{"aml"}?
 
-    \textcolor{NavyBlue}{The purpose of creating the logical variable is to separate patients based on whether they have AML or ALL. For this analysis, both types of ALL patients need to be combined in a single group. To do this, the logical variable queries whether or not a patient is in the AML category; if so, \texttt{TRUE} is assigned. All other patients (i.e., both ALL-T and ALL-B patients) are assigned a \texttt{FALSE}. Basing the logical variable on \texttt{allT} or \texttt{allB} would result in AML and ALL-B/ALL-T patients being grouped together.}
+        \textcolor{NavyBlue}{The purpose of creating the logical variable is to separate patients based on whether they have AML or ALL. For this analysis, both types of ALL patients need to be combined in a single group. To do this, the logical variable queries whether or not a patient is in the AML category; if so, \texttt{TRUE} is assigned. All other patients (i.e., both ALL-T and ALL-B patients) are assigned a \texttt{FALSE}. Basing the logical variable on \texttt{allT} or \texttt{allB} would result in AML and ALL-B/ALL-T patients being grouped together.}
 
     b) How many patients have AML? How many have ALL?
 
-    \textcolor{NavyBlue}{There are 42 patients with ALL and 20 patients with AML.}
+        \textcolor{NavyBlue}{There are 42 patients with ALL and 20 patients with AML.}
 
 
 4. Summarize the data separately for AML patients and for ALL patients.
@@ -135,12 +136,12 @@ all.mean.expression = apply(gene.matrix.sample[leuk.type == FALSE, ], 2, mean)
 
     b) Explain the logic behind the code to generate \texttt{aml.mean.expression} and \texttt{all.mean.expression}. In other words, what do the separate components instruct \textsf{R} to do?
 
-    \textcolor{NavyBlue}{The command for calculating \texttt{aml.mean.expression} instructs \textsf{R} to calculate the mean down each column of \texttt{gene.matrix.sample}, selectively including only values from rows for which \texttt{leuk.type} is \texttt{TRUE}; that is, only including expression values from patients with AML. To calculate the mean expression levels for ALL patients, the command skips the rows with data from AML patients.}
+        \textcolor{NavyBlue}{The command for calculating \texttt{aml.mean.expression} instructs \textsf{R} to calculate the mean down each column of \texttt{gene.matrix.sample}, selectively including only values from rows for which \texttt{leuk.type} is \texttt{TRUE}; that is, only including expression values from patients with AML. To calculate the mean expression levels for ALL patients, the command skips the rows with data from AML patients.}
 
 
     c) View the contents of \texttt{aml.mean.expression}. What is the average expression level of the first sampled gene across AML patients?
 
-    \textcolor{NavyBlue}{The average expression level of the first sampled gene is -263.5731}.
+        \textcolor{NavyBlue}{The average expression level of the first sampled gene is -483.96.}
 
     ```{r}
 as.matrix(aml.mean.expression)[1, ]
@@ -160,12 +161,12 @@ diff.mean.expression.matrix[1, ]
 
     a) What is the difference in mean expression level between AML and ALL for the first gene on the list; on average, is this gene more highly expressed in AML patients or ALL patients? Does it seem like this gene could be a good predictor of leukemia type? Why or why not?
 
-    \textcolor{NavyBlue}{The difference in mean expression level between AML and ALL for the first gene on the list is -1131.455; on average, the gene is more highly expressed in ALL patients. It is not possible to tell whether this gene could be a good predictor, without knowing the distribution of differences. A difference of 1000 could very well be a typical mean expression difference between the AML and ALL, or it might be extreme.}
+        \textcolor{NavyBlue}{The difference in mean expression level between AML and ALL for the first gene on the list is 129.51; on average, the gene is more highly expressed in AML patients. It is not possible to tell whether this gene could be a good predictor, without knowing the distribution of differences. A difference of 129.51 could very well be a typical mean expression difference between the AML and ALL, or it might be extreme.}
 
 
     b) Using numerical and graphical summaries, describe the distribution of differences in mean expression levels.
 
-    \textcolor{NavyBlue}{From the histogram, a vast majority of the observations are between -1000 and 1000; more precisely, the middle 50\% of the data are between -181.47 and 71.63. However, the boxplot indicates the presence of both small and large outliers; these genes may be ones useful for differentiating between AML and ALL. }
+        \textcolor{NavyBlue}{From the histogram, a vast majority of the observations are between -2500 and 2500; more precisely, the middle 50\% of the data are between -90.44 and 129.34. However, the boxplot indicates the presence of both small and large outliers; these genes may be ones useful for differentiating between AML and ALL. }
 
     ```{r, fig.height = 4, fig.width = 8}
 #numerical summaries
@@ -209,11 +210,11 @@ ordered.large.out
 
     a) What are the upper and lower outlier bounds?
 
-    \textcolor{NavyBlue}{The upper bound is 451.29 and the lower bound is -561.13.}
+        \textcolor{NavyBlue}{The upper bound is 459.01 and the lower bound is -420.11.}
 
     b) How many large outliers are present in the sample?
 
-    \textcolor{NavyBlue}{There are five large outliers present in the sample.}
+        \textcolor{NavyBlue}{There are ten large outliers present in the sample.}
 
     ```{r}
 table(which.large.out)
@@ -225,16 +226,17 @@ length(large.out) #alternatively, use length()
 
     c) How many rows and columns does \texttt{large.out} have? Explain why.
 
-    \textcolor{NavyBlue}{The matrix \texttt{large.out} has two columns and five rows. It is constructed from all two columns of \texttt{diff.mean.expression.matrix}, and only the rows for which the expression value is greater than \texttt{ub.outlier}}
+        \textcolor{NavyBlue}{The matrix \texttt{large.out} has two columns and ten rows. It is constructed from all two columns of \texttt{diff.mean.expression.matrix}, and only the rows for which the expression value is greater than \texttt{ub.outlier}}
 
     d) View \texttt{order.large.out}. What do these numbers represent?
 
-    \textcolor{NavyBlue}{These numbers represent the row ordering if the rows were to be sorted in decreasing order, from largest to smallest. For example, the \texttt{5} that is the first number in the vector indicates that the fifth row contains the largest value, and should be first in an ordered list.}
+        \textcolor{NavyBlue}{These numbers represent the row ordering if the rows were to be sorted in decreasing order, from largest to smallest. For example, the \texttt{1} that is the first number in the vector indicates that the first row contains the largest value, and should be first in an ordered list.}
 
     ```{r}
 order.large.out
 ```
 
+    \newpage
 
     e) Modify the code to find small outliers. How many small outliers are present in the sample?
 
@@ -248,7 +250,7 @@ order.small.out = order(small.out[,1], decreasing = FALSE)
 ordered.small.out = as.matrix(small.out[order.small.out,])
 ```
 
-    \textcolor{NavyBlue}{There are twelve small outliers present in the sample.}
+        \textcolor{NavyBlue}{There are twelve small outliers present in the sample.}
 
     ```{r}
 table(which.small.out)
@@ -257,7 +259,7 @@ table(which.small.out)
 
     f) Which gene has the largest positive difference in mean expression between AML and ALL samples? Which gene has the largest negative difference in mean expression between AML and ALL samples?
 
-    \textcolor{NavyBlue}{These genes are indicated by the largest large outlier and the smallest small outlier:}
+        \textcolor{NavyBlue}{These genes are indicated by the largest large outlier and the smallest small outlier:}
 
     ```{r}
 #largest large outlier
@@ -277,12 +279,12 @@ ordered.outliers = as.matrix(diff.mean.expression.matrix[order.decreasing, ])
 
     Which gene just missed the cutoff to qualify as a large outlier? Which gene is closest to the cutoff for qualifying as a small outlier?
 
-    \textcolor{NavyBlue}{The gene from the probe \texttt{D49950\_at} with a difference of 297.26 just missed the cutoff to qualify as a large outlier, while \texttt{U35113\_at} with a difference of -450.20 is closest to the cutoff for qualifying as a small outlier. This can be read off the ordered list of all outliers; alternatively, the commands used below can be used to extract the relevant rows:}
+    \textcolor{NavyBlue}{The gene from the probe \texttt{U38980\_at} with a difference of 457.43 just missed the cutoff to qualify as a large outlier, while \texttt{U47414\_at} with a difference of -333.81 is closest to the cutoff for qualifying as a small outlier. This can be read off the ordered list of all outliers; alternatively, the commands used below can be used to extract the relevant rows:}
 
 
     ```{r}
-#pull the 6th largest value from the list where decreasing = TRUE
-ordered.outliers[6, ]
+#pull the 11th largest value from the list where decreasing = TRUE
+ordered.outliers[11, ]
 
 #pull the 13th largest value from the list where decreasing = FALSE
 order.increasing = order(diff.mean.expression.matrix[ ,1], decreasing = FALSE)
@@ -336,7 +338,7 @@ ordered.small.out[1:5, ]
 
 ### Predicting leukemia type
 
-Figure \ref{golubPrediction} illustrates the main ideas behind the strategy developed by the Golub team to predict leukemia type from expression data.The vertical orange bars represent the gene expression levels of a patient for each gene, relative to the mean expression for AML patients and ALL patients from the training dataset (vertical blue bars). A gene will "vote" for either AML or ALL, depending on whether the patient's expression level is closer to $\mu_{AML}$ or $\mu_{ALL}$. In the example shown, three of the genes are considered to have ALL-like expression, versus the other two that are more AML-like. The votes are also weighted to account for how far an observation is from the midpoint between the two means (horizontal dotted blue line); i.e., the length of the dotted line shows the deviation from the midpoint. For example, the observed expression value for gene 2 is not as strong an indicator of ALL as the expression value for gene 1. The magnitude of the deviations $(v_1, v_2, \dots)$ are summed to obtain $V_{AML}$ and $V_{ALL}$, and a higher value indicates a prediction of either AML or ALL, respectively.
+Figure \ref{golubPrediction} illustrates the main ideas behind the strategy developed by the Golub team to predict leukemia type from expression data. The vertical orange bars represent the gene expression levels of a patient for each gene, relative to the mean expression for AML patients and ALL patients from the training dataset (vertical blue bars). A gene will "vote" for either AML or ALL, depending on whether the patient's expression level is closer to $\mu_{AML}$ or $\mu_{ALL}$. In the example shown, three of the genes are considered to have ALL-like expression, versus the other two that are more AML-like. The votes are also weighted to account for how far an observation is from the midpoint between the two means (horizontal dotted blue line); i.e., the length of the dotted line shows the deviation from the midpoint. For example, the observed expression value for gene 2 is not as strong an indicator of ALL as the expression value for gene 1. The magnitude of the deviations $(v_1, v_2, \dots)$ are summed to obtain $V_{AML}$ and $V_{ALL}$, and a higher value indicates a prediction of either AML or ALL, respectively.
 
 \begin{figure}[h!]
 \centering
@@ -431,37 +433,39 @@ for(i in 1:dim(votes)[1]){
 
     a) The loop stores the results in a matrix called \texttt{votes}. What are the dimensions of the matrix? Does a single row contain the votes for a single patient, or the votes for a single gene? (*Hint*: refer to the syntax used to create the empty \texttt{votes} matrix.)
 
-    \textcolor{NavyBlue}{The syntax used to create the \texttt{votes} matrix specifies that the number of rows equals the number of patients, and the number of columns equals the number of genes. The line beforehand specifies that \texttt{num.genes} and \texttt{num.patients} are defined by the number of columns and rows in the matrix \texttt{test.gene.matrix}. Thus, the matrix has 10 rows and 10 columns. Since the number of rows corresponds to the number of patients, each row contains the information for a single patient; a single row will contain the votes for a single patient.}
+        \textcolor{NavyBlue}{The syntax used to create the \texttt{votes} matrix specifies that the number of rows equals the number of patients, and the number of columns equals the number of genes. The line beforehand specifies that \texttt{num.genes} and \texttt{num.patients} are defined by the number of columns and rows in the matrix \texttt{test.gene.matrix}. Thus, the matrix has 10 rows and 10 columns. Since the number of rows corresponds to the number of patients, each row contains the information for a single patient; a single row will contain the votes for a single patient.}
 
 
     b) Inside the loop, the two vectors \texttt{dist.from.aml} and \texttt{dist.from.all} store the distance between an expression value and the AML or ALL mean, respectively; the distance is calculated as the absolute value of the expression value in a specific cell minus a predictor mean (either AML or ALL). The loop extends in two directions, where \texttt{i} ranges from 1:10 and \texttt{j} ranges from 1:10, since the dimensions of the \texttt{votes} matrix are 10 (rows) by 10 (columns).
+    
+        \newpage
 
         i. In the first step of the loop, \texttt{i = 1} and \texttt{j = 1}. Based on what you know about bracket notation, describe what is being calculated and stored in \texttt{dist.from.aml} and \texttt{dist.from.all} for these values of \texttt{i} and \texttt{j.}
    
-        \textcolor{NavyBlue}{When \texttt{i = 1} and \texttt{j = 1}, the distance between $\mu_{AML}$ and $\mu_{ALL}$ is being calculated in patient 1, for the first predictor gene. The element \texttt{test.gene.matrix[1, 1]} contains the expression level of gene 1 in patient 1; \texttt{predictor.means.aml[1]} and \texttt{predictor.means.all[1]} contain $\mu_{AML}$ and $\mu_{ALL}$ for gene 1. The two numbers calculated will be the first value in the two vectors \texttt{dist.from.aml} and \texttt{dist.from.all}.}
+            \textcolor{NavyBlue}{When \texttt{i = 1} and \texttt{j = 1}, the distance between $\mu_{AML}$ and $\mu_{ALL}$ is being calculated in patient 1, for the first predictor gene. The element \texttt{test.gene.matrix[1, 1]} contains the expression level of gene 1 in patient 1; \texttt{predictor.means.aml[1]} and \texttt{predictor.means.all[1]} contain $\mu_{AML}$ and $\mu_{ALL}$ for gene 1. The two numbers calculated will be the first value in the two vectors \texttt{dist.from.aml} and \texttt{dist.from.all}.}
    
     
         ii. What is being calculated and stored when \texttt{i = 2} and \texttt{j = 1}?
     
-        \textcolor{NavyBlue}{When \texttt{i = 2} and \texttt{j = 1}, the distance between $\mu_{AML}$ and $\mu_{ALL}$ is being calculated in patient 2, for the first predictor gene. The element \texttt{test.gene.matrix[2, 1]} contains the expression level of gene 1 in patient 2. The values in \texttt{predictor.means.aml[1]} and \texttt{predictor.means.all[1]} remain the same, and contain $\mu_{AML}$ and $\mu_{ALL}$ for gene 1.}
+            \textcolor{NavyBlue}{When \texttt{i = 2} and \texttt{j = 1}, the distance between $\mu_{AML}$ and $\mu_{ALL}$ is being calculated in patient 2, for the first predictor gene. The element \texttt{test.gene.matrix[2, 1]} contains the expression level of gene 1 in patient 2. The values in \texttt{predictor.means.aml[1]} and \texttt{predictor.means.all[1]} remain the same, containing $\mu_{AML}$ and $\mu_{ALL}$ for gene~1.}
     
         iii. What is being calculated and stored when \texttt{i = 1} and \texttt{j = 2}?
     
-        \textcolor{NavyBlue}{When \texttt{i = 1} and \texttt{j = 2}, the distance between $\mu_{AML}$ and $\mu_{ALL}$ is being calculated in patient 1, for the second predictor gene. The element \texttt{test.gene.matrix[1, 2]} contains the expression level of gene 2 in patient 1. The values in \texttt{predictor.means.aml[2]} and \texttt{predictor.means.all[2]} contain $\mu_{AML}$ and $\mu_{ALL}$ for gene 2.}
+            \textcolor{NavyBlue}{When \texttt{i = 1} and \texttt{j = 2}, the distance between $\mu_{AML}$ and $\mu_{ALL}$ is being calculated in patient 1, for the second predictor gene. The element \texttt{test.gene.matrix[1, 2]} contains the expression level of gene 2 in patient 1. The values in \texttt{predictor.means.aml[2]} and \texttt{predictor.means.all[2]} contain $\mu_{AML}$ and $\mu_{ALL}$ for gene 2.}
    
-        \textcolor{NavyBlue}{Note: One intuitive way to think through how the loop works is that it first calculates the distances for a particular gene for all patients (\texttt{i} from 1 to 10), then moves on to the next gene. Once it moves on to another gene (i.e., next value of \texttt{j}), the values in \texttt{dist.from.aml} and \texttt{dist.from.all} are re-calculated.}
+            \textcolor{NavyBlue}{Note: One intuitive way to think through how the loop works is that it first calculates the distances for a particular gene for all patients (\texttt{i} from 1 to 10), then moves on to the next gene. Once it moves on to another gene (i.e., next value of \texttt{j}), the values in \texttt{dist.from.aml} and \texttt{dist.from.all} are re-calculated.}
    
     
         iv. Based on the previous answers, why does it make sense for the loop to calculate distance based on \texttt{predictor.means.aml[j]} and \texttt{predictor.means.all[j]} instead of \texttt{predictor.means.aml[i]} and \texttt{predictor.means.all[i]}?
     
-        \textcolor{NavyBlue}{In the distance calculation, the value of the predictor mean does not change with values of \texttt{i}; it remains constant for different values of \texttt{i} and only changes with values of \texttt{j}. This makes sense conceptually because there is a single $\mu_{AML}$ value (and a single $\mu_{ALL}$ value) for each gene, and the loop should subtract that single $\mu$ value from the expression level at that gene for each patient in order to calculate distance. }
+            \textcolor{NavyBlue}{In the distance calculation, the value of the predictor mean does not change with values of \texttt{i}; it remains constant for different values of \texttt{i} and only changes with values of \texttt{j}. This makes sense conceptually because there is a single $\mu_{AML}$ value (and a single $\mu_{ALL}$ value) for each gene, and the loop should subtract that single $\mu$ value from the expression level at that gene for each patient in order to calculate distance. }
     
     
     
     
     c) View the first row of the matrix \texttt{votes}. For which predictor genes does this patient have AML-like expression, and for which does this patient have ALL-like expression?
 
-    \textcolor{NavyBlue}{The patient has AML-like expression for predictor genes 2, 3, 6, 7, 9, and 10; AML votes are denoted with a \texttt{0}. The patient has ALL-like expression for predictor genes 1, 4, 5, and 8; ALL votes are denoted with a \texttt{1}. The names of the genes can be determined by looking at the column names of  \texttt{test.gene.matrix}.}
+        \textcolor{NavyBlue}{The patient has AML-like expression for predictor genes 2, 3, 6, 7, 9, and 10; AML votes are denoted with a \texttt{0}. The patient has ALL-like expression for predictor genes 1, 4, 5, and 8; ALL votes are denoted with a \texttt{1}. The names of the genes can be determined by looking at the column names of  \texttt{test.gene.matrix}.}
 
     ```{r}
 #view the first row of votes
@@ -495,7 +499,7 @@ colnames(deviation.magnitude) <- colnames(test.gene.matrix)
 
     a) View \texttt{deviation.magnitude}. What is the deviation from the midpoint at the M19507\_at probe for patient 1? For which patient is the deviation at this gene probe the largest?
 
-    \textcolor{NavyBlue}{The deviation from the midpoint at the M19507\_at probe for patient 1 is 5,429.31. The largest deviation at this gene point occurs with patient number 3, with deviation 11,383.1.}
+        \textcolor{NavyBlue}{The deviation from the midpoint at the M19507\_at probe for patient 1 is 5,429.31. The largest deviation at this gene point occurs with patient number 3, with deviation 11,383.1.}
 
     ```{r}
 #deviation.magnitude for patient 1 at probe M19507_at
@@ -509,10 +513,8 @@ max(deviation.magnitude[ ,"M19507_at"])
 
     b) For patient 1, which values should be summed to calculate $V_{AML}$? (*Hint*: Refer to Question 10, part c.) 
 
-    \textcolor{NavyBlue}{The values to calculate $V_{AML}$ are the magnitudes corresponding to genes that voted for AML. For patient 1, these values correspond to the predictor genes 2, 3, 6, 7, 9, and 10.}
+        \textcolor{NavyBlue}{The values to calculate $V_{AML}$ are the magnitudes corresponding to genes that voted for AML. For patient 1, these values correspond to the predictor genes 2, 3, 6, 7, 9, and 10.}
  
-
-\newpage
  
 12. Calculate $V_{AML}$ and $V_{ALL}$ for each patient, and determine which leukemia type is predicted.
 
@@ -542,16 +544,16 @@ predicted.leuk.type
 
     a) Briefly describe how the \texttt{for()} loop to create \texttt{V.aml} and \texttt{V.all} works.
   
-    \textcolor{NavyBlue}{The loop to create \texttt{V.aml} and \texttt{V.all} sums the deviation magnitudes, including magnitudes based on the values in the \texttt{votes} matrix, to return a value of $V_{AML}$ and $V_{ALL}$ for each patient. For example, when \texttt{i = 1}, $V_{AML}$ for patient 1 is calculated by summing the numbers in row 1 of the deviation magnitude for specific columns---only the columns for which there is a \texttt{0} in row 1 the \texttt{votes} matrix.}
+        \textcolor{NavyBlue}{The loop to create \texttt{V.aml} and \texttt{V.all} sums the deviation magnitudes, including magnitudes based on the values in the \texttt{votes} matrix, to return a value of $V_{AML}$ and $V_{ALL}$ for each patient. For example, when \texttt{i = 1}, $V_{AML}$ for patient 1 is calculated by summing the numbers in row 1 of the deviation magnitude for specific columns---only the columns for which there is a \texttt{0} in row 1 of the \texttt{votes} matrix.}
 
   
     b) Briefly describe how the \texttt{for()} loop and \texttt{if} statements to create \texttt{predicted.leuk.type} work.
   
-    \textcolor{NavyBlue}{The loop and conditional statements to create \texttt{predicted.leuk.type} compares $V_{AML}$ and $V_{ALL}$ for each patient, and returns a specific result based on the comparison. If $V_{AML}$ is less than $V_{ALL}$, the prediction is AML. If $V_{AML}$ is greater than $V_{ALL}$, the prediction is ALL. If the two values $V_{AML}$ and $V_{ALL}$ are equal, then the result is a tie.}
+        \textcolor{NavyBlue}{The loop and conditional statements to create \texttt{predicted.leuk.type} compares $V_{AML}$ and $V_{ALL}$ for each patient, and returns a specific result based on the comparison. If $V_{AML}$ is less than $V_{ALL}$, the prediction is AML. If $V_{AML}$ is greater than $V_{ALL}$, the prediction is ALL. If the two values $V_{AML}$ and $V_{ALL}$ are equal, then the result is a tie.}
 
     c) What are the predicted leukemia types for the 10 patients in \texttt{golub.test}?
   
-    \textcolor{NavyBlue}{The first three patients and the fifth patient are predicted to have AML; other patients are predicted to have ALL.}
+        \textcolor{NavyBlue}{The first three patients and the fifth patient are predicted to have AML; other patients are predicted to have ALL.}
 
 
 

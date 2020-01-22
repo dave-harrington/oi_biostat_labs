@@ -48,7 +48,7 @@ arenosa.sample = arenosa[arenosa.rows, ]
 
 2. Print out the first five rows and first seven columns of \texttt{arenosa.sample}; briefly describe the data matrix shown. Does expression of these genes seem higher in vernalized or non-vernalized plants?
 
-    \textcolor{NavyBlue}{The data matrix shows expression data for the first five genes in \texttt{arenosa.sample} in the six KA specimens. For these gens, expression seems higher in vernalized plants (columns 5-7).}
+    \textcolor{NavyBlue}{The data matrix shows expression data for the first five genes in \texttt{arenosa.sample} in the six KA specimens. For these genes, expression seems higher in vernalized plants (columns 5-7).}
 
     ```{r}
 arenosa.sample[1:5, 1:7]
@@ -57,7 +57,7 @@ arenosa.sample[1:5, 1:7]
 
 3. The three measured individuals in a particular group represent biological replicates: individuals of the same type grown under identical conditions. Collecting data from multiple replicates captures the inherent biological variability between organisms. Thus, averaging expression levels across replicates provides an estimate of the typical expression level in the larger population. 
 
-    Using the \texttt{apply()} function as shown in the template, calculate mean expression level across the three replicates for each type of sample: non-vernalized KA, vernalized KA, non-vernalized TBG, and vernalized TBG.
+    Using the \texttt{apply()} function as shown in the template, calculate mean expression level across the three replicates for each type of sample: non-vernalized KA, vernalized KA, non-vernalized TBG, and vernalized TBG.\footnote{Recall that the \texttt{apply()} function was introduced in Lab 3 of this chapter; refer to the Lab Notes for an explanation of the function syntax.}
 
     ```{r}
 ka.nv.mean.sample = apply(arenosa.sample[2:4], 1, mean)
@@ -78,9 +78,11 @@ boxplot(tbg.nv.mean.sample, tbg.v.mean.sample, names = c("TBG NV", "TBG V"))
 ```
 
   
+\newpage  
+  
 5. Using graphical and numerical methods, compare expression levels of cold-responsive genes between non-vernalized KA and non-vernalized TBG, and between vernalized KA and vernalized TBG. How does gene expression differ between non-vernalized KA and TBG plants? How does gene expression differ between vernalized KA and TBG plants?
   
-    \textcolor{NavyBlue}{Expression level of cold-responsive gense in non-vernalized TBG is slightly higher than in non-vernalized KA; median expression in NV TBG is 275 versus 243 in NV KA. In contrast, vernalized KA plants show higher expression of cold-responsive genes; median expression in vernalized KA is at 464 versus 393 in vernalized TBG.}  
+    \textcolor{NavyBlue}{Expression level of cold-responsive genes in non-vernalized TBG is slightly higher than in non-vernalized KA; median expression in NV TBG is 275 versus 243 in NV KA. In contrast, vernalized KA plants show higher expression of cold-responsive genes; median expression in vernalized KA is at 464 versus 393 in vernalized TBG.}  
       
     ```{r, fig.height = 6, fig.width = 6}
 #numerical summaries
@@ -98,7 +100,10 @@ boxplot(ka.v.mean.sample, tbg.v.mean.sample, names = c("KA V", "TBG V"))
 6. Based on the observations made in Questions 4 and 5, does vernalization appear to trigger a stronger change in gene expression in KA plants or TBG plants?
 
     \textcolor{NavyBlue}{Vernalization appears to trigger a stronger change in gene expression in KA plants. Non-vernalized KA plants start out at overall lower levels of expression in comparison to TBG plants, but vernalized KA plants have higher overall levels of expression than vernalized TBG plants. The difference in median expression level for KA between vernalized and non-vernalized means is $464 - 243 = 221$; for TBG, the difference is $393 - 275 = 118$.}
+    
+    \textcolor{NavyBlue}{Note that the observed discrepancy in change in median expression levels (i.e., 221 for KA versus 118 for TBG) do not necessarily suggest that, on average, such a difference would be observed based on \textit{all} KA and TBG plants. These calculations were based on data from six KA and six TBG specimens. Chapter 4 will introduce the concepts necessary for evaluating whether the observed difference is extreme enough to suggest that at a population level, there exists a difference in expression response between KA and TBG.}
 
+\newpage
 
 ### Identifying outliers for responsiveness
 
@@ -121,7 +126,7 @@ tbg.resp.sample[1:3]
 
 8. Create a plot to compare the responsiveness of genes in KA versus TBG for the genes in \texttt{arenosa.sample}; a transformation may be helpful. Describe what you see.
 
-    \textcolor{NavyBlue}{A log transformation is especially helpful for clarifying features of the boxplot. On a log scale, values close to 0 are indicative of low responsiveness, while large values in either direction correspond to high responsiveness. The magnitude of response to vernalization in TBG is smaller than in KA. The spread of responsiveness in KA is larger than for TBG, as indicated by the larger IQR and range of values; this indicates that more genes in KA are differentially expressed between vernalized and non-vernalized samples. Additionally, median responsiveness in KA is higher than in TBG.}
+    \textcolor{NavyBlue}{A log transformation is especially helpful for clarifying features of the boxplot. On a log scale, values close to 0 are indicative of low responsiveness, while large values in either direction correspond to high responsiveness. In general, the magnitude of response to vernalization in TBG is smaller than in KA, as indicated by the higher median in KA. The spread of responsiveness in KA is larger than for TBG, as indicated by the larger IQR and range of values; this indicates that more genes in KA are differentially expressed between vernalized and non-vernalized samples. Additionally, median responsiveness in KA is higher than in TBG.}
 
     ```{r, fig.width = 8, fig.height = 6, warning = FALSE}
 par(mfrow = c(1, 2))
@@ -134,7 +139,7 @@ boxplot(log(tbg.resp.sample), log(ka.resp.sample),
 
     a) Report the genes that are high outliers for both KA and TBG, and the genes that are low outliers for both KA and TBG.
     
-    \textcolor{NavyBlue}{There are 17 high outliers for both KA and TBG (see below for the list), and 3 small outliers for both KA and TBG (485694, 921327, HR3).}
+        \textcolor{NavyBlue}{There are 17 high outliers for both KA and TBG (see below for the list), and 3 small outliers for both KA and TBG (485694, 921327, HR3).}
     
   
     ```{r}
@@ -178,12 +183,13 @@ ordered.pos.ka.out = as.matrix(arenosa.response[order.pos.ka.out, ])
 ordered.pos.ka.out[1:10, ] #show the first 10 outliers
 
 #identify common large outliers
-##using intersect()
+
+#using intersect()
 tbg.pos.out = arenosa[which.tbg.pos.out, 1]
 ka.pos.out = arenosa[which.ka.pos.out, 1]
 intersect(tbg.pos.out, ka.pos.out)
 
-##using (merge)
+#using (merge)
 merge(arenosa.response[which.tbg.pos.out, ], arenosa.response[which.ka.pos.out, ])
 
 #identify small outliers
@@ -200,12 +206,13 @@ ordered.neg.ka.out = as.matrix(arenosa.response[order.neg.ka.out, ])
 ordered.neg.ka.out[1:10, ] #show the first 10 outliers
 
 #identify common small outliers
-##using intersect()
+
+#using intersect()
 tbg.neg.out = arenosa[which.tbg.neg.out, 1]
 ka.neg.out = arenosa[which.ka.neg.out, 1]
 intersect(tbg.neg.out, ka.neg.out)
 
-##using (merge)
+#using (merge)
 merge(arenosa.response[which.tbg.neg.out, ], arenosa.response[which.ka.neg.out, ])
 ```
   
@@ -215,7 +222,7 @@ merge(arenosa.response[which.tbg.neg.out, ], arenosa.response[which.ka.neg.out, 
   
    b) Why might it be interesting to further investigate cold-responsive genes that are either high outliers or low outliers for both KA and TBG?
   
-    \textcolor{NavyBlue}{These highly cold-responsive genes likely play a role in how plants cope with colder temperatures; they could be involved in regulating freezing tolerance, or controlling how plants detect cold temperatures.}
+      \textcolor{NavyBlue}{These highly cold-responsive genes likely play a role in how plants cope with colder temperatures; they could be involved in regulating freezing tolerance, or controlling how plants detect cold temperatures.}
 
 
 

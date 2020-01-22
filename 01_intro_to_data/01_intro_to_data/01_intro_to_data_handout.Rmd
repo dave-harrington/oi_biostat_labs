@@ -63,7 +63,7 @@ plot(cdc$weight ~ cdc$height)
 5. BMI is calculated as weight in kilograms divided by height squared. Create a new variable \texttt{bmi} and make a scatterplot of \texttt{height} and \texttt{BMI}. Do \texttt{height} and \texttt{BMI} seem to be associated?
 
 	
-    A BMI of 30 or above is considered overweight. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
+    A BMI of 30 or above is considered obese. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
 
 
 

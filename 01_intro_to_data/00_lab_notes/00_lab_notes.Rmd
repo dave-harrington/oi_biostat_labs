@@ -34,7 +34,7 @@ Lab 2 provides a walk-through for conducting an exploratory analysis of a datase
 
 Lab 3 demonstrates the use of statistical first principles in conducting a basic analysis of a small microarray dataset. New commands for manipulating matrices are introduced, along with a first look at control structures. 
 
-Lab 4 reinforces the commands introduced in Lab 3 and data interpretation skills from Labs 1 and 2, in the context of an RNA sequencing dataset. Both Labs 3 and 4 demonstrate how computing is essential for data analysis; even though the two datasets are relatively small by modern standards, they are already too large to feasibly analyze without statistical computing software.
+Lab 4 reinforces the commands introduced in Lab 3 and data interpretation skills from Labs 1 and 2, in the context of an RNA sequencing dataset. Both Labs 3 and 4 demonstrate how computing is essential for data analysis; even though the two datasets are relatively small by modern standards, they are already too large to feasibly analyze without statistical computing software. Labs 3 and 4 also illustrate the use of simple statistical ideas to explore complex data.
 
 \newpage
 
@@ -44,13 +44,13 @@ While the following notes are a more systematic introduction to \textsf{R} than 
 
 ## Data Structures
 
-There are several **data types** in \textsf{R}: character, numeric, integer, complex, and logical. The most common data types are character and numeric, where numeric specifically refers to real-valued numbers; characters can be thought of as text labels. Integers and complex numbers can be stored as integer and complex values. Logical values will be discussed in the Lab 3 notes.
+There are several **data types** in \textsf{R}: character, numeric, integer, complex, and logical. The most common data types are character and numeric, where numeric specifically refers to real-valued numbers; characters can be thought of as text labels (i.e., text strings). Integers and complex numbers can be stored as integer and complex values. Logical values will be discussed in the Lab 3 notes.
 
 **Data structures** are different formats for storing data: vectors, matrices, lists, data frames, and factors. 
 
 ### Vectors
 
-A **vector** is a one-dimensional collection of values that are all the same data type; in colloquial language, a vector might simply be referred to as a "list". For example, a numeric vector is one in which all elements of the vector are real numbers.
+A **vector** is a one-dimensional collection of values that are all the same data type; in colloquial language, a vector might simply be referred to as a "list" or sequence of values.\footnote{Note that the term \textit{list} used in the context of a programming language has a specific meaning, as discussed below in the section defining data frames.} For example, a numeric vector is one in which all elements of the vector are real numbers.
 
 The \texttt{c()} command concatenates (i.e., combines) elements into a vector. The following code creates a numeric vector containing the values 1, 1.5, 2, 2.5, and 3, which is stored as a variable \texttt{x}. The variable \texttt{y} is an integer vector containing the integers 5 through 9. The \texttt{class()} command identifies the data structure of an object.
 
@@ -169,15 +169,15 @@ list(a, b)
 
 Just as a matrix is the two-dimensional analog of a vector, a **data frame** is the two-dimensional analog of a list. A data frame contains vectors of the same length, where the vectors can be of different types. This is often the most convenient format for storing a statistical dataset.
 
-The following code creates a small data frame called \texttt{patient.info} from four vectors: \texttt{id}, \texttt{weight}, \texttt{gender}, and \texttt{age}.
+The following code creates a small data frame called \texttt{patient.info} from four vectors: \texttt{id}, \texttt{weight}, \texttt{sex}, and \texttt{age}.
 
 ```{r}
 id = c("A", "B", "C", "D", "E")
 weight = c(210, 140, 120, 180, 160)
-gender = c("male", "female", "female", "male", "male")
+sex = c("male", "female", "female", "male", "male")
 age = c(22, 45, 35, 50, 70)
 
-patient.info = data.frame(id, weight, gender, age)
+patient.info = data.frame(id, weight, sex, age)
 patient.info
 ```
 
@@ -204,14 +204,14 @@ famuss[c(1, 2, 3, 595), c("sex", "age", "race", "height", "weight",
 ```
 
 
-The default in \textsf{R} when creating data frames is to convert any character vectors to factors. A **factor** is a specific data structure for values that come from a fixed set of possible values, and is ideal for storing categorical data. When \texttt{patient.info} was created, the character vector \texttt{gender} was converted into a factor variable with two levels, \texttt{female} and \texttt{male}. To prevent a character vector from being converted into a factor, use \texttt{I()} to indicate that the object should remain as-is.\footnote{In the \textit{RStudio} interface, the data types of objects are visible in the Environment tab. To view the data types of objects within a data frame, select the blue arrow to the left of the name of the data frame.}
+The default in \textsf{R} when creating data frames is to convert any character vectors to factors. A **factor** is a specific data structure for values that come from a fixed set of possible values, and is ideal for storing categorical data. When \texttt{patient.info} was created, the character vector \texttt{sex} was converted into a factor variable with two levels, \texttt{female} and \texttt{male}. To prevent a character vector from being converted into a factor, use \texttt{I()} to indicate that the object should remain as-is.\footnote{In the \textit{RStudio} interface, the data types of objects are visible in the Environment tab. To view the data types of objects within a data frame, select the blue arrow to the left of the name of the data frame.}
 
 ```{r}
-class(patient.info$gender)
-levels(patient.info$gender)
+class(patient.info$sex)
+levels(patient.info$sex)
 
 class(patient.info$id)
-patient.info = data.frame(I(id), weight, gender, age)  #rebuild patient.info
+patient.info = data.frame(I(id), weight, sex, age)  #rebuild patient.info
 class(patient.info$id)                                 #id remains a character vector
 ```
 
@@ -316,7 +316,7 @@ plot(frog$clutch.volume ~ frog$body.size, col = "dodgerblue",
 
 The \texttt{subset()} command is one way to create subsets of vectors, matrices, or dataframes that meet specific conditions. The conditions are specified using logical operators that express "less than", "greater than or equal to", "exactly equal to", etc.
 
-The following code creates subsets from the famuss data that contain only the rows (i.e., participants) that are older than 27, 27 or younger, or 27 years old. The \texttt{<=} and \texttt{>=} denote $\leq$ and $\geq$. Note that two equal signs (\texttt{==}) are required to specify exactly equal to. 
+The following code creates subsets from the \texttt{famuss data} that contain only the rows (i.e., participants) that are older than 27, 27 or younger, or 27 years old. The \texttt{<=} and \texttt{>=} denote $\leq$ and $\geq$. Note that two equal signs (\texttt{==}) are required to specify exactly equal to. 
 
 The \texttt{subset()} command can also be used on character vectors like \texttt{sex}.
 
@@ -355,7 +355,7 @@ The \texttt{sample()} command takes a random sample of a specified size from the
 
 To be able to retrieve a sample that has been generated, it is necessary to associate the sample with a seed (i.e., a tag). Setting the seed allows for the same sample to be generated with a subsequent run of \texttt{sample()}.
 
-The following code shows samples of size 10 drawn from the integers 1 through 15, either with replacement or without replacement. In the first run, it is possible to obtain a specific number more than once; this is not possible in the other runs. The first two runs are not associated with a seed. The second two are associated with the seed \texttt{2018}; running \texttt{sample()} with these specifications and seed will always result in the sample 6, 7, 1, 3, 15, 4, 11, 2, 14, 10. Note how the last two runs result in a different sample than the second run.
+The following code shows samples of size 10 drawn from the integers 1 through 15, either with replacement or without replacement. In the first run, it is possible to obtain a specific number more than once; this is not possible in the other runs. The first two runs are not associated with a seed. The second two are associated with the seed \texttt{2018}; running \texttt{sample()} with these specifications and seed will always result in the sample 15, 7, 3, 12, 2, 5, 9, 13, 14, 4. Note how the last two runs result in a different sample than the second run.
 
 ```{r}
 #completely random
@@ -368,8 +368,6 @@ sample(1:15, size = 10, replace = FALSE)
 set.seed(2018)
 sample(1:15, size = 10, replace = FALSE)
 ```
-
-
 
 ## Tables
 
@@ -415,11 +413,14 @@ barplot(table(famuss$actn3.r577x))
 barplot(prop.table(table(famuss$actn3.r577x)))
 ```
 
-A segmented bar plot is produced from applying \texttt{barplot()} to a contingency table of counts. A standardized segmented bar plot is produced from applying \texttt{barplot()} to a contingency table of proportions. When using \texttt{prop.table()} on a contingency table, specify \texttt{2} to calculate column proportions; specify \texttt{1} to calculate row proportions. 
+A segmented bar plot is produced from applying \texttt{barplot()} to a contingency table of counts. A standardized segmented bar plot is produced from applying \texttt{barplot()} to a contingency table of proportions. 
 
-```{r}
+When using \texttt{prop.table()} on a contingency table, specify \texttt{2} to calculate column proportions; specify \texttt{1} to calculate row proportions. If a number is not specified in the \texttt{prop.table} argument, proportions will be calculated by dividing the value in each cell by the total number of observations; for example, in the third table below, the proportion 0.0679 is calculated from 36/530.
+
+```{r, fig.height = 3.5, fig.width = 9}
 addmargins(table(LEAP$overall.V60.outcome, LEAP$treatment.group))
 prop.table(table(LEAP$overall.V60.outcome, LEAP$treatment.group), 2)
+prop.table(table(LEAP$overall.V60.outcome, LEAP$treatment.group))
 
 #OI Biostat Figure 1.3
 par(mfrow = c(1, 2))
@@ -438,8 +439,28 @@ boxplot(famuss$ndrm.ch[famuss$bmi < 25], famuss$ndrm.ch[famuss$bmi >= 25],
         names = c("low BMI", "high BMI"))
 ```
 
+## The \texttt{tapply()} Function
+
+The \textbf{\texttt{tapply()}} function is related to the \texttt{apply()} function discussed in the notes for Lab 3. As with \texttt{apply()}, \texttt{tapply()} allows a specific function to be applied to a matrix; the function can be a predefined \textsf{R} function like \texttt{mean()} or a user-defined function. The power of \texttt{tapply()} is that it allows for a vector to be split into groups, with the function applied to each group.
+
+The function has the generic structure
+
+```{r, eval = FALSE}
+tapply(y, x, FUN)
+```
+
+where \texttt{y} is the vector of data, \texttt{x} is the grouping variable, and \texttt{FUN} is the function of interest.
+
+The following code shows how to calculate the mean change in non-dominant arm strength for each genotype group in the FAMuSS data.
+
+```{r}
+#calculate mean ndrm.ch for each actn3.r577x group
+tapply(famuss$ndrm.ch, famuss$actn3.r577x, mean)
+```
+
 
 \newpage
+
 
 # Lab 3: Golub Case Study
 
@@ -540,6 +561,8 @@ par(mfrow = c(1, 2))
 hist(wdi.2011$gdp.per.capita, main = "Income")
 hist(log(wdi.2011$gdp.per.capita), main = "Log-Transformed Income")
 ```
+
+\newpage
 
 ## Set Operations
 

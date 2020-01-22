@@ -115,7 +115,7 @@ The symbol for exponentiation in R is the carat, ^
 
 
 	
-A BMI of 30 or above is considered overweight. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
+A BMI of 30 or above is considered obese. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
 
 
 

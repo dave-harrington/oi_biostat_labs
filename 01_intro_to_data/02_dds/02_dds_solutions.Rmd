@@ -168,7 +168,9 @@ summary(dds.discr$expenditures[dds.discr$gender == "Female"])
 
 5. How does the distribution of expenditures vary by ethnic group? Does there seem to be a difference in the amount of funding that a person receives, on average, between different ethnicities?
 
-    \textcolor{NavyBlue}{The distribution of \texttt{expenditures} is quite different between ethnic groups. For example, there is very little variation in \texttt{expenditures} within the Multi Race, Native Hawaiian, and Other groups; in other groups, such as the White not Hispanic group, there is a greater range in \texttt{expenditures}. Additionally, there seems to be a difference in the amount of funding that a person receives, on average, between different ethnicities. The median amount of annual support received for individuals in the American Indian and Native Hawaiian groups is about \$40,000, versus medians of approximately \$10,000 for Asian and Black consumers. }
+    \textcolor{NavyBlue}{The distribution of \texttt{expenditures} is quite different between ethnic groups. For example, there is very little variation in \texttt{expenditures} within the Multi Race, Native Hawaiian, and Other groups; in other groups, such as the White not Hispanic group, there is a greater range in \texttt{expenditures}. Additionally, there seems to be a difference in the amount of funding that a person receives, on average, between different ethnicities. The median amount of annual support received for individuals in the American Indian and Native Hawaiian groups is about \$40,000, versus medians of approximately \$10,000 for Asian and Black consumers.}
+    
+    \textcolor{NavyBlue}{Rather than using \texttt{summary())} for each ethnicity group, the \texttt{tapply()} command allows for a convenient shortcut. The specific syntax of the \texttt{tapply()} function is explained in the lab notes.}
 
     ```{r, fig.width = 8}
 #graphical summaries
@@ -183,6 +185,9 @@ summary(dds.discr$expenditures[dds.discr$ethnicity == "Multi Race"])
 summary(dds.discr$expenditures[dds.discr$ethnicity == "Native Hawaiian"])
 summary(dds.discr$expenditures[dds.discr$ethnicity == "Other"])
 summary(dds.discr$expenditures[dds.discr$ethnicity == "White not Hispanic"])
+
+#bonus: using tapply( )
+tapply(dds.discr$expenditures, dds.discr$ethnicity, summary)
 ```
 
 
@@ -235,6 +240,8 @@ prop.table(table(dds.discr$age.cohort[dds.discr$ethnicity == "White not Hispanic
 
 ```
 
+
+\newpage
 
 Recall that a confounding variable is a variable that is associated with the response variable and the exploratory variable under consideration; confounding was initially introduced in the context of sunscreen use and the incidence of skin cancer, where sun exposure is a confounder. In this setting, age is a confounder for the relationship between \texttt{expenditures} and \texttt{ethnicity}. Just as it would be incorrect to claim that sunscreen causes skin cancer, it is essential here to recognize that there is more to the story than the apparent association between \texttt{expenditures} and \texttt{ethnicity}.
 
@@ -290,6 +297,12 @@ nonhisp.means = c(nonhisp.mean.0to5, nonhisp.mean.6to12, nonhisp.mean.13to17,
 nonhisp.means
 
 nonhisp.means - hisp.means
+
+#bonus: using tapply( )
+hisp.means = tapply(dds.hispanics$expenditures, dds.hispanics$age.cohort, mean)
+nonhisp.means = tapply(dds.white.non.hisp$expenditures, dds.white.non.hisp$age.cohort, 
+mean)
+nonhisp.means - hisp.means
 ```
 
 
@@ -298,7 +311,7 @@ nonhisp.means - hisp.means
 
 9. Based on this exploratory analysis, does there seem to be evidence of ethnic discrimination in the amount of financial support provided by the California DDS? Summarize your findings in language accessible to a non-statistician.
 
-    \textcolor{NavyBlue}{There does not seem to be evidence of ethnic discrimination. Although the average annual expenditures is lower for Hispanics than for White non-Hispanics, this is due to the difference in age distributions between the two ethnic groups. The population of Hispanic consumers is relatively young compared to the population of White non-Hispanic consumers,and the amount of expenditures for younger consumers tends to be lower than for older consumers. When individuals of similar ages are compared, there are not large differences in the average amount of financial support provided to a Hispanic consumer versus a White non-Hispanic consumer.}
+    \textcolor{NavyBlue}{There does not seem to be evidence of ethnic discrimination. Although the average annual expenditures is lower for Hispanics than for White non-Hispanics, this is due to the difference in age distributions between the two ethnic groups. The population of Hispanic consumers is relatively young compared to the population of White non-Hispanic consumers, and the amount of expenditures for younger consumers tends to be lower than for older consumers. When individuals of similar ages are compared, there are not large differences in the average amount of financial support provided to a Hispanic consumer versus a White non-Hispanic consumer.}
 
 
 ### Simpson's paradox

@@ -96,7 +96,7 @@ plot(cdc$height, bmi)
     \textcolor{NavyBlue}{Height and BMI do not appear to be associated.}
 
 	
-    A BMI of 30 or above is considered overweight. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
+    A BMI of 30 or above is considered obese. Why might health agencies choose to use BMI as a measure of obesity, rather than weight?
 
     \textcolor{NavyBlue}{Since \texttt{height} and \texttt{BMI} have a much weaker association, it is more useful to use \text{BMI} as a measure of obesity. Using BMI is one way to account for the fact that taller people tend to have more tissue and thus, weigh more than shorter people.}
 
@@ -266,7 +266,7 @@ hist(transcript.sample)
 boxplot(transcript.sample)
 ```
 
-    \textcolor{NavyBlue}{For this particular sample, some of the most extreme outliers were picked up (such as a transcript of 109,224 bp), so the sample more closely resembles the complete data. All samples most likely will still be skewed right with some large outliers, since there are several in this data.}
+    \textcolor{NavyBlue}{For this particular sample, some of the most extreme outliers were picked up (such as a transcript of 81,357 bp), so the sample more closely resembles the complete data. All samples most likely will still be skewed right with some large outliers, since there are several in this data.}
 
 
 

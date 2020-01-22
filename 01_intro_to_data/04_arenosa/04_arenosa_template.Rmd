@@ -59,7 +59,7 @@ arenosa.sample =
 
 
 
-3. The three measured individuals in a particular group represent biological replicates: individuals of the same type grown under identical conditions. Collecting data from multiple replicates captures the inherent biological variability between organisms. Averaging expression levels across replicates provides an estimate of the typical expression level in the larger population. Calculate mean expression level across the three replicates for each type of sample: non-vernalized KA, vernalized KA, non-vernalized TBG, and vernalized TBG.
+3. The three measured individuals in a particular group represent biological replicates: individuals of the same type grown under identical conditions. Collecting data from multiple replicates captures the inherent biological variability between organisms. Averaging expression levels across replicates provides an estimate of the typical expression level in the larger population. Using the \texttt{apply()} function as shown in the template, calculate mean expression level across the three replicates for each type of sample: non-vernalized KA, vernalized KA, non-vernalized TBG, and vernalized TBG.\footnote{Recall that the \texttt{apply()} function was introduced in Lab 3 of this chapter; refer to the Lab Notes for an explanation of the function syntax.}
 
 ```{r, eval = FALSE}
 ka.nv.mean.sample = apply(arenosa.sample[2:4], 1, mean)
