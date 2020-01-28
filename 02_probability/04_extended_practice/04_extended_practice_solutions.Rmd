@@ -32,11 +32,11 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 
     Let $X$ represent the event of two parents having brown eyes, and $Y$ represent the event of having a child with blue eyes. The following tree illustrates the possible paths to $Y$.
 	
-    Note that the $\times$ represents a mating between two genotypes; e.g. $BB \times BB$ represents a mating between two $BB$ individuals.  The symbol $\cdot$ is used for multiplication of probabilities
+    Note that in this set of solutions, the $\times$ represents a mating between two genotypes; e.g. $BB \times BB$ represents a mating between two $BB$ individuals.  The symbol $\cdot$ is used for multiplication of probabilities.
 	
     \textit{\Tree [.X [.BB$\times$BB [ Y $Y^C$ ] ] [.Bb$\times$Bb [ Y $Y^C$ ] ] [.BB$\times$Bb [ Y $Y^C$ ] ] ]} 
 	
-    Solve for $P(Y|X)$, which is given by adding together the probabilities of the three branches ending in $Y$.\footnote{The total probability equation : $P(Y|X) = [P(BB \times BB | X) \cdot P(Y| BB \times BB)] + [P(Bb \times Bb | X) \cdot P(Y| Bb \times Bb)] + [P(BB \times Bb | X) \cdot P(Y| BB \times Bb)]$}
+    Solve for $P(Y|X)$, which is given by adding together the probabilities of the three branches ending in $Y$.\footnote{The total probability equation : $P(Y|X) = [P(BB \times BB | X) \cdot P(Y| BB \times BB, X)] + [P(Bb \times Bb | X) \cdot P(Y| Bb \times Bb, X)] + [P(BB \times Bb | X) \cdot P(Y| BB \times Bb, X)]$}
 
     \textbf{Find the probabilities of the first set of branches}: $P(BB \times BB | X)$, $P(Bb \times Bb | X)$, and $P(BB \times Bb | X)$. In other words, find the probability of each pair, given that both parents have brown eyes. 
 
@@ -56,7 +56,7 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 	
     \begin{align*}
 		P(Bb \times Bb | X) = [P(Bb | X)]^2 =& \left[\dfrac{P(Bb \text{ and } X)}{P(X)} \right]^2 \\
-		=& \left[\dfrac{P(X|Bb) \cdot P(Bb)}{[P(X|BB) \cdot P(BB)] + [P(X|Bb) \cdot P(Bb)]} \right]^2 \\
+		=& \left[\dfrac{P(X|Bb) \cdot P(Bb)}{[P(X|Bb) \cdot P(Bb)] + [P(X|Bb) \cdot P(Bb)]} \right]^2 \\
 		=& \left[\dfrac{(1)(1/2)}{[(1)(1/4)] + [(1)(1/2)]} \right]^2 \\
 		=& \left[\dfrac{2}{3} \right]^2 \\
 		=& \dfrac{4}{9}
@@ -64,9 +64,9 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 		
     Note that it is also possible to find $P(BB | X)$ and $P(Bb | X)$ from applying the definition of conditional probability and using the genotype frequencies: 
 
-    \[P(BB \times BB | X) = [P(BB | X)]^2 = \left[\dfrac{P(BB \text{ and } X)}{P(X)} \right]^2 = \left[ \dfrac{0.25}{0.75} \right] = (1/3)^2 = 1/9\]	
+    \[P(BB \times BB | X) = [P(BB | X)]^2 = \left[\dfrac{P(BB \text{ and } X)}{P(X)} \right]^2 = \left[ \dfrac{0.25}{0.75} \right]^2 = (1/3)^2 = 1/9\]	
 
-    \[P(Bb \times Bb | X) = [P(Bb | X)]^2 = \left[\dfrac{P(Bb \text{ and } X)}{P(X)} \right]^2 = \left[ \dfrac{0.50}{0.75} \right] = (2/3)^2 = 4/9\]		
+    \[P(Bb \times Bb | X) = [P(Bb | X)]^2 = \left[\dfrac{P(Bb \text{ and } X)}{P(X)} \right]^2 = \left[ \dfrac{0.50}{0.75} \right]^2 = (2/3)^2 = 4/9\]		
 		
     - Calculate $P(BB \times Bb | X)$. From the previous calculations, $P(BB | X)$ and $P(Bb | X)$ are already known to be 1/3 and 2/3, respectively. Since the mother could be $BB$ and the father $Bb$, or vice versa, remember to multiply by 2.
 		
@@ -76,7 +76,7 @@ a) Suppose that two parents have brown eyes. What is the probability that their 
 		=& \dfrac{4}{9}
     \end{align*}
 	
-    \textbf{Find the probabilities of the second set of branches}: $P(Y| BB \times BB)$, $P(Y| Bb \times Bb)$, and $P(Y| BB \times Bb)$. In other words, find the probability of a child with blue eyes, given a specific genotype pair.
+    \textbf{Find the probabilities of the second set of branches}: $P(Y| BB \times BB, X)$, $P(Y| Bb \times Bb, X)$, and $P(Y| BB \times Bb, X)$. In other words, find the probability of a child with blue eyes, given a specific genotype pair. Since the three genotype pairs listed are each combinations of brown-eyed parents, the probabilities can be expressed without the $X$ in the condition; e.g., $P(Y|BB \times BB, X)$ is equivalent to $P(Y|BB \times BB)$.
 	
     A parent passes down one of two alleles ($B$ or $b$) with equal chance, and alleles are inherited independently of each other. An individual must be genotype $bb$ in order to have blue eyes.
 	
@@ -301,7 +301,7 @@ c) Suppose that deaf, white cats have an increased chance of being blind, but th
 
     i. What is the prevalence of blindness among deaf, white cats?
     
-    \textcolor{NavyBlue}{The prevalence of blindness among deaf, white cats is 0.276.}
+        \textcolor{NavyBlue}{The prevalence of blindness among deaf, white cats is 0.276.}
     
     ```{r}
 sum(blindness == 1 & deafness == 1)/sum(deafness == 1)
@@ -310,7 +310,7 @@ sum(blindness == 1 & deafness == 1)/sum(deafness == 1)
   
     ii. What is the prevalence of blindness among white cats?
     
-    \textcolor{NavyBlue}{The prevalence of blindness among white cats is 0.155.}
+        \textcolor{NavyBlue}{The prevalence of blindness among white cats is 0.155.}
     
     ```{r}
 sum(blindness)/population.size
@@ -319,7 +319,7 @@ sum(blindness)/population.size
 
     iii. Given that a cat is white and blind, what is the probability that it has two blue eyes? 
     
-    \textcolor{NavyBlue}{The probability a cat has two blue eyes given it is white and blind is 0.113.}
+        \textcolor{NavyBlue}{The probability a cat has two blue eyes given it is white and blind is 0.113.}
     
     ```{r}
 sum(blue.eyes == 2 & blindness == 1)/sum(blindness == 1)
@@ -327,7 +327,7 @@ sum(blue.eyes == 2 & blindness == 1)/sum(blindness == 1)
     
     iv. What is the probability that a white cat has one blue eye and one non-blue eye, given that it is not blind?
     
-    \textcolor{NavyBlue}{The probability that a cat with one blue eye and one non-blue eye, given that it is not blind, is 0.276. The algebraic solution to this problem is shown as Example 2.58 in the text.}
+        \textcolor{NavyBlue}{The probability that a cat with one blue eye and one non-blue eye, given that it is not blind, is 0.276. The algebraic solution to this problem is shown as Example 2.58 in the text.}
     
     ```{r}
 sum(blue.eyes == 1 & blindness == 0)/sum(blindness == 0)
@@ -340,19 +340,19 @@ d) The following two questions are not solved in the text. Solve the answers alg
 
     i. What is the prevalence of two blue eyes among white cats that are both deaf and blind?
     
-    \color{NavyBlue}
+        \color{NavyBlue}
     
-    Let $D$ represent the event that a white cat is deaf. Let $B_2$ represent the event that a white cat has two blue eyes. Let $L$ represent the event that a white cat is blind.
+        Let $D$ represent the event that a white cat is deaf. Let $B_2$ represent the event that a white cat has two blue eyes. Let $L$ represent the event that a white cat is blind.
     
-    \begin{align*}
+        \begin{align*}
     P(B_2 | L, D) =& \frac{P(L \text{ and } D \text{ and } B_2)}{P(L \text{ and } D)} \\
     =& \frac{P(L | D, B_2)P(D \text{ and } B_2)}{P(L \text{ and } D)} \\
     =& \frac{P(L | D, B_2)P(B_2 | D)P(D)}{P(L | D)P(D)} \\
     =& \frac{(0.20)(0.238)(0.307)}{(0.278)(0.307)} \\
     =& 0.171
-    \end{align*}
+        \end{align*}
 
-    \color{Black}
+        \color{Black}
     
     ```{r}
 sum(blue.eyes == 2 & blindness == 1 & deafness == 1)/sum(blindness == 1 & deafness == 1)
@@ -361,17 +361,17 @@ sum(blue.eyes == 2 & blindness == 1 & deafness == 1)/sum(blindness == 1 & deafne
     
     ii. Given that a white cat has two blue eyes, what is the probability that it is deaf and blind?
     
-    \color{NavyBlue}
+        \color{NavyBlue}
     
-    \begin{align*}
-    P(L \text{ and } D|B_2) =& \frac{P(L \text{ and } D \text{ and } B_2)}{P(B_2)} \\
-    =& \frac{P(L | D, B_2)P(D \text{ and } B_2)}{P(B_2)} \\
-    =& \frac{P(L | D, B_2)P(B_2 | D)P(D)}{P(B_2)} \\
-    =& \frac{(0.20)(0.238)(0.307)}{0.10} \\
-    =& 0.146
-    \end{align*}
+        \begin{align*}
+        P(L \text{ and } D|B_2) =& \frac{P(L \text{ and } D \text{ and } B_2)}{P(B_2)} \\
+        =& \frac{P(L | D, B_2)P(D \text{ and } B_2)}{P(B_2)} \\
+        =& \frac{P(L | D, B_2)P(B_2 | D)P(D)}{P(B_2)} \\
+        =& \frac{(0.20)(0.238)(0.307)}{0.10} \\
+        =& 0.146
+        \end{align*}
     
-    \color{Black}
+        \color{Black}
     
     ```{r}
 sum(blue.eyes == 2 & blindness == 1 & deafness == 1)/sum(blue.eyes == 2)

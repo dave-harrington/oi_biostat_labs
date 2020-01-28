@@ -50,7 +50,7 @@ This lab introduces the basic elements of \textsf{R} programming required to con
 
 Although the \texttt{R} scripts written in these labs are relatively short, it is still important to follow some best practices that help make the code easier to read and modify.
 
-  - Organize the code in a clear, logical manner. Be sure that the script can be run linearly, from beginning to end, without errors.
+  - Organize the code in a clear, logical manner. Be sure that the script can be run from beginning to end, line-by-line, without errors.
   
   - Annotate the code with comments to make it easier to identify the purpose of specific sections.
   
@@ -69,7 +69,7 @@ sample(x, size = , replace = FALSE, prob = NULL)
 
 where the \texttt{prob} argument allows for the probability of sampling each element in \texttt{x} to be specified as a vector. When \texttt{prob} is omitted, the function will sample each element with equal probability. 
 
-The following code simulates the outcome of tossing a biased coin ten times, where the probability of a heads is 0.6; a heads is represented by \texttt{1} and a tails is represented by \texttt{0} The first argument is the vector \texttt{(0, 1)}, and the \texttt{prob} argument is the vector \texttt{(0.6, 0.4)}; the order indicates that the first element (\texttt{0}) is to be sampled with probability 0.6 and the second element (\texttt{1}) is to be sampled with probability 0.4.
+The following code simulates the outcome of tossing a biased coin ten times, where the probability of a heads is 0.6; a heads is represented by \texttt{1} and a tails is represented by \texttt{0} The first argument is the vector \texttt{(0, 1)}, and the \texttt{prob} argument is the vector \texttt{(0.4, 0.6)}; the order indicates that the first element (\texttt{0}) is to be sampled with probability 0.4 and the second element (\texttt{1}) is to be sampled with probability 0.6.
 
 ```{r}
 #set the seed for a pseudo-random sample
@@ -106,7 +106,7 @@ dice.rolls
 sum(dice.rolls == 1 | dice.rolls > 4)
 ```
 
-Additionally, since logical operators work with string values, it is possible to use them with \texttt{sum()} to return the number of heads if heads is represented by, for example, \texttt{H}.
+Additionally, since logical operators work with text strings, it is possible to use them with \texttt{sum()} to return the number of heads if heads is represented by, for example, \texttt{H}.
 
 ```{r}
 #set the seed for a pseudo-random sample
@@ -166,6 +166,10 @@ The \texttt{for} loop is a useful tool when the set of instructions to be repeat
     - The second vector, \texttt{outcomes}, is created by calculating the sum of \texttt{outcomes.replicate} for each iteration of the loop. Once the loop has run, \texttt{outcomes} is a record of the number of \texttt{1}'s that occurred for each iteration.
     
   - In the language of the coin tossing scenario: the loop starts by tossing 5 coins, counting how many heads occur, then recording that number as the first element of \texttt{outcomes}. Next, the loop tosses 5 coins again and records the number of heads in the second element of \texttt{outcomes}. The loop stops once it has repeated the experiment (of tossing 5 coins) 50 times.
+  
+    - The distinction between the \texttt{outcomes.replicate} vector and the \texttt{outcomes} vector, for each run of the loop, is that the \texttt{outcomes.replicate} vector stores the exact sequence of results while \texttt{outcomes} only records the number of heads. 
+    
+    - For this particular problem, the only information needed is the number of heads; thus, one can think of \texttt{outcomes} as summarizing the relevant information from the experiment. 
 
 ```{r, eval = FALSE}
 for(k in 1:number.replicates){
@@ -188,7 +192,7 @@ This lab introduces the \texttt{if} statement structure and demonstrates how to 
 
 ### \texttt{rep()}
 
-The \texttt{rep(x, times)} function is a generic way to replicate elements of a vector texttt{x} a certain number of times. In the lab, it is used to build a vector containing the elements that can be sampled from for the scenario of drawing differently colored balls from a bag. The following code creates a vector \texttt{balls} that contains 5 \texttt{R}'s and 2 \texttt{W}'s.
+The \texttt{rep(x, times)} function is a generic way to replicate elements of a vector \texttt{x} a certain number of times. In the lab, it is used to build a vector containing the elements that can be sampled for the scenario of drawing differently colored balls from a bag. The following code creates a vector \texttt{balls} that contains 5 \texttt{R}'s and 2 \texttt{W}'s.
 
 ```{r}
 balls = rep(c("R", "W"), c(5, 2))
@@ -215,13 +219,13 @@ if(x > 5){
 
 \newpage
 
-#### Counting successes
+### Counting successes
 
 The first two problems in the lab introduce the structure of \texttt{if} statements in the context of calculating joint probabilities, such as the joint probability of drawing a white ball on the first pick and a red on the second. The \texttt{if} statements are used to record instances of successes, instances when both events of interest occurred.
 
 These \texttt{if} statements are nested within \texttt{for} loops. The loop from Question 1 is reproduced here for reference.
 
-  - In the \texttt{if} statement, the condition requires that the first element of the vector \texttt{draw} must be a \texttt{"W"} and the second element an \texttt{R}. 
+  - In the \texttt{if} statement, the condition requires that the first element of the vector \texttt{draw} must be a \texttt{"W"} and the second element an \texttt{"R"}. 
   
   - If the condition is satisfied for the $k^{th}$ replicate, then a \texttt{1} is recorded as the $k^{th}$ element of the vector \texttt{successes}.
   
@@ -254,7 +258,7 @@ if( (draw[1] == "W" & draw[2] == "R") | (draw[1] == "R" & draw[2] == "W") ){
 }
 ```
 
-However, it can also be expressed more simply with the help of the \texttt{sum()} function:
+However, it can be expressed more simply with the help of the \texttt{sum()} function:
 
 ```{r, eval = FALSE}
 if(sum(draw == "R") == 1){
@@ -265,7 +269,7 @@ if(sum(draw == "R") == 1){
 ```
 
 
-#### Simulating populations
+### Simulating populations
 
 The last two problems in the lab use \texttt{if} statements to simulate populations based on known conditional probabilities. This approach is useful when probabilities other than those provided are of interest, such as joint probabilities or the reverse conditional probabilities.
 
@@ -350,7 +354,7 @@ This lab illustrates three common approaches for calculating the positive predic
 
 All \textsf{R} programming required for the simulation approach is discussed in the two previous labs. The challenging aspect of this lab is the second half, which consists of concept-oriented questions focused on the relationships between prevalence, sensitivity, specificity, positive predictive value, and negative predictive value. 
 
-#### Using \textsf{R} as a calculator
+### Using \textsf{R} as a calculator
 
 One advantage \textsf{R} has over a standard hand calculator is the ability to easily store values as named variables. This can make numerical computations like the calculation of positive predictive value much less error-prone. Using a short script like the following to do the computation, rather than directly entering numbers into a calculator, is more efficient. The script can also be re-run with different starting values.
 
@@ -387,6 +391,6 @@ ppv
 
 This lab consists of conditioning questions that are more challenging than those in the text end-of-chapter exercises, both in terms of the problem context and the extent of manipulation required to calculate probabilities. 
 
-The first problem is a classic allele inheritance scenario; problems like these are typical in introductory and mid-level genetics courses. It is an example of a probability problem where attempting to find a solution via intuition or mental logic, rather than the rules of probability, can prove misleading. For example, students often miss a layer of conditioning (part a) or think that eye color of a first child is completely uninformative with regards to eye color of a second child (part c).
+The first problem is a classic allele inheritance scenario; problems like these are typical in introductory and mid-level genetics courses. It is an example of a probability problem where attempting to find a solution via intuition or mental logic, rather than the rules of probability, can prove misleading. For example, students often miss a layer of conditioning (part a) or think that eye color of a first child is uninformative with regards to eye color of a second child (part c).
 
 The second problem is a layered conditioning problem that builds to involve three events and requires careful attention to detail with regards to algebraic notation. The lab solutions demonstrate the simulation approach, while the algebraic approach is explained in the text. 

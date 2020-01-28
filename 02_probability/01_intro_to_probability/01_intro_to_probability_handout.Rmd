@@ -25,7 +25,7 @@ output:
 	
 \end{small}
 
-Probabilities for events can be calculated via simulation by simply repeating an experiment a large number of times and then counting the number of times the event of interest occurs. According to the Law of Large Numbers, as the number of repetitions increase, the proportion $\hat{p}_n$ of occurrences converges to the probability $p$ of that event. 
+Probabilities for events can be calculated via simulation by simply repeating an experiment a large number of times and then counting the number of times the event of interest occurs. According to the Law of Large Numbers, as the number of repetitions increase, the proportion $\hat{p}_n$ of occurrences converges to the probability $p$ of that event (where $n$ is the number of repetitions). 
 
 The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostatistics}.
 

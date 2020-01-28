@@ -25,7 +25,7 @@ output:
 	
 \end{small}
 
-Probabilities for events can be calculated via simulation by simply repeating an experiment a large number of times and then counting the number of times the event of interest occurs. According to the Law of Large Numbers, as the number of repetitions increase, the proportion $\hat{p}_n$ of occurrences converges to the probability $p$ of that event. 
+Probabilities for events can be calculated via simulation by simply repeating an experiment a large number of times and then counting the number of times the event of interest occurs. According to the Law of Large Numbers, as the number of repetitions increase, the proportion $\hat{p}_n$ of occurrences converges to the probability $p$ of that event (where $n$ is the number of repetitions). 
 
 The material in this lab corresponds to Section 2.1 of \textit{OpenIntro Biostatistics}.
 
@@ -73,7 +73,7 @@ total.heads
   
     d) What is the advantage of representing the outcomes with the values \texttt{0} and \texttt{1}, rather than with letters like "T" and "H"?
 
-        \textcolor{NavyBlue}{Representing the outcomes with \texttt{0} and \texttt{1} allows for the use \texttt{sum()} to return the number of heads.}
+        \textcolor{NavyBlue}{Representing the outcomes with \texttt{0} and \texttt{1} allows for the use of \texttt{sum()} to return the number of heads. Note that \texttt{sum} can also be used if the outcomes are represented with letters, but the syntax is slightly more complex; this method is shown in the Lab Notes.}
 
     e) Run the code chunk again to simulate another set of 5 coin tosses. Is it reasonable to expect that the results might differ from the first set of tosses? Explain your answer.
   
@@ -247,7 +247,7 @@ sum(results)
 
     c) Based on 100,000 replicates, estimate the probability that at least one employee tests positive out of 150 drug-free employees.
 
-        \textcolor{NavyBlue}{The estimated probability that at least one employee tests positve out of 150 drug-free employees is $83,718/100,000 = 0.837.$}
+        \textcolor{NavyBlue}{The estimated probability that at least one employee tests positive out of 150 drug-free employees is $83,718/100,000 = 0.837.$}
 
     ```{r, eval = TRUE}
 #define parameters
@@ -292,7 +292,7 @@ table(at.least.1.pos)
 
     b) Suppose a clinic conducts approximately 50 mammograms in a week. Use simulation to calculate the probability that no more than 1 woman will test positive if none of the women have breast cancer.
 
-        \textcolor{NavyBlue}{The probability that no more than 1 woman will test positive if none of the woman have breast cancer is 0.28.}
+        \textcolor{NavyBlue}{The probability that no more than 1 woman will test positive if none of the women have breast cancer is 0.28.}
 
   
     ```{r}
@@ -328,7 +328,7 @@ table(at.most.1.pos)
   
     c) Re-calculate the probability described in a) if the probability of a false positive result is 0.01.
   
-        \textcolor{NavyBlue}{With the probability of a false positive result at 0.01 (i.e., specificity of 0.99), the probability that no more than 1 woman will test positive if none of the woman have breast cancer is 0.91.}
+        \textcolor{NavyBlue}{With the probability of a false positive result at 0.01 (i.e., specificity of 0.99), the probability that no more than 1 woman will test positive if none of the women have breast cancer is 0.91.}
   
   
     ```{r}

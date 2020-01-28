@@ -89,7 +89,7 @@ table(successes)
     
   d) For these 10 replicates, when did a set of two draws result in a white ball on the first pick and a red on the second?
   
-    \textcolor{NavyBlue}{For these 10 replicates, a success occured on the fourth and fifth picks.}
+    \textcolor{NavyBlue}{For these 10 replicates, a success occured on the second, third, and seventh picks.}
   
     ```{r}
 which(successes == 1)
@@ -102,7 +102,7 @@ which(successes == 1)
   
   e) Set the number of replicates to 10,000 and re-run the simulation. What is the estimated probability of drawing a white ball on the first pick and a red on the second?
 
-    \textcolor{NavyBlue}{The estimated probability of drawing a white ball on the first pick and a red on the second is 0.30.}
+    \textcolor{NavyBlue}{The estimated probability of drawing a white ball on the first pick and a red on the second is 0.307.}
 
   
     ```{r}
@@ -145,6 +145,8 @@ sum(successes)/replicates
     Use the multiplication rule of probability for conditional events, $P(A \text{ and } B) = P(B|A) P(A)$. Let $W_1$ be the event that the first ball drawn is white, and $R_2$ be the event that the second ball is red. If a white ball is drawn on the first pick, then there is a $3/5$ chance of drawing a red ball out of the five remaining balls. On the first pick, there is a $1/2$ chance of drawing a white ball.
     
     \[P(W_1 \text{ and } R_2) = P(R_2|W_1)P(W_1) = (3/5)(1/2) = 3/10 \]
+    
+    This answer is very close to 0.307, the answer from part e).
     
     \color{Black}
 

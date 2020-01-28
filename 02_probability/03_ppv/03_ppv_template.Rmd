@@ -26,7 +26,7 @@ The material in this lab corresponds to Section 2.2.5 of *OpenIntro Biostatistic
 
 ### Introduction
 
-Suppose a child tests positive for trisomy 21 from a cell-free fetal DNA (cfDNA) test. What is the probability that the child does have trisomy 21, given the positive test result?
+Suppose an unborn child tests positive for trisomy 21 from a cell-free fetal DNA (cfDNA) test. What is the probability that the child does have trisomy 21, given the positive test result?
 
 This conditional probability, $P(D|T^{+})$, where $D$ is the event of having the disease and $T^{+}$ is the event of a positive test, has a specific name: **positive predictive value (PPV) **. Similarly, the **negative predictive value (NPV)**, $P(D^c|T^{-})$, is the probability that disease is absent when test results are negative. These values are of particular importance to clinicians in assessing patient health.
 
@@ -132,7 +132,7 @@ total.expected.negatives
     
 2. **Simulation approach**. Rather than building a population based on expected values, a population can be simulated using the provided probabilities. This approach was introduced in the previous lab.
 
-    The following code creates a simulated dataset of 100,000 individuals each of whom has a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
+    The following code creates a simulated dataset of 100,000 individuals, each of whom has a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
     
 ```{r, eval = FALSE}
 #define parameters
@@ -194,7 +194,7 @@ ppv
     
     
     
-  c) Take a look at \texttt{disease.status.and.test.result}. What does a single row ith a \texttt{0} in both columns represent?
+  c) Take a look at \texttt{disease.status.and.test.result}. What does a single row with a \texttt{0} in both columns represent?
     
     
     

@@ -32,7 +32,7 @@ The material in this lab corresponds to Section 2.2.5 of *OpenIntro Biostatistic
 
 ### Introduction
 
-Suppose a child tests positive for trisomy 21 from a cell-free fetal DNA (cfDNA) test. What is the probability that the child does have trisomy 21, given the positive test result?
+Suppose an unborn child tests positive for trisomy 21 from a cell-free fetal DNA (cfDNA) test. What is the probability that the child does have trisomy 21, given the positive test result?
 
 This conditional probability, $P(D|T^{+})$, where $D$ is the event of having the disease and $T^{+}$ is the event of a positive test, has a specific name: **positive predictive value (PPV) **. Similarly, the **negative predictive value (NPV)**, $P(D^c|T^{-})$, is the probability that disease is absent when test results are negative. These values are of particular importance to clinicians in assessing patient health.
 
@@ -75,11 +75,11 @@ There are several possible strategies for approaching this type of calculation: 
 
     a) Calculate the two column totals---out of 100,000 children, how many are expected to have trisomy 21? How many are expected to not have trisomy 21?
 
-    \color{NavyBlue}
+        \color{NavyBlue}
 
-    If trisomy 21 occurs in 1 out of 800 births, then $(1/800)(100,000) = 125$ children are expected to have trisomy 21 in a population of 100,000. It then follows that $100,000 - 125 = 99,875$ children are expected to not have trisomy 21; this could also be calculated by $(799/800)(100,000) = 99,875$.
+        If trisomy 21 occurs in 1 out of 800 births, then $(1/800)(100,000) = 125$ children are expected to have trisomy 21 in a population of 100,000. It then follows that $100,000 - 125 = 99,875$ children are expected to not have trisomy 21; this could also be calculated by $(799/800)(100,000) = 99,875$.
 
-    \color{Black}
+        \color{Black}
 
 
     
@@ -132,14 +132,14 @@ total.expected.negatives
 
     c) Using values from the table, calculate an estimate of the probability that a child who tests positive actually has trisomy 21. \textit{Hint:} Think about how the definition of conditional probability could be applied here... $P(D|T^{+}) = \frac{P(D \text{ and } T^{+})}{P(T^{+})}$
 
-    \color{NavyBlue}
+        \color{NavyBlue}
 
-    \[P(D|T^{+}) = \dfrac{P(D \text{ and } T^{+})}{P(T^{+})} = \dfrac{\dfrac{122.5}{100,000}}{\dfrac{621.875}{100,000}} = \dfrac{122.5}{621.875}
+        \[P(D|T^{+}) = \dfrac{P(D \text{ and } T^{+})}{P(T^{+})} = \dfrac{\dfrac{122.5}{100,000}}{\dfrac{621.875}{100,000}} = \dfrac{122.5}{621.875}
 = 0.197 \]
 
-    The quantity $P(D|T^{+})$ can be estimated as the expected number of true positive tests divided by the total expected number of positive tests.
+        The quantity $P(D|T^{+})$ can be estimated as the expected number of true positive tests divided by the expected number of total positive tests.
 
-    \color{Black}
+        \color{Black}
 
     ```{r calculate_ppv}
 #ppv
@@ -148,11 +148,12 @@ ppv
 ```
 
 
-    
+
+\newpage    
     
 2. **Simulation approach**. Rather than building a population based on expected values, a population can be simulated using the provided probabilities. This approach was introduced in the previous lab.
 
-    The following code creates a simulated dataset of 100,000 individuals each of whom  has a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
+    The following code creates a simulated dataset of 100,000 individuals, each of whom  has a disease status and test result. Run the code then answer the following questions. There are comments in the code that correspond to the following questions; i.e., when answering part a), look for the comment \texttt{(part a)}.
     
     ```{r, eval = TRUE}
 #define parameters
@@ -223,7 +224,7 @@ npv
     
     
     
-    c) Take a look at \texttt{disease.status.and.test.result}. What does a single row ith a \texttt{0} in both columns represent?
+    c) Take a look at \texttt{disease.status.and.test.result}. What does a single row with a \texttt{0} in both columns represent?
     
         \color{NavyBlue}
 
@@ -242,6 +243,8 @@ npv
     e) Is the PPV calculated through the simulation different from the result using the table method? If so, explain why the two numbers differ.
     
         \textcolor{NavyBlue}{The PPV calculated through this simulation method is slightly different than the result from the table method; this method returned a PPV of 0.213 versus a value of 0.197. Some variation is to be expected with the simulation; if the simulation were repeated with a larger population size, then the returned result is likely to be closer to 0.197.}
+    
+    \newpage
     
     f) Estimate the NPV based on the results of the simulation. 
     
@@ -276,7 +279,7 @@ knitr::include_graphics("trisomy_tree.png")
         =& 0.197
         \end{align*}
 
-        The topmost branch of the tree illustrates how $P(D \text{ and } T^{+})$ can be calculated by using the general multiplication rule and multiplying $P(D)$ by $P(T^{+}|D)$. There are only two "ways" to test positive--either as a true positive or as a false positive, and these are disjoint events; thus, $P(T^{+}) = P(D \text{ and } T^{+}) + P(D^C \text{ and } T^{+})$.
+        The topmost branch of the tree illustrates how $P(D \text{ and } T^{+})$ can be calculated by using the general multiplication rule and multiplying $P(D)$ by $P(T^{+}|D)$. There are only two "ways" to test positive---either as a true positive or as a false positive, and these are disjoint events; thus, $P(T^{+}) = P(D \text{ and } T^{+}) + P(D^C \text{ and } T^{+})$.
   
         \color{Black}
   
@@ -319,23 +322,22 @@ knitr::include_graphics("trisomy_tree.png")
 
     a) If a woman in her 60's has a positive mammogram, what is the likelihood that she has breast cancer? Solve this problem algebraically.
     
-    \color{NavyBlue}
+        \color{NavyBlue}
 		
-    Use Bayes' rule to solve for $P(D|T^+)$. 
+        Use Bayes' rule to solve for $P(D|T^+)$. 
 	
-    \begin{align*}
-		\\ P(D|T^{+}) &= \frac{P(T^{+}|D) \cdot P(D)}{[P(T^{+}|D) \cdot P(D)] + [P(T^{+}|D^C) \cdot P(D^C)]}
-		\\ P(\text{cancer}|\text{mammogram}^+) &= \frac{P(\text{mammogram}^{+}|\ \text{cancer}) \cdot P(\text{cancer})}{[P(\text{mammogram}^{+}|\ \text{cancer})] + [P(\text{mammogram}^{+}|\ \text{no cancer})]}		
-		\\ &= \frac{0.85 \cdot (0.0356)}{0.85 \cdot (0.0356) + (1-0.95) \cdot (1-0.0356)}
-		\\ &= 0.3856
-    \end{align*}
+        \begin{align*}
+		    \\ P(D|T^{+}) &= \frac{P(T^{+}|D) \cdot P(D)}{[P(T^{+}|D) \cdot P(D)] + [P(T^{+}|D^C) \cdot P(D^C)]}
+		    \\ &= \frac{0.85 \cdot (0.0356)}{0.85 \cdot (0.0356) + (1-0.95) \cdot (1-0.0356)}
+		    \\ &= 0.3856
+        \end{align*}
 		
-		\color{Black}
+		    \color{Black}
 		
 		
     b) Use an \textsf{R} simulation to simulate the results for administering mammograms to a population of 100,000 women in their 30's. How many women in this hypothetical population are expected to test positive for breast cancer? Estimate the PPV of a mammogram for a woman in her 30's.
     
-    \textcolor{NavyBlue}{This simulation results in 5,426 positive tests and an estimated PPV of 0.0735.}
+        \textcolor{NavyBlue}{This simulation results in 5,426 positive tests and an estimated PPV of 0.0735.}
 
     ```{r}
 #define parameters
@@ -384,35 +386,35 @@ ppv
 
     c) Using whatever methods you wish, calculate the PPV for each age group; show your work. Describe any trends you see in the PPV values as prevalence changes. Explain the reason for the trends in language that someone who has not taken a statistics course would understand.
 
-    \color{NavyBlue}
+        \color{NavyBlue}
 
-    As the prevalence of breast cancer increases, PPV also increases. If more women have the disease, the chance of a positive test result being a true positive increases (and the chance of the result being a false positive decreases).
+        As the prevalence of breast cancer increases, PPV also increases. If more women have the disease, the chance of a positive test result being a true positive increases (and the chance of the result being a false positive decreases).
 
-    To explain the reason for this trend, it is helpful to refer to the PPV formula and consider extreme cases. Suppose that the prevalence of a disease is very small and close to 0; the numerator would also be close to 0, causing PPV to be small. In the other direction, if prevalence is  large (almost 1), then the second term in the denominator that contains *(1 - prevalence)* essentially disappears, and the numerator divided by the denominator will be almost 1. 
+        To explain the reason for this trend, it is helpful to refer to the PPV formula and consider extreme cases. Suppose that the prevalence of a disease is very small and close to 0; the numerator would also be close to 0, causing PPV to be small. In the other direction, if prevalence is  large (almost 1), then the second term in the denominator that contains *(1 - prevalence)* essentially disappears, and the numerator divided by the denominator will be almost 1. 
 
-    Another way to think about this is to focus on the denominator, which quantifies the number of true positives and false positives. When prevalence increases, even though both the numerator and denominator are increasing from $[prev \times sensitivity]$, the denominator is also decreasing from $[(1-prev) \times (1-specificity)]$ (since as prevalence increases, the quantity $(1 - prev)$ decreases). Since sensitivity and specificity are constant, increasing prevalence has the effect of increasing the number of true positives (left term) and decreasing the number of false positives (right term). PPV increases when the number of true positives increases.
+        Another way to think about this is to focus on the denominator, which quantifies the number of true positives and false positives. When prevalence increases, even though both the numerator and denominator are increasing from $[prev \times sensitivity]$, the denominator is also decreasing from $[(1-prev) \times (1-specificity)]$ (since as prevalence increases, the quantity $(1 - prev)$ decreases). Since sensitivity and specificity are constant, increasing prevalence has the effect of increasing the number of true positives (left term) and decreasing the number of false positives (right term). PPV increases when the number of true positives increases.
 
-    \[P(D|T^{+}) = \frac{\text{prevalence} \times
-    \text{sensitivity}}{[\text{prev} \times
-    \text{sensitivity] +
-      [(1-prev)} \times \text{(1-specificity)}]} \]
+        \[P(D|T^{+}) = \frac{\text{prevalence} \times
+        \text{sensitivity}}{[\text{prev} \times
+        \text{sensitivity] +
+          [(1-prev)} \times \text{(1-specificity)}]} \]
 
-    \begin{table}[htb!]
-	\caption{Prevalence of Breast Cancer by Age Group}
-	\centering
-	\begin{tabular}{l|l|l}
+        \begin{table}[htb!]
+	    \caption{Prevalence of Breast Cancer by Age Group}
+	    \centering
+	    \begin{tabular}{l|l|l}
 		\textbf{Age Group}  & \textbf{Prevalence} & \textbf{PPV}      \\ \hline
 		  30 - 40 &           0.0044          &     0.070             \\
 		  40 - 50 &           0.0147          &     0.202             \\
 		  50 - 60 &           0.0238          &     0.293             \\
 		  60 - 70 &           0.0356          &     0.386             \\
 		  70 - 80 &           0.0382          &     0.403             \\ \hline
-	\end{tabular}
-    \end{table}
+	    \end{tabular}
+        \end{table}
 
-    The following \textsf{R} chunk demonstrates how \textsf{R} can be used as a calculator; the code calculates PPV using Bayes' rule.
+        The following \textsf{R} chunk demonstrates how \textsf{R} can be used as a calculator; the code calculates PPV using Bayes' rule.
     
-    \color{Black}
+        \color{Black}
 
     ```{r}
 #calculations
@@ -441,7 +443,7 @@ ppv
 
     d) Suppose that two new mammogram imaging technologies have been developed which can improve the PPV associated with mammograms; one improves sensitivity to 99\% (but specificity remains at 95\%), while the other improves specificity to 99\% (while sensitivity remains at 85\%). Which technology offers a higher increase in PPV? Explain your answer.
 
-    \textcolor{NavyBlue}{The technology that raises specificity to 99\% offers a higher increase. For example, see the code below that tests how PPV changes for the 70 - 80 age group, as compared to the current PPV of 0.403; while raising sensitivity only increases PPV to 0.440, raising specificity increases PPV to 0.771. Since prevalence of the disease only ranges between less than 1\% to at most $\sim$ 4\%, most of the people tested do not have breast cancer. This implies that the low PPV is largely due to the high number of false positives. This value is related to the specificity. If specificity increases, this increases the number of true negatives and decreases the number of false positives. Increasing sensitivity can potentially increase the number of true positives detected and raise PPV, but this does not have as strong an effect.}
+        \textcolor{NavyBlue}{The technology that raises specificity to 99\% offers a higher increase. For example, see the code below that tests how PPV changes for the 70 - 80 age group, as compared to the current PPV of 0.403; while raising sensitivity only increases PPV to 0.440, raising specificity increases PPV to 0.771. Since prevalence of the disease only ranges between less than 1\% to at most $\sim$ 4\%, most of the people tested do not have breast cancer. This implies that the low PPV is largely due to the high number of false positives. This value is related to the specificity. If specificity increases, this increases the number of true negatives and decreases the number of false positives. Increasing sensitivity can potentially increase the number of true positives detected and raise PPV, but this does not have as strong an effect.}
 
     ```{r}
 #test high sensitivity
@@ -483,17 +485,19 @@ ppv
 \end{tabular}
     \end{table}
 
+    \newpage
+
     a) Calculate the missing PPV and NPV values, using any method.
 	
-	  \color{NavyBlue}
+	      \color{NavyBlue}
 	  
-	  \textsf{R} can be used as a calculator to efficiently calculate PPV and NPV according to the following equations: 
+	      \textsf{R} can be used as a calculator to efficiently calculate PPV and NPV according to the following equations: 
 
-    \[\text{PPV = } P(D|T^+)= \dfrac{P(D)\cdot P(T^{+}|D)}{P(T)} =  \dfrac{P(T^{+}|D) \cdot P(D)}{[P(T^{+}|D) \cdot P(D)] + [P(T^{+}|D^C) \cdot P(D^C)]}\]
+        \[\text{PPV = } P(D|T^+)= \dfrac{P(D)\cdot P(T^{+}|D)}{P(T)} =  \dfrac{P(T^{+}|D) \cdot P(D)}{[P(T^{+}|D) \cdot P(D)] + [P(T^{+}|D^C) \cdot P(D^C)]}\]
 
-    \[\text{NPV = } P(D^C|T^-)= \dfrac{P(D^C)\cdot P(T^{-}|D^C)}{P(T^{-})} =  \dfrac{P(T^{-}|D^{C}) \cdot P(D^C)}{[P(T^{-}|D^C) \cdot P(D^C)] + [P(T^{-}|D) \cdot P(D)]}\]
+        \[\text{NPV = } P(D^C|T^-)= \dfrac{P(D^C)\cdot P(T^{-}|D^C)}{P(T^{-})} =  \dfrac{P(T^{-}|D^{C}) \cdot P(D^C)}{[P(T^{-}|D^C) \cdot P(D^C)] + [P(T^{-}|D) \cdot P(D)]}\]
 
-    \color{Black}
+        \color{Black}
     
     ```{r}
 prevalence = c(0.001, 0.020, 0.060, 0.100)
@@ -516,43 +520,43 @@ npv
 	
     b) Describe any observable trends in the PPV and NPV values.
 	
-	  \textcolor{NavyBlue}{As prevalence of prostate cancer increases by age group, PPV also increases. However, with rising prevalence, NPV decreases.}
+	      \textcolor{NavyBlue}{As prevalence of prostate cancer increases by age group, PPV also increases. However, with rising prevalence, NPV decreases.}
 	
 	
 	
     c) Explain the reason for the trends in part b), in language that someone who has not taken a statistics course would understand. 
 	
-	  \textcolor{NavyBlue}{The probability that a man has prostate cancer, given a positive test, necessarily increases as the overall probability of having prostate cancer increases. If more men have the disease, the chance of a positive test result being a true positive increases (and the chances of the result being a false positive decreases). The decreasing NPV values follow similar logic: if fewer men have the disease, the chance of a negative test being a true negative decreases (and the chances of the result being a false negative increases). }
+	      \textcolor{NavyBlue}{The probability that a man has prostate cancer, given a positive test, necessarily increases as the overall probability of having prostate cancer increases. If more men have the disease, the chance of a positive test result being a true positive increases (and the chances of the result being a false positive decreases). The decreasing NPV values follow similar logic: if fewer men have the disease, the chance of a negative test being a true negative decreases (and the chances of the result being a false negative increases). }
 	
 	
 	
     d) The cutoff for a positive test is somewhat controversial. Explain how lowering the cutoff for a positive test from 4.1 ng/ml to 2.5 ng/ml would affect sensitivity and specificity. The answer to this part does not use any of the calculations in the previous parts of the problem.
 
-    \color{NavyBlue}
+        \color{NavyBlue}
     
-    Lowering the cutoff for a positive test would result in more men testing positive, since men with PSA values 2.5 ng/ml to 4.1 ng/ml were not previously classified as testing positive. Since the sensitivity of a test is the proportion who test positive among those who have disease, and the number with disease does not change, the proportion will increase, causing sensitivity to increase.  
+        Lowering the cutoff for a positive test would result in more men testing positive, since men with PSA values 2.5 ng/ml to 4.1 ng/ml were not previously classified as testing positive. Since the sensitivity of a test is the proportion who test positive among those who have disease, and the number with disease does not change, the proportion will increase, causing sensitivity to increase.  
     
-    Lowering the cutoff will cause fewer men to test negative.  Since the proportion without the disease will not change, sensitivity (the proportion of men testing negative among those who are negative) will decrease.
+        Lowering the cutoff will cause fewer men to test negative.  Since the proportion without the disease will not change, specificity (the proportion of men testing negative among those who are negative) will decrease.
 
-    It may be helpful to examine a numerical example. The table below corresponds to hypothetical population of 10,000 men in a particular age group with an overall prevalence of 0.05, sensitivity of 0.20, and specificty of 0.94. Since prevalence remains constant in a given age group, the totals for $D$ and $D^C$ must remain the same when test results are changed.
+        It may be helpful to examine a numerical example. The table below corresponds to hypothetical population of 10,000 men in a particular age group with an overall prevalence of 0.05, sensitivity of 0.20, and specificity of 0.94. Since prevalence remains constant in a given age group, the totals for $D$ and $D^C$ must remain the same when test results are changed.
 
-    \begin{center}
-    \begin{tabular}{l|l|l|l}
+        \begin{center}
+        \begin{tabular}{l|l|l|l}
 	        & $D$ & $D^C$ & Total \\ \hline
 	$T^+$  & 100 & 570 & 670 \\ \hline
 	$T^-$  & 400 & 8,930 & 9,330\\ \hline
 	Total  & 500 & 9,500 & 10,000\\
-    \end{tabular}
-    \end{center}
+        \end{tabular}
+        \end{center}
 
 
-    - Suppose with a change in the cutoff, the number of positive tests ($T^+$, Total) were to increase from 670 to 700. It is reasonable to assume that some but not all of the additional 30 positive tests are false positives. The 100 in the upper left cell ($T^+$, $D$) must increase, and because the total with disease remains 500,  sensitivity ($P(T^{+}|D)$), the ratio of the upper left cell to 500), increases. 
+        - Suppose with a change in the cutoff, the number of positive tests ($T^+$, Total) were to increase from 670 to 700. It is reasonable to assume that some but not all of the additional 30 positive tests are false positives. The 100 in the upper left cell ($T^+$, $D$) must increase, and because the total with disease remains 500,  sensitivity ($P(T^{+}|D)$), the ratio of the upper left cell to 500), increases. 
     
-    - If the total testing positive increases to 700, the total testing negative decreases to 9,300. Assuming that some of the 30 now positive but previously negative tests were true negatives, the 8,930 true negatives in the middle cell ($T^-$, $D^C$) must decrease. This causes test specificity ($P(T^{-}|D^C)$), the ratio of the middle cell to 9,500), to decrease. 
+        - If the total testing positive increases to 700, the total testing negative decreases to 9,300. Assuming that some of the 30 now positive but previously negative tests were true negatives, the 8,930 true negatives in the middle cell ($T^-$, $D^C$) must decrease. This causes test specificity ($P(T^{-}|D^C)$), the ratio of the middle cell to 9,500), to decrease. 
     
-    - It is easy to show that in the extreme situation where all of the additional positive tests are false positive, sensitivity does not change and specificity still decreases.
+        - It is easy to show that in the extreme situation where all of the additional positive tests are false positives, sensitivity does not change and specificity still decreases.
     
-     This example shows the features of all diagnostic tests based on a quantitative level of a biomarker.  The sensitivity and specificity of the test depend on the level used to `make a call' that disease is present.  The same logic used in this problem can be used to show that if the level of PSA used to indicate prostate cancer is increased, sensitivity will decrease and specificity will increase.
+        This example shows the features of all diagnostic tests based on a quantitative level of a biomarker.  The sensitivity and specificity of the test depend on the level used to `make a call' that disease is present.  The same logic used in this problem can be used to show that if the level of PSA used to indicate prostate cancer is increased, sensitivity will decrease and specificity will increase.
 
 
     \color{Black}
