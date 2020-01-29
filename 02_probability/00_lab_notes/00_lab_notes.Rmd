@@ -31,7 +31,7 @@ output:
 
 Lab 1 introduces the basic framework for estimating probability through simulated repetitions of an experiment. The \texttt{sample()} command and syntax for a \texttt{for} loop are introduced in the context of a simple coin flipping experiment, then extended to more complex scenarios.
 
-Lab 2 continues the discussion of control structures by introducing the use of \texttt{if} statements for counting successes and for simulating populations based on conditional probabilities. 
+Lab 2 continues the discussion of control structures by introducing the use of \texttt{if} statements for counting successes and for simulating populations based on conditional probabilities.
 
 Lab 3 illustrates three common approaches for calculating the positive predictive value of a diagnostic test: contingency tables, tree diagrams, and simulation. The second part of the lab is a conceptual exploration of the relationships between prevalence, sensitivity, specificity, PPV, and NPV.
 
