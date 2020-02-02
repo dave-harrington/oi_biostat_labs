@@ -215,11 +215,11 @@ nhanes.samp = NHANES[row.num, ]
 
   a) What proportion of Americans at least 25 years of age are college graduates?
   
-  b) What proportion of Americans with a high school degree are college graduates?
+  b) What proportion of Americans at least 25 years of age with a high school degree are college graduates?
   
    
    
-#### Question 3.
+### Question 3.
 
   a) Calculate the median and interquartile range of the distribution of the variable \texttt{Poverty}. Write a sentence explaining the median in the context of these data.
 

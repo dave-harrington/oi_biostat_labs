@@ -420,9 +420,9 @@ total.adults = length(adults$Education)
 ```
    
   
-b) What proportion of Americans with a high school degree are college graduates?
+b) What proportion of Americans at least 25 years of age with a high school degree are college graduates?
   
-    \textcolor{NavyBlue}{Assuming that all students in college have a high school degree, the proportion of Americans with a high school degree that are college graduates is 0.380.} 
+    \textcolor{NavyBlue}{Assuming that all students in college have a high school degree, the proportion of Americans at least 25 years of age with a high school degree that are college graduates is 0.380.} 
   
     ```{r}
 #calculations

@@ -374,7 +374,7 @@ For convenience, descriptions of the variables used in this lab exercise are inc
 \newpage  
 
 
-#### Question 1.
+### Question 1.
 
   a) Describe in words the distribution of ages for the study participants.
   
@@ -438,7 +438,7 @@ plot(nhanes.samp$Age, nhanes.samp$Height)
 
 
 
-#### Question 2.
+### Question 2.
 
   a) What proportion of Americans at least 25 years of age are college graduates?
   
@@ -458,7 +458,7 @@ total.adults = length(adults$Education)
    
    
    
-  b) What proportion of Americans with a high school degree are college graduates?
+  b) What proportion of Americans at least 25 years of age with a high school degree are college graduates?
   
 ```{r}
 #calculations
@@ -470,7 +470,7 @@ total.adults = length(adults$Education)
    
    
    
-#### Question 3.
+### Question 3.
 
   a) Calculate the median and interquartile range of the distribution of the variable \texttt{Poverty}. Write a sentence explaining the median in the context of these data.
 
@@ -487,7 +487,7 @@ total.adults = length(adults$Education)
 ```
  
  
-#### Question 4.
+### Question 4.
  
  a) Construct a two-way table, with \texttt{PhysActive} as the row variable and \texttt{Diabetes} as the column variable. Among participants who are not physically active, what proportion have diabetes? What proportion of physically active participants have diabetes?
 
