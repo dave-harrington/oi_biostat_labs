@@ -43,7 +43,7 @@ data(arenosa)
 arenosa.rows = 1:nrow(arenosa)
 set.seed(5011)
 arenosa.sample.rows = sample(arenosa.rows, size = 100, replace = FALSE)
-arenosa.sample = arenosa[arenosa.rows, ]
+arenosa.sample = arenosa[arenosa.sample.rows, ]
 ```
 
 2. Print out the first five rows and first seven columns of \texttt{arenosa.sample}; briefly describe the data matrix shown. Does expression of these genes seem higher in vernalized or non-vernalized plants?
