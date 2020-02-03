@@ -77,7 +77,7 @@ gene.matrix.sample = gene.matrix[ ,gene.index.set]
 
 \newpage
 
-3. Create a logical variable, \texttt{leuk.type}, that has value \texttt{1} for AML and value \texttt{0} for anything that is not AML (i.e., \texttt{allT} and \texttt{allB}).
+3. Create a logical variable, \texttt{leuk.type}, that has value \texttt{TRUE} for AML and value \texttt{FALSE} for anything that is not AML (i.e., \texttt{allT} and \texttt{allB}). For a logical variable, \textsf{R} interprets \texttt{TRUE} as \texttt{1} and \texttt{FALSE} as \texttt{0}.
 
     ```{r, eval = FALSE}
 #create logical variable
@@ -85,6 +85,9 @@ leuk.type = (golub.train$cancer == "aml")
 
 #view table of leukemia types
 table(leuk.type)
+
+#calculate sum of leuk.type
+sum(leuk.type)
 ```
 
     a) When creating the logical variable, why not write \texttt{"allT"} or \texttt{"allB"} instead of \texttt{"aml"}?
@@ -124,7 +127,6 @@ diff.mean.expression.matrix
     b) Using numerical and graphical summaries, describe the distribution of differences in mean expression levels.
 
 
-\newpage
 
 6. Identify the outliers. Run the following code to set up the definition of outliers as specified in Chapter 1 of *OpenIntro Biostatistics*:
 
@@ -177,11 +179,9 @@ ordered.outliers = as.matrix(diff.mean.expression.matrix[order.decreasing, ])
 
     Which gene just missed the cutoff to qualify as a large outlier? Which gene is closest to the cutoff for qualifying as a small outlier?
 
-\newpage
 
 7. The genes previously identified as outliers are only outliers of the specific 100 genes chosen in the sample. From the complete set of data in \texttt{golub.train}, identify the five largest outliers and five smallest outliers out of all 7,129 genes. (*Hint*: this can be done with only a few modifications to the code run for the initial analysis.) 
 
-\newpage
 
 ### Predicting leukemia type
 

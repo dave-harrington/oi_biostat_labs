@@ -116,7 +116,7 @@ e) Plot a histogram showing the distribution of the expression levels of the sec
 
 
 
-3. Create a logical variable, \texttt{leuk.type}, that has value \texttt{1} for AML and value \texttt{0} for anything that is not AML (i.e., \texttt{allT} and \texttt{allB}).
+3. Create a logical variable, \texttt{leuk.type}, that has value \texttt{TRUE} for AML and value \texttt{FALSE} for anything that is not AML (i.e., \texttt{allT} and \texttt{allB}). For a logical variable, \textsf{R} interprets \texttt{TRUE} as \texttt{1} and \texttt{FALSE} as \texttt{0}.
 
 ```{r}
 #create logical variable
@@ -124,6 +124,9 @@ leuk.type = (golub.train$cancer == "aml")
 
 #view table of leukemia types
 table(leuk.type)
+
+#calculate sum of leuk.type
+sum(leuk.type)
 ```
 
 a) When creating the logical variable, why not write \texttt{"allT"} or \texttt{"allB"} instead of \texttt{"aml"}?
