@@ -60,7 +60,7 @@ for(k in 1:number.replicates){
 
     a) Run the simulation and view the results (*Hint*: make a plot). Describe the distribution of the number of good responses to the drug.
     
-    \textcolor{NavyBlue}{The distribution is right-skewed; there are very few replicates where more than 3 patients respond well to the drug. In most of the replicates, 1 patient out of 8 responds well.}
+        \textcolor{NavyBlue}{The distribution is right-skewed; there are very few replicates where more than 3 patients respond well to the drug. In most of the replicates, 1 patient out of 8 responds well.}
     
     ```{r}
 table(number.responses)
@@ -69,9 +69,9 @@ barplot(table(number.responses))
 
     b) What value(s) for response probability would produce a left-skewed distribution? What value(s) would produce a symmetric distribution?
 
-    \textcolor{NavyBlue}{A response probability close to 1, such as 0.85, produces a left-skewed distribution; in this case, almost all of the 8 patients would be expected to respond well to the drug.}
+        \textcolor{NavyBlue}{A response probability close to 1, such as 0.85, produces a left-skewed distribution; in this case, almost all of the 8 patients would be expected to respond well to the drug.}
     
-    \textcolor{NavyBlue}{A response probability near 0.5 produces a symmetric graph. In this case, typically half of the patients would be expected to respond well to the drug.}
+        \textcolor{NavyBlue}{A response probability near 0.5 produces a symmetric graph. In this case, typically half of the patients would be expected to respond well to the drug.}
     
     ```{r, echo = FALSE, fig.width = 7}
 #define parameters
@@ -129,7 +129,7 @@ barplot(table(number.responses.B))
 
     c) Based on the results of the simulation, estimate the probability that 0 patients respond well to the new drug. 
     
-    \textcolor{NavyBlue}{The probability that 0 patients respond well is 133/500 = 0.266.}.
+        \textcolor{NavyBlue}{The probability that 0 patients respond well is 133/500 = 0.266.}
     
     ```{r}
 sum(number.responses == 0)/number.replicates
@@ -140,65 +140,68 @@ sum(number.responses == 0)/number.replicates
 
     d) Let $X$ be a random variable defined as the number of patients who respond well to the experimental drug. Based on the results of the simulation, $\dots$
 
-    i. Construct a probability distribution for $X$.
+        i. Construct a probability distribution for $X$.
     
-    \textcolor{NavyBlue}{$X$ can take on values 0 through 8, inclusive.}
+            \textcolor{NavyBlue}{$X$ can take on values 0 through 8, inclusive.}
     
-    
-    \begin{table}[h!]
-    \setlength{\tabcolsep}{8pt}
-    \color{NavyBlue}
+            \begin{table}[h]
+            \centering
+            \setlength{\tabcolsep}{6pt}
+            
+            \color{NavyBlue}
+            \begin{tabular}{l |c|c|c|c|c|c|c|c|c| l}
+		        \hline 
+		        $x_i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & Total \\
+		        \hline
+		        $P(X = x_i)$ & 0.266 & 0.418 & 0.250 & 0.052 & 0.012 & 0.002 & 0 & 0 & 0 & = 1.00\\
+		        \hline
+            \end{tabular}
+            \end{table}
 
-    \begin{tabular}{l |c|c|c|c|c|c|c|c|c| l}
-		  \hline 
-		  $x_i$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & Total \\
-		  \hline
-		  $P(X = x_i)$ & 0.266 & 0.418 & 0.250 & 0.052 & 0.012 & 0.002 & 0 & 0 & 0 & = 1.00\\
-		  \hline
-    \end{tabular}
-    \end{table}
+            \color{Black}
+  
+        ii. Calculate $E(X)$, where 
+            \[E(X) 	= x_1 P(X=x_1) + \cdots + x_k P(X=x_k) = \sum_{i=1}^{k}x_iP(X=x_i)\]
+  
+            \color{NavyBlue}
 
-    \color{Black}
-          
+            \begin{align*}
+            E(X) 	&= \sum_{i=1}^{k}x_iP(X=x_i) \notag \\
+        	  &= (x_1)P(X = x_1) + (x_2)P(X = x_2) + \cdots + (x_k)P(X = x_k) \\
+        	  &= (0)(0.266) + (1)(0.418) + (2)(0.250) + (3)(0.052) \\
+        	  & \qquad + (4)(0.012) + (5)(0.002) + (6)(0) + (7)(0) + (8)(0) \\
+        	  &= 1.132
+            \end{align*}
+        
+            \color{Black}
+  
+  
+        iii. Calculate $\text{Var}(X)$, where
+        \[\text{Var}(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
+    
+            \color{NavyBlue}
+            
+            \begin{align*}
+            \text{Var}(X) 	&= \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \\
+              &= (x_1-\mu)^2 P(X=x_1) + \cdots+ (x_k-\mu)^2 P(X=x_k) \\
+        	    &= (0 - 1.132)^{2}(0.266) + (1 - 1.132)^{2}(0.418) + (2 - 1.132)^{2}(0.250) + (3 - 1.132)^{2}(0.052) \\
+        	    & \qquad + (4 - 1.132)^{2}(0.012) + (5 - 1.132)^{2}(0.002) + (6 - 1.132)^{2}(0) + (7 - 1.132)^{2}(0) \\
+        	    & \qquad (8 - 1.132)^{2}(0) \\
+        	    &= 0.847
+            \end{align*}
+        
+            \color{Black}
+
     ```{r}
-prop.table(table(number.responses))
+#using r as a calculator
+prop.table(table(number.responses))  #print probability distribution table
+    
+#calculate E(X)
+x.i = 0:8
+prob.x.i = prop.table(table(number.responses))
+e.x = sum(x.i*prob.x.i)
+e.x
 ```
-          
-          
-          
-  
-    ii. Calculate $E(X)$, where 
-    \[E(X) 	= x_1 P(X=x_1) + \cdots + x_k P(X=x_k) = \sum_{i=1}^{k}x_iP(X=x_i)\]
-  
-    \color{NavyBlue}
-
-    \begin{align*}
-    E(X) 	&= \sum_{i=1}^{k}x_iP(X=x_i) \notag \\
-	  &= (x_1)P(X = x_1) + (x_2)P(X = x_2) + \cdots + (x_k)P(X = x_k) \\
-	  &= (0)(0.266) + (1)(0.418) + (2)(0.250) + (3)(0.052) \\
-	  & \qquad + (4)(0.012) + (5)(0.002) + (6)(0) + (7)(0) + (8)(0) \\
-	  &= 1.132
-    \end{align*}
-
-    \color{Black}
-  
-  
-    iii. Calculate $\text{Var}(X)$, where
-    \[\text{Var}(X) = (x_1-\mu)^2 P(X=x_1) + \cdots + (x_k-\mu)^2 P(X=x_k) = \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \]
-    
-    \color{NavyBlue}
-    
-    \begin{align*}
-    \text{Var}(X) 	&= \sum_{j=1}^{k} (x_j - \mu)^2 P(X=x_j) \\
-      &= (x_1-\mu)^2 P(X=x_1) + \cdots+ (x_k-\mu)^2 P(X=x_k) \\
-	    &= (0 - 1.132)^{2}(0.266) + (1 - 1.132)^{2}(0.418) + (2 - 1.132)^{2}(0.250) + (3 - 1.132)^{2}(0.052) \\
-	    & \qquad + (4 - 1.132)^{2}(0.012) + (5 - 1.132)^{2}(0.002) + (6 - 1.132)^{2}(0) + (7 - 1.132)^{2}(0) \\
-	    & \qquad (8 - 1.132)^{2}(0) \\
-	    &= 0.847
-    \end{align*}
-
-    \color{Black}
-
 
 \newpage
 

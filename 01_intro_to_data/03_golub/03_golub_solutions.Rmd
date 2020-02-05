@@ -229,7 +229,7 @@ length(large.out) #alternatively, use length()
 
     c) How many rows and columns does \texttt{large.out} have? Explain why.
 
-        \textcolor{NavyBlue}{The matrix \texttt{large.out} has two columns and ten rows. It is constructed from all two columns of \texttt{diff.mean.expression.matrix}, and only the rows for which the expression value is greater than \texttt{ub.outlier}}
+        \textcolor{NavyBlue}{The matrix \texttt{large.out} has one column and ten rows. It is constructed from the one column of \texttt{diff.mean.expression.matrix}, and only the rows for which the expression value is greater than \texttt{ub.outlier}. The gene name labels are stored in what \textsf{R} considers a "column 0". }
 
     d) View \texttt{order.large.out}. What do these numbers represent?
 
