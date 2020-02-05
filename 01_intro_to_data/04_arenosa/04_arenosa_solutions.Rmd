@@ -82,7 +82,7 @@ boxplot(tbg.nv.mean.sample, tbg.v.mean.sample, names = c("TBG NV", "TBG V"))
   
 5. Using graphical and numerical methods, compare expression levels of cold-responsive genes between non-vernalized KA and non-vernalized TBG, and between vernalized KA and vernalized TBG. How does gene expression differ between non-vernalized KA and TBG plants? How does gene expression differ between vernalized KA and TBG plants?
   
-    \textcolor{NavyBlue}{Expression level of cold-responsive genes in non-vernalized TBG is slightly higher than in non-vernalized KA; median expression in NV TBG is 275 versus 243 in NV KA. In contrast, vernalized KA plants show higher expression of cold-responsive genes; median expression in vernalized KA is at 464 versus 393 in vernalized TBG.}  
+    \textcolor{NavyBlue}{Expression level of cold-responsive genes in non-vernalized TBG is slightly higher than in non-vernalized KA; median expression in NV TBG is 251 versus 231 in NV KA. In contrast, vernalized KA plants show higher expression of cold-responsive genes; median expression in vernalized KA is at 404 versus 344 in vernalized TBG.} 
       
     ```{r, fig.height = 6, fig.width = 6}
 #numerical summaries
@@ -99,9 +99,9 @@ boxplot(ka.v.mean.sample, tbg.v.mean.sample, names = c("KA V", "TBG V"))
 
 6. Based on the observations made in Questions 4 and 5, does vernalization appear to trigger a stronger change in gene expression in KA plants or TBG plants?
 
-    \textcolor{NavyBlue}{Vernalization appears to trigger a stronger change in gene expression in KA plants. Non-vernalized KA plants start out at overall lower levels of expression in comparison to TBG plants, but vernalized KA plants have higher overall levels of expression than vernalized TBG plants. The difference in median expression level for KA between vernalized and non-vernalized means is $464 - 243 = 221$; for TBG, the difference is $393 - 275 = 118$.}
+    \textcolor{NavyBlue}{Vernalization appears to trigger a stronger change in gene expression in KA plants. Non-vernalized KA plants start out at overall lower levels of expression in comparison to TBG plants, but vernalized KA plants have higher overall levels of expression than vernalized TBG plants. The difference in median expression level for KA between vernalized and non-vernalized means is $404 - 231 = 173$; for TBG, the difference is $344 - 251 = 93$.}
     
-    \textcolor{NavyBlue}{Note that the observed discrepancy in change in median expression levels (i.e., 221 for KA versus 118 for TBG) do not necessarily suggest that, on average, such a difference would be observed based on \textit{all} KA and TBG plants. These calculations were based on data from six KA and six TBG specimens. Chapter 4 will introduce the concepts necessary for evaluating whether the observed difference is extreme enough to suggest that at a population level, there exists a difference in expression response between KA and TBG.}
+    \textcolor{NavyBlue}{Note that the observed discrepancy in change in median expression levels (i.e., 173 for KA versus 93 for TBG) do not necessarily suggest that, on average, such a difference would be observed based on \textit{all} KA and TBG plants. These calculations were based on data from six KA and six TBG specimens. Chapter 4 will introduce the concepts necessary for evaluating whether the observed difference is extreme enough to suggest that at a population level, there exists a difference in expression response between KA and TBG.}
 
 \newpage
 
@@ -111,7 +111,7 @@ boxplot(ka.v.mean.sample, tbg.v.mean.sample, names = c("KA V", "TBG V"))
 
     Using the expression means defined in Question 3, calculate the responsiveness of the genes in \texttt{arenosa.sample} for TBG and for KA. Examine the responsiveness for the first three genes in the sample. Interpret the meaning of responsiveness values of 1, less than 1, and greater than 1. 
     
-    \textcolor{NavyBlue}{A responsiveness value of 1 occurs when the mean expression level under vernalized conditions is equal to the mean expression level under non-vernalized conditions. A value less than 1 indicates higher expression under non-vernalized conditions, such as with gene 3, in TBG plants. A value greater than 1 indicates higher expression under vernalized conditions. For example, mean expression of gene 2 is almost 15 times higher in vernalized KA than non-vernalized KA.}
+    \textcolor{NavyBlue}{A responsiveness value of 1 occurs when the mean expression level under vernalized conditions is equal to the mean expression level under non-vernalized conditions. A value less than 1 indicates higher expression under non-vernalized conditions, such as with gene 2, in TBG plants. A value greater than 1 indicates higher expression under vernalized conditions. For example, mean expression of gene 3 is about 5 times higher in vernalized KA than non-vernalized KA.}
 
     
     ```{r}
