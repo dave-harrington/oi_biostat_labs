@@ -501,7 +501,7 @@ colnames(deviation.magnitude) <- colnames(test.gene.matrix)
 
     a) View \texttt{deviation.magnitude}. What is the deviation from the midpoint at the M19507\_at probe for patient 1? For which patient is the deviation at this gene probe the largest?
 
-        \textcolor{NavyBlue}{The deviation from the midpoint at the M19507\_at probe for patient 1 is 5,429.31. The largest deviation at this gene point occurs with patient number 3, with deviation 11,383.1.}
+        \textcolor{NavyBlue}{The deviation from the midpoint at the M19507\_at probe for patient 1 is 5,429.31. The largest deviation at this gene occurs with patient number 3, with deviation 11,383.1.}
 
     ```{r}
 #deviation.magnitude for patient 1 at probe M19507_at
