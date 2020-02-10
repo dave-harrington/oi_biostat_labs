@@ -103,27 +103,27 @@ for(k in 1:replicates){
     
     a) Explain the code used to generate \texttt{outcome.individual}.
     
-    \textcolor{NavyBlue}{The variable \texttt{outcome.individual} contains either a \texttt{0} or \texttt{1}, sampled with probabilities $1 - p$ and $p$, respectively. A \texttt{1} represents a successful trial and a \texttt{0} represents an unsuccessful trial.}
+        \textcolor{NavyBlue}{The variable \texttt{outcome.individual} contains either a \texttt{0} or \texttt{1}, sampled with probabilities $1 - p$ and $p$, respectively. A \texttt{1} represents a successful trial and a \texttt{0} represents an unsuccessful trial.}
     
     b) The \texttt{if-else} statement is closely related to the \texttt{if} statement and has the basic structure \texttt{if( condition ) \{ statement 1 \} else \{ statement 2 \}}. If the condition is satisfied, the first statement is carried out; else, the second statement is carried out.
     
         Examine the condition in the \texttt{if-else} statement and explain how the condition specifies when statement 1 should be carried out versus statement 2. In the context of the experiment, is statement 1 or statement 2 carried out when a success occurs?
 
-    \textcolor{NavyBlue}{The condition specifies that when \texttt{outcome.individual} is \texttt{0}, statement 1 should be carried out; i.e., when a failure occurs, statement 1 is carried out. Thus, when a success occurs, statement 2 is executed.}
+        \textcolor{NavyBlue}{The condition specifies that when \texttt{outcome.individual} is \texttt{0}, statement 1 should be carried out; i.e., when a failure occurs, statement 1 is carried out. Thus, when a success occurs, statement 2 is executed.}
 
     c) The variable \texttt{trial.number} keeps track of how many trials have occurred in the current replicate. The variable is set at \texttt{1} at the beginning of the loop.
     
         Why is \texttt{trial.number} only recorded in \texttt{trials.for.first.success} (at the $k^{th}$ position) when \texttt{outcome.individual} is not \texttt{0}?
 
-    \textcolor{NavyBlue}{If \texttt{outcome.individual} is \texttt{0}, then a success has not yet occurred in the series of trials (for a particular replicate). It is only when the success has occurred that \texttt{trial.number} reflects the number of trials required to observe a first success.}
+        \textcolor{NavyBlue}{If \texttt{outcome.individual} is \texttt{0}, then a success has not yet occurred in the series of trials (for a particular replicate). It is only when the success has occurred that \texttt{trial.number} reflects the number of trials required to observe a first success.}
     
     d) Why is a \texttt{repeat} loop necessary to model the geometric distribution but not the binomial distribution?
 
-    \textcolor{NavyBlue}{The number of trials is not fixed with the geometric distribution, which requires the simulation to continue indefinitely until a condition is met. In binomial sampling, the number of trials is fixed.}
+        \textcolor{NavyBlue}{The number of trials is not fixed with the geometric distribution, which requires the simulation to continue indefinitely until a condition is met. In binomial sampling, the number of trials is fixed.}
 
     e) In which of these 10 replicates did the first participant to refuse to administer the most severe shock?
     
-    \textcolor{NavyBlue}{In replicates 3, 4, 5, and 7, the first participant refused to administer the most severe shock.}
+        \textcolor{NavyBlue}{In replicates 3, 4, 5, and 7, the first participant refused to administer the most severe shock.}
 
     ```{r}
 which(trials.for.first.success == 1)
@@ -131,7 +131,7 @@ which(trials.for.first.success == 1)
     
     f) Set the number of replicates to 10,000 and re-run the simulation. What is the estimated probability that the first success occurs within the first four participants tested?
     
-    \textcolor{NavyBlue}{The estimated probability that the first success occurs within the first four participants is 0.817.}
+        \textcolor{NavyBlue}{The estimated probability that the first success occurs within the first four participants is 0.817.}
 
     ```{r, eval = TRUE, echo = FALSE}
 # GEOMETRIC RANDOM VARIABLE SIMULATION #
@@ -182,7 +182,7 @@ sum(trials.for.first.success <= 4)/replicates
     
     g) Use \texttt{pgeom()} to calculate the probability estimated in part f).
     
-    \textcolor{NavyBlue}{The probability of the first success occuring within the first four participants tested is 0.821.}
+        \textcolor{NavyBlue}{The probability of the first success occuring within the first four participants tested is 0.821.}
 
     ```{r}
 pgeom(4 - 1, 0.35)
@@ -191,13 +191,13 @@ pgeom(4 - 1, 0.35)
 
     
     
-2. When patients receive blood transfusions, it is critical that the blood type of the donor is compatible with the patients, or else an immune system response will be triggered. For example, a patient with Type O- blood can only receive Type O- blood, but a patient with Type O+ blood can receive either TYpe O+ blood or Type O-. Furthermore, if a blood donor and recipient are of the same ethnic background, the chance of an adverse reaction may be reduced. 
+2. When patients receive blood transfusions, it is critical that the blood type of the donor is compatible with the patients, or else an immune system response will be triggered. For example, a patient with Type O- blood can only receive Type O- blood, but a patient with Type O+ blood can receive either Type O+ blood or Type O-. Furthermore, if a blood donor and recipient are of the same ethnic background, the chance of an adverse reaction may be reduced. 
 
     According to data collected from blood donors, 0.37 of white, non-Hispanic donors are Type O+ and 0.08 are Type O-. For the following questions, assume that only white, non-Hispanic donors are being tested.
 
     a) On average, how many donors would need to be randomly sampled for a Type O+ donor to be identified? With what standard deviation?
     
-    \textcolor{NavyBlue}{On average, 2.70 (about 3) donors would need to be randomly sampled for a Type O+ donor to be identified, with standard deviation 2.15.}
+        \textcolor{NavyBlue}{On average, 2.70 (about 3) donors would need to be randomly sampled for a Type O+ donor to be identified, with standard deviation 2.15.}
 
     ```{r}
 p = 0.37
@@ -209,7 +209,7 @@ sd = sqrt(variance); sd
 
     b) What is the probability that 4 donors must be sampled to identify a Type O+ donor?
 
-    \textcolor{NavyBlue}{The probability that 4 donors must be sampled to identify a Type O+ donor is 0.093.}
+        \textcolor{NavyBlue}{The probability that 4 donors must be sampled to identify a Type O+ donor is 0.093.}
 
     ```{r}
 dgeom(4 - 1, 0.37)
@@ -217,7 +217,7 @@ dgeom(4 - 1, 0.37)
 
     c) What is the probability that more than 4 donors must be sampled to identify a Type O+ donor?
     
-    \textcolor{NavyBlue}{The probability that more than 4 donors must be sampled to identify a Type O+ donor is 0.158.}
+        \textcolor{NavyBlue}{The probability that more than 4 donors must be sampled to identify a Type O+ donor is 0.158.}
     
     ```{r}
 pgeom(4 - 1, 0.37, lower.tail = FALSE)
@@ -225,7 +225,7 @@ pgeom(4 - 1, 0.37, lower.tail = FALSE)
 
     d) What is the probability of the first Type O- donor being found within the first 4 people?
 
-    \textcolor{NavyBlue}{The probability of the first Type O- donor being found within the first 4 people is 0.284.}
+        \textcolor{NavyBlue}{The probability of the first Type O- donor being found within the first 4 people is 0.284.}
     
     ```{r}
 pgeom(4 - 1, 0.08)
@@ -234,7 +234,7 @@ pgeom(4 - 1, 0.08)
   
     e) What is the probability that fewer than 4 donors must be tested before a Type O- donor is found?
     
-    \textcolor{NavyBlue}{The probability that fewer than 4 donors must be tested before a Type O- donor is found is 0.221.}
+        \textcolor{NavyBlue}{The probability that fewer than 4 donors must be tested before a Type O- donor is found is 0.221.}
     
     ```{r}
 pgeom(3 - 1, 0.08)
@@ -328,19 +328,19 @@ table(trials.for.rth.success)
     
         Explain what happens when the condition of the \texttt{if} statement is satisfied.
         
-    \textcolor{NavyBlue}{When the condition of the \texttt{if} statement is satisfied, then \texttt{1} is added to \texttt{sucesses}.}
+        \textcolor{NavyBlue}{When the condition of the \texttt{if} statement is satisfied, then \texttt{1} is added to \texttt{successes}.}
         
     b) Is a \texttt{1} added to \texttt{trial.number} only when a success occurs?
     
-    \textcolor{NavyBlue}{No, the line adding \texttt{1} to \texttt{trial.number} is outside of the \texttt{if} statement and will occur regardless of whether a success occurs.}
+        \textcolor{NavyBlue}{No, the line adding \texttt{1} to \texttt{trial.number} is outside of the \texttt{if} statement and will occur regardless of whether a success occurs.}
     
     c) What is the condition required for the \texttt{while} loop to continue running?
     
-    \textcolor{NavyBlue}{The \texttt{while} loop runs as long as \texttt{successes} is less than \texttt{r}, where \texttt{r} is specified at the beginning of the simulation.}
+        \textcolor{NavyBlue}{The \texttt{while} loop runs as long as \texttt{successes} is less than \texttt{r}, where \texttt{r} is specified at the beginning of the simulation.}
     
     d) In the first of these 20 replicates, how many trials did it take to observe four successes?
     
-    \textcolor{NavyBlue}{In the first of these 20 replicates, it took 14 trials to observe four successes.}
+        \textcolor{NavyBlue}{In the first of these 20 replicates, it took 14 trials to observe four successes.}
     
     ```{r}
 trials.for.rth.success[1]
@@ -348,7 +348,7 @@ trials.for.rth.success[1]
     
     e) Set the number of replicates to 1,000 and re-run the simulation. What is the estimated probability that five participants must be tested in order to observe four who refuse to administer the most severe shock?
     
-    \textcolor{NavyBlue}{The estimated probability that five participants must be tested in order to observe four who refuse to administer the most severe shock is 0.034.}
+        \textcolor{NavyBlue}{The estimated probability that five participants must be tested in order to observe four who refuse to administer the most severe shock is 0.034.}
     
     ```{r, eval = TRUE, include = FALSE}
 # NEGATIVE BINOMIAL RANDOM VARIABLE SIMULATION #
@@ -398,7 +398,7 @@ sum(trials.for.rth.success == 5)/replicates
     
     f) Use \texttt{pnbinom()} to calculate the probability estimated in part e).
 
-    \textcolor{NavyBlue}{The probability estimated in part e) is 0.054.}
+        \textcolor{NavyBlue}{The probability estimated in part e) is 0.054.}
 
     ```{r}
 pnbinom(5 - 4, 4, 0.35)
@@ -411,7 +411,7 @@ pnbinom(5 - 4, 4, 0.35)
 
     a) Find the probability that the first soapy-taste detector is the fourth person selected.
     
-    \textcolor{NavyBlue}{The probability that the first soapy-taste detector is the fourth person selected is 0.0879. This can be calculated using either the negative binomial distribution or the geometric, since the negative binomial simplifies to the geometric for $r = 1$.}
+        \textcolor{NavyBlue}{The probability that the first soapy-taste detector is the fourth person selected is 0.0879. This can be calculated using either the negative binomial distribution or the geometric, since the negative binomial simplifies to the geometric for $r = 1$.}
 
     ```{r}
 dnbinom(4 - 1, 1, 1994/14604)
@@ -420,7 +420,7 @@ dgeom(4 - 1, 1994/14604)
 
     b) Find the probability that the second soapy-taste detector is identified before ten people are tested.
     
-    \textcolor{NavyBlue}{The probability that the second soapy-taste detector is identified before ten people are tested is 0.405.}
+        \textcolor{NavyBlue}{The probability that the second soapy-taste detector is identified before ten people are tested is 0.405.}
 
     ```{r}
 pnbinom(10 - 2, 2, 1994/14604)
@@ -428,7 +428,7 @@ pnbinom(10 - 2, 2, 1994/14604)
 
     c) Find the probability that no more than two people out of ten are soapy-taste detectors.
     
-    \textcolor{NavyBlue}{The probability that no more than two people out of ten are soapy-taste detectors is 0.854. Note that this is a binomial probability, since the number of trials is fixed.}
+        \textcolor{NavyBlue}{The probability that no more than two people out of ten are soapy-taste detectors is 0.854. Note that this is a binomial probability, since the number of trials is fixed.}
 
     ```{r}
 pbinom(2, 10, 1994/14604)
@@ -436,15 +436,17 @@ pbinom(2, 10, 1994/14604)
 
     d) What is the probability that two soapy-taste detectors are identified from testing ten people?
     
-    \textcolor{NavyBlue}{The probability that two soapy-taste detectors are identified from testing ten people is 0.259. This is also a binomial probability.}
+        \textcolor{NavyBlue}{The probability that two soapy-taste detectors are identified from testing ten people is 0.259. This is also a binomial probability.}
 
     ```{r}
 dbinom(2, 10, 1994/14604)
 ```
 
+    \newpage
+
     e) Calculate the mean and standard deviation of the number of people that must be tested if the goal is to identify two soapy-taste detectors.
 
-    \textcolor{NavyBlue}{The mean and standard deviation of a negative binomial random variable with $r = 2$ and $p = 1994/14604$ are 14.65 and 9.62, respectively.}
+        \textcolor{NavyBlue}{The mean and standard deviation of a negative binomial random variable with $r = 2$ and $p = 1994/14604$ are 14.65 and 9.62, respectively.}
 
     ```{r}
 r = 2
@@ -516,7 +518,7 @@ for(k in 1:replicates){
     
     a) Use simulation to estimate the probability of observing more than 15 marked deer in a sample of size 50.
     
-    \textcolor{NavyBlue}{The estimated probability of observing more than 15 marked deer in a sample of size 50 is 0.065.}
+        \textcolor{NavyBlue}{The estimated probability of observing more than 15 marked deer in a sample of size 50 is 0.065.}
 
     ```{r}
 table(outcomes)
@@ -525,11 +527,11 @@ sum(outcomes > 15)/replicates
 
     b) Examine the code used to generate \texttt{outcome.replicate}. How does this differ from the code used to simulate binomial sampling? 
 
-    \textcolor{NavyBlue}{The \texttt{sample()} command is run with \texttt{replace = FALSE}. The sample is drawn from a vector of several \texttt{0}'s and \texttt{1}'s, where there are $N - m$ \texttt{0}'s and $m$ \texttt{1}'s. It is not necessary to specify a probability vector, since by default \textsf{R} will draw from the remaining elements with equal probability.}
+        \textcolor{NavyBlue}{The \texttt{sample()} command is run with \texttt{replace = FALSE}. The sample is drawn from a vector of several \texttt{0}'s and \texttt{1}'s, where there are $N - m$ \texttt{0}'s and $m$ \texttt{1}'s. It is not necessary to specify a probability vector, since by default \textsf{R} will draw from the remaining elements with equal probability.}
     
     c) Use simulation to estimate the probability of observing more than 15 marked deer in a sample of size 50 if the deer are sampled with replacement.
     
-    \textcolor{NavyBlue}{The estimated probability of observing more than 15 marked deer in a sample of size 50 if the deer are sampled with replacement is 0.073.}
+        \textcolor{NavyBlue}{The estimated probability of observing more than 15 marked deer in a sample of size 50 if the deer are sampled with replacement is 0.073.}
 
     ```{r}
 #define parameters
@@ -567,7 +569,7 @@ sum(outcomes > 15)/replicates
 
     a) What is the mean and variance of the number of people sampled that are soapy-taste detectors?
     
-    \textcolor{NavyBlue}{The mean and variance of the number of people sampled that are soapy-taste detectors are 20.48 and 17.50, respectively.}
+        \textcolor{NavyBlue}{The mean and variance of the number of people sampled that are soapy-taste detectors are 20.48 and 17.50, respectively.}
 
     ```{r}
 N = 14604
@@ -580,7 +582,7 @@ variance = n*p*(1 - p)*((N - n)/(N - 1)); variance
 
     b) Calculate the probability that 20 of the people sampled are soapy-taste detectors.
 
-    \textcolor{NavyBlue}{The probability that 20 of the people sampled are soapy-taste detectors is 0.0953.}
+        \textcolor{NavyBlue}{The probability that 20 of the people sampled are soapy-taste detectors is 0.0953.}
     
     ```{r}
 dhyper(20, 1994, 14604-1994, 150)
@@ -588,7 +590,7 @@ dhyper(20, 1994, 14604-1994, 150)
 
     c) Calculate the probability that 20 or more of the people sampled are soapy-taste detectors.
     
-    \textcolor{NavyBlue}{The probability that 20 or more of the people sampled are soapy-taste detectors is 0.582.}
+        \textcolor{NavyBlue}{The probability that 20 or more of the people sampled are soapy-taste detectors is 0.582.}
 
     ```{r}
 phyper(19, 1994, 14604-1994, 150, lower.tail = FALSE)
@@ -596,7 +598,7 @@ phyper(19, 1994, 14604-1994, 150, lower.tail = FALSE)
 
     d) Suppose that the 150 individuals were sampled with replacement. What is the probability of selecting 20 soapy-taste detectors?
     
-    \textcolor{NavyBlue}{The probability of selecting 20 soapy-taste detectors is 0.0948.}
+        \textcolor{NavyBlue}{The probability of selecting 20 soapy-taste detectors is 0.0948.}
 
     ```{r}
 dbinom(20, 150, 1994/14604)
@@ -604,7 +606,7 @@ dbinom(20, 150, 1994/14604)
     
     e) Compare the answers from part b) and part d). Explain why the answers are essentially identical.
     
-    \textcolor{NavyBlue}{With a large sample size, sampling with replacement is highly unlikely to result in any particular individual being sampled again. In this case, the hypergeometric and binomial distributions will produce equal probabilities.}
+        \textcolor{NavyBlue}{With a large sample size, sampling with replacement is highly unlikely to result in any particular individual being sampled again. In this case, the hypergeometric and binomial distributions will produce equal probabilities.}
     
     
     

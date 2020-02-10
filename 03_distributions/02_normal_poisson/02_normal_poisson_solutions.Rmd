@@ -77,7 +77,7 @@ qnorm(0.159, lower.tail = FALSE)
 
     a) What age at childbirth puts a woman in the upper 2.5\% of the age distribution? In other words, what is the 97.5 percentile of this age distribution?
     
-    \textcolor{NavyBlue}{An age of about 38 (37.8) years puts a woman in the upper 2.5\% of the age distribution}
+        \textcolor{NavyBlue}{An age of about 38 (37.8) years puts a woman in the upper 2.5\% of the age distribution}
   
     ```{r}
 qnorm(0.975, mean = 26.4, sd = 5.8)
@@ -85,7 +85,7 @@ qnorm(0.975, mean = 26.4, sd = 5.8)
   
     b) What proportion of women who give birth are 21 years of age or older?
     
-    \textcolor{NavyBlue}{$P(X \geq 21) = 0.824$; 82.4\% of women are 21 years of age or older.}
+        \textcolor{NavyBlue}{$P(X \geq 21) = 0.824$; 82.4\% of women who give birth are 21 years of age or older.}
 
     ```{r}
 pnorm(21, mean = 26.4, sd = 5.8, lower.tail = FALSE)
@@ -110,7 +110,7 @@ pnorm(100, mean = 80, sd = 12) - pnorm(90, mean = 80, sd = 12)
   
     a) What proportion of 1- to 14-year-olds are hypertensive?
 
-    \textcolor{NavyBlue}{$P(X \geq 115.0) = 0.0228$; 2.28\% of 1- to 14-year-olds are hypertensive.}
+        \textcolor{NavyBlue}{$P(X \geq 115.0) = 0.0228$; 2.28\% of 1- to 14-year-olds are hypertensive.}
 
     ```{r}
 pnorm(115, mean = 105, sd = 5, lower.tail = FALSE)
@@ -118,7 +118,7 @@ pnorm(115, mean = 105, sd = 5, lower.tail = FALSE)
 
     b) What proportion of 15- to 44-year-olds are hypertensive?
 
-    \textcolor{NavyBlue}{$P(Y \geq 140.0) = 0.0668$; 6.68\% of 15- to 44-year-olds are hypertensive.}
+        \textcolor{NavyBlue}{$P(Y \geq 140.0) = 0.0668$; 6.68\% of 15- to 44-year-olds are hypertensive.}
 
     ```{r}
 pnorm(140, mean = 125, sd = 10, lower.tail = FALSE)
@@ -127,15 +127,15 @@ pnorm(140, mean = 125, sd = 10, lower.tail = FALSE)
     
     c) What is the probability that a family is hypertensive? Assume that the hypertensive status of different members of a family are independent random variables. (Admittedly, this assumption is highly unrealistic.)
     
-    \textcolor{NavyBlue}{Let $C$ be a binomial random variable modeling the number of children in a family that are hypertensive, and $A$ be a binomial random variable modeling the number of hypertensive adults in a family; $C \sim \text{Bin}(2, 0.0228)$, $A \sim \text{Bin}(2, 0.0668)$.}
+        \textcolor{NavyBlue}{Let $C$ be a binomial random variable modeling the number of children in a family that are hypertensive, and $A$ be a binomial random variable modeling the number of hypertensive adults in a family; $C \sim \text{Bin}(2, 0.0228)$, $A \sim \text{Bin}(2, 0.0668)$.}
     
-    \textcolor{NavyBlue}{A family is considered hypertensive if at least one adult and at least one child are hypertensive. Let $H$ represent the event that a family is hypertensive. Assume that $C$ and $A$ are independent:}
+        \textcolor{NavyBlue}{A family is considered hypertensive if at least one adult and at least one child are hypertensive. Let $H$ represent the event that a family is hypertensive. Assume that $C$ and $A$ are independent:}
     
-    \color{NavyBlue}
-    \[ P(H) = P(C \geq 1) \times P(A \geq 1) = 0.0058\]
-    \color{Black}
+        \color{NavyBlue}
+        \[ P(H) = P(C \geq 1) \times P(A \geq 1) = 0.0058\]
+        \color{Black}
     
-    \textcolor{NavyBlue}{The probablity that a family is hypertensive is 0.0058.}
+        \textcolor{NavyBlue}{The probablity that a family is hypertensive is 0.0058.}
 
     ```{r}
 pbinom(0, 2, 0.0228, lower.tail = FALSE) * pbinom(0, 2, 0.0668, lower.tail = FALSE)
@@ -143,7 +143,7 @@ pbinom(0, 2, 0.0228, lower.tail = FALSE) * pbinom(0, 2, 0.0668, lower.tail = FAL
     
     d) Consider a community of 1,000 families. What is the probability that between one and five families (inclusive) are hypertensive? 
     
-    \textcolor{NavyBlue}{Let $K$ be a binomial random variable modeling the number of hypertensive families in the community. $P(1 \leq K \leq 5) = P(K \leq 5) - P(K = 0) = 0.475.$ The probability that between one and five families are hypertensive is 0.475.}
+      \textcolor{NavyBlue}{Let $K$ be a binomial random variable modeling the number of hypertensive families in the community. $P(1 \leq K \leq 5) = P(K \leq 5) - P(K = 0) = 0.475.$ The probability that between one and five families are hypertensive is 0.475.}
 
     ```{r}
 pbinom(5, 1000, 0.0058) - dbinom(0, 1000, 0.0058)
@@ -178,7 +178,7 @@ ppois(5, 3, lower.tail = FALSE)
 
     a) What is the expected number of children born with Down syndrome in Boston in 2017?
     
-    \textcolor{NavyBlue}{The expected number of children born with Down syndrome in Boston in 2017, assuming that the number of live births has remained constant, is $(1/800)(8011) = 10.01$.}
+        \textcolor{NavyBlue}{The expected number of children born with Down syndrome in Boston in 2017, assuming that the number of live births has remained constant, is $(1/800)(8011) = 10.01$.}
     
     ```{r}
 lambda = 1/800; n = 8011
@@ -187,22 +187,24 @@ n*lambda
     
     b) What is the probability of 12 or more Down syndrome births in 2017?
     
-    \textcolor{NavyBlue}{Since the expected value of a Poisson distribution is the same as the rate $\lambda$, the expected number of births with trisomy 21 is 10.01. The probability of 12 or more Down syndrome births in 2017 is $P(X \geq 12)$, where $X \sim \text{Pois}(10.01)$. The probability that 12 or more Down syndrome births occur is 0.304.}
+        \textcolor{NavyBlue}{Since the expected value of a Poisson distribution is the same as the rate $\lambda$, the expected number of births with trisomy 21 is 10.01. The probability of 12 or more Down syndrome births in 2017 is $P(X \geq 12)$, where $X \sim \text{Pois}(10.01)$; $P(X \geq 12) = 0.304$.}
 
     ```{r}
 ppois(11, lambda = 10.01, lower.tail = FALSE)
 ```
     
+    \newpage
+    
     c) In 2012, 23\% of the 8,011 live births were among women age 35 or older. Is this enough information to recalculate parts a) and b) for women age 35 or older? Explain your answer.
 
-    \textcolor{NavyBlue}{No, this is not enough information, because it is not sufficient to only adjust for the smaller number of births from women age 35 or older. Women in this age group are more likely to have a Down syndrome birth; it is not reasonable to assume that the rate of trisomy 21 birth defects for this age group is 1/800 live births per year.}
+        \textcolor{NavyBlue}{No, this is not enough information, because it is not sufficient to only adjust for the smaller number of births from women age 35 or older. Women in this age group are more likely to have a Down syndrome birth; it is not reasonable to assume that the rate of trisomy 21 birth defects for this age group is 1/800 live births per year.}
 
     
     d) Rates in populations are sometimes expressed as a rate per 1,000 or 10,000. Could the following statement be true, or is it clearly a contradiction? Explain your answer.
     
         *In 2012, there were 44.5 births per 1,000 female Boston residents, ages 15-44. There was no significant change in the Boston birth rate between 2008 and 2012. In 2012, the rates of births to Black and Latino women in the same age range were 64.7 and 66.3, respectively.*
 
-    \textcolor{NavyBlue}{The statement could be true, even if the rates of births to Black and Latino women are higher than the overall average rate; this suggests that the rate of births to other groups of women, such as Caucasian or Asian women, are lower than the overall average rate of 44.5 births per 1,000 female residents ages 15-44.}
+        \textcolor{NavyBlue}{The statement could be true, even if the rates of births to Black and Latino women are higher than the overall average rate; this suggests that the rate of births to other groups of women, such as Caucasian or Asian women, are lower than the overall average rate of 44.5 births per 1,000 female residents ages 15-44.}
 
 
 
@@ -211,7 +213,7 @@ ppois(11, lambda = 10.01, lower.tail = FALSE)
 
     a) What is the probability that at most 380 newborns in a year are born with hemophilia?
   
-    \textcolor{NavyBlue}{Assuming that there are equal numbers of males and females born each year, there are approximately 2,000,000 male births per year in the United States; thus, the rate $\lambda$ for a population of 2,000,000 is $(1/5,000)(2,000,000) = 400$. Since the expected value of a Poisson distribution is the same as the rate $\lambda$, the expected number of male births with hemophilia is 400. The probability that at most 380 newborn males have hemophilia is $P(X \leq 380)$, where $X \sim \text{Pois}(400)$. The probability that at most 380 newborns in a year are born with hemophilia is 0.165.}
+        \textcolor{NavyBlue}{Assuming that there are equal numbers of males and females born each year, there are approximately 2,000,000 male births per year in the United States; thus, the rate $\lambda$ for a population of 2,000,000 is $(1/5,000)(2,000,000) = 400$. Since the expected value of a Poisson distribution is the same as the rate $\lambda$, the expected number of male births with hemophilia is 400. The probability that at most 380 newborn males have hemophilia is $P(X \leq 380)$, where $X \sim \text{Pois}(400)$. The probability that at most 380 newborns in a year are born with hemophilia is 0.165.}
   
     ```{r}
 rate = (1/5000)*(4000000/2)
@@ -223,15 +225,17 @@ ppois(380, lambda = rate)
     
     b) What is the probability that 450 or more newborns in a year are born with hemophilia?
     
-    \textcolor{NavyBlue}{The probability that 450 or more newborns in a year are born with hemophilia is 0.007.}
+        \textcolor{NavyBlue}{The probability that 450 or more newborns in a year are born with hemophilia is 0.007.}
 
     ```{r}
 ppois(449, lambda = rate, lower.tail = FALSE)
 ```
 
+    \newpage
+
     c) Consider a hypothetical country in which there are approximately 1.5 million births per year. If the incidence rate of hemophilia is equal to that in the US, as well as the sex ratio at birth, how many newborns are expected to have hemophilia over five years, and with what standard deviation?
     
-    \textcolor{NavyBlue}{The number of male births per year in the hypothetical country is $(1/2)(1,500,000) = 750,000$. If in this hypothetical country, the annual rate of hemophilia in male births is 1 per 5,000, then the expected number of male births with hemophilia in one year is $(1/5,000)(750,000) = 150$; the rate $\lambda$ for one year is 150. Over five years, the rate of hemophilia births is $(150)(5) = 750$. Since the rate $\lambda$ for a Poisson distribution is both the mean and the variance, the expected number of hemophilia births over five years is 750, with standard deviation $\sqrt{750} = 27.39$.}
+        \textcolor{NavyBlue}{The number of male births per year in the hypothetical country is $(1/2)(1,500,000) = 750,000$. If in this hypothetical country, the annual rate of hemophilia in male births is 1 per 5,000, then the expected number of male births with hemophilia in one year is $(1/5,000)(750,000) = 150$; the rate $\lambda$ for one year is 150. Over five years, the rate of hemophilia births is $(150)(5) = 750$. Since the rate $\lambda$ for a Poisson distribution is both the mean and the variance, the expected number of hemophilia births over five years is 750, with standard deviation $\sqrt{750} = 27.39$.}
     
     ```{r}
 new.yearly.rate = (1/5000)*(1500000/2); new.yearly.rate
@@ -250,7 +254,7 @@ sqrt(five.year.rate)
     
     a) In 2014, Essex County reported 146 overdose fatalities from opioids. Assume that all these deaths occurred in the non-Hispanic white members of the population. What is the probability of 146 or more such events in a given year, assuming that the incidence rate of opioid deaths in Essex County is the same as the national rate?
     
-    \textcolor{NavyBlue}{The probability of 146 or more overdose fatalities in a given year is $2.62 \times 10^{-40}$.}
+        \textcolor{NavyBlue}{The probability of 146 or more overdose fatalities in a given year is $2.62 \times 10^{-40}$.}
  
     ```{r}
 non.hispanic.whites = 769000 * 0.73
@@ -258,10 +262,11 @@ lambda.essex = (6.8/100000) * non.hispanic.whites
 ppois(145, lambda.essex, lower.tail = FALSE)
 ```
 
+    \newpage
     
     b) What was the observed rate of opioid-related deaths in Essex County in 2014, stated in terms of deaths per 100,000 non-Hispanic white members of the population? Continue to assume that all of the observed deaths were among non-Hispanic whites.
     
-    \textcolor{NavyBlue}{The observed rate is approximately 26 deaths per year per 100,000 non-Hispanic whites, which is much higher than the national rate reported by the CDC.}
+        \textcolor{NavyBlue}{The observed rate is approximately 26 deaths per year per 100,000 non-Hispanic whites, which is much higher than the national rate reported by the CDC.}
  
     ```{r}
 non.hispanic.whites = 769000 * 0.73
@@ -272,9 +277,9 @@ obs.rate
     
     c) In 2015, Essex County reported 165 opioid-related deaths in its non-Hispanic white population. Using the rate from part b), calculate the probability of 165 or more such events.
     
-    \textcolor{NavyBlue}{Using the observed rate from part b), find $P(X \geq 165) = P(X > 164)$. Since the population of Essex County did not change from 2014 to 2015, $\lambda$ for this calculation is simply 146, which is already a rate in terms of deaths per year for non-Hispanic whites, for the population size of Essex County.}
+        \textcolor{NavyBlue}{Using the observed rate from part b), find $P(X \geq 165) = P(X > 164)$. Since the population of Essex County did not change from 2014 to 2015, $\lambda$ for this calculation is simply 146, which is already a rate in terms of deaths per year for non-Hispanic whites, for the population size of Essex County.}
     
-    \textcolor{NavyBlue}{The probability of 165 or more opioid-related deaths is around 0.065, or 6.5\%.}
+        \textcolor{NavyBlue}{The probability of 165 or more opioid-related deaths is around 0.065, or 6.5\%.}
     
     ```{r}
 #show that the observed rate lambda is 146
@@ -286,7 +291,7 @@ ppois(164, obs.lambda.essex, lower.tail = FALSE)
 
     d) Assess whether the findings from parts a) through c) are indicative of an opioid overdose crisis in Essex County.
     
-    \textcolor{NavyBlue}{The probability of 165 or more opioid-related deaths occuring in Essex County in 2015 is still small, even after adjusting the rate by using the number of observed overdose fatalities in 2014. The rate of opioid-related deaths in 2014 for Essex County was already far greater than the national rate, and even more overdose fatalities occurred in 2015. The findings are indicative of a rapid increase in opioid misuse in Essex County, on a scale that is extreme relative to the national rate.}
+        \textcolor{NavyBlue}{The probability of 165 or more opioid-related deaths occuring in Essex County in 2015 is still small, even after adjusting the rate by using the number of observed overdose fatalities in 2014. The rate of opioid-related deaths in 2014 for Essex County was already far greater than the national rate, and even more overdose fatalities occurred in 2015. The findings are indicative of a rapid increase in opioid misuse in Essex County, on a scale that is extreme relative to the national rate.}
 
   
   

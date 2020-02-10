@@ -199,9 +199,11 @@ prop.table(table(number.responses))  #print probability distribution table
 #calculate E(X)
 x.i = 0:8
 prob.x.i = prop.table(table(number.responses))
-e.x = sum(x.i*prob.x.i)
+e.x = sum(x.i[1:6]*prob.x.i)
 e.x
 ```
+
+    \textcolor{NavyBlue}{Note that when using \textsf{R} as a calculator to calculate $E(X)$ based on the simulation, it is necessary to account for unobserved values of $x_i$. Since there were no instances of 6, 7, or 8 good responses observed in the simulation, the calculation should specifically be made only from the first 6 values of the \texttt{x.i} vector (0, 1, 2, 3, 4, 5).}
 
 \newpage
 
@@ -239,13 +241,13 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
 
     a) Confirm that the clinical trial satisfies the conditions for a binomial experiment.
   
-    \textcolor{NavyBlue}{There is a fixed number of trials, $n$, at 8 patients; it is reasonable to assume that the response of each patient is independent of the others. Each outcome can be classified as either success or failure. The probability of a good response, $p$, is assumed to be the same for each patient.}
+        \textcolor{NavyBlue}{There is a fixed number of trials, $n$, at 8 patients; it is reasonable to assume that the response of each patient is independent of the others. Each outcome can be classified as either success or failure. The probability of a good response, $p$, is assumed to be the same for each patient.}
   
   
     b) Calculate $E(X)$ and $\text{Var}(X)$ using the formulas specific to the binomial distribution; compare the results to the answers from part d) of Question 1. Explain any observed discrepancies.
     
     
-    \textcolor{NavyBlue}{According to the binomial formulas, $E(X) = np = (8)(0.15) = 1.2$ and $\text{Var}(X) = np(1-p) = (8)(0.15)(1 - 0.15) = 1.02$. The values are a bit different from the answers in part d), with a lower mean and higher variance. The probability distribution from simulation will approach the theoretical distribution as the number of replicates increases, and the formulas will give identical results.}
+        \textcolor{NavyBlue}{According to the binomial formulas, $E(X) = np = (8)(0.15) = 1.2$ and $\text{Var}(X) = np(1-p) = (8)(0.15)(1 - 0.15) = 1.02$. The values are a bit different from the answers in part d), with a lower mean and higher variance. The probability distribution from simulation will approach the theoretical distribution as the number of replicates increases, and the formulas will give identical results.}
 
 
 
@@ -259,7 +261,7 @@ pbinom(5, 10, 0.35, lower.tail = FALSE)
     
     a) Calculate the probability that exactly 60 stocks are infected.
     
-    \textcolor{NavyBlue}{The probability that exactly 60 stocks are infected is $P(X = 60) = 0.0063$.}
+        \textcolor{NavyBlue}{The probability that exactly 60 stocks are infected is $P(X = 60) = 0.0063$.}
     
     ```{r}
 dbinom(60, 250, 0.30)
@@ -267,7 +269,7 @@ dbinom(60, 250, 0.30)
     
     b) Calculate the probability that at most 60 stocks are infected.
     
-    \textcolor{NavyBlue}{The probability that at most 60 stocks are infected is $P(X \leq 60) = 0.021$.}
+        \textcolor{NavyBlue}{The probability that at most 60 stocks are infected is $P(X \leq 60) = 0.021$.}
     
     ```{r}
 pbinom(60, 250, 0.30)
@@ -276,7 +278,7 @@ pbinom(60, 250, 0.30)
     
     c) Calculate the probability that at least 80 stocks are infected. 
     
-    \textcolor{NavyBlue}{The probability that at least 80 stocks are infected is $P(X \geq 80) = 1 - P(X \leq 79) = 0.223$.}
+        \textcolor{NavyBlue}{The probability that at least 80 stocks are infected is $P(X \geq 80) = 1 - P(X \leq 79) = 0.223$.}
     
     ```{r}
 pbinom(79, 250, 0.30, lower.tail = FALSE)
@@ -284,7 +286,7 @@ pbinom(79, 250, 0.30, lower.tail = FALSE)
     
     d) Assume that a researcher will use all of the stocks sampled for an experiment. If the researcher wants to be sure that no more than 40\% of the stocks used for an experiment are infected, does it seem reasonable to take a random sample of 250 stocks?
     
-    \textcolor{NavyBlue}{40\% of 250 stocks is 100. What is the probability that out of 250 stocks, no more than 100 stocks are infected? This is $P(X \leq 100) \approx 1$. It seems reasonable to expect that from a random sample of 250, no more than 40\% are infected.}
+        \textcolor{NavyBlue}{40\% of 250 stocks is 100. What is the probability that out of 250 stocks, no more than 100 stocks are infected? This is $P(X \leq 100) \approx 1$. It seems reasonable to expect that from a random sample of 250, no more than 40\% are infected.}
     
     ```{r}
 pbinom(100, 250, 0.30)
@@ -336,7 +338,7 @@ sum(number.infected <= 100)/number.replicates
 
     a) Calculate the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood.
 
-    \textcolor{NavyBlue}{Let $X$ represent the number of individuals in a sample who had chickenpox during childhood. $P(X = 97) = 0.006$; the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood is 0.006.}
+        \textcolor{NavyBlue}{Let $X$ represent the number of individuals in a sample who had chickenpox during childhood. $P(X = 97) = 0.006$; the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood is 0.006.}
 
     ```{r}
 dbinom(97, size = 100, prob = 0.90)
@@ -345,12 +347,12 @@ dbinom(97, size = 100, prob = 0.90)
 
     b) Calculate the probability that exactly 3 out of a new sample of 100 American adults have not had chickenpox in their childhood.
 
-    \textcolor{NavyBlue}{The event that exactly 3 out of 100 adults did not have chickenpox during childhood is equivalent to the event that exactly 97 out of 100 did have chickenpox during childhood; thus, the probability is 0.006 from calculations in part a).}
+        \textcolor{NavyBlue}{The event that exactly 3 out of 100 adults did not have chickenpox during childhood is equivalent to the event that exactly 97 out of 100 did have chickenpox during childhood; thus, the probability is 0.006 from calculations in part a).}
 
         
     c) What is the probability that at least 1 out of 10 randomly sampled American adult has had chickenpox?
 
-    \textcolor{NavyBlue}{$P(X \geq 1) = P(X > 0)$; the probability that at least 1 out of 10 randomly sampled American adults have had chickenpox is essentially 1.}
+        \textcolor{NavyBlue}{$P(X \geq 1) = P(X > 0)$; the probability that at least 1 out of 10 randomly sampled American adults have had chickenpox is essentially 1.}
 
     ```{r}
 1 - dbinom(0, size = 10, prob = 0.90)
@@ -360,7 +362,7 @@ pbinom(0, size = 10, prob = 0.90, lower.tail = FALSE)
 
     d) What is the probability that at most 3 out of 10 randomly sampled American adults have not had chickenpox?
 
-    \textcolor{NavyBlue}{$P(X \leq 3)$, where the probability of not having had chickenpox during childhood is 1 - 0.90 = 0.10; the probability that at most 3 out of 10 randomly sampled American adults have not had chickenpox is 0.99.}
+        \textcolor{NavyBlue}{$P(X \leq 3)$, where the probability of not having had chickenpox during childhood is 1 - 0.90 = 0.10; the probability that at most 3 out of 10 randomly sampled American adults have not had chickenpox is 0.99.}
 
     ```{r}
 pbinom(3, size = 10, prob = 0.10)
@@ -369,5 +371,5 @@ pbinom(3, size = 10, prob = 0.10)
 
     e) Suppose that the adults were sampled from the same city. Would it be appropriate to use the binomial distribution to calculate the probabilities from parts a) through d)?
     
-    \textcolor{NavyBlue}{It might not be appropriate to use the binomial distribution. If the city is small enough that 10 or 100 people may have come into contact with each other, then there is potentially some dependence between each person's contracting chickenpox as a child. In contrast, it is reasonable to assume independence if 10 or 100 adults are sampled from the entire United States.}
+        \textcolor{NavyBlue}{It might not be appropriate to use the binomial distribution. If the city is small enough that 10 or 100 people may have come into contact with each other, then there is potentially some dependence between each person's contracting chickenpox as a child. In contrast, it is reasonable to assume independence if 10 or 100 adults are sampled from the entire United States.}
   
