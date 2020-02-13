@@ -46,7 +46,7 @@ replicates = 10
 successes = vector("numeric", replicates)
 
 #set the seed for a pseudo-random sample
-set.seed(2018)
+set.seed(5011)
 
 #simulate the draws
 for(k in 1:replicates){
@@ -89,7 +89,7 @@ table(successes)
     
   d) For these 10 replicates, when did a set of two draws result in a white ball on the first pick and a red on the second?
   
-    \textcolor{NavyBlue}{For these 10 replicates, a success occured on the second, third, and seventh picks.}
+    \textcolor{NavyBlue}{For these 10 replicates, a success occured on the second, fifth, seventh, and eighth picks.}
   
     ```{r}
 which(successes == 1)

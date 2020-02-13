@@ -44,7 +44,7 @@ replicates = 10
 successes = vector("numeric", replicates)
 
 #set the seed for a pseudo-random sample
-set.seed(2018)
+set.seed(5011)
 
 #simulate the draws
 for(k in 1:replicates){
