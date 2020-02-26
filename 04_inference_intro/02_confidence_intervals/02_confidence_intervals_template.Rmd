@@ -91,7 +91,7 @@ yrbss.sample = yrbss.complete[sample.rows, ]
 
 ```
 
-    d) The standard deviation of weight in the sample is 17.52 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
+    d) The standard deviation of weight in the sample is 18.26 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
     
     ```{r}
 #use r as a calculator

@@ -61,7 +61,7 @@ yrbss.sample = yrbss.complete[sample.rows, ]
 
 1. Calculate a 95\% confidence interval for $\mu_{weight}$ using the data in \texttt{yrbss.sample}. Does it seem like the population mean weight will be different from 60 kilograms?
 
-    \textcolor{NavyBlue}{The 95\% confidence level is (62.997, 69.155) kg. It seems like population mean weight will be different from 60 kilograms.}
+    \textcolor{NavyBlue}{The 95\% confidence level is (63.238, 70.257) kg. It seems like population mean weight will be different from 60 kilograms.}
 
     ```{r}
 #calculate confidence interval
@@ -78,9 +78,9 @@ t.test(yrbss.sample$weight, conf.level = 0.95)$conf.int
         These points mark off the *rejection region* as defined by $\alpha$; the $t$-statistic calculated from $\overline{x}$ must lie within the tail areas bounded by these points in order to constitute sufficient evidence against $H_0$.
 
 
-    \color{NavyBlue}
-    The points -1.98 and 1.98 mark the rejection regions for $\alpha = 0.05$ on a $t$-distribution that has 99 degrees of freedom.
-    \color{Black}      
+        \color{NavyBlue}
+        The points -1.98 and 1.98 mark the rejection regions for $\alpha = 0.05$ on a $t$-distribution that has 99 degrees of freedom.
+        \color{Black}      
       
     ```{r}
 #t-point marking the upper tail 
@@ -97,7 +97,7 @@ qt(0.025, df = 99)
     b) Calculate the $t$-statistic from \texttt{yrbss.sample}. Confirm that it lies within the rejection region and that the associated $p$-value is less than $\alpha$.
 
 
-    \textcolor{NavyBlue}{The $t$-statistic calculated from weights in \texttt{yrbss.sample} is 3.92, which is within the upper tail, beyond the $t$ point of 1.98. The $p$-value of 0.0006 is much smaller than $\alpha$.}
+        \textcolor{NavyBlue}{The $t$-statistic calculated from weights in \texttt{yrbss.sample} is 3.82, which is within the upper tail, beyond the $t$ point of 1.98. The $p$-value of 0.0002 is much smaller than $\alpha$.}
 
 
     ```{r}
@@ -110,7 +110,7 @@ t.test(yrbss.sample$weight, mu = 60, alternative = "two.sided")
 
     a) What is the margin of error, $m$, from the confidence interval calculated in Question 1?
 
-    \textcolor{NavyBlue}{The margin of error is half the width of a confidence interval ($\overline{x} \pm m$). Thus, the margin of error in the confidence interval (62.997, 69.155) kg is $(69.155 - 62.997)/2 = 3.079$.}
+        \textcolor{NavyBlue}{The margin of error is half the width of a confidence interval ($\overline{x} \pm m$). Thus, the margin of error in the confidence interval (63.238, 70.257) kg is $(70.257 - 63.238)/2 = 3.510$.}
 
     ```{r, eval = TRUE}
 #use r as a calculator
@@ -131,7 +131,7 @@ x.bar - m; x.bar + m
     
 b) What values of $\overline{x}$ would correspond to the $t$-points that mark off the rejection region? In other words, what weight values for the sample mean would be considered 'extreme' enough to warrant rejecting $H_0$?
 
-    \textcolor{NavyBlue}{The weight values of 63.08 kg and 56.92 kg would correspond to the $t$-points that mark off the rejection regions in the upper and lower tails, respectively. A sample mean would be considered extreme if it were greater than 63.08 or lower than 56.92.}
+    \textcolor{NavyBlue}{The weight values of 63.51 kg and 56.49 kg would correspond to the $t$-points that mark off the rejection regions in the upper and lower tails, respectively. A sample mean would be considered extreme if it were greater than 63.51 or lower than 56.49.}
 
     ```{r, eval = TRUE}
 #use r as a calculator
@@ -151,10 +151,11 @@ x.upper; x.lower
 
 
 
+    \newpage
     
     c) How far apart are the two values calculated in part b) from each other? How does the distance relate to $m$, as calculated in part a)?
     
-    \textcolor{NavyBlue}{The two values calculated in part b) are 6.16 units away from each other, which is exactly twice the margin of error $m$ calculated in part a).}
+    \textcolor{NavyBlue}{The two values calculated in part b) are 7.02 units away from each other, which is exactly twice the margin of error $m$ calculated in part a).}
 
     \color{NavyBlue}
     
@@ -184,9 +185,9 @@ A one-sided hypothesis test with $\alpha = 0.05$ and $H_A: \mu > \mu_0$ correspo
 
     a) Is there evidence that on average, American adults sleep less than 7 hours per night? Use $\alpha = 0.10$. 
 
-    \textcolor{NavyBlue}{The null hypothesis is that American adults sleep 7 hours a night, $H_0: \mu = 7.0$ hours. The alternative hypothesis is that American adults sleep less than 7 hours a night, $H_A: \mu < 7.0$ hours. The $t$-statistic is -1.53, and the associated $p$-value is $P(T \leq -1.53) = 0.06$. Since the one-sided alternative hypothesis is $\mu < \mu_0$, the $p$-value is the lower tail area; i.e., the area to the left of the $t$-statistic. }
+        \textcolor{NavyBlue}{The null hypothesis is that American adults sleep 7 hours a night, $H_0: \mu = 7.0$ hours. The alternative hypothesis is that American adults sleep less than 7 hours a night, $H_A: \mu < 7.0$ hours. The $t$-statistic is -1.53, and the associated $p$-value is $P(T \leq -1.53) = 0.06$. Since the one-sided alternative hypothesis is $\mu < \mu_0$, the $p$-value is the lower tail area; i.e., the area to the left of the $t$-statistic. }
     
-    \textcolor{NavyBlue}{Since $p$ is less than $\alpha$, there is sufficient evidence to reject the null hypothesis and accept the alternative that American adults sleep less than 7 hours per night. The low $p$-value indicates that if the true mean hours of sleep per night in the American population were 7 hours, then it would be unusual to observe a sample with mean 6.80 hours.}
+        \textcolor{NavyBlue}{Since $p$ is less than $\alpha$, there is sufficient evidence to reject the null hypothesis and accept the alternative that American adults sleep less than 7 hours per night. The low $p$-value indicates that if the true mean hours of sleep per night in the American population were 7 hours, then it would be unusual to observe a sample with mean 6.80 hours.}
 
     ```{r}
 #use r as a calculator
@@ -208,11 +209,11 @@ pt(t, df = n - 1, lower.tail = TRUE)
     
     b) Calculate a one-sided lower 90\% confidence interval for the average amount of sleep per night among US adults; i.e., of the form ($-\infty, \overline{x} + m$). Compare the information obtained from a confidence interval versus a hypothesis test and assess whether the results of the test are practically significant, as opposed to statistically significant.
 
-    \textcolor{NavyBlue}{The upper 90\% bound is 6.97 hours. Based on the data in this sample, we can be 90\% confident that the population mean hours of sleep per night among US adults is at most 6.97 hours. }
-    
-    \textcolor{NavyBlue}{The interval does not contain the $\mu_0$ value of 7.0 hours; 7.0 hours is not a plausible value for $\mu_0$ according to the confidence interval, which agrees with the conclusion from part a). While the interval provides a plausible range of values for the population mean hours sleep per night, the $p$-value from the test gives a measure of the strength of the evidence against $H_0$.}
-    
-    \textcolor{NavyBlue}{Note that while the results of the test are statistically significant, but not necessarily practically significant. 6.97 hours is only about 2 minutes less than 7 hours. Thus, from a practical standpoint that 2 minutes of sleep is a negligible amount, this sample does not provide convincing evidence that American adults sleep a meaningful amount less than 7 hours per night.}
+        \textcolor{NavyBlue}{The upper 90\% bound is 6.97 hours. Based on the data in this sample, we can be 90\% confident that the population mean hours of sleep per night among US adults is at most 6.97 hours. }
+        
+        \textcolor{NavyBlue}{The interval does not contain the $\mu_0$ value of 7.0 hours; 7.0 hours is not a plausible value for $\mu_0$ according to the confidence interval, which agrees with the conclusion from part a). While the interval provides a plausible range of values for the population mean hours sleep per night, the $p$-value from the test gives a measure of the strength of the evidence against $H_0$.}
+        
+        \textcolor{NavyBlue}{Note that while the results of the test are statistically significant, but not necessarily practically significant. 6.97 hours is only about 2 minutes less than 7 hours. Thus, from a practical standpoint that 2 minutes of sleep is a negligible amount, this sample does not provide convincing evidence that American adults sleep a meaningful amount less than 7 hours per night.}
   
     ```{r}
 #use r as a calculator
@@ -254,27 +255,27 @@ ci.lower.bound
     
         i. Suppose that you are interested in learning whether mean fasting blood sugar levels in Neighborhood A, a middle-class neighborhood, is different from 5.31 mmol/L.
 
-        \color{NavyBlue}
-
-        A two-sided alternative seems reasonable; there is not information to suggest that population fasting blood sugar levels in this neighborhood is higher or lower than normal. 
-  
-        $H_0: \mu = 5.31$ mmol/L, $H_A: \mu \neq 5.31$ mmol/L.
-
-        \color{Black}
+            \color{NavyBlue}
+    
+            A two-sided alternative seems reasonable; there is not information to suggest that population fasting blood sugar levels in this neighborhood is higher or lower than normal. 
+      
+            $H_0: \mu = 5.31$ mmol/L, $H_A: \mu \neq 5.31$ mmol/L.
+    
+            \color{Black}
 
 
         
         ii. Neighborhood B is primarily inhabited by low-income families. If the mean fasting blood sugar level in Neighborhood B is higher than normal, you will start recruiting participants for an antidiabetic drug trial from the neighborhood.
 
-        \color{NavyBlue}
-  
-        It is reasonable to expect that if the null hypothesis is not true, then the mean fasting blood sugar level in this neighborhood is higher than 5.31 mmol/L.
-  
-        $H_0: \mu = 5.31$ mmol/L, $H_A: \mu > 5.31$ mmol/L.
-  
-        Additionally, the consequences in this scenario are the same whether we fail to reject $H_0$ or if it is actually the case that mean fasting blood sugar level is less than 5.31 mmol/L; we will not choose to recruit participants for an antidiabetic drug trial. 
-  
-        \color{Black}
+            \color{NavyBlue}
+      
+            It is reasonable to expect that if the null hypothesis is not true, then the mean fasting blood sugar level in this neighborhood is higher than 5.31 mmol/L.
+      
+            $H_0: \mu = 5.31$ mmol/L, $H_A: \mu > 5.31$ mmol/L.
+      
+            Additionally, the consequences in this scenario are the same whether we fail to reject $H_0$ or if it is actually the case that mean fasting blood sugar level is less than 5.31 mmol/L; we will not choose to recruit participants for an antidiabetic drug trial. 
+      
+            \color{Black}
 
 
         
@@ -283,15 +284,15 @@ ci.lower.bound
         i. Use \texttt{t.test()} to test the hypotheses from part a). Use $\alpha = 0.05$. Summarize your conclusions.
 
 
-        \color{NavyBlue}
-        
-        The $p$-value for the Neighborhood A data is 0.06; there is not sufficient evidence at the $\alpha = 0.05$ significance level to reject the null hypothesis that the mean fasting blood sugar in this neighborhood is 5.31 mmol/L. 
-
-
-        The $p$-value for the Neighborhood B data is 0.03, which is less than $\alpha = 0.05$. There is sufficient evidence to reject the null and accept the alternative hypothesis that the mean fasting blood sugar in this neighborhood is higher than 5.31 mmol/L. 
-
-
-        \color{Black}
+            \color{NavyBlue}
+            
+            The $p$-value for the Neighborhood A data is 0.06; there is not sufficient evidence at the $\alpha = 0.05$ significance level to reject the null hypothesis that the mean fasting blood sugar in this neighborhood is 5.31 mmol/L. 
+    
+    
+            The $p$-value for the Neighborhood B data is 0.03, which is less than $\alpha = 0.05$. There is sufficient evidence to reject the null and accept the alternative hypothesis that the mean fasting blood sugar in this neighborhood is higher than 5.31 mmol/L. 
+    
+    
+            \color{Black}
     
 
         ```{r, eval = TRUE}
@@ -308,7 +309,7 @@ t.test(x = sugar.levels.B, mu = 5.31, alternative = "greater")
         ii. The values in the two datasets are actually identical. Why are the $p$-values from the two tests different from each other?
 
       
-          \textcolor{NavyBlue}{The $p$-value for a one-sided test is exactly half the $p$-value for a two-sided test conducted at the same significance level. For a two-sided test, $p = P(T \geq |t|) = 2 P(T \geq t)$. The $p$-value for a one-sided test is only $P(T \geq t)$ or $P(T \leq t)$, depending on the direction of the alternative. A result needs to be more extreme to be within the rejection region of a two-sided test.}
+            \textcolor{NavyBlue}{The $p$-value for a one-sided test is exactly half the $p$-value for a two-sided test conducted at the same significance level. For a two-sided test, $p = P(T \geq |t|) = 2 P(T \geq t)$. The $p$-value for a one-sided test is only $P(T \geq t)$ or $P(T \leq t)$, depending on the direction of the alternative. A result needs to be more extreme to be within the rejection region of a two-sided test.}
 
 
         
@@ -363,15 +364,15 @@ table(in.rejection.region)
     a) With $\alpha = 0.05$, what percentage of samples result in the (incorrect) conclusion that the population mean is not 67.91 kg?
 
 
-    \textcolor{NavyBlue}{$55/1000 = 5.5\%$ of the samples result in the incorrect conclusion that the population mean is not 67.91 kg.}
+        \textcolor{NavyBlue}{$53/1000 = 5.3\%$ of the samples result in the incorrect conclusion that the population mean is not 67.91 kg.}
 
   
     b) What happens when $\alpha$ is changed? Test $\alpha = 0.10$ and $\alpha = 0.01$. Compare your results to those in part a).
 
 
-    \textcolor{NavyBlue}{When $\alpha = 0.10$, 10\% of the samples result in rejecting $H_0$. When $\alpha = 0.01$, 1.8\% of the samples result in rejecting $H_0$.\footnote{Note that the observed proportion 1.8\% is different from 1\% only due to random chance; with a larger number of simulations, the observed proportion will approach 1\%.} As $\alpha$ decreases, the percentage of samples that return an incorrect conclusion decreases.}
-
-    \textcolor{NavyBlue}{This is directly related to what was observed in the confidence interval simulation from Lab 2 of this unit: $\alpha$ is the percentage of confidence intervals that did not contain the population mean $\mu_{weight}$. Thus, $\alpha$ can be thought of as the error probability for both hypothesis tests and confidence intervals.}
+        \textcolor{NavyBlue}{When $\alpha = 0.10$, 10.2\% of the samples result in rejecting $H_0$. When $\alpha = 0.01$, 1.1\% of the samples result in rejecting $H_0$.\footnote{Note that the observed proportion 1.1\% is different from 1\% only due to random chance; with a larger number of simulations, the observed proportion will approach 1\%.} As $\alpha$ decreases, the percentage of samples that return an incorrect conclusion decreases.}
+    
+        \textcolor{NavyBlue}{This is directly related to what was observed in the confidence interval simulation from Lab 2 of this unit: $\alpha$ is the percentage of confidence intervals that did not contain the population mean $\mu_{weight}$. Thus, $\alpha$ can be thought of as the error probability for both hypothesis tests and confidence intervals.}
 
 
     ```{r, echo = FALSE}

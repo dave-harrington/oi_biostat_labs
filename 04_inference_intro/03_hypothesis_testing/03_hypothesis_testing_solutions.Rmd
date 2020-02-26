@@ -36,7 +36,7 @@ The dataset \texttt{nhanes.samp.adult} in the \texttt{oibiostat} package contain
 
     a) Using numerical and graphical summaries, describe the distribution of nightly sleep hours in \texttt{nhanes.samp.adult}.
     
-    \textcolor{NavyBlue}{The data are roughly symmetric around the mean at 6.9 hours. There is one very low outlier corresponding to one person who reported getting 2 hours of sleep on weekdays. The middle half of participants report getting between 6 and 8 hours of sleep on weekdays.}
+        \textcolor{NavyBlue}{The data are roughly symmetric around the mean at 6.9 hours. There is one very low outlier corresponding to one person who reported getting 2 hours of sleep on weekdays. The middle half of participants report getting between 6 and 8 hours of sleep on weekdays.}
     
     ```{r, fig.width = 8, fig.height = 4}
 #load the data
@@ -58,7 +58,7 @@ boxplot(nhanes.samp.adult$SleepHrsNight)
     
     b) Based on the distribution of nightly sleep hours in the sample, does it seem that the population mean nightly sleep hours may be outside the range defined as adequate (7 - 9 hours)?
 
-    \textcolor{NavyBlue}{Yes, it seems like the population mean nightly sleep hours will be outside the range defined as adequate; the sample mean at 6.9 hours is just below the lower end of this range.}
+        \textcolor{NavyBlue}{Yes, it seems like the population mean nightly sleep hours will be outside the range defined as adequate; the sample mean at 6.9 hours is just below the lower end of this range.}
 
 
 
@@ -79,26 +79,26 @@ t.test(nhanes.samp.adult$SleepHrsNight, na.rm = TRUE, conf.level = 0.95)$conf.in
 
     a) Formulate null and alternative hypotheses. The symbol $\mu$ denotes the population mean, while $\mu_0$ refers to the numeric value specified by the null hypothesis. 
     
-    \textcolor{NavyBlue}{The null hypothesis is that the mean nightly sleep hours in the population equals 8 hours ($H_0: \mu = 8$). Based on prior knowledge that Americans tend to be sleep-deprived, it is reasonable to assume that if $H_0$ is not true, then the population mean sleep hours would be less than 8 hours ($H_A: \mu < 8$). }
+        \textcolor{NavyBlue}{The null hypothesis is that the mean nightly sleep hours in the population equals 8 hours ($H_0: \mu = 8$). Based on prior knowledge that Americans tend to be sleep-deprived, it is reasonable to assume that if $H_0$ is not true, then the population mean sleep hours would be less than 8 hours ($H_A: \mu < 8$). }
     
     
     
-  b) Specify a significance level, $\alpha$.
+    b) Specify a significance level, $\alpha$.
     
-    \textcolor{NavyBlue}{The significance level $\alpha$ defines a "rare" event. Typically, $\alpha = 0.05$. An $\alpha$ level of 0.05 means that an event occurring with probability lower than 5\% will be considered sufficient evidence against the null hypothesis. For this test, let $\alpha = 0.05$.}
-    
-    
+        \textcolor{NavyBlue}{The significance level $\alpha$ defines a "rare" event. Typically, $\alpha = 0.05$. An $\alpha$ level of 0.05 means that an event occurring with probability lower than 5\% will be considered sufficient evidence against the null hypothesis. For this test, let $\alpha = 0.05$.}
     
     
     
-  c) Calculate the test statistic.
     
-    \[t = \frac{\overline{x} - \mu_0}{s/\sqrt{n}} \]
     
-    \color{NavyBlue} The test statistic is
-    \[t = \frac{\overline{x} - \mu_0}{s/\sqrt{n}} = \frac{6.89 - 8}{1.39/\sqrt{135}} = -9.20 \]
+    c) Calculate the test statistic.
     
-    \color{Black}
+        \[t = \frac{\overline{x} - \mu_0}{s/\sqrt{n}} \]
+    
+        \color{NavyBlue} The test statistic is
+        \[t = \frac{\overline{x} - \mu_0}{s/\sqrt{n}} = \frac{6.89 - 8}{1.39/\sqrt{135}} = -9.20 \]
+        
+        \color{Black}
     
     ```{r, eval}
 #use r as a calculator
@@ -112,9 +112,9 @@ t
 ```
 
     
-  d) Calculate the $p$-value.
+    d) Calculate the $p$-value.
 
-    \textcolor{NavyBlue}{The $p$-value is extremely small; $P(T \leq -9.20) = 3.16 \times 10^{-16}$.}
+        \textcolor{NavyBlue}{The $p$-value is extremely small; $P(T \leq -9.20) = 3.16 \times 10^{-16}$.}
 
 
     ```{r, eval = TRUE}
@@ -130,7 +130,7 @@ t.test(nhanes.samp.adult$SleepHrsNight, mu = 8, alternative = "less")
     
     e) Draw a conclusion.
     
-    \textcolor{NavyBlue}{The $p$-value is less than $\alpha$; the results are significant at $\alpha = 0.05$. There is sufficient evidence to reject the null hypothesis and accept the alternative that mean nightly sleep hours in the population is less than 8 hours. The chance of drawing a sample with mean nightly sleep hours 6.90 hours if the distribution were actually centered at 8 hours is almost zero! These data support the conclusion that American adults are not getting enough sleep.}  
+        \textcolor{NavyBlue}{The $p$-value is less than $\alpha$; the results are significant at $\alpha = 0.05$. There is sufficient evidence to reject the null hypothesis and accept the alternative that mean nightly sleep hours in the population is less than 8 hours. The chance of drawing a sample with mean nightly sleep hours 6.90 hours if the distribution were actually centered at 8 hours is almost zero! These data support the conclusion that American adults are not getting enough sleep.}  
   
 
 
@@ -160,18 +160,18 @@ boxplot(nhanes.samp.adult$TotChol)
 
     a) Choose whether to conduct a one-sided or two-sided test. Formulate null and alternative hypotheses.
   
-    \textcolor{NavyBlue}{Conduct a two-sided test to assess whether there is a difference in either direction; $H_0: \mu = 5.2$ mmol/L versus $H_A: \mu \neq 5.2$ mmol/L.}
+        \textcolor{NavyBlue}{Conduct a two-sided test to assess whether there is a difference in either direction; $H_0: \mu = 5.2$ mmol/L versus $H_A: \mu \neq 5.2$ mmol/L.}
   
   
   
     b) Specify a significance level, $\alpha$.
   
-    \textcolor{NavyBlue}{Let $\alpha = 0.05$.}
+        \textcolor{NavyBlue}{Let $\alpha = 0.05$.}
   
   
     c) Calculate the test statistic. (Note: Be careful of missing data values.)
   
-    \textcolor{NavyBlue}{The test statistic is -0.411.}    
+        \textcolor{NavyBlue}{The test statistic is -0.411.}    
   
     ```{r, eval = TRUE}
 #use r as a calculator
@@ -187,7 +187,7 @@ t
   
     d) Calculate the $p$-value.
   
-    \textcolor{NavyBlue}{For a two-sided hypothesis test, the $p$-value is the total area from both tails of the $t$ distribution that are beyond the absolute value of the observed $t$-statistic. Here, $2 \times P(T \leq -0.411) = 0.682$.}
+        \textcolor{NavyBlue}{For a two-sided hypothesis test, the $p$-value is the total area from both tails of the $t$ distribution that are beyond the absolute value of the observed $t$-statistic. Here, $2 \times P(T \leq -0.411) = 0.682$.}
 
     ```{r}
 2*pt(t, df = n - 1, lower.tail = TRUE)
@@ -206,7 +206,7 @@ t.test(x = nhanes.samp.adult$TotChol, mu = 5.2, alternative = "two.sided")
   
     f) Draw a conclusion.
 
-    \textcolor{NavyBlue}{The $p$-value is greater than $\alpha$; there is insufficient evidence to reject the null hypothesis in favor of the alternative. Based on these data, the population mean total cholesterol level may not be different from 5.2 mmol/L. Note that it would be inappropriate to conclude that the population mean total cholesterol level \textit{is} 5.2 mmol/L; failure to reject the null does not imply that the null is true.}
+        \textcolor{NavyBlue}{The $p$-value is greater than $\alpha$; there is insufficient evidence to reject the null hypothesis in favor of the alternative. Based on these data, the population mean total cholesterol level may not be different from 5.2 mmol/L. Note that it would be inappropriate to conclude that the population mean total cholesterol level \textit{is} 5.2 mmol/L; failure to reject the null does not imply that the null is true.}
 
 
 ### Hypothesis Testing: Body Temperature

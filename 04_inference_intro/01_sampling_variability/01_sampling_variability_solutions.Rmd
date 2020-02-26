@@ -69,7 +69,7 @@ yrbss.sample = yrbss[sample.rows, ]
 
     a) Which rows of \texttt{yrbss} were sampled from?
     
-    \textcolor{NavyBlue}{The following ten rows were sampled from \texttt{yrbss}; the data from the respondents stored in these ten rows are stored as \texttt{yrbss.sample}.}
+        \textcolor{NavyBlue}{The following ten rows were sampled from \texttt{yrbss}; the data from the respondents stored in these ten rows are stored as \texttt{yrbss.sample}.}
     
     ```{r}
 sample.rows
@@ -79,7 +79,7 @@ sample.rows
     
     b) How many individuals of each gender have been sampled?
     
-    \textcolor{NavyBlue}{There are 8 female students and 2 male students in \texttt{yrbss.sample}.}
+        \textcolor{NavyBlue}{There are 3 female students and 7 male students in \texttt{yrbss.sample}.}
     
     ```{r}
 table(yrbss.sample$gender)
@@ -89,7 +89,7 @@ table(yrbss.sample$gender)
     
     c) What is the mean age of the sampled students?
     
-    \textcolor{NavyBlue}{The mean age of the sampled students is 16.5 years.}
+        \textcolor{NavyBlue}{The mean age of the sampled students is 16.3 years.}
     
     ```{r}
 mean(yrbss.sample$age)
@@ -99,7 +99,7 @@ mean(yrbss.sample$age)
     
     d) Calculate $\overline{x}_{weight}$ and $s_{weight}$, the mean and standard deviation of weight in the sample.
     
-    \textcolor{NavyBlue}{The mean weight in the sample is 68.13 kg and the standard deviation of weight in the sample is 12.03 kg.}
+        \textcolor{NavyBlue}{The mean weight in the sample is 63.64 kg and the standard deviation of weight in the sample is 10.03 kg.}
     
     ```{r}
 mean(yrbss.sample$weight)
@@ -110,7 +110,7 @@ sd(yrbss.sample$weight)
     
     e) Calculate $\mu_{weight}$, the mean weight in the \texttt{yrbss} population.
     
-    \textcolor{NavyBlue}{The mean weight in the \texttt{yrbss} population is 67.91 kg.}
+        \textcolor{NavyBlue}{The mean weight in the \texttt{yrbss} population is 67.91 kg.}
     
     ```{r}
 mean(yrbss$weight, na.rm = TRUE)
@@ -137,7 +137,7 @@ yrbss.sample = yrbss[sample.rows, ]
 
     a) Use the \texttt{summary()} command on \texttt{weight} to check for any missing values, which are recorded as \texttt{NA}. Are there any missing values in your sample?
     
-    \textcolor{NavyBlue}{There are five missing values in this sample.}
+        \textcolor{NavyBlue}{There are two missing values in this sample.}
     
     ```{r}
 summary(yrbss.sample$weight)
@@ -148,7 +148,7 @@ summary(yrbss.sample$weight)
     
     b) What is $\overline{x}_{weight}$, as calculated from your sample? Does it differ from $\overline{x}_{weight}$ as calculated in part d) of the previous question? How do these point estimates compare to the population mean $\mu_{weight}$?
 
-    \textcolor{NavyBlue}{From this sample, $\overline{x}_{weight}$ is 71.03 kg. It is larger than both the sample mean calculated in part d) of the previous question (68.13 kg) and the population parameter $\mu_{weight}$ (67.91 kg). }
+        \textcolor{NavyBlue}{From this sample, $\overline{x}_{weight}$ is 62.99 kg. It is smaller than both the sample mean calculated in part d) of the previous question (63.64 kg) and the population parameter $\mu_{weight}$ (67.91 kg). }
 
 
 \newpage

@@ -15,7 +15,6 @@ output:
 ---
 
 \begin{small}
-	
 	\textbf{Topics}
 	\begin{itemize}
 	  \item Interval estimates
@@ -75,7 +74,7 @@ yrbss.sample = yrbss.complete[sample.rows, ]
 
     a) Calculate $\overline{x}_{weight}$ and $s_{weight}$, the mean and standard deviation of weight in the sample.
   
-    \textcolor{NavyBlue}{The sample mean $\overline{x}_{weight}$ is 68.842 kg and the sample standard deviation $s_{weight}$ is 17.521 kg.}
+        \textcolor{NavyBlue}{The sample mean $\overline{x}_{weight}$ is 69.63 kg and the sample standard deviation $s_{weight}$ is 18.26 kg.}
 
     ```{r}
 mean(yrbss.sample$weight)
@@ -86,7 +85,7 @@ sd(yrbss.sample$weight)
     
     b) For a 95\% confidence interval, $z^\star$ is the point on a standard normal distribution that has area 0.975 to the left (and area 0.025 to the right). Calculate the value of $z^\star$ for a 95\% confidence interval.
     
-    \textcolor{NavyBlue}{The $z^\star$ value for a 95\% confidence interval is 1.96.}
+        \textcolor{NavyBlue}{The $z^\star$ value for a 95\% confidence interval is 1.96.}
     
     ```{r}
 qnorm(0.975)
@@ -99,7 +98,7 @@ qnorm(0.975)
         
         \color{NavyBlue}
         
-        \[\left( 68.842 - 1.96 \frac{17.521}{\sqrt{30}}, \ 68.842 + 1.96 \frac{17.521}{\sqrt{30}} \right) \rightarrow (62.57, 75.11) \text{ kg} \]
+        \[\left( 69.628 - 1.96 \frac{18.264}{\sqrt{30}}, \ 69.628 + 1.96 \frac{18.264}{\sqrt{30}} \right) \rightarrow (63.09, 76.16) \text{ kg} \]
         
         \color{Black}
 
@@ -121,13 +120,13 @@ ci.upper.bound = x.bar + m
 ci.lower.bound; ci.upper.bound
 ```
 
-    d) The standard deviation of weight in the sample is 17.52 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
+    d) The standard deviation of weight in the sample is 18.26 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
     
-    \color{NavyBlue}
+        \color{NavyBlue}
     
-    For $s = 20$, the 95\% confidence interval is (61.68, 76.00) kg, while for $s = 25$, the 95\% confidence interval is (59.90, 77.79) kg. As sample standard deviation increases, the confidence intervals become wider. In comparison, the original interval with $s = 17.52$ kg was about 12.5 kg wide; this increased to 14.5 kg and 18 kg. Intuitively, one would expect that observing less variability in a sample allows for a more precise estimate of the population parameter. This effect can also be determined through examining the formula for $m$, the margin of error; as $s$ increases, the margin of error increases since the numerator of the standard error ($s/\sqrt{n}$) increases.
+        For $s = 20$, the 95\% confidence interval is (62.47, 76.78) kg, while for $s = 25$, the 95\% confidence interval is (60.68, 78.58) kg. As sample standard deviation increases, the confidence intervals become wider. In comparison, the original interval with $s = 18.26$ kg was about 13 kg wide; this increased to 14.3 kg and 18 kg. Intuitively, one would expect that observing less variability in a sample allows for a more precise estimate of the population parameter. This effect can also be determined through examining the formula for $m$, the margin of error; as $s$ increases, the margin of error increases since the numerator of the standard error ($s/\sqrt{n}$) increases.
     
-    \color{Black}
+        \color{Black}
 
     ```{r}
 #use r as a calculator
@@ -153,7 +152,7 @@ ci.lower.bound; ci.upper.bound
     
         \color{NavyBlue}
         
-        \[\left( 68.842 - 1.64 \frac{17.521}{\sqrt{30}}, \ 68.842 + 1.64 \frac{17.521}{\sqrt{30}} \right) \rightarrow (63.580, 74.103) \text{ kg} \]
+        \[\left( 69.628 - 1.64 \frac{18.264}{\sqrt{30}}, \ 69.628 + 1.64 \frac{18.264}{\sqrt{30}} \right) \rightarrow (64.14, 75.11) \text{ kg} \]
         
         \color{Black}
     
@@ -181,7 +180,7 @@ ci.lower.bound; ci.upper.bound
    
         \color{NavyBlue}
         
-        \[\left( 68.842 - 2.58 \frac{17.521}{\sqrt{30}}, \ 68.842 + 2.58 \frac{17.521}{\sqrt{30}} \right) \rightarrow (60.60, 77.08) \text{ kg} \]
+        \[\left( 69.628 - 2.58 \frac{18.264}{\sqrt{30}}, \ 69.628 + 2.58 \frac{18.264}{\sqrt{30}} \right) \rightarrow (61.04, 78.22) \text{ kg} \]
         
         \color{Black}
    
@@ -206,14 +205,14 @@ ci.lower.bound; ci.upper.bound
     
     c) Compare the 95\% confidence interval calculated in the previous question to the 90\% and 99\% confidence intervals. Describe the relationship between confidence level and width of the interval.
     
-    \textcolor{NavyBlue}{The 95\% confidence interval of (62.57, 75.11) kg is an intermediate width; wider than the 90\% confidence interval but more narrow than the 99\% confidence interval. As confidence level increases, the width of the interval increases.}
+        \textcolor{NavyBlue}{The 95\% confidence interval of (63.09, 76.16) kg is an intermediate width; wider than the 90\% confidence interval but more narrow than the 99\% confidence interval. As confidence level increases, the width of the interval increases.}
     
     
     d) Which of the intervals calculated (90\%, 95\%, 99\%) do you find to be the most informative as an estimate of the mean weight of high school age students in the US? Explain your answer. 
     
-    \textcolor{NavyBlue}{The 99\% confidence interval is the widest and thus, the least informative; it provides a less precise estimate of the population mean weight. The 90\% confidence interval offers the most precise estimate.}
+        \textcolor{NavyBlue}{The 99\% confidence interval is the widest and thus, the least informative; it provides a less precise estimate of the population mean weight. The 90\% confidence interval offers the most precise estimate.}
     
-    \textcolor{NavyBlue}{Consider an extreme case---a theoretical "100\%" confidence interval that captures the population mean with absolute certainty would be $(0, +\infty)$ kg. Such a wide interval is completely uninformative for providing an plausible range of values for $\mu$.}
+        \textcolor{NavyBlue}{Consider an extreme case---a theoretical "100\%" confidence interval that captures the population mean with absolute certainty would be $(0, +\infty)$ kg. Such a wide interval is completely uninformative for providing an plausible range of values for $\mu$.}
 
 
 3. The \texttt{t.test()} command can be used to calculate confidence intervals. For example, the command to calculate a 95\% confidence interval for \texttt{height} in \texttt{yrbss.complete} is
@@ -227,7 +226,7 @@ t.test(yrbss.complete$height, conf.level = 0.95)$conf.int
     
         The answer will differ slightly from the one in Question 1 because \textsf{R} calculates confidence intervals using a critical value from the $t$ distribution rather than from the standard normal distribution; the $t$ distribution will be introduced in Unit 5.
         
-        \textcolor{NavyBlue}{The confidence interval is (62.30, 75.38) kg. }
+        \textcolor{NavyBlue}{The confidence interval is (62.80, 76.45) kg. }
     
     ```{r}
 t.test(yrbss.sample$weight, conf.level = 0.95)$conf.int
@@ -237,7 +236,7 @@ t.test(yrbss.sample$weight, conf.level = 0.95)$conf.int
     
     b) Examine the effect of larger sample sizes on the confidence interval by re-running the code for sample sizes of 50, 100, and 300. Describe your observations.
     
-    \textcolor{NavyBlue}{As the sample size increases, the confidence intervals become more narrow. The interval with sample size 300 is about 3 kg wide and provides a fairly precise estimate. In comparison, the interval with sample size 30 was about 13 kg wide. Intuitively, one would expect that having more data from the population allows for a more precise estimate of the population parameter. This effect can also be predicted by examining the formula for $m$, the margin of error; as $n$ increases, the margin of error decreases since the denominator $\sqrt{n}$ increases.}
+        \textcolor{NavyBlue}{As the sample size increases, the confidence intervals become more narrow. The interval with sample size 300 is about 4 kg wide and provides a fairly precise estimate. In comparison, the interval with sample size 30 was about 11 kg wide. Intuitively, one would expect that having more data from the population allows for a more precise estimate of the population parameter. This effect can also be predicted by examining the formula for $m$, the margin of error; as $n$ increases, the margin of error decreases since the denominator $\sqrt{n}$ increases.}
 
     ```{r, echo = FALSE}
 #remove rows with missing values
@@ -307,7 +306,7 @@ t.test(yrbss.sample$weight, conf.level = 0.95)$conf.int
 
     a) Consider the individuals in \texttt{yrbss.complete} as the target population. Calculate the population mean weight, $\mu_{weight}$. 
     
-    \textcolor{NavyBlue}{The population mean weight $\mu_{weight}$ for \texttt{yrbss.complete} is 67.91 kg.}
+        \textcolor{NavyBlue}{The population mean weight $\mu_{weight}$ for \texttt{yrbss.complete} is 67.91 kg.}
 
     ```{r}
 mean(yrbss.complete$weight)
@@ -315,7 +314,7 @@ mean(yrbss.complete$weight)
     
     b) Does the 95\% interval calculated in part b) of Question 3 for $n = 100$ contain $\mu_{weight}$?
     
-    \textcolor{NavyBlue}{Yes, the interval (63.00, 69.15) kg contains $\mu_{weight}$.}
+        \textcolor{NavyBlue}{Yes, the interval (63.24, 70.26) kg contains $\mu_{weight}$.}
     
     
 
@@ -358,12 +357,12 @@ table(contains.mu)
 
     a) How many intervals contain the population mean $\mu_{weight}$?
 
-    \textcolor{NavyBlue}{944 intervals contained $\mu_{weight}$.}
+        \textcolor{NavyBlue}{945 intervals contained $\mu_{weight}$.}
 
     
     b) Re-run the simulation with confidence levels of 0.90 and 0.99. What happens to the number of intervals that contain $\mu_{weight}$?
 
-    \textcolor{NavyBlue}{When the confidence level is decreased to 0.90, 89.2\% of the intervals contain $\mu$. When the confidence level is increased to 0.99, 98.2\% of the intervals contain $\mu$.}
+        \textcolor{NavyBlue}{When the confidence level is decreased to 0.90, 89.8\% of the intervals contain $\mu$. When the confidence level is increased to 0.99, 98.9\% of the intervals contain $\mu$.}
 
 
     ```{r, eval = TRUE, echo = FALSE}
@@ -438,13 +437,13 @@ table(contains.mu)
     
     c) What is a disadvantage associated with using an interval that gives a more precise estimate of the parameter; e.g., a 90\% interval rather than a 95\% interval?
 
-    \textcolor{NavyBlue}{A more precise interval is less likely to contain the population parameter.}
+        \textcolor{NavyBlue}{A more precise interval is less likely to contain the population parameter.}
 
     d) From what you have observed in this lab about the relationship between an interval estimate $(\overline{x} \pm m)$ and the population mean ($\mu$), evaluate the following statement:
     
-    "The 95\% confidence interval as calculated from the 13,572 sampled high school students in the 2013 YRBSS survey is (67.61, 68.20) kg. It is possible to definitively conclude that this interval contains the mean weight of the 21.2 million high school students in the US in 2013."
+        "The 95\% confidence interval as calculated from the 13,572 sampled high school students in the 2013 YRBSS survey is (67.61, 68.20) kg. It is possible to definitively conclude that this interval contains the mean weight of the 21.2 million high school students in the US in 2013."
     
-    \textcolor{NavyBlue}{It is impossible to know with absolute certainty whether the confidence interval computed from the sample actually contains the population parameter $\mu$. At most, we can conclude with 95\% confidence that the interval (67.61, 68.20) kg contains the population mean weight of the 21.2 million high school students in the US in 2013. Due to sampling variability, a sample may contain extreme values such that a confidence interval calculated from the sample data does not contain the population parameter.}
+        \textcolor{NavyBlue}{It is impossible to know with absolute certainty whether the confidence interval computed from the sample actually contains the population parameter $\mu$. At most, we can conclude with 95\% confidence that the interval (67.61, 68.20) kg contains the population mean weight of the 21.2 million high school students in the US in 2013. Due to sampling variability, a sample may contain extreme values such that a confidence interval calculated from the sample data does not contain the population parameter.}
     
     ```{r}
 t.test(yrbss$weight, conf.level = 0.95)$conf.int

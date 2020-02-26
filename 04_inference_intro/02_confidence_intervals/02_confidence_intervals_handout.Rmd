@@ -81,7 +81,7 @@ yrbss.sample = yrbss.complete[sample.rows, ]
     c) Calculate a 95\% confidence interval based on the sampled weights. The quantity $(z^\star \times \frac{s}{\sqrt{n}})$ is known as the margin of error, $m$.
         \[\overline{x} \pm z^\star \times \frac{s}{\sqrt{n}}  \rightarrow  \left( \overline{x} - z^\star \frac{s}{\sqrt{n}}, \ \overline{x} + z^\star \frac{s}{\sqrt{n}} \right) \]
 
-    d) The standard deviation of weight in the sample is 17.52 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
+    d) The standard deviation of weight in the sample is 18.26 kg. Suppose that the standard deviation in the sample were 20 kg or 25 kg, but that $\overline{x}$ and $n$ remain constant. Re-run the calculation from part c) and describe the effect of larger (sample) standard deviation on the confidence interval.
         
 2. In general, for a confidence interval of $(1 - \alpha)(100)\%$, $z^\star$ is the point on a standard normal distribution that has area $1 - (\alpha/2)$ to the left (and area $\alpha/2$ to the right). For a 95\% confidence interval, $\alpha = 0.05$; $z^\star$ is the point on a standard normal distribution with area $1 - (0.05/2) = 0.975$ to the left.
 
