@@ -1,7 +1,7 @@
 ---
 title: "Lab 0: Introduction to R Markdown"
-author: "OpenIntro Biostatistics"
-date: "January 2020"
+author: "Julie Vu"
+date: "09 March 2020"
 output: pdf_document
 ---
 
@@ -31,7 +31,7 @@ Plain text is prepared in paragraphs, as in the first part of this document. *Te
 
 3. Write a brief paragraph describing previous coursework in statistics (if any) and share your motivation for learning statistics with R. *Knit* the document. Note that each time you *knit* the document, the output overwrites the previous version.
 
-Your paragraph...
+    My undergraduate training in statistics consisted of 1) an introductory course in applied statistics with \textsf{R} for a life sciences audience and 2) an independent study of topics in biostatistics. The main reason I decided to take a statistics course was that in the course of conducting senior thesis research in evolutionary genetics, I realized that while I had plenty of experience collecting data, I had very little knowledge of how to analyze data.
 
 
 Bulleted lists are produced using the formatting syntax: 
@@ -46,6 +46,12 @@ The list must be preceded by a blank line, and 4 spaces should be used before su
 4. Write a bulleted list giving your year of graduation, your field of study, and the country you are from.  Under the entry for your country, prepare subitems with the name of your state and city. *Knit* the document and inspect it to make sure the PDF is correctly produced.
 
 Your bulleted list...
+
+- Year of Graduation: 2015
+- Field of Study: Organismic and Evolutionary Genetics
+- USA
+    + Florida
+    + Pensacola
 
 Additional formatting commands will be introduced gradually throughout the rest of the labs.
 
@@ -111,7 +117,7 @@ load("sample_data.Rdata")
 
 11. The following code will produce a side-by-side boxplot (one for each column of \texttt{sample.data}). To run the code, change eval=FALSE to eval=TRUE. *Knit* the document. The plot should now be visible in the PDF output. Any new R chunks you create default to the eval = TRUE option. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 #produce a side-by-side boxplot
 boxplot(sample.data)
 ```
