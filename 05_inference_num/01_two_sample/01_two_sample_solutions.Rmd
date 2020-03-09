@@ -138,7 +138,7 @@ t.stat
 
     c) Calculate the $p$-value from a $t$-distribution with degrees of freedom $n - 1$.
   
-    \textcolor{NavyBlue}{The $p$-value is $P(T \geq |3.70|) = 2 \times P(T \geq 3.70) = 0.00349$.}
+    \textcolor{NavyBlue}{The $p$-value is $P(T \geq |12.32|) = 2 \times P(T \geq 12.32) = 8.89 \times 10^{-8}$.}
     
     ```{r}
 #calculate the p-value
