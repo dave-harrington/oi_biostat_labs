@@ -1,0 +1,200 @@
+---
+title: "Section 6"
+author: "Statistics 104"
+date: "Fall 2019"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../section_header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+		\item Two-sample $t$-test for paired data
+		\item Two-sample $t$-test for independent group data
+		\item Statistical power and sample size
+		\item ANOVA
+	\end{itemize}
+	
+\end{small}
+
+\vspace{0.5cm}
+
+\textbf{Notes}
+
+\vspace{8cm}
+
+<!---
+        
+```{r}
+#generates paleo data
+set.seed(2017)
+paleo.group <- rnorm(250, 7, 20)
+control.group <- rnorm(250, 5, 12)
+diets <- cbind(paleo.group, control.group)
+diets <- as.data.frame(diets)
+save(diets, file = "diets.Rdata")
+```        
+
+--->    
+        
+1. \textbf{The Paleo Diet.} The Paleo diet allows only for foods that humans typically consumed prior to the development of agriculture about 10,000 years ago. To study the efficacy of the Paleo diet, researchers recruited 500 adult volunteers interested in losing weight from around the Boston area. Volunteers were randomly assigned to either of two equally sized treatment groups. One group spent six months following the Paleo diet, while the other group received a weekly email about healthy eating practices such as reducing portion size.  At the beginning of the study, the average difference in weights between the two groups was about 0. The file \texttt{diets.Rdata} contain the change in weight for each volunteer, measured in pounds and calculated as (weight at beginning of study - weight at end of study).
+
+    a) Calculate the 90\% confidence interval for the difference between the mean weight loss of the two groups (Paleo - control). Interpret this interval in the context of the data.
+  
+    \vspace{3cm}
+  
+    b) Based on the confidence interval, do the data provide convincing evidence that the Paleo diet is more effective for weight loss than the weekly email newsletter?
+  
+    \vspace{3cm}
+    
+    c) Would it be reasonable to believe that the study results generalize to the population of American adults? Explain your answer.
+    
+    \vspace{3cm}
+
+    d) Without explicitly performing the hypothesis test, determine whether the results would have indicated a significant difference in population means if the Paleo group had lost 8.25 pounds on average instead of 7.25. Assume that all other numbers remained constant.
+  
+    \vspace{3cm}
+    
+    e) Suppose a new study will be conducted that specifically recruits twins; of a pair of twins, one individual will be assigned to the Paleo diet group, while the other will be assigned to the email newsletter group. The study team is interested in detecting any average difference of at least 5 pounds, and anticipate that the standard deviation of weight will be about 15 pounds. Calculate the number of twin pairs that should be recruited to achieve a power level of 80\%, if the study data will be analyzed at $\alpha = 0.10$.
+    
+    \vspace{2cm}
+
+<!---
+```{r}
+#generates air quality data
+set.seed(2017)
+smoking <- rnorm(40, 11.6, 7.3)
+nonsmoking <- rnorm(40, 6.9, 2.7)
+air.quality <- cbind(smoking, nonsmoking)
+air.quality <- as.data.frame(air.quality)
+save(air.quality, file = "air_quality.Rdata")
+```
+--->
+
+\newpage
+    
+2. \textbf{Indoor Air Quality.} A study was conducted in 1980 to compare the indoor air quality in offices where smoking was permitted with that in offices where smoking was not permitted. Measurements were made of carbon monoxide (CO) at 1:20 p.m. in 40 work areas where smoking was permitted and in 40 work areas where smoking was not permitted; CO levels were measured in parts per million (ppm). The data are in \texttt{air\_quality.Rdata}. \footnote{Data simulated from summary statistics in Rosner, \textit{Fundamentals of Biostatistics}, 7$^{th}$ ed., p. 310}
+
+    Analyze the data using a hypothesis test and confidence interval. Summarize your conclusions in language that a non-statistician would understand.
+  
+  \vspace{4cm}
+    
+    
+
+<!---
+```{r}
+#generates global warming data
+set.seed(2017)
+differences <- rnorm(51, 0.8, 4.9)
+temps.1968 <- rnorm(51, 50, 10)
+temps.2008 = temps.1968 + differences
+us.temps <- cbind(temps.1968, temps.2008)
+us.temps <- as.data.frame(us.temps)
+save(us.temps, file = "us_temps.Rdata")
+```
+--->    
+    
+3. \textbf{Global Warming.}  Is there strong evidence of global warming? Let's consider a small-scale example, comparing how temperatures have changed in the US from 1968 to 2008. The daily high temperature reading on January 1 was collected in 1968 and 2008 for 51 randomly selected locations in the continental US. The readings are in \texttt{us\_temps.Rdata}, in units of degrees Fahrenheit. We are interested in determining whether these data provide strong evidence of temperature warming in the continental US. 
+
+    According to the worldwide scientific community, emission of greenhouse gases like carbon dioxide are a major cause of global warming; emissions have increased over time due to use of fossil fuels for electricity, transportation, etc. Suppose that our analysis will be used to inform whether existing legislation to limit carbon dioxide emissions should be maintained.
+
+    a) State the hypotheses and $\alpha$. Consider whether an $\alpha$ different from 0.05 could be reasonable. Justify your choice of alternative hypothesis and $\alpha$.
+    
+    \vspace{2cm}
+    
+    b) Conduct the hypothesis test and interpret your conclusions.
+    
+    \vspace{2cm}
+    
+    c) Calculate and interpret a confidence interval that corresponds to the test conducted in part b).
+    
+    \vspace{2cm}
+    
+
+\newpage
+
+<!---
+
+```{r}
+#generates work hours data
+require("Runuran")
+set.seed(2019)
+
+high.school <- urnorm(n = 546, mean = 44.25, sd = 14.97, lb = 0)
+high.school <- round(high.school, digits = 2)
+high.school.label <- rep("high school", length(high.school))
+col.A <- cbind(high.school, high.school.label)
+
+bachelor <- urnorm(n = 253, mean = 40.55, sd = 13.62, lb = 0)
+bachelor <- round(bachelor, digits = 2)
+bachelor.label <- rep("bachelor", length(bachelor))
+col.B <- cbind(bachelor, bachelor.label)
+
+graduate <- urnorm(n = 155, mean = 39.5, sd = 15.51, lb = 0)
+graduate <- round(graduate, digits = 2)
+graduate.label <- rep("graduate", length(graduate))
+col.C <- cbind(graduate, graduate.label)
+
+gss.work <- rbind(col.A, col.B, col.C)
+gss.work <- data.frame(gss.work)
+colnames(gss.work) <- c("work.hours", "education.level")
+gss.work$work.hours <- as.numeric(as.character(gss.work$work.hours))
+
+save(gss.work, file = "gss_work.Rdata")
+```
+
+--->
+  
+4. \textbf{Work Hours and Education.} The General Social Survey collects data on demographics, education, and work, among many other characteristics of U.S. residents. The dataset \texttt{gss\_work.Rdata} contains the simulated responses for 954 participants. The variable \texttt{work.hours} contains the number of hours the respondent works in an average week, while \texttt{education.level} contains the highest level of education attained. 
+
+    Investigate whether the average amount of hours worked per week differs between individuals who have different levels of educational attainment, at significance level $\alpha = 0.05$.
+    
+    a) Evaluate the assumptions for ANOVA.
+    
+    \vspace{3cm}
+    
+    b) State the null and alternative hypotheses.
+        
+    \vspace{2cm}
+        
+    c) Conduct the $F$-test and summarize the results.
+        
+    \vspace{2cm}
+
+        
+    d) Complete the analysis using pairwise comparisons.
+        
+        i. What is the appropriate significance level $\alpha^{\star}$ for the individual comparisons, as per the Bonferroni correction?
+            
+        \vspace{1.5cm}
+            
+        ii. Conduct pairwise comparisons and summarize the results.
+            
+        \vspace{3cm}
+        
+
+
+\newpage
+
+5. \textbf{Corn Yield.} A large farm wants to try out a new type of fertilizer to evaluate whether it will improve the farm's corn production. The land is broken into plots that produce an average of 1,215 pounds of corn with a standard deviation of 94 pounds per plot. The owner is interested in detecting any average difference of at least 40 pounds per plot. Assume each plot of land gets treated with either the current fertilizer or the new fertilizer. Let $\alpha = 0.05$.
+
+    a) How many plots of land would be needed for the experiment if the desired power level is 90\%? 
+
+    \vspace{2cm}
+
+    b) What would the power of the study be if 160 total plots of land were used for the experiment, with an equal number being treated with the current fertilizer versus new fertilizer?
+
+    \vspace{2cm}
+
+    c) Would the power of the test increase or decrease if the significance level were increased to $\alpha = 0.10$? Explain your answer.
+
+    \vspace{3cm}
+
