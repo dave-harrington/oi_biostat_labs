@@ -185,7 +185,7 @@ boxplot(gene.matrix.sample[, 1] ~ leuk.type)
     
     b) Conduct a $t$-test comparing expression levels between AML and ALL patients for the gene in the first column of \texttt{gene.matrix.sample}. Summarize the results.
     
-    \textcolor{NavyBlue}{The null hypothesis is that expression level for this gene does not differ between AML and ALL patients, $H_0: \mu_{AML} = \mu_{ALL}$. The alternative is $H_A: \mu_{AML} \neq \mu_{ALL}$. Let $\alpha = 0.05$. The $p$-value is smaller than $\alpha$; there is sufficient evidence to reject the null hypothesis of no difference. The observed difference between the mean expression levels suggests that this gene is more highly expressed in ALL patients than AML patients.}
+    \textcolor{NavyBlue}{The null hypothesis is that expression level for this gene does not differ between AML and ALL patients, $H_0: \mu_{AML} = \mu_{ALL}$. The alternative is $H_A: \mu_{AML} \neq \mu_{ALL}$. Let $\alpha = 0.05$. The $p$-value is greater than $\alpha$; there is insufficient evidence to reject the null hypothesis of no difference. The observed difference between the mean expression levels are consistent with the gene being equally expressed, on average, in AML patients and ALL patients.}
 
     ```{r}
 #conduct a t-test
