@@ -7,14 +7,6 @@ output: pdf_document
 
 This is an R Markdown (Rmd) document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. It was designed to simplify creating HTML documents, but the labs for this text are written to generate PDF documents. Before continuing, be sure to install a TeX distribution; one easy option is the TinyTex distribution that can be installed via R (\url{https://yihui.org/tinytex/}).\footnote{Alternatively, a full TeX distribution can be downloaded from \url{https://www.latex-project.org/get/}.}
 
-To install the TinyTeX distribution, run the following commands. The commands appear in a grey box; click the green play button in the upper right hand corner to run both lines:
-
-```{r, eval = FALSE}
-install.packages('tinytex')
-tinytex::install_tinytex()
-```
-
-
 The content of an R Markdown document is created in the R Studio script editor. Formatting commands in the text are converted to a PDF document when you click on the *Knit* button, located on the toolbar at the top of the script editor.
 
 In R Studio, the menu item *File > New File > R Markdown...* choice produces a dialog box for output type. To create a new document, select *Document* from the left side of the dialog box, enter a name and title, choose PDF, and select OK. A template will open in the script editor, with file extension .Rmd. Templates will be provided for all the lab exercises, and you will start by simply opening the template files, so there will almost never be a need to start a new file `from scratch' while working on these labs.
@@ -109,28 +101,7 @@ rm(list = ls()) #clears the environment, equivalent to clicking the broom icon
 load("sample_data.Rdata")
 ```
 
-11. The following code will produce a side-by-side boxplot (one for each column of \texttt{sample.data}). To run the code, change eval=FALSE to eval=TRUE. *Knit* the document. The plot should now be visible in the PDF output. Any new R chunks you create default to the eval = TRUE option. 
-
-```{r, eval = FALSE}
-#produce a side-by-side boxplot
-boxplot(sample.data)
-```
-
-12. When you run a code chunk in an R Markdown file, the commands get sent to the console to be executed. For example, running the command to load \texttt{sample\_data.Rdata} results in \texttt{sample.data} appearing in the Environment pane.
-
-    There is another way to load datasets; clicking the name of an \texttt{.Rdata} file in the Files pane also loads data into the global environment.\footnote{A dialog box will appear asking for confirmation; choose Yes to load the dataset into \textit{RStudio}.}  However, the important thing to remember is that while this will allow you to work with the data by running code chunks within an R Markdown file, it does *not* load the data during the knitting process.
-    
-13. Let's test that out. On the Environment pane, click the broom icon next to the Import Dataset button, then choose Yes from the confirmation pop-up; this clears objects such as variables and datasets from the workspace. Place a # symbol in front of the line in the Step 10 code chunk to turn it into a comment that R will not evaluate.
-
-    Load \texttt{sample.data} by clicking the name of the file in the Files pane; confirm that the dataset name appears in the Environment pane and that running the chunk from Step 11 still produces a plot. 
-    
-    Try to *Knit* the document. This should return an error message reporting that the object 'sample.data' is not found.
-    
-14. Remove the # symbol from the Step 10 code chunk. *Knit* the document. During the knitting process, the document is being compiled line-by-line. If there is no command to load a dataset within the R Markdown file, any commands that require that dataset will not be able to run.
-
-    Additionally, the document is compiled in order; i.e., from top to bottom. If, for example, the command to load the \texttt{sample.data} data appeared *after* the histogram command, the same error message would appear. Once an error is detected, the compiler does not "read further" into the document.
-    
-    Thus, when working with data files, be sure to check that they are loaded within the R Markdown file itself. There are different functions for loading data depending on whether the data are in \texttt{.Rdata} versus \texttt{.csv} format, and whether the data are stored in a package like \texttt{oibiostat}.
+Alternatively, clicking on the name of the dataset in the Files panel will produce a dialog box asking for confirmation; choose Yes to load the dataset into *RStudio*. 
 
 ### R Script versus R Markdown
 
