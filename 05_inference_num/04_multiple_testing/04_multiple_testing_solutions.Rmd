@@ -172,7 +172,7 @@ leuk.type = (golub$cancer == "aml")
 
     a) Produce a plot to show the association between cancer type and expression levels for the gene in the first column of \texttt{gene.matrix.sample}. Describe what you see. What do the values \texttt{TRUE} and \texttt{FALSE} mean?
     
-    \textcolor{NavyBlue}{The value \texttt{TRUE} correspondes to AML patients, while \texttt{FALSE} corresponds to ALL patients. The boxplot shows that the gene in the first column has lower median expression in AML patients relative to ALL patients.}
+    \textcolor{NavyBlue}{The value \texttt{TRUE} correspondes to AML patients, while \texttt{FALSE} corresponds to ALL patients. The boxplot shows that the gene in the first column has lower median expression in ALL patients relative to AML patients.}
 
 
     ```{r}
