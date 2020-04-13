@@ -1,0 +1,43 @@
+\setlength \parindent{0pt}
+\usepackage{parskip}
+
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{gensymb}
+
+\usepackage{booktabs}
+
+\def\labelitemi{--}
+
+\usepackage{parskip}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
+
+\usepackage[notextcomp]{kpfonts}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+
+\usepackage{listings}
+\usepackage[usenames, dvipsnames]{xcolor}
+
+\usepackage{qtree}
+
+% https://github.com/rstudio/rmarkdown/issues/337
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+% https://github.com/rstudio/rmarkdown/pull/252
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+
+\pretitle{\vspace{\droptitle}\centering\huge}
+\posttitle{\par}
+
+\preauthor{\centering\large\emph}
+\postauthor{\par}
+
+\predate{\centering\large\emph}
+\postdate{\par}

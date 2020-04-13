@@ -194,7 +194,7 @@ summary(model.RFFTvsEdu)
 
     a) Identify the $t$-statistics and $p$-values for each slope coefficient in the model. Interpret the $p$-values in the context of the data.
     
-        \textcolor{NavyBlue}{The $t$-statistics and $p$-values for the slope coefficients $EduLowSec$, $EduHighSec$, and $EduUniv$ are 14.78 ($p < 0.0001$), 32.13 ($p < 0.0001$), and 44.96 ($p < 0.0001$). The three $p$-values are each smaller than $\alpha = 0.05$, indicating there is sufficient evidence to conclude that, for each group, the mean RFFT is significantly different from the mean RFFT for the baseline group, primary school education. In each case, the mean RFFT is higher than mean RFFT for individuals who completed at most a primary school education.}
+        \textcolor{NavyBlue}{The $t$-statistics and $p$-values for the slope coefficients $EduLowSec$, $EduHighSec$, and $EduUniv$ are 4.01 ($p < 0.0001$), 8.54 ($p < 0.0001$), and 12.21 ($p < 0.0001$). The three $p$-values are each smaller than $\alpha = 0.05$, indicating there is sufficient evidence to conclude that, for each group, the mean RFFT is significantly different from the mean RFFT for the baseline group, primary school education. In each case, the mean RFFT is higher than mean RFFT for individuals who completed at most a primary school education.}
     
     b) Calculate and interpret the 95\% confidence interval for the slope coefficient of $X_3$, university education.
     
