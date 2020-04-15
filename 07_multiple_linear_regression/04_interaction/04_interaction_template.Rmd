@@ -106,7 +106,7 @@ data(COL)
 diabetic = (nhanes.samp.adult.500$Diabetes == "Yes")
 
 #plot the blue points (non-diabetics) with plot axes
-plot(TotChol[-diabetic] ~ Age[-diabetic], data = nhanes.samp.adult.500,
+plot(TotChol[!diabetic] ~ Age[!diabetic], data = nhanes.samp.adult.500,
      pch = 21, col = COL[1], bg = COL[1, 3], cex = 1.3,
      xlab = "Age (yrs)", ylab = "Total Cholesterol (mmol/L)",
      main = "Cholesterol vs Age in NHANES (n = 500)")
@@ -156,11 +156,11 @@ model.nondiabetics = lm()
 #define model.diabetics and model.nondiabetics
 model.diabetics = lm(TotChol[diabetic] ~ Age[diabetic], 
                      data = nhanes.samp.adult.500)
-model.nondiabetics = lm(TotChol[-diabetic] ~ Age[-diabetic], 
+model.nondiabetics = lm(TotChol[!diabetic] ~ Age[!diabetic], 
                         data = nhanes.samp.adult.500)
 
 #plot the blue points (non-diabetics) with plot axes
-plot(TotChol[-diabetic] ~ Age[-diabetic], data = nhanes.samp.adult.500,
+plot(TotChol[!diabetic] ~ Age[!diabetic], data = nhanes.samp.adult.500,
      pch = 21, col = COL[1], bg = COL[1, 3], cex = 1.3,
      xlab = "Age (yrs)", ylab = "Total Cholesterol (mmol/L)",
      main = "Cholesterol vs Age in NHANES (n = 500)")
@@ -247,7 +247,7 @@ coef(model.interact)
 
 
         
-The estimated equations for non-diabetic and diabetic individuals from the model with the interaction term, fit to all individuals, show the same qualitative behavior as seen when two separate models were fit to diabetics and non-diabetics. Note, however, that the values of the estimated coefficients are not the same between the two approaches.
+The estimated equations for non-diabetic and diabetic individuals from the model with the interaction term, fit to all individuals, show the same behavior as seen when two separate models were fit to diabetics and non-diabetics.
 
 In practice, it is more efficient to model the data using a single model with an interaction term than working with subsets of the data. The subset approach shown at the beginning of this lab was used to demonstrate the logic behind interaction.
 

@@ -101,7 +101,7 @@ The term $(Diabetes \times Age)$ is the interaction term between diabetes status
     d) Speculate as to what might explain a positive association between age and cholesterol for non-diabetics, but a negative association between age and cholesterol for diabetics.
         
         
-The estimated equations for non-diabetic and diabetic individuals from the model with the interaction term, fit to all individuals, show the same qualitative behavior as seen when two separate models were fit to diabetics and non-diabetics. Note, however, that the values of the estimated coefficients are not the same between the two approaches.
+The estimated equations for non-diabetic and diabetic individuals from the model with the interaction term, fit to all individuals, show the same behavior as seen when two separate models were fit to diabetics and non-diabetics.
 
 In practice, it is more efficient to model the data using a single model with an interaction term than working with subsets of the data. The subset approach shown at the beginning of this lab was used to demonstrate the logic behind interaction.
 

@@ -106,7 +106,7 @@ data(COL)
 diabetic = (nhanes.samp.adult.500$Diabetes == "Yes")
 
 #plot the blue points (non-diabetics) with plot axes
-plot(TotChol[-diabetic] ~ Age[-diabetic], data = nhanes.samp.adult.500,
+plot(TotChol[!diabetic] ~ Age[!diabetic], data = nhanes.samp.adult.500,
      pch = 21, col = COL[1], bg = COL[1, 3], cex = 1.3,
      xlab = "Age (yrs)", ylab = "Total Cholesterol (mmol/L)",
      main = "Cholesterol vs Age in NHANES (n = 500)")
@@ -146,11 +146,11 @@ plot(TotChol[diabetic] ~ Age[diabetic], data = nhanes.samp.adult.500,
 abline(model.diabetics, col = "red", lwd = 3)
 
 #fit model for non-diabetics
-model.nondiabetics = lm(TotChol[-diabetic] ~ Age[-diabetic], 
+model.nondiabetics = lm(TotChol[!diabetic] ~ Age[!diabetic], 
                         data = nhanes.samp.adult.500)
 
 #create a plot specific to non-diabetics
-plot(TotChol[-diabetic] ~ Age[-diabetic], data = nhanes.samp.adult.500,
+plot(TotChol[!diabetic] ~ Age[!diabetic], data = nhanes.samp.adult.500,
      pch = 21, col = COL[1], bg = COL[1, 3], cex = 0.8, 
      xlab = "Age (yrs)", ylab = "Total Cholesterol (mmol/L)",
      main = "Cholesterol vs Age, Non-Diabetics")
@@ -159,9 +159,9 @@ abline(model.nondiabetics, col = "blue", lwd = 3)
     
     c) Run the code in the template to create a single plot with data from all 500 individuals and the least-squares lines from parts a) and b).
   
-    ```{r, fig.width = 7, fig.height = 5, echo = FALSE, fig.align = "center"}
+    ```{r, fig.width = 6, fig.height = 4, echo = FALSE, fig.align = "center"}
 #plot the blue points (non-diabetics) with plot axes
-plot(TotChol[-diabetic] ~ Age[-diabetic], data = nhanes.samp.adult.500,
+plot(TotChol[!diabetic] ~ Age[!diabetic], data = nhanes.samp.adult.500,
      pch = 21, col = COL[1], bg = COL[1, 3], cex = 1,
      xlab = "Age (yrs)", ylab = "Total Cholesterol (mmol/L)",
      main = "Cholesterol vs Age in NHANES (n = 500)")
@@ -258,12 +258,14 @@ coef(model.interact)
         
             \textcolor{NavyBlue}{For the model in Question 1, the predicted difference in mean cholesterol level between two individuals was the same regardless of whether the two individuals were both diabetic or both non-diabetic. Fitting an interaction term allows for the association between total cholesterol and age to be different between diabetics and non-diabetics. }
     
+    \newpage
+    
     d) Speculate as to what might explain a positive association between age and cholesterol for non-diabetics, but a negative association between age and cholesterol for diabetics.
     
         \textcolor{NavyBlue}{Cholesterol levels tend to increase in age, and keeping cholesterol levels in a healthy range eventually becomes a concern for all individuals. However, diabetics are particularly at risk for having elevated cholesterol levels, and so may be prescribed cholesterol-lowering medication more so than non-diabetic individuals. The observed interaction between age and diabetes may be the result of more frequent cholesterol-lowering medication in diabetic individuals.}
         
         
-The estimated equations for non-diabetic and diabetic individuals from the model with the interaction term, fit to all individuals, show the same qualitative behavior as seen when two separate models were fit to diabetics and non-diabetics. Note, however, that the values of the estimated coefficients are not the same between the two approaches.
+The estimated equations for non-diabetic and diabetic individuals from the model with the interaction term, fit to all individuals, show the same behavior as seen when two separate models were fit to diabetics and non-diabetics. 
 
 In practice, it is more efficient to model the data using a single model with an interaction term than working with subsets of the data. The subset approach shown at the beginning of this lab was used to demonstrate the logic behind interaction.
 
@@ -288,9 +290,6 @@ summary(model.interact)
 summary(model.TotCholvsAgeDiabetes)$adj.r.squared
 ```
         
-
-\newpage
-
 
 ### Interaction with PREVEND
 
@@ -323,6 +322,8 @@ coef(model.RFFT.interact)
             
             \color{Black}
         
+        \newpage
+        
         ii. Write the model equation for statin users.
         
             \color{NavyBlue}
@@ -347,8 +348,7 @@ coef(model.RFFT.interact)
             \end{align*}
             
             \color{Black}
-    \newpage    
-        
+
     b) Interpret the model coefficients.
     
         \color{NavyBlue}
