@@ -1,0 +1,271 @@
+---
+title: "Distributions for Pairs of Random Variables"
+author: "Chapter 3, Lab 4: Solutions"
+date: "OpenIntro Biostatistics"
+
+fontsize: 11pt
+geometry: margin=1in
+
+output:
+  pdf_document:
+    includes:
+      in_header: ../../header.tex
+    fig_width: 5
+    fig_height: 3.5
+---
+
+
+\begin{small}
+	
+	\textbf{Topics}
+	\begin{itemize}
+	  \item Marginal, joint, and conditional distributions
+	  \item Correlated random variables
+	  \item Variance of the sum or difference of two correlated random variables
+	\end{itemize}
+	
+\end{small}
+
+There are many examples of correlated random variables, such as height and weight in a population of individuals. This lab discusses distributions for pairs of random variables, in addition to the correlation of two random variables.
+
+The material in this lab corresponds to Section 3.6 of *OpenIntro Biostatistics*.
+
+\vspace{0.5cm}
+
+**Marginal, joint, and conditional distributions**
+
+The **joint distribution** $p_{X, Y}(x, y)$ for a pair of random variables $(X, Y)$ is the collection of probabilities 
+\[p(x_i,y_j) = P(X=x_i, Y = y_j)\text{ , for all pairs of values $(x_i,y_j)$.}\] 
+Joint distributions are often displayed in tabular form: If $X$ and $Y$ have $k_1$ and $k_2$ possible values respectively, there will be $(k_1)(k_2)$ possible $(x,y)$ pairs.
+
+When two variables $X$ and $Y$ have a joint distribution, the **marginal distribution** of $X$ is the collection of probabilities for $X$ when $Y$ is ignored. The marginal distribution of $X$ can be written as $p_X(x)$, and a specific value in the marginal distribution written as $p_X(x_i)$. 
+
+The **conditional distribution** $p_{Y|X}(y|x)$ for a pair of random variables $(X, Y)$ is the collection of probabilities 
+\[P(Y = y_j| X = x_i) = \dfrac{P(Y = y_j, X = x_i)}{P(X = x_j)}\text{ , for all pairs of values $(x_i,y_j)$.}\]
+Unlike the marginal distribution of $Y$, the conditional distribution of $Y$ given $X$ accounts for information from $X$.
+
+**Correlated random variables**
+
+Two random variables $X$ and $Y$ are **independent** if the probabilities
+\[P(Y = y_j| X = x_i) = P(Y = y_j) \text{, for all pairs of values $(x_i,y_j)$.}\]
+
+Equivalently, $X$ and $Y$ are independent if the probabilities
+\[P(Y = y_j \text{ and } X = x_i) = P(Y = y_j)P(X = x_i)\text{ , for all pairs of values $(x_i,y_j)$.}\]
+
+Two random variables that are not independent are called **correlated random variables**.  The correlation between two random variables, $\rho$, is a measure of the strength of the relationship between them. When two random variables are positively correlated, they tend to increase or decrease together. If one of the variables increases while the other decreases (or vice versa) they are negatively correlated.
+\[\rho_{X,Y} = \sum_{i} \sum_{j} p(i,j)\frac{(x_i - \mu_X)}{\textrm{sd}(X)}\frac{(y_j - \mu_Y)}{\textrm{sd}(Y)}\]
+
+**Variance of the sum or difference of two correlated random variables**
+
+When two random variables $X$ and $Y$ are correlated:
+\[\text{Variance}(X + Y) = \text{Variance}(X) + \text{Variance}(Y) + 2 \sigma_X \sigma_Y \rho_{X,Y}  \]
+\[\text{Variance}(X - Y) = \text{Variance}(X) + \text{Variance}(Y) - 2 \sigma_X \sigma_Y \rho_{X,Y}\]
+
+
+When random variables are positively correlated the variance of the sum or the difference of two variables will be larger than the sum of the two variances. When they are negatively correlated the variance of the sum or difference  will be smaller than the sum of the two variances. 
+
+The standard deviation for the sum or difference is the square root of the variance.
+
+\vspace{0.5cm}
+
+1. Let $X$ represent the outcome from a roll of a fair six-sided die. Then, toss a fair coin $X$ times and let $Y$ denote the number of tails observed.
+
+    a) Consider the joint probability table of $X$ and $Y$. How many entries are there total? How many entries equal 0?
+    
+        \textcolor{NavyBlue}{$X$ can take on values between 1 through 6, while $Y$ can take on values between 0 through 6. Thus, there are a total of 42 entries in the joint probability table. The entries that equal 0 correspond to where $Y > X$, since there cannot be more tails observed than the number of times the coin is flipped (which equals the outcome on the die). There are $5 + 4 + 3 + 2 + 1 = 15$ such entries.}
+    
+    b) Compute the joint probability $P(X = 1, Y = 0)$.
+    
+        \textcolor{NavyBlue}{This is the probability that when a 1 is observed on the die, 0 tails are observed from 1 flip of the coin. $P(X = 1, Y = 0) = (1/6)(1/2) = 1/12$.}
+    
+    c) Compute the joint probability $P(X = 1, Y = 2)$.
+    
+        \textcolor{NavyBlue}{This is the probability that when a 1 is observed on the die, 2 tails are observed from 1 flip of the coin. As discussed in part a), this has probability 0.}
+    
+    d) Compute the joint probability $P(X = 6, Y = 3)$.
+    
+        \textcolor{NavyBlue}{This is the probability that when a 6 is observed on the die, 3 tails are observed from 6 flips of the coin. $P(X = 6, Y = 3) = (1/6){6 \choose 3}(1/2)^3(1/2)^3 = (1/6)(0.3125) = 0.0521$.}
+    
+    ```{r}
+p.tails = 0.5
+(1/6)*dbinom(3, 6, p.tails)
+```
+    
+    \newpage
+    
+    e) Compute the marginal probability $P(Y = 5)$.
+    
+        \textcolor{NavyBlue}{This is the probability of observing 5 tails, over all possible values of $X$. Simplifying from the probabilities that equal 0, $P(Y = 5) = P(Y = 5 | X = 5)P(X = 5) + P(Y = 5 | X = 6)P(X = 6) = (1/6){5 \choose 5}(1/2)^5 + (1/6){6 \choose 5}(1/2)(1/2)^5 = 0.0208$.}
+
+    ```{r}
+given.x.equals.5 = (1/6)*dbinom(5, 5, p.tails)
+given.x.equals.6 = (1/6)*dbinom(5, 6, p.tails)
+
+given.x.equals.5 + given.x.equals.6
+```
+
+
+
+2. Consider the following joint probability distribution:
+
+    \begin{center}
+    \begin{tabular}{c|ccc}
+         &    &   Y     & \\ \hline
+    X    & -1 &   0     &  1\\ \hline
+    -1   & 0.10 & 0 & 0.35 \\
+    0    & 0 &  0.10 & 0.10 \\
+    1    & 0.15 & 0.10 & 0.10
+    \end{tabular}
+    \end{center}
+    
+    a) Compute $P(X > Y)$.
+    
+        \textcolor{NavyBlue}{The event $X > Y$ is satisfied by ($X = 0, Y = -1$), ($X = 1, Y = -1$), and ($X = 1, Y = 0$). Thus, $P(X > Y) = 0 + 0.15 + 0.1 = 0.25$.}
+    
+    b) Calculate the marginal distributions.
+    
+        \color{NavyBlue}
+        
+        Sum over the margins to calculate the marginal distributions.
+        
+        \[p_Y(-1) = 0.25 \quad p_Y(0) = 0.20 \quad p_Y(1) = 0.55 \]
+        \[p_X(-1) = 0.45 \quad p_X(0) = 0.20 \quad p_X(1) = 0.35 \]
+        
+        \color{Black}
+    
+    c) Compute $E(X)$.
+    
+        \color{NavyBlue}
+        
+        \[E(X) = \sum_i x_i P(X = x_i) = (-1)(0.45) + (0)(0.20) + (1)(0.35) = -0.10 \]
+        
+        \color{Black}
+    
+    d) Compute $\text{Var}(Y)$.
+    
+        \color{NavyBlue}
+        
+        \[E(Y) = \sum_i y_i P(Y = y_i) = (-1)(0.25) + (0)(0.20) + (1)(0.55) = 0.30 \]
+        \[\text{Var}(Y) = \sum_i (y_i - E(Y))^2 P(Y = y_i) = (-1 - 0.30)^2(0.25) + (0 - 0.30)^2(0.20) + (1 - 0.30)^2(0.55) = 0.71\]
+        
+        \color{Black}
+    
+    \newpage
+    
+    e) Compute $\rho_{X,Y}$.
+    
+        \color{NavyBlue}
+                
+        First, $\text{Var(X)} = \sum_i (x_i - E(X))^2 P(X = x_i) = 0.79$.
+        
+        \begin{align*}
+        \rho_{X,Y} =& \sum_{i} \sum_{j} p(i,j)\frac{(x_i - \mu_X)}{\textrm{sd}(X)}\frac{(y_j - \mu_Y)}{\textrm{sd}(Y)} \\
+        =&(0.10)\dfrac{(-1 + 0.10)}{\sqrt{0.79}}\dfrac{(-1 - 0.30)}{\sqrt{0.71}}  + \cdots + (0.10)\dfrac{(1 + 0.10)}{\sqrt{0.79}}\dfrac{(1 - 0.30)}{\sqrt{0.71}} \\
+        =& -0.361
+        \end{align*}
+        
+        \color{Black}
+    
+    f) Calculate $P(X|Y = 0)$.
+    
+        \color{NavyBlue}
+        \[p_{X|Y}(-1|0) = 0/0.20 = 0 \quad p_{X|Y}(0|0) = 0.10/0.20 = 0.50 \quad p_{X|Y}(1|0) = 0.10/0.20 = 0.50 \]
+        \color{Black}
+    
+    g) Compute $E(Y| X = 1)$.
+
+        \color{NavyBlue}
+        \[p_{Y|X}(-1|1) = 0.15/0.35 = 0.429 \quad p_{Y|X}(0|1) = 0.10/0.35 = 0.286 \quad p_{Y|X}(1|1) = 0.10/0.35 = 0.286 \]
+        \[E(Y| X = 1) = (-1)(0.429) + (0)(0.286) + (1)(0.286) = -0.143 \]
+        \color{Black}
+
+    h) Calculate $\text{Var}(X - Y)$.
+    
+        \color{NavyBlue}
+        
+        \begin{align*}
+        \text{Var}(X - Y) =& \text{Var}(X) + \text{Var}(Y) - 2\sigma_X \sigma_Y \sigma_{X, Y} \\
+        =& 0.79 + 0.71 - 2(\sqrt{0.79})(\sqrt{0.71})(-0.361) \\
+        =& 2.04
+        \end{align*}
+        \color{Black}
+
+\textit{\textcolor{NavyBlue}{The following code shows how some of the above calculations can be done with \textsf{R}.}}
+
+```{r}
+#enter joint probability distribution
+x = -1:1; y = -1:1
+ptable = matrix(nrow = 3, byrow = TRUE, c(0.1, 0, 0.35,
+                           0, 0.1, 0.1,
+                           0.15, 0.1, 0.1))
+rownames(ptable) = x; colnames(ptable) = y
+
+#calculate marginal distributions
+marg.x = apply(ptable, 1, sum); marg.x
+marg.y = apply(ptable, 2, sum); marg.y
+
+#compute E(X) and (EY)
+e.x = sum(x*marg.x); e.x
+e.y = sum(y*marg.y); e.y
+
+#compute Var(X) using either formula
+e.x2 = sum(x^2*marg.x); e.x2
+var.x = e.x2 - (e.x)^2; var.x
+sum(((x - e.x)^2) * marg.x)
+
+#compute Var(Y)
+var.y = sum(((y - e.y)^2) * marg.y)
+
+#compute Cor(X, Y)
+x.std = (x - e.x)/sqrt(var.x)
+y.std = (y - e.y)/sqrt(var.y)
+
+cor = sum(ptable[1, ]*x.std[1]*y.std + ptable[2, ]*x.std[2]*y.std +
+  ptable[3, ]*x.std[3]*y.std)
+```
+
+\newpage
+    
+3. *Simulating from a Joint Probability Distribution*. The code shown in the template writes a function called \texttt{rcat()} that simulates $n$ random pairs from a joint probability distribution specified as a table. The output is a $n \times 2$ matrix of the randomly generated pairs. You do not need to know the details of the code that creates the \texttt{rcat()} function. 
+
+    ```{r, warning = FALSE, include = FALSE}
+#load reshape package
+library(reshape)
+
+#write function
+rcat = function(n, ptable) {
+  pmatrix <- melt(ptable)
+  rows <- which(rmultinom(n, 1, pmatrix$value) == 1, arr.ind = TRUE)[ ,'row']
+  indices <- pmatrix[rows, c('X1','X2')]
+  colnames(indices) <- c('i','j')
+  rownames(indices) <- seq(1, nrow(indices))
+  return(indices)
+}
+```
+
+    Run the following code to enter the joint probability distribution used in the previous problem, then simulate 10,000 draws from the joint probability distribution and summarize the results.
+    
+    ```{r}
+#enter joint probability distribution
+x = -1:1; y = -1:1
+ptable = matrix(nrow = 3, byrow = TRUE, c(0.1, 0, 0.35,
+                           0, 0.1, 0.1,
+                           0.15, 0.1, 0.1))
+rownames(ptable) = x; colnames(ptable) = y
+    
+#check entries
+ptable
+
+#set seed for pseudo-random sampling
+set.seed(2019)  
+results = rcat(10000, ptable)
+table(results)
+```
+
+    a) Based on the simulation results, what is $P(X = -1, Y = 1)$? How does this compare to the theoretical value?
+    
+        \textcolor{NavyBlue}{In the simulation, 3564/10000 of the randomly generated pairs have $(X = -1, Y = 1)$, which is an estimated probability of 0.3564. This is very close to the theoretical value, 0.35.}
+        
+    b) Calculate $P(X > Y)$ from the simulated data and compare this to the theoretical value.
+    
+        \textcolor{NavyBlue}{In the simulation, there are $1445 + 1010 = 2455$ random pairs that comprise $X > Y$, for an estimated probability of 0.246. This is very close to the theoretical value, 0.25.}
