@@ -16,30 +16,26 @@ output:
 
 # Overview
 
-1. Examining Scatterplots
-    - *OI Biostat* Section 6.1
+
+1. Introduction to Least Squares Regression
+    - *OI Biostat* Sections 6.1, 6.2 and 6.3.1
     
-2. Introduction to Least Squares Regression
-    - *OI Biostat* Sections 6.2 and 6.3.1
-    
-3. Understanding $R^2$
+2. Understanding $R^2$
     - *OI Biostat* Section 6.3.2
-    
-4. Categorical Predictors with Two Levels and Inference in Regression
+
+3. Categorical Predictors with Two Levels and Inference in Regression
     - *OI Biostat* Sections 6.3.3 and 6.4
+    
+Lab 1 introduces the idea of using a straight line to summarize data that exhibit an approximately linear relationship and the mechanics of fitting and interpreting a line of best fit. This lab also formally introduces the statistical model for least squares regression and discusses the residual plots used to assess the assumptions for linear regression.
 
-Lab 1 introduces the idea of using a straight line to summarize data that exhibit an approximately linear relationship and the mechanics of fitting and interpreting a line of best fit.
+Lab 2 explores the idea behind the quantity $R^2$ by sampling observations according to a population regression model with known parameters.
 
-Lab 2 formally introduces the statistical model for least squares regression and discusses the residual plots used to assess the assumptions for linear regression.
-
-Lab 3 explores the idea behind the quantity $R^2$ by sampling observations according to a population regression model with known parameters.
-
-Lab 4 discusses the use of binary categorical predictor variables and the extension of statistical inference to a regression context.
+Lab 3 discusses the use of binary categorical predictor variables and the extension of statistical inference to a regression context.
 
 \newpage
 
 
-# Lab 1: Examining Scatterplots
+# Lab 1: Introduction to Least Squares Regression
 
 ### Fitting and Plotting a Least Squares Model
 
@@ -83,10 +79,7 @@ abline(lm(BMI ~ Age, data = nhanes.samp.adult.500),
        col = "red", lty = 2, lwd = 2)
 ```
 
-
 \newpage
-
-# Lab 2: Introduction to Least Squares Regression
 
 ### Extracting Residuals and Predicted Values from a Model Fit
 

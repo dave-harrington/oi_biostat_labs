@@ -1,6 +1,6 @@
 ---
 title: "Categorical Predictors with Two Levels and Inference in Regression"
-author: "Chapter 6, Lab 4: Solutions"
+author: "Chapter 6, Lab 3: Solutions"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
@@ -91,7 +91,7 @@ abline(lm(BMI ~ DM, data = prevend.samp), col = "red", lty = 2)
     
     c) Based on the plots, comment briefly on the nature of the association.
     
-    \textcolor{NavyBlue}{Overall, individuals with diabetes tend to have a higher BMI than individuals without diabetes. As seen in the boxplot, median BMI for individuals with diabetes is higher than median BMI for individuals without diabetes. }
+        \textcolor{NavyBlue}{Overall, individuals with diabetes tend to have a higher BMI than individuals without diabetes. As seen in the boxplot, median BMI for individuals with diabetes is higher than median BMI for individuals without diabetes. }
 
 4. In the Chapter 1 Lab Notes, the **factor** data structure was introduced. Factors are ideal for storing categorical data. In a factor variable, the levels of the variable are displayed as characters (such as "Female" and "Male") while the data remain stored as integer values (such as \texttt{0} and \texttt{1}); each level of the variable is associated with a specific integer value.
 

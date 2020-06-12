@@ -1,6 +1,6 @@
 ---
 title: "Understanding $R^2$"
-author: "Chapter 6, Lab 3"
+author: "Chapter 6, Lab 2"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt

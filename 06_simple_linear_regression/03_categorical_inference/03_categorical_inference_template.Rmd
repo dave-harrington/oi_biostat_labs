@@ -1,6 +1,6 @@
 ---
 title: "Categorical Predictors with Two Levels and Inference in Regression"
-author: "Chapter 6, Lab 4: Template"
+author: "Chapter 6, Lab 3: Template"
 date: "OpenIntro Biostatistics"
 
 fontsize: 11pt
