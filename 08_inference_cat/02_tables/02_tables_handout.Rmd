@@ -19,6 +19,7 @@ output:
 	\textbf{Topics}
 	\begin{itemize}
 	  \item The $\chi^2$ test for independence
+	  \item Fisher's exact test
 	  \item Measures of association in two-by-two tables
 	\end{itemize}
 	
@@ -56,6 +57,61 @@ For each cell in a table, the **residual** equals
 \[\dfrac{O_{i, j} - E_{i, j}}{\sqrt{E_{i,j}}}. \]
 Residuals with a large magnitude contribute the most to the $\chi^2$ statistic. If a residual is positive, the observed value is greater than the expected value; if a residual is negative, the observed value is less than the expected.
 
+\vspace{0.5cm}
+
+*Fisher's exact test*
+
+When the expected counts in a two-way table are less than 10, Fisher's exact test is used to compute a $p$-value without relying on the normal approximation. In this course, only the logic behind Fisher's exact test for a $2 \times 2$ table is discussed. In the $2 \times 2$ table case, the hypotheses for Fisher's exact test can be expressed in the same way as for a two-sample test of proportions; the null hypothesis is $H_0: p_1 = p_2$.
+
+The $p$-value is the probability of observing results as or more extreme than those observed under the assumption that the null hypothesis is true.
+
+  - Thus, the $p$-value is calculated by adding together the individual conditional probabilities of obtaining each table that is as or more extreme than the one observed, under the null hypothesis and given that the marginal totals are considered fixed.
+  
+  - When the marginal totals are held constant, the value of any one cell in the table determines the rest of entries. When marginal totals are considered fixed, each table represents a unique set of results.
+  
+  - Extreme tables are those which contradict $H_0: p_1 = p_2$.
+  
+  - A two-sided $p$-value can be calculated by doubling the smaller of the possible one-sided $p$-values; this method is typically used when calculating $p$-values by hand. Another common method is to classify "more extreme" tables as all tables with probabilities less than that of the observed table, in both directions; the $p$-value is the sum of probabilities for the qualifying table.
+  
+The probability of a particular table (i.e., set of results) can be calculated with the **hypergeometric distribution**.
+
+Let $X$ represent the number of successes in a series of repeated Bernoulli trials, where sampling is done without replacement. Suppose that in the population of size $N$, there are $m$ total successes. What is the probability of observing exactly $k$ successes when drawing a sample of size $n$?
+
+
+For example, imagine an urn with $m$ white balls and $N - m$ black balls (thus, there are $N$ total balls). Draw $n$ balls without replacement (i.e., a sample of $n$ balls). What is the probability of observing $k$ white balls in the sample? 
+
+The possible results of a sample can be organized in a $2 \times 2$ table:
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{l|cc|c} 
+   & \textbf{White Ball} & \textbf{Black Ball} & \textbf{Total}\\ \hline
+  \textbf{Sampled} & $k$ & \textcolor{gray}{$n - k$}  & $n$  \\
+  \textbf{Not Sampled} & \textcolor{gray}{$m - k$} & \textcolor{gray}{$N - n - (m - k)$} & \textcolor{gray}{$N - n$} \\ \hline
+  \textbf{Total} & $m$ & $N - m$ & $N$  \\ 
+\end{tabular}\\
+\end{center}
+\end{table*}
+
+
+The probability of observing exactly $k$ successses in a sample of size $n$ (i.e., $n$ dependent trials) is given by 
+\[P(X = k) = \dfrac{{m \choose k} {N - m \choose n-k}}{{N \choose n}}. \]
+
+Hypergeometric probabilities are calculated in \textsf{R} with the use of \texttt{dhyper()} and \texttt{phyper()}. The following code shows how to calculate $P(X = 5)$, $P(X \leq 5)$, and $P(X > 5)$ for $X \sim \text{HGeom}(10, 15, 8)$, where $m = 10$, $N - m = 15$, and $n = 8$. 
+
+```{r}
+#probability X equals 5
+dhyper(5, 10, 15, 8)
+
+#probability X is less than or equal to 5
+phyper(5, 10, 15, 8)
+
+#probability X is greater than 5
+phyper(5, 10, 15, 8, lower.tail = FALSE)
+```
+
+\vspace{0.5cm}
+
 *Measures of association in two-by-two tables*
 
 Chapter 1 introduced the **relative risk (RR)**, a measure of the risk of a certain event occurring in one group relative to the risk of the event occurring in another group, as a numerical summary for two-by-two ($2 \times 2$) tables. The relative risk can also be thought of as a measure of association.
@@ -87,7 +143,7 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
 \[OR_{\text{A, comparing Group 1 to Group 2}} = \dfrac{a/b}{c/d} = \dfrac{ad}{bc} \]
 \[OR_{\text{A, comparing Group 2 to Group 1}} = \dfrac{c/d}{a/b} = \dfrac{bc}{ad} \]
 
-\newpage
+\vspace{0.5cm}
 
 ### The $\chi^2$ test of independence
 
@@ -124,11 +180,72 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
     
 2. In the PREVEND study introduced in Chapter 6, researchers measured various features of study participants, including data on statin use and highest level of education attained. From the data in \texttt{prevend.samp}, is there evidence of an association between statin use and educational level? Summarize the results.
 
+### Fisher's exact test
+
+3. \textit{Clostridium difficile} is a bacterium that causes inflammation of the colon. Antibiotic treatment is typically not effective, particularly for patients who experience multiple recurrences of infection. Infusion of feces from healthy donors has been reported as an effective treatment for recurrent infection. A randomized trial was conducted to compare the efficacy of donor-feces infusion versus vancomycin, the antibiotic typically prescribed to treat \textit{C. difficile }infection. The results of the trial are shown in the following table. 
+
+    \begin{table}[h]
+	\centering
+	\begin{tabular}{rrr|r}
+		\hline
+		& Cured & Uncured & Sum \\ 
+		\hline
+		Fecal Infusion & 13 & 3 & 16 \\ 
+		Vancomycin & 4 & 9 & 13 \\ 
+		\hline
+		Sum & 17 & 12 & 29 \\ 
+		\hline
+	\end{tabular}
+    \end{table}
+
+    a) Can a $\chi^2$ test be used to analyze these results?
+    
+    b) Researchers are interested in understanding whether fecal infusion is a more effective treatment than vancomycin. Write the null hypothesis and appropriate one-sided alternative hypothesis.
+    
+    c) Under the assumption that the marginal totals are fixed, enumerate all possible sets of results that are more extreme than what was observed, in the same direction.
+    
+    d) Calculate the probability of the observed results.
+    
+    e) Calculate the probability of each set of results enumerated in part c).
+
+    f) Based on the answers in parts d) and e), compute the one-sided $p$-value and interpret the results.
+    
+    g) Use \texttt{fisher.test( )} to confirm the calculations in part f) and to calculate the two-sided $p$-value.
+  
+
+4. Psychologists conducted an experiment to investigate the effect of anxiety on a person's desire to be alone or in the company of others (Schacter 1959; Lehmann 1975). A group of 30 individuals were randomly assigned into two groups; one group was designated the "high anxiety" group and the other the "low anxiety" group. Those in the high-anxiety group were told that in the "upcoming experiment", they would be subjected to painful electric shocks, while those in the low-anxiety group were told that the shocks would be mild and painless.\footnote{Individuals were not actually subjected to electric shocks of any kind}. All individuals were informed that there would be a 10 minute wait before the experiment began, and that they could choose whether to wait alone or with other participants.
+
+    The following table summarizes the results:
+  
+    \begin{table}[h]
+	\centering
+	\begin{tabular}{rrr|r}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & 12 & 5 & 17 \\ 
+		Low-Anxiety & 4 & 9 & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+    \end{table}
+
+
+    a) Under the null hypothesis of no association, what are the expected cell counts?
+    
+    b) Under the assumption that the marginal totals are fixed and the null hypothesis is true, what is the probability of the observed set of results?
+    
+    c) Enumerate the tables that are more extreme than what was observed, in the same direction. 
+    
+    d) Conduct a formal test of association for the results and summarize your findings. Let $\alpha = 0.05$.
+
+
 ### Measures of association in two-by-two tables
 
-3. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
+5. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
 
-4. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
+6. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
 
     a) Is relative risk an appropriate measure of association for these data? Explain your answer.
     

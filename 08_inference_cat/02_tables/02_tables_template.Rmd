@@ -13,6 +13,7 @@ output: pdf_document
 	\textbf{Topics}
 	\begin{itemize}
 	  \item The $\chi^2$ test for independence
+	  \item Fisher's exact test
 	  \item Measures of association in two-by-two tables
 	\end{itemize}
 	
@@ -81,7 +82,7 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
 \[OR_{\text{A, comparing Group 1 to Group 2}} = \dfrac{a/b}{c/d} = \dfrac{ad}{bc} \]
 \[OR_{\text{A, comparing Group 2 to Group 1}} = \dfrac{c/d}{a/b} = \dfrac{bc}{ad} \]
 
-\newpage
+\vspace{0.5cm}
 
 ### The $\chi^2$ test of independence
 
@@ -226,9 +227,141 @@ prevend.samp$Education = factor(prevend.samp$Education, levels = 0:3,
 
 \newpage
 
+### Fisher's exact test
+
+3. \textit{Clostridium difficile} is a bacterium that causes inflammation of the colon. Antibiotic treatment is typically not effective, particularly for patients who experience multiple recurrences of infection. Infusion of feces from healthy donors has been reported as an effective treatment for recurrent infection. A randomized trial was conducted to compare the efficacy of donor-feces infusion versus vancomycin, the antibiotic typically prescribed to treat \textit{C. difficile }infection. The results of the trial are shown in the following table. 
+
+    \begin{table}[h]
+	\centering
+	\begin{tabular}{rrr|r}
+		\hline
+		& Cured & Uncured & Sum \\ 
+		\hline
+		Fecal Infusion & 13 & 3 & 16 \\ 
+		Vancomycin & 4 & 9 & 13 \\ 
+		\hline
+		Sum & 17 & 12 & 29 \\ 
+		\hline
+	\end{tabular}
+    \end{table}
+
+a) Can a $\chi^2$ test be used to analyze these results?
+    
+```{r}
+#compute expected values
+
+```
+
+    
+b) Researchers are interested in understanding whether fecal infusion is a more effective treatment than vancomycin. Write the null hypothesis and appropriate one-sided alternative hypothesis.
+
+
+
+c) Under the assumption that the marginal totals are fixed, enumerate all possible sets of results that are more extreme than what was observed, in the same direction.
+  
+
+<!---
+
+The following syntax can help you format tables; type numbers in the $number$ placeholders, then knit to see the completed table. The ampersands mark the boundaries of each cell in the table.
+
+--->
+	
+\begin{tabular}{r|cc|c}
+\hline
+                 & Cured    & Uncured  & Sum \\ 
+\hline
+	Fecal Infusion & $number$ & $number$ & 16 \\ 
+	Vancomycin     & $number$ & $number$ & 13 \\ 
+\hline
+  Sum            & 17       & 12       & 29 \\
+\hline
+\end{tabular}
+
+
+  
+d) Calculate the probability of the observed results.
+    
+```{r}
+
+```
+
+    
+e) Calculate the probability of each set of results enumerated in part c).
+ 
+```{r}
+
+```
+
+    
+f) Based on the answers in parts d) and e), compute the one-sided $p$-value and interpret the results.
+    
+```{r}
+
+```
+
+    
+g) Use \texttt{fisher.test( )} to confirm the calculations in part f) and to calculate the two-sided $p$-value.
+    
+```{r}
+#enter the data
+
+#use fisher.test
+```
+
+
+
+4. Psychologists conducted an experiment to investigate the effect of anxiety on a person's desire to be alone or in the company of others (Schacter 1959; Lehmann 1975). A group of 30 individuals were randomly assigned into two groups; one group was designated the "high anxiety" group and the other the "low anxiety" group. Those in the high-anxiety group were told that in the "upcoming experiment", they would be subjected to painful electric shocks, while those in the low-anxiety group were told that the shocks would be mild and painless.\footnote{Individuals were not actually subjected to electric shocks of any kind}. All individuals were informed that there would be a 10 minute wait before the experiment began, and that they could choose whether to wait alone or with other participants.
+
+    The following table summarizes the results:
+  
+    \begin{table}[h]
+	\centering
+	\begin{tabular}{rrr|r}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & 12 & 5 & 17 \\ 
+		Low-Anxiety & 4 & 9 & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+    \end{table}
+
+
+a) Under the null hypothesis of no association, what are the expected cell counts?
+  
+```{r}
+#compute the expected values
+
+```
+  
+    
+b) Under the assumption that the marginal totals are fixed and the null hypothesis is true, what is the probability of the observed set of results?
+  
+```{r}
+
+```
+  
+
+c) Enumerate the tables that are more extreme than what was observed, in the same direction. 
+
+```{r}
+
+```
+
+    
+d) Conduct a formal test of association for the results and summarize your findings. Let $\alpha = 0.05$.
+    
+```{r}
+
+```
+
+\newpage
+
 ### Measures of association in two-by-two tables
 
-3. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
+5. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
 
 
 
@@ -238,7 +371,7 @@ prevend.samp$Education = factor(prevend.samp$Education, levels = 0:3,
 ```
 
 
-4. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
+6. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
 
 
 a) Is relative risk an appropriate measure of association for these data? Explain your answer.

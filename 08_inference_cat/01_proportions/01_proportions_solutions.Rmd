@@ -252,5 +252,61 @@ prop.test(x = x, n = n)$p.val
 #conduct inference
 prop.test(x = x, n = n)$conf.int
 ```
+
+\newpage
   
-  
+5. Remdesivir is an antiviral drug previously tested in animal models infected with coronaviruses like SARS and MERS. As of May 2020, remdesivir had temporary approval from the FDA for use in severely ill COVID-19 patients and was the subject of numerous ongoing studies. 
+ 
+      A randomized controlled trial conducted in China enrolled 236 patients with severe COVID-19; 158 were assigned to receive remdesivir and 78 to receive a placebo. In the remdesivir group, 103 patients showed clinical improvement; in the placebo group, 45 patients showed clinical improvement.\footnote{Wang, Y, et al. Remdesivir in adults with severe COVID-19: a randomised, double-blind, placebo-controlled, multi-centre trial. \textit{Lancet} 395(10236). 16 May 2020.}
+      
+      a) Calculate $\hat{p}_1$ and $\hat{p}_2$, the two sample proportions of interest.
+      
+          \textcolor{NavyBlue}{The two sample proportions of interest are 0.652 and 0.577, the proportion of individuals in each treatment group that showed clinical improvement.}
+      
+    ```{r}
+#use r as a calculator
+x = c(103, 45)
+n = c(158, 78)
+p.hat.vector = x/n
+p.hat.vector
+```
+      
+      
+      b) Conduct a formal comparison of the clinical improvement rates and summarize your findings. Be sure to check the assumptions for using the normal approximation.
+      
+          \color{NavyBlue}
+          
+          Since the participants were randomly assigned to each group, the groups can be treated as independent, and it is reasonable to assume independence of patients within each group.
+    
+          The pooled proportion $\hat{p}$ is
+    \[\hat{p} = \dfrac{x_1 + x_2}{n_1 + n_2} = 0.627\]
+    
+          The success-failure condition is met; the expected number of successes and failures are all larger than 10.
+        
+          Test $H_0: p_1 = p_2$ against $H_A: p_1 \neq p_2$, where $p_1$ represents the population proportion of clinical improvement in COVID-19 patients treated with remdesivir and $p_2$ represents the population proportion of clinical improvement in COVID-19 patients treated with placebo. Let $\alpha = 0.05$. The $p$-value is 0.328, which is greater than $\alpha$; there is insufficient evidence to reject the null hypothesis of no difference. Even though the proportion of patients who experienced clinical improvement about 7\% higher in the remdesivir group, this difference is not extreme enough to represent sufficient evidence that remdesivir is more effective than placebo.
+          
+          \color{Black}
+      
+    ```{r}
+#use r as a calculator
+p.hat.pooled = sum(x)/sum(n)
+p.hat.pooled
+
+#check success-failure
+n*p.hat.pooled
+n*(1 - p.hat.pooled)
+
+#conduct inference
+prop.test(x = x, n = n)$p.val
+```
+      
+      
+      c) Report and interpret an appropriate interval estimate. Be sure to check the assumptions for using the normal approximation.
+      
+          \textcolor{NavyBlue}{The success-failure condition should be checked for each sample: from the data, the number of successes and failures are both well over 10 in each group. The 95\% confidence interval is (-0.067, 0.217); with 95\% confidence, this interval captures the difference in population proportion of clinical mortality between COVID-19 patients treated with remdesivir and those treated with placebo. The interval contains 0, which is consistent with no statistically significant evidence of a difference. The interval reflects the lack of precision around the effect estimate that is characteristic of an insufficiently large sample size.}
+      
+    ```{r}
+prop.test(x = x, n = n)$conf.int
+```
+      
+      

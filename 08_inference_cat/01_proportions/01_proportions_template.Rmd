@@ -212,3 +212,30 @@ c) Calculate and interpret a 95\% confidence interval for the difference in prop
 
 ```
 
+
+5. Remdesivir is an antiviral drug previously tested in animal models infected with coronaviruses like SARS and MERS. As of May 2020, remdesivir had temporary approval from the FDA for use in severely ill COVID-19 patients and was the subject of numerous ongoing studies. 
+ 
+      A randomized controlled trial conducted in China enrolled 236 patients with severe COVID-19; 158 were assigned to receive remdesivir and 78 to receive a placebo. In the remdesivir group, 103 patients showed clinical improvement; in the placebo group, 45 patients showed clinical improvement.\footnote{Wang, Y, et al. Remdesivir in adults with severe COVID-19: a randomised, double-blind, placebo-controlled, multi-centre trial. \textit{Lancet} 395(10236). 16 May 2020.}
+      
+
+a) Calculate $\hat{p}_1$ and $\hat{p}_2$, the two sample proportions of interest.
+
+```{r}
+#use r as a calculator
+
+```
+
+
+b) Conduct a formal comparison of the clinical improvement rates and summarize your findings. Be sure to check the assumptions for using the normal approximation.
+      
+```{r}
+
+```
+      
+
+c) Report and interpret an appropriate interval estimate. Be sure to check the assumptions for using the normal approximation.
+
+```{r}
+
+```
+

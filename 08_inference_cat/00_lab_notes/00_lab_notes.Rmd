@@ -24,7 +24,7 @@ output:
 
 Lab 1 introduces methods of inference for binomial proportions in the one-sample and two-sample cases.
 
-Lab 2 generalizes inference for binomial proportions to the setting of two-way contingency tables and also discusses measures of association in two-by-two tables.
+Lab 2 generalizes inference for binomial proportions to the setting of two-way contingency tables. Both the $\chi^2$ test of independence and Fisher's exact test are discussed.
 
 
 \newpage
@@ -218,6 +218,27 @@ statin.edu.table = table(prevend.samp$Statin, prevend.samp$Education)
 chisq.test(statin.edu.table)
 ```
 
+### Hypothesis Testing with \texttt{fisher.test( )}
+
+The \textbf{\texttt{fisher.test()}} has the following generic structure
+
+```{r, eval = FALSE}
+fisher.test(x, y, correct = TRUE)
+```
+
+where \texttt{x} is either a matrix or a vector and \texttt{y} is a vector. If \texttt{x} is a matrix, the argument \texttt{y} is ignored.
+
+The following example shows a test of independence for treatment and outcome in the *C. difficile* fecal infusion study.
+
+```{r}
+#enter the data
+infusion.table = matrix(c(13, 3, 4, 9), nrow = 2, ncol = 2, byrow = T)
+dimnames(infusion.table) = list("Outcome" = c("Cured", "Uncured"),
+                           "Drug" = c("Fecal Infusion", "Vancomycin"))
+
+fisher.test(infusion.table)
+```
+
 ### Relative Risk and Odds Ratio with \texttt{epitools}
 
 The \texttt{epitools} package contains various useful calculators for epidemiology, including functions to calculate relative risk and odds ratios in two-way tables. First, install and load the package:
@@ -294,8 +315,6 @@ riskratio(prevend.samp$Smoking, prevend.samp$CVD)$measure
 #view the data table
 riskratio(prevend.samp$Smoking, prevend.samp$CVD)$data
 ```
-
-\newpage
 
 The function \textbf{\texttt{oddsratio()}} calculates the odds ratio and has the following generic structure
 

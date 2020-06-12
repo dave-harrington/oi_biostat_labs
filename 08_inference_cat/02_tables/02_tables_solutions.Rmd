@@ -19,6 +19,7 @@ output:
 	\textbf{Topics}
 	\begin{itemize}
 	  \item The $\chi^2$ test for independence
+	  \item Fisher's exact test
 	  \item Measures of association in two-by-two tables
 	\end{itemize}
 	
@@ -56,6 +57,61 @@ For each cell in a table, the **residual** equals
 \[\dfrac{O_{i, j} - E_{i, j}}{\sqrt{E_{i,j}}}. \]
 Residuals with a large magnitude contribute the most to the $\chi^2$ statistic. If a residual is positive, the observed value is greater than the expected value; if a residual is negative, the observed value is less than the expected.
 
+\vspace{0.5cm}
+
+*Fisher's exact test*
+
+When the expected counts in a two-way table are less than 10, Fisher's exact test is used to compute a $p$-value without relying on the normal approximation. In this course, only the logic behind Fisher's exact test for a $2 \times 2$ table is discussed. In the $2 \times 2$ table case, the hypotheses for Fisher's exact test can be expressed in the same way as for a two-sample test of proportions; the null hypothesis is $H_0: p_1 = p_2$.
+
+The $p$-value is the probability of observing results as or more extreme than those observed under the assumption that the null hypothesis is true.
+
+  - Thus, the $p$-value is calculated by adding together the individual conditional probabilities of obtaining each table that is as or more extreme than the one observed, under the null hypothesis and given that the marginal totals are considered fixed.
+  
+  - When the marginal totals are held constant, the value of any one cell in the table determines the rest of entries. When marginal totals are considered fixed, each table represents a unique set of results.
+  
+  - Extreme tables are those which contradict $H_0: p_1 = p_2$.
+  
+  - A two-sided $p$-value can be calculated by doubling the smaller of the possible one-sided $p$-values; this method is typically used when calculating $p$-values by hand. Another common method is to classify "more extreme" tables as all tables with probabilities less than that of the observed table, in both directions; the $p$-value is the sum of probabilities for the qualifying table.
+  
+The probability of a particular table (i.e., set of results) can be calculated with the **hypergeometric distribution**.
+
+Let $X$ represent the number of successes in a series of repeated Bernoulli trials, where sampling is done without replacement. Suppose that in the population of size $N$, there are $m$ total successes. What is the probability of observing exactly $k$ successes when drawing a sample of size $n$?
+
+
+For example, imagine an urn with $m$ white balls and $N - m$ black balls (thus, there are $N$ total balls). Draw $n$ balls without replacement (i.e., a sample of $n$ balls). What is the probability of observing $k$ white balls in the sample? 
+
+The possible results of a sample can be organized in a $2 \times 2$ table:
+
+\begin{table*}[h!]
+\begin{center}
+\begin{tabular}{l|cc|c} 
+   & \textbf{White Ball} & \textbf{Black Ball} & \textbf{Total}\\ \hline
+  \textbf{Sampled} & $k$ & \textcolor{gray}{$n - k$}  & $n$  \\
+  \textbf{Not Sampled} & \textcolor{gray}{$m - k$} & \textcolor{gray}{$N - n - (m - k)$} & \textcolor{gray}{$N - n$} \\ \hline
+  \textbf{Total} & $m$ & $N - m$ & $N$  \\ 
+\end{tabular}\\
+\end{center}
+\end{table*}
+
+
+The probability of observing exactly $k$ successses in a sample of size $n$ (i.e., $n$ dependent trials) is given by 
+\[P(X = k) = \dfrac{{m \choose k} {N - m \choose n-k}}{{N \choose n}}. \]
+
+Hypergeometric probabilities are calculated in \textsf{R} with the use of \texttt{dhyper()} and \texttt{phyper()}. The following code shows how to calculate $P(X = 5)$, $P(X \leq 5)$, and $P(X > 5)$ for $X \sim \text{HGeom}(10, 15, 8)$, where $m = 10$, $N - m = 15$, and $n = 8$. 
+
+```{r}
+#probability X equals 5
+dhyper(5, 10, 15, 8)
+
+#probability X is less than or equal to 5
+phyper(5, 10, 15, 8)
+
+#probability X is greater than 5
+phyper(5, 10, 15, 8, lower.tail = FALSE)
+```
+
+\vspace{0.5cm}
+
 *Measures of association in two-by-two tables*
 
 Chapter 1 introduced the **relative risk (RR)**, a measure of the risk of a certain event occurring in one group relative to the risk of the event occurring in another group, as a numerical summary for two-by-two ($2 \times 2$) tables. The relative risk can also be thought of as a measure of association.
@@ -87,7 +143,7 @@ The **odds ratio (OR)** is a measure of association that remains applicable even
 \[OR_{\text{A, comparing Group 1 to Group 2}} = \dfrac{a/b}{c/d} = \dfrac{ad}{bc} \]
 \[OR_{\text{A, comparing Group 2 to Group 1}} = \dfrac{c/d}{a/b} = \dfrac{bc}{ad} \]
 
-\newpage
+\vspace{0.5cm}
 
 ### The $\chi^2$ test of independence
 
@@ -289,11 +345,274 @@ chisq.test(statin.edu.table)
 chisq.test(statin.edu.table)$residuals
 ```
 
+\newpage
 
+### Fisher's exact test
+
+3. \textit{Clostridium difficile} is a bacterium that causes inflammation of the colon. Antibiotic treatment is typically not effective, particularly for patients who experience multiple recurrences of infection. Infusion of feces from healthy donors has been reported as an effective treatment for recurrent infection. A randomized trial was conducted to compare the efficacy of donor-feces infusion versus vancomycin, the antibiotic typically prescribed to treat \textit{C. difficile }infection. The results of the trial are shown in the following table. 
+
+    \begin{table}[h]
+	\centering
+	\begin{tabular}{rrr|r}
+		\hline
+		& Cured & Uncured & Sum \\ 
+		\hline
+		Fecal Infusion & 13 & 3 & 16 \\ 
+		Vancomycin & 4 & 9 & 13 \\ 
+		\hline
+		Sum & 17 & 12 & 29 \\ 
+		\hline
+	\end{tabular}
+    \end{table}
+
+    a) Can a $\chi^2$ test be used to analyze these results?
+    
+        \textcolor{NavyBlue}{A $\chi^2$ test is not advisable since there are expected counts less than 10.}
+    
+    ```{r}
+infusion.table = matrix(c(13, 3, 4, 9), nrow = 2, ncol = 2, byrow = T)
+dimnames(infusion.table) = list("Outcome" = c("Cured", "Uncured"),
+                                "Treatment" = c("Fecal Infusion", 
+                                                "Vancomycin"))
+
+chisq.test(infusion.table)$expected
+```
+    
+    b) Researchers are interested in understanding whether fecal infusion is a more effective treatment than vancomycin. Write the null hypothesis and appropriate one-sided alternative hypothesis.
+    
+        \textcolor{NavyBlue}{Let $p_1$ represent the population proportion of individuals cured on the fecal infusion treatment and $p_2$ represent the population proportion of individuals cured on the vancomycin treatment. Under the null hypothesis, the proportion cured is equal between the two treatment groups: $H_0: p_1 = p_2$. The appropriate alternative hypothesis of interest is $H_0: p_1 > p_2$. }    
+    
+    c) Under the assumption that the marginal totals are fixed, enumerate all possible sets of results that are more extreme than what was observed, in the same direction.
+    
+        \textcolor{NavyBlue}{Results more extreme than what was observed are those that constitute stronger evidence in favor of the fecal treatment group being more effective than vancomyin; i.e., results where either 14, 15, or 16 of the cured patients were in the fecal infusion group.}
+      
+        \color{NavyBlue}
+      
+        \begin{table}[h]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Cured & Uncured & Sum \\ 
+		\hline
+		Fecal Infusion & \textcolor{black}{14} & \textcolor{black}{2} & 16 \\ 
+		Vancomycin & \textcolor{black}{3} & \textcolor{black}{10} & 13 \\ 
+		\hline
+		Sum & 17 & 12 & 29 \\ 
+		\hline
+	\end{tabular}
+        \end{table}
+
+        \begin{table}[h]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Cured & Uncured & Sum \\ 
+		\hline
+		Fecal Infusion & \textcolor{black}{15} & \textcolor{black}{1} & 16 \\ 
+		Vancomycin & \textcolor{black}{2} & \textcolor{black}{11} & 13 \\ 
+		\hline
+		Sum & 17 & 12 & 29 \\ 
+		\hline
+	\end{tabular}
+        \end{table}
+
+        \begin{table}[h]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Cured & Uncured & Sum \\ 
+		\hline
+		Fecal Infusion & \textcolor{black}{16} & \textcolor{black}{0} & 16 \\ 
+		Vancomycin & \textcolor{black}{1} & \textcolor{black}{12} & 13 \\ 
+		\hline
+		Sum & 17 & 12 & 29 \\ 
+		\hline
+	\end{tabular}
+      \end{table}
+      
+      \color{Black}
+    
+    d) Calculate the probability of the observed results.
+    
+        \textcolor{NavyBlue}{Use the hypergeometric distribution with parameters $N = 29$, $m = 17$, and $n = 16$; calculate $P(X = 13)$. Consider the "successes" to be the individuals cured and the "sample size" to be the number of individuals in the fecal infusion group. The probability that 13 of the cured individuals were in the fecal infusion group, given the table margins are fixed, is 0.0077.}
+    
+    ```{r}
+#probability of the observed results
+dhyper(13, 17, 29 - 17, 16)
+```
+
+    
+    e) Calculate the probability of each set of results enumerated in part c).
+    
+        \textcolor{NavyBlue}{The probabilities of observing 14, 15, or 16 cured individuals in the fecal infusion group, respectively, are $6.61 \times 10^{-4}$, $2.41 \times 10^{-5}$, and $2.51 \times 10^{-7}$. }
+    
+    ```{r}
+#probability of results more extreme than observed
+dhyper(14, 17, 29 - 17, 16)
+dhyper(15, 17, 29 - 17, 16)
+dhyper(16, 17, 29 - 17, 16)
+```
+    
+    f) Based on the answers in parts d) and e), compute the one-sided $p$-value and interpret the results.
+    
+        \textcolor{NavyBlue}{The probability of observing results as or more extreme than the observed table is 0.0084. Since $p < 0.05$, there is sufficient evidence to reject the null hypothesis at significance level $\alpha = 0.05$; the data support fecal infusion as a more effective treatment for \textit{C. difficile} infection than vancomycin.}
+    
+    ```{r}
+#summing previous probabilities
+p.observed = dhyper(13, 17, 29 - 17, 16)
+p.more.extreme = dhyper(14, 17, 29 - 17, 16) + dhyper(15, 17, 29 - 17, 16) + 
+  dhyper(16, 17, 29 - 17, 16)
+p.observed + p.more.extreme
+
+#using phyper
+phyper(12, 17, 29 - 17, 16, lower.tail = FALSE)
+```
+
+    
+    g) Use \texttt{fisher.test( )} to confirm the calculations in part f) and to calculate the two-sided $p$-value.
+    
+        \textcolor{NavyBlue}{The two-sided $p$-value is 0.0095.}
+    
+    ```{r}
+#one-sided p-value
+fisher.test(infusion.table, alternative = "greater")$p.val
+
+#two-sided p-value
+fisher.test(infusion.table, alternative = "two.sided")$p.val
+```
+
+
+4. Psychologists conducted an experiment to investigate the effect of anxiety on a person's desire to be alone or in the company of others (Schacter 1959; Lehmann 1975). A group of 30 individuals were randomly assigned into two groups; one group was designated the "high anxiety" group and the other the "low anxiety" group. Those in the high-anxiety group were told that in the "upcoming experiment", they would be subjected to painful electric shocks, while those in the low-anxiety group were told that the shocks would be mild and painless.\footnote{Individuals were not actually subjected to electric shocks of any kind}. All individuals were informed that there would be a 10 minute wait before the experiment began, and that they could choose whether to wait alone or with other participants.
+
+    The following table summarizes the results:
+  
+    \begin{table}[h]
+	\centering
+	\begin{tabular}{rrr|r}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & 12 & 5 & 17 \\ 
+		Low-Anxiety & 4 & 9 & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+    \end{table}
+
+
+    a) Under the null hypothesis of no association, what are the expected cell counts?
+    
+        \textcolor{NavyBlue}{Under the null hypothesis of no association, the expected cell counts are 9.07 and 7.93 in the wait together and wait alone groups, respectively, for those considered "high anxiety" and 6.93 and 6.07 in the wait together and wait alone groups, respectively, for those considered "low anxiety".}
+    
+    ```{r}
+#enter the data
+anxiety.table = matrix(c(12, 5, 4, 9), nrow = 2, ncol = 2, byrow = T)
+dimnames(anxiety.table) = list("Treatment" = c("High Anxiety", "Low Anxiety"),
+                               "Outcome" = c("Wait Together", "Wait Alone"))
+
+chisq.test(anxiety.table)$expected
+```
+       
+    
+    b) Under the assumption that the marginal totals are fixed and the null hypothesis is true, what is the probability of the observed set of results?
+
+        \textcolor{NavyBlue}{Use the hypergeometric distribution with parameters $N = 30$, $m = 16$, and $n = 17$; calculate $P(X = 12)$. Consider the "successes" to be the individuals who wait together, and the "number sampled" to be the people randomized to the high-anxiety group. The probability of the observed set of results, assuming the marginal totals are fixed and the null hypothesis is true, is 0.0304.}
+    
+    ```{r}
+dhyper(12, 16, 30 - 16, 17)
+```
+
+
+    c) Enumerate the tables that are more extreme than what was observed, in the same direction. 
+    
+        \textcolor{NavyBlue}{More individuals than expected in the high-anxiety group were observed to wait together; thus, tables that are more extreme in the same direction also consist of those where more people in the high-anxiety group wait together than observed. These are tables in which 13, 14, 15, or 16 individuals in the high-anxiety group wait together.}
+        
+        \begin{table}[h]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & \textcolor{black}{13} & \textcolor{black}{4} & 17 \\ 
+		Low-Anxiety & \textcolor{black}{3} & \textcolor{black}{10} & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+        \end{table}
+        
+        \begin{table}[h!]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & \textcolor{black}{14} & \textcolor{black}{3} & 17 \\ 
+		Low-Anxiety & \textcolor{black}{2} & \textcolor{black}{11} & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+        \end{table}
+        
+        \begin{table}[h!]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & \textcolor{black}{15} & \textcolor{black}{2} & 17 \\ 
+		Low-Anxiety & \textcolor{black}{1} & \textcolor{black}{12} & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+        \end{table}
+        
+        \begin{table}[h!]
+	\centering
+	\color{gray}
+	\begin{tabular}{r|cc|c}
+		\hline
+		& Wait Together & Wait Alone & Sum \\ 
+		\hline
+		High-Anxiety & \textcolor{black}{16} & \textcolor{black}{1} & 17 \\ 
+		Low-Anxiety & \textcolor{black}{0} & \textcolor{black}{13} & 13 \\ 
+		\hline
+		Sum & 16 & 14 & 30 \\ 
+		\hline
+	\end{tabular}
+        \end{table}
+    
+    
+    \newpage
+    
+    d) Conduct a formal test of association for the results and summarize your findings. Let $\alpha = 0.05$.
+    
+        \textcolor{NavyBlue}{Let $p_1$ represent the population proportion of individuals waiting together in the high-anxiety group and $p_2$ represent the population proportion of individuals waiting together in the low-anxiety group. Test $H_0: p_1 = p_2$ against $H_A: p_1 \neq p_2$. Let $\alpha = 0.05$. The two-sided $p$-value is 0.063. There is insufficient evidence to reject the null hypothesis; the data do not suggest there is an association between high anxiety and a person's desire to be in the company of others.}
+        
+        \textcolor{NavyBlue}{Note that the results are borderline; a one-sided $p$-value rejects the null hypothesis with $p = 0.036$. The choice of two-sided hypothesis is more impartial.}
+        
+    ```{r}
+#two-sided test
+fisher.test(anxiety.table)$p.val
+    
+#one-sided test
+fisher.test(anxiety.table, alternative = "greater")$p.val
+```
+        
+\newpage
 
 ### Measures of association in two-by-two tables
 
-3. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
+5. Suppose a study is conducted to assess the association between smoking and cardiovascular disease (CVD). Researchers recruited a group of 231 study participants then categorized them according to smoking and disease status: 111 are smokers, while 40 smokers and 32 non-smokers have CVD. Calculate and interpret the relative risk of CVD.
 
     \textcolor{NavyBlue}{The relative risk of CVD comparing smokers to non-smokers is 1.35. Smoking is associated with a 35\% increase in the probability of CVD. In other words, the risk of CVD is 35\% greater in smokers compared to non-smokers. }
 
@@ -305,9 +624,8 @@ risk.nonsmokers = 32/(231-111)
 risk.smokers / risk.nonsmokers
 ```
 
-\newpage
 
-4. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
+6. Suppose another study is conducted to assess the association between smoking and CVD, but researchers use a different design: 90 individuals with CVD and 110 individuals without CVD are recruited. 40 of the individuals with CVD are smokers, and 80 of the individuals without CVD are non-smokers.
 
     a) Is relative risk an appropriate measure of association for these data? Explain your answer.
     
