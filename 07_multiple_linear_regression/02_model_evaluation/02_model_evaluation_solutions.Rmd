@@ -228,6 +228,7 @@ model2 <- lm(expenditures ~ ethnicity + age, data = dds.subset)
 coef(model2)
 ```
 
+\newpage
 
 7. Evaluate the model fit.
 
@@ -344,4 +345,92 @@ points(expenditures[hispanic & older] ~ age[hispanic & older],
        cex = 0.8)
 ```
 
+\newpage
 
+\color{NavyBlue}
+
+Consider, though, that the relationship between expenditures and age does appear approximately linear for individuals under 18 and for individuals above 21; it may also be approximately linear in the 18-21 age group. The following residual plots are for models predicting expenditures from age and ethnicity, considering only the individuals in a particular age group at a time: under 18 years, between 18 and 21 years (inclusive), and above 21 years.
+
+\color{Black}
+
+```{r, fig.width = 8, fig.height = 4.75, echo = FALSE}
+
+#redefine older and younger as < 18 and > 21
+#let middle group be [18, 21] 
+younger = (dds.subset$age < 18)
+middle = (dds.subset$age >= 18 & dds.subset$age <21)
+older = (dds.subset$age > 21)
+
+
+model.younger = lm(expenditures[younger] ~ age[younger] + ethnicity[younger],
+                   data = dds.subset)
+
+par(mfrow = c(1, 2))
+plot(resid(model.younger) ~ fitted(model.younger),
+     main = "Resid vs Pred. Exp. in DDS, <18",
+     pch = 21, bg = COL[5, 4], col = COL[5],
+     cex = 0.8,
+     xlab = "Pred. Expenditures",
+     ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+
+qqnorm(resid(model.younger),
+       pch = 21, bg = COL[5, 4], col = COL[5], cex = 0.8,
+       main = "Q-Q of Residuals in DDS, <18")
+qqline(resid(model.younger),
+       col = "red", lwd = 2)
+
+model.middle = lm(expenditures[middle] ~ age[middle] + ethnicity[middle],
+                  data = dds.subset)
+
+par(mfrow = c(1, 2))
+plot(resid(model.middle) ~ fitted(model.middle),
+     main = "Resid vs Pred. Exp. in DDS, [18, 21]",
+     pch = 21, bg = COL[5, 4], col = COL[5],
+     cex = 0.8,
+     xlab = "Pred. Expenditures",
+     ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+
+qqnorm(resid(model.middle),
+       pch = 21, bg = COL[5, 4], col = COL[5], cex = 0.8,
+       main = "Q-Q of Residuals in DDS, [18, 21]")
+qqline(resid(model.middle),
+       col = "red", lwd = 2)
+
+model.older = lm(expenditures[older] ~ age[older] + ethnicity[older],
+                 data = dds.subset)
+
+par(mfrow = c(1, 2))
+plot(resid(model.older) ~ fitted(model.older),
+     main = "Resid vs Pred. Exp. in DDS, 22+",
+     pch = 21, bg = COL[5, 4], col = COL[5],
+     cex = 0.8,
+     xlab = "Pred. Expenditures",
+     ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+
+qqnorm(resid(model.older),
+       pch = 21, bg = COL[5, 4], col = COL[5], cex = 0.8,
+       main = "Q-Q of Residuals in DDS, 22+")
+qqline(resid(model.older),
+       col = "red", lwd = 2)
+```
+
+\color{NavyBlue}
+
+The residual plots indicate that linear regression is appropriate when applied to specific age cohorts at a time. The following tables show the results of $t$-tests for the model coefficients, showing the regression summary output for the model fit to the youngest participants, the participants in the 18-21 range, and the older participants.\footnote{ \textcolor{NavyBlue}{An additional package has been used to format the output from \texttt{summary(lm( ))} as a compact table.}}  
+
+Inference drawn from these models supports the idea that after adjusting for age, there is not evidence of an association between expenditures and ethnicity. In other words, these data are not indicative of ethnic discrimination against Hispanics by the California DDS.
+
+\color{Black}
+
+\footnotesize
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(moderndive)
+
+get_regression_table(model.younger, print = TRUE)
+get_regression_table(model.middle, print = TRUE)
+get_regression_table(model.older, print = TRUE)
+```
