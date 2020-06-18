@@ -25,6 +25,9 @@ output:
 3. Distributions Related to Bernoulli Trials
     - *OI Biostat* Section 3.5
     
+4. Distributions for Pairs of Random Variables
+    - *OI Biostat* Section 3.6
+    
 
 Lab 1 introduces the general notion of a random variable and its distribution using a simulation, then discusses the binomial distribution. 
 
@@ -32,7 +35,9 @@ Lab 2 discusses the normal distribution and working with normal probabilities, a
     
 Lab 3 covers the geometric, negative binomial, and hypergeometric distributions. The simulations in this lab introduce \texttt{repeat} and \texttt{while} loops.
 
-All three labs include practice problems that illustrate the use of \textsf{R} functions for probability distributions.
+Lab 4 discusses distributions for pairs of random variables, in addition to the correlation of random variables. 
+
+The first three labs include practice problems that illustrate the use of \textsf{R} functions for probability distributions.
 
 \newpage
 
@@ -523,3 +528,25 @@ for(k in 1:replicates){
 }
 ```
 
+
+\newpage
+
+# Lab 4: Distributions for Pairs of Random Variables
+
+## The \texttt{apply()} Function
+
+To use the \texttt{apply()} function to a matrix, specify the function and whether it should be applied to the rows or the columns. The function can be a pre-defined \texttt{R} function like \texttt{mean()}, \texttt{range()}, \texttt{summary()}, \texttt{class()}, etc. or a user-defined function. \texttt{R} also has specific functions for calculating the marginal sums and means of a matrix: \texttt{rowSums()}, \texttt{colSums()}, \texttt{rowMeans()}, and \texttt{colMeans()}.
+
+```{r}
+m = matrix(1:9, nrow = 3)
+m
+
+apply(m, 1, sum)   #calculate row sums
+apply(m, 2, sum)   #calculate column sums
+
+rowSums(m)
+colSums(m)
+
+rowMeans(m)
+colMeans(m)
+```
