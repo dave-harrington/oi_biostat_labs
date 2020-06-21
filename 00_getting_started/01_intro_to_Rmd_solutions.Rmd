@@ -1,9 +1,23 @@
 ---
-title: "Lab 0: Introduction to R Markdown"
-author: "OpenIntro Biostatistics"
-date: "January 2020"
+title: "Lab 0: Introduction to R Markdown (Solutions)"
+author: "Julie Vu"
+date: "21 June 2020"
 output: pdf_document
 ---
+
+\color{blue}
+
+This file demonstrates the elements that the completed Introduction to R Markdown lab should contain:
+
+  - Step 1: This file is renamed as 01\_intro\_to\_Rmd\_solutions.Rmd, for clarity.
+  - Step 2: An edited header
+  - Step 3: A brief paragraph
+  - Step 4: A bulleted list
+  - Step 11: A side-by-side boxplot
+
+\color{black}
+
+\vspace{0.5cm}
 
 This is an R Markdown (Rmd) document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. It was designed to simplify creating HTML documents, but the labs for this text are written to generate PDF documents. Before continuing, be sure to install a TeX distribution; one easy option is the TinyTex distribution that can be installed via R (\url{https://yihui.org/tinytex/}).\footnote{Alternatively, a full TeX distribution can be downloaded from \url{https://www.latex-project.org/get/}.}
 
@@ -30,7 +44,7 @@ Plain text is prepared in paragraphs, as in the first part of this document. *Te
 
 3. Write a brief paragraph describing previous coursework in statistics (if any) and share your motivation for learning statistics with R. *Knit* the document. Note that each time you *knit* the document, the output overwrites the previous version.
 
-Your paragraph...
+After minimal exposure to statistics in high school and college, I completed graduate work in medical statistics at University College London. My primary motivation for beginning to study applied statistics with R was to prepare myself for analyzing biological data as part of senior thesis research.
 
 
 Bulleted lists are produced using the formatting syntax: 
@@ -44,7 +58,11 @@ The list must be preceded by a blank line, and 4 spaces should be used before su
 
 4. Write a bulleted list giving your year of graduation, your field of study, and the country you are from.  Under the entry for your country, prepare subitems with the name of your state and city. *Knit* the document and inspect it to make sure the PDF is correctly produced.
 
-Your bulleted list...
+- 2015
+- Organismic and Evolutionary Biology
+- USA
+    + State: Massachusetts
+    + City: Cambridge
 
 Additional formatting commands will be introduced gradually throughout the rest of the labs.
 
@@ -110,7 +128,7 @@ load("sample_data.Rdata")
 
 11. The following code will produce a side-by-side boxplot (one for each column of \texttt{sample.data}). To run the code, change eval=FALSE to eval=TRUE. *Knit* the document. The plot should now be visible in the PDF output. Any new R chunks you create default to the eval = TRUE option.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 #produce a side-by-side boxplot
 boxplot(sample.data)
 ```
