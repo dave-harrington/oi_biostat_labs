@@ -84,7 +84,7 @@ mean(a)
 sd(a)
 ```
 
-8. Plots appear in the Plots tab in the upper right. Plot the values of \texttt{a} against the values of \texttt{b}:
+8. Plots appear in the Plots tab in the lower right. Plot the values of \texttt{a} against the values of \texttt{b}:
 
     ```{r, eval = FALSE}
 #plot a against b
