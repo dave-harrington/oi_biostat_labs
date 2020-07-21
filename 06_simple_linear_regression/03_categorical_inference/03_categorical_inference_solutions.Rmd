@@ -147,7 +147,7 @@ par(mfrow = c(1, 2))
 residuals = resid(lm(BMI ~ DM, data = prevend.samp))
 predicted = predict(lm(BMI ~ DM, data = prevend.samp))
 plot(residuals ~ predicted, 
-     xlab = "Residual", ylab = "Predicted BMI",
+     ylab = "Residual", xlab = "Predicted BMI",
      cex = 0.75)
 abline(h = 0, lty = 2, col = "red")
 
