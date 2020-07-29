@@ -19,6 +19,8 @@ This file demonstrates the elements that the completed Introduction to R Markdow
 
 \vspace{0.5cm}
 
+### Orientation
+
 This is an R Markdown (Rmd) document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. It was designed to simplify creating HTML documents, but the labs for this text are written to generate PDF documents. Before continuing, be sure to install a TeX distribution; one easy option is the TinyTex distribution that can be installed via R (\url{https://yihui.org/tinytex/}).\footnote{Alternatively, a full TeX distribution can be downloaded from \url{https://www.latex-project.org/get/}.}
 
 To install the TinyTex distribution, run the following commands. The commands appear in a grey box; click the green play button in the upper right hand corner to run both lines:
@@ -28,11 +30,18 @@ install.packages('tinytex')
 tinytex::install_tinytex()
 ```
 
+To install the *oibiostat* data package, run the code in the following chunk. The package only needs to be installed once. 
+
+```{r, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("OI-Biostat/oi_biostat_data")
+```
+
 The content of an R Markdown document is created in the R Studio script editor. Formatting commands in the text are converted to a PDF document when you click on the *Knit* button, located on the toolbar at the top of the script editor.
 
 In R Studio, the menu item *File > New File > R Markdown...* choice produces a dialog box for output type. To create a new document, select *Document* from the left side of the dialog box, enter a name and title, choose PDF, and select OK. A template will open in the script editor, with file extension .Rmd. Templates will be provided for all the lab exercises, and you will start by simply opening the template files, so there will almost never be a need to start a new file `from scratch' while working on these labs.
 
-Let's get started.
+### Getting Started
 
 The first six lines of this file are referred to as the **header**. R Markdown is very fussy about the form of the header---the three dashed lines above and below lines 2-5 must appear exactly as in this document, and there must be a blank space between the colon and the descriptive text. Also, the title, author, and date fields must be kept within double quotes. The output line specifies the output format as PDF. 
 
@@ -80,14 +89,7 @@ The real power of R Markdown is that it allows for R programs to be included in 
 
 R programs in an Rmd file are located in **code chunks**, which appear as grey-shaded blocks as shown below starting on line 60. You can embed an R code chunk by either typing the three backticks (`) followed by an "r" enclosed in braces, then the additional three backticks to close the chunk, or simply press the *Insert Chunk* button from the *Chunks* menu on the far right of the toolbar on top of the script editor. 
 
-6. Datasets for the labs are contained within the *oibiostat* package. To install the *oibiostat* package, run the code in the following chunk. The package only needs to be installed once. 
-
-```{r, eval = FALSE}
-install.packages("devtools")
-devtools::install_github("OI-Biostat/oi_biostat_data")
-```
-
-To view which datasets are included in the package, go to the "Packages" tab and scroll down to *oibiostat*; clicking the blue hyperlink opens the documentation page that lists the datasets included in the package.
+6. Datasets for the labs are contained within the *oibiostat* package. To view which datasets are included in the package, go to the "Packages" tab and scroll down to *oibiostat*; clicking the blue hyperlink opens the documentation page that lists the datasets included in the package.
 
 7. The following code chunks use data included in the package. To load the package, use the \texttt{library} command. This command only needs to be used once in a document, in the first R chunk that requires data from the package. The \texttt{data()} command can be used to load a particular dataset from the package; once the command is run, the name of the dataset will appear in the Environment tab.
 
