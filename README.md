@@ -14,6 +14,7 @@ Most of the datasets used in the labs can be accessed from the `oibiostat` `R` p
 
 ```r
 install.packages("devtools")
+library(devtools)
 devtools::install_github("OI-Biostat/oi_biostat_data")
 ```
 
