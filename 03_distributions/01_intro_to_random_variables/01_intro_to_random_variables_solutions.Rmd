@@ -334,7 +334,7 @@ sum(number.infected <= 100)/number.replicates
 ```
 
     
-5. The National Vaccine Information Center estimates that 90\% of Americans have had chickenpox by the time they reach adulthood.
+5. The US Centers for Disease Control and Prevention (CDC) estimates that 90\% of Americans have had chickenpox by the time they reach adulthood.
 
     a) Calculate the probability that exactly 97 out of 100 randomly sampled American adults had chickenpox during childhood.
 
